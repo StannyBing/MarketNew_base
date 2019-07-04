@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical">
+
+
+    <com.youth.banner.Banner
+        android:id="@+id/banner_work_info"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        app:image_scale_type="fit_xy"
+        android:layout_height="120dp">
+
+    </com.youth.banner.Banner>
+
+    <LinearLayout
+        android:id="@+id/ll_work_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/app_work_info"/>
+
+        <ViewFlipper
+            android:id="@+id/vf_info_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoStart="true"
+            android:flipInterval="4000"
+            android:inAnimation="@anim/info_up_in"
+            android:outAnimation="@anim/info_up_out">
+
+        </ViewFlipper>
+
+    </LinearLayout>
+
+</LinearLayout>

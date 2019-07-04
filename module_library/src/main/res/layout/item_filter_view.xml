@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+
+    <TextView
+        android:id="@+id/tv_filter_name"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        android:text="状态名称:"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_small"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@id/tv_filter_name">
+
+        <EditText
+            android:id="@+id/et_filter_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入..."
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:maxLength="256"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/shape_search_cursor"
+            android:textSize="@dimen/text_size_small"
+            android:visibility="gone"/>
+
+        <com.zx.zxutils.views.ZXSpinner
+            android:id="@+id/sp_filter_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+        </com.zx.zxutils.views.ZXSpinner>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/divider_color"/>
+
+
+</RelativeLayout>

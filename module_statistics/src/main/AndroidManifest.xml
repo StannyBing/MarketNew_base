@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.zx.module_statistics">
+
+    <application android:theme="@style/MainAppTheme"
+                 android:networkSecurityConfig="@xml/network_security_config">
+
+        <meta-data
+            android:name="com.zx.module_statistics.api.ApiConfigModule"
+            android:value="ConfigModule"/>
+    </application>
+</manifest>

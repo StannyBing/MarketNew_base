@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:background="@color/white"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.zx.module_library.view.ToolBarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_text="找回密码">
+
+    </com.zx.module_library.view.ToolBarView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="请输入您的手机号："
+            android:textColor="@color/text_color_noraml"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_forget_phone"
+                style="@style/MyEditText"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:imeOptions="normal"
+                android:inputType="number"
+                android:maxLength="11"
+                android:singleLine="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_big"/>
+
+            <Button
+                android:id="@+id/btn_forget_send"
+                style="@style/MySubmitButton"
+                android:layout_width="90dp"
+                android:layout_height="30dp"
+                android:textAllCaps="false"
+                android:text="发送"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="请输入验证码："
+            android:textColor="@color/text_color_noraml"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <LinearLayout
+            android:id="@+id/ll_forget_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_forget_code1"
+                style="@style/MyEditText"
+                android:layout_width="0dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/text_color_noraml"
+                android:textSize="@dimen/text_size_big"/>
+
+            <EditText
+                android:id="@+id/et_forget_code2"
+                style="@style/MyEditText"
+                android:layout_width="0dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/text_color_noraml"
+                android:textSize="@dimen/text_size_big"/>
+
+            <EditText
+                android:id="@+id/et_forget_code3"
+                style="@style/MyEditText"
+                android:layout_width="0dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/text_color_noraml"
+                android:textSize="@dimen/text_size_big"/>
+
+            <EditText
+                android:id="@+id/et_forget_code4"
+                style="@style/MyEditText"
+                android:layout_width="0dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:inputType="number"
+                android:maxLength="1"
+                android:singleLine="true"
+                android:textColor="@color/text_color_noraml"
+                android:textSize="@dimen/text_size_big"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="收不到短信验证码？请先确认手机是否安装短信截图软件或是否停机欠费，若均不是，请联系我们。"
+            android:textColor="@color/text_color_light"
+            android:textSize="@dimen/text_size_normal"/>
+
+
+        <LinearLayout
+            android:id="@+id/ll_forget_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:background="@drawable/app_forget_tel"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系信息中心"
+                android:textColor="@color/text_color_light"
+                android:textSize="@dimen/text_size_normal"/>
+
+            <TextView
+                android:id="@+id/tv_forget_helptel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="666666"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_normal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

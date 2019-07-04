@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">module_other</string>
+
+    <string name="collect">我的收藏</string>
+    <string name="system_name">市场监管法律法规检索系统</string>
+    <string name="law">市场监管法律法规助手</string>
+    <string name="open_search">立即开启一键搜索</string>
+    <string name="hint_text">食品药品</string>
+    <string name="keyword">关键词：</string>
+    <string name="sort">分类：</string>
+    <string name="description">市场监管处罚裁量标准</string>
+    <string name="hint_law_name">请输入法律法规名称</string>
+    <string name="law_rgl_query">法律法规查询</string>
+    <string name="add_collect">加入收藏</string>
+    <string-array name="keywordName">
+        <item>食品药品</item>
+        <item>餐饮服务</item>
+    </string-array>
+    <integer-array name="keywordId">
+        <item>0</item>
+        <item>1</item>
+    </integer-array>
+    <string-array name="sortName">
+        <item>公共法律法规</item>
+        <item>科室法律法规</item>
+        <item>个人法律法规</item>
+    </string-array>
+    <integer-array name="sortId">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </integer-array>
+
+    <string-array name="notifyName">
+        <item>最近更新</item>
+        <item>中华人民共和国宪法</item>
+        <item>中华人民共和国刑事诉讼法</item>
+        <item>中华人民共和国刑法</item>
+        <item>中华人民共和国中外合资经营企业法</item>
+    </string-array>
+    <integer-array name="notifyId">
+        <item>-1</item>
+        <item>173</item>
+        <item>174</item>
+        <item>175</item>
+        <item>176</item>
+    </integer-array>
+</resources>

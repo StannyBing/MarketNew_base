@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.zx.marketnew_base">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+
+    <application
+        android:name="com.zx.module_library.app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:persistent="true"
+        android:supportsRtl="true"
+        android:theme="@style/MainAppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.zx.marketnew_base.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <meta-data
+            android:name="com.zx.marketnew_base.api.ApiConfigModule"
+            android:value="ConfigModule"/>
+
+        <activity
+            android:name=".system.ui.SplashActivity"
+            android:theme="@style/TransTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.ui.MainActivity"/>
+        <activity
+            android:name=".system.ui.LoginActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".system.ui.ForgetPwdActivity"/>
+        <activity android:name=".system.ui.ChangePwdActivity"/>
+        <activity android:name=".system.ui.SettingActivity"/>
+        <activity android:name=".main.ui.UserDetailActivity"/>
+        <activity android:name=".main.ui.MyTaskActivity"/>
+    </application>
+
+</manifest>

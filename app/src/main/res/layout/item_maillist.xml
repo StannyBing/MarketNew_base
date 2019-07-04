@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/iv_maillist_head"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_maillist_name"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/iv_maillist_head"
+        android:text="市场监管"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_normal"/>
+
+    <ImageView
+        android:id="@+id/iv_maillist_star"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tv_maillist_name"
+        android:background="@drawable/app_maillist_star"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_maillist_duty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:text="党组书记"
+        android:textColor="@color/text_color_light"
+        android:textSize="@dimen/text_size_small"/>
+
+    <View
+        android:id="@+id/view_maillist_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/divider_color"/>
+</RelativeLayout>

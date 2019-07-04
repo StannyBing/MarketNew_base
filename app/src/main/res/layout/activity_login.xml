@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical"
+              android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/iv_login_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/app_login_user"/>
+
+    <TextView
+        android:id="@+id/tv_login_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Hello! XXX"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_big"/>
+
+    <TextView
+        android:id="@+id/tv_login_welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="欢迎回来"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_big"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="一键开启智慧市场监管工作"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_big"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="用户名"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_normal"/>
+
+    <EditText
+        android:id="@+id/et_login_phone"
+        style="@style/MyEditText"
+        android:hint="请输入用户名/手机号"
+        android:maxLength="11"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="密码"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_normal"/>
+
+    <EditText
+        android:id="@+id/et_login_pwd"
+        style="@style/MyEditText"
+        android:layout_marginBottom="30dp"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        android:maxLength="20"/>
+
+    <Button
+        android:id="@+id/btn_login_do"
+        style="@style/MySubmitButton"
+        android:text="登  录"/>
+
+    <TextView
+        android:id="@+id/tv_login_forgetpwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="忘记密码？"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_normal"/>
+</LinearLayout>

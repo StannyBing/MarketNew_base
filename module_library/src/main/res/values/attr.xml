@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="module_color" format="color"/>
+
+    <declare-styleable name="ToolBarView">
+        <attr name="title_text" format="string"/>
+        <attr name="back_text" format="string"/>
+        <attr name="right_text" format="string"/>
+        <attr name="module_color"/>
+        <attr name="bg_color" format="color"/>
+        <attr name="rightpic_bg" format="reference"/>
+        <attr name="midpic_bg" format="reference"/>
+        <attr name="show_rightpic" format="boolean"/>
+        <attr name="show_righttext" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="SearchView">
+        <attr name="func_text" format="string"/>
+        <attr name="show_func" format="boolean"/>
+        <attr name="hint_text" format="string"/>
+        <attr name="module_color"/>
+    </declare-styleable>
+
+    <declare-styleable name="FileHandleView">
+        <attr name="module_color"/>
+        <attr name="modifiable" format="boolean"/>
+        <attr name="list_type" format="enum">
+            <enum name="Linear" value="0"/>
+            <enum name="Grid" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

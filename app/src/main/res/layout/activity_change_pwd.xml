@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <com.zx.module_library.view.ToolBarView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_text="密码修改">
+
+    </com.zx.module_library.view.ToolBarView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:text="请设置密码："
+            android:textColor="@color/text_color_noraml"
+            android:textSize="@dimen/text_size_big"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="登录密码用于电脑端和手机端登录"
+            android:textColor="@color/text_color_light"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:text="密码："
+            android:textColor="@color/text_color_noraml"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_change_pwd"
+                style="@style/MyEditText"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/text_color_noraml"
+                android:textSize="@dimen/text_size_normal"/>
+
+            <LinearLayout
+                android:id="@+id/ll_change_deletepwd"
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_toLeftOf="@+id/ll_change_showpwd"
+                android:background="@null"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/app_change_deletepwd"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_change_showpwd"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@null"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_change_showpwd"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/app_change_hidepwd"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_change_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="5dp"
+            android:text="需6-12位字符"
+            android:textColor="@color/error_color"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <Button
+            android:id="@+id/btn_change_next"
+            style="@style/MySubmitButton"
+            android:text="下一步"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_xapp_bg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_xapp_bg">
+
+        <TextView
+            android:id="@+id/tv_xapp_icon"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:background="@mipmap/ic_launcher"
+            android:textColor="@color/text_color_noraml"
+            android:textSize="@dimen/text_size_biger"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_xapp_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_xapp_bg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:text="名称名称"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_smaller"/>
+
+</RelativeLayout>

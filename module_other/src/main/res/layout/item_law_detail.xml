@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/common_rect_vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tvLawQueryId"
+        style="@style/common_rect_horizontal"
+        android:paddingLeft="@dimen/dp_24"
+        android:paddingRight="@dimen/dp_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLawQueryTitle"
+        style="@style/common_textView_white"
+        android:layout_width="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_16"
+        android:textColor="@color/text_color_drak"
+        android:visibility="gone"
+        app:layout_constraintLeft_toRightOf="@id/tvLawQueryId"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"></TextView>
+
+    <TextView
+        android:id="@+id/tvLawQueryName"
+        style="@style/common_textView_white_small"
+        android:layout_width="@dimen/dp_0"
+        android:singleLine="false"
+        android:textColor="@color/text_color_drak"
+        app:layout_constraintLeft_toRightOf="@id/tvLawQueryId"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLawQueryTitle" />
+
+    <TextView
+        android:id="@+id/tvLawQueryParentName"
+        style="@style/common_textView_white_tiny"
+        android:layout_width="@dimen/dp_0"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_4"
+        android:gravity="right"
+        android:singleLine="false"
+        android:textColor="@color/text_color_noraml"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintLeft_toRightOf="@id/tvLawQueryId"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLawQueryName" />
+
+    <View
+        style="@style/common_wrap_divider"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</android.support.constraint.ConstraintLayout>

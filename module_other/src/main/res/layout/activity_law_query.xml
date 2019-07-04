@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/common_rect_match"
+    android:background="@color/white">
+
+    <com.zx.module_library.view.ToolBarView
+        android:id="@+id/tbvLawQuery"
+        style="@style/common_rect_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title_text="@string/law_rgl_query"></com.zx.module_library.view.ToolBarView>
+
+    <View
+        android:id="@+id/viewLawBg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_80"
+        android:background="@color/backgroundBlue"
+        app:layout_constraintTop_toBottomOf="@id/tbvLawQuery" />
+
+    <TextView
+        android:id="@+id/tvLawQuery"
+        style="@style/common_textView_white_small"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="@string/law_rgl_query"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/viewLawBg" />
+
+    <com.zx.module_library.view.SearchView
+        android:id="@+id/svLawSearch"
+        style="@style/common_rect_vertical"
+        android:layout_marginLeft="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_64"
+        android:layout_marginRight="@dimen/dp_32"
+        app:hint_text="@string/hint_law_name"
+        app:layout_constraintTop_toTopOf="@id/viewLawBg"></com.zx.module_library.view.SearchView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvLawQuery"
+        style="@style/common_recycler_match"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/viewLawBg">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <android.support.constraint.Group
+        android:id="@+id/groupLawQuery"
+        style="@style/common_rect_vertical"
+        app:constraint_referenced_ids="tvLawCollect,wvLawQuery" />
+
+    <TextView
+        android:id="@+id/tvLawCollect"
+        style="@style/common_textView_white_small"
+        android:layout_marginTop="@dimen/dp_24"
+        android:layout_marginRight="@dimen/dp_28"
+        android:drawableLeft="@drawable/collect_normal_gray"
+        android:drawablePadding="@dimen/dp_4"
+        android:text="@string/add_collect"
+        android:textColor="@color/text_color_noraml"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewLawBg" />
+
+    <WebView
+        android:id="@+id/wvLawQuery"
+        style="@style/common_recycler_vertical"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        android:layerType="hardware"
+        android:layout_marginTop="@dimen/dp_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLawCollect"></WebView>
+
+</android.support.constraint.ConstraintLayout>
