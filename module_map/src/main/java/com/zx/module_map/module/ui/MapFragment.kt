@@ -17,6 +17,7 @@ import com.zx.module_map.R
 import com.zx.module_map.module.func.listener.MapListener
 import com.zx.module_map.module.func.tianditu.TianDiTuLayer
 import com.zx.module_map.module.func.tianditu.TianDiTuLayerTypes
+import com.zx.module_map.module.func.tool.OnlineTileLayer
 import com.zx.module_map.module.mvp.contract.MapContract
 import com.zx.module_map.module.mvp.model.MapModel
 import com.zx.module_map.module.mvp.presenter.MapPresenter
@@ -28,6 +29,9 @@ import kotlinx.android.synthetic.main.fragment_map.*
  * 功能：地图
  */
 class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, OnStatusChangedListener, OnSingleTapListener {
+
+    private var vectorLayer: OnlineTileLayer? = null
+
     private var vectorGlobalLayer: TianDiTuLayer? = null
     private var vectorGlobalLable: TianDiTuLayer? = null
     private var imageGlobalLayer: TianDiTuLayer? = null
@@ -75,6 +79,8 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
         ArcGISRuntime.License.setLicense("runtimestandard,101,rux00000,none,XXXXXXX")
         map_view.setMapBackground(-1, -1, 0.0f, 0.0f)
 
+//        map_view.addLayer(ArcGISTiledMapServiceLayer("http://www.tianditucq.com/RemoteRest/services/CQMap_VEC/MapServer"))
+
         initBaseLayer()
     }
 
@@ -84,28 +90,18 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
         vectorGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_ANNOTATION_CHINESE_2000)
         imageGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_2000)
         imageGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_ANNOTATION_CHINESE_2000)
-
-        mVecLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_VEC)
-        mImgLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_IMG)
-        mImgLayer!!.isVisible = false
-        mLabLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_CVA)
-        mGridLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_GRID)
-
-        mGLayer = GraphicsLayer()
-        map_view.addLayer(mGLayer)
-        mMarkersGLayer = GraphicsLayer()
-        map_view.addLayer(mMarkersGLayer)
-        map_view.onStatusChangedListener = this
-        map_view.onSingleTapListener = this
-
         map_view.addLayer(vectorGlobalLayer)
         map_view.addLayer(vectorGlobalLable)
         map_view.addLayer(imageGlobalLayer)
         map_view.addLayer(imageGlobalLable)
-        map_view.addLayer(mVecLayer)
-        map_view.addLayer(mImgLayer)
-        map_view.addLayer(mLabLayer)
-        map_view.addLayer(mGridLayer)
+        imageGlobalLayer!!.isVisible = false
+        imageGlobalLable!!.isVisible = false
+
+        map_view.setOnStatusChangedListener { any, status ->
+            if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
+                mapListener.doLocation()
+            }
+        }
     }
 
     /**
@@ -136,29 +132,29 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
                     locationDisplayManager!!.isShowPings = !locationDisplayManager!!.isShowPings
                     if (locationDisplayManager!!.isShowLocation) {
                         location = locationDisplayManager!!.location
-                    } else {
-                        locationDisplayManager = map_view.locationDisplayManager.apply {
-                            isAllowNetworkLocation = true
-                            isShowLocation = true
-                            isUseCourseSymbolOnMovement = false
-                            isAccuracyCircleOn = false
-                            locationAcquiringSymbol = PictureMarkerSymbol(activity!!, ContextCompat.getDrawable(activity!!, R.drawable.location_symbol)) as MarkerSymbol?
-                            defaultSymbol = PictureMarkerSymbol(activity!!, ContextCompat.getDrawable(activity!!, R.drawable.location_symbol))
-                            autoPanMode = LocationDisplayManager.AutoPanMode.LOCATION
-                            isShowPings = true
-                            start()
-                            location = this.location
-                        }
                     }
-                    if (location != null) {
-                        map_view.centerAt(location!!.latitude, location!!.longitude, true)
-                        map_view.scale = 70000.00
-                    } else if (ZXLocationUtil.getLocation(activity!!) != null) {
-                        map_view.centerAt(ZXLocationUtil.getLocation(activity!!)!!.latitude, ZXLocationUtil.getLocation(activity!!)!!.longitude, true)
-                        map_view.scale = 70000.00
-                    } else {
-                        showToast("当前GPS信号弱，未获取到位置信息，请稍后再试")
+                } else {
+                    locationDisplayManager = map_view.locationDisplayManager.apply {
+                        isAllowNetworkLocation = true
+                        isShowLocation = true
+                        isUseCourseSymbolOnMovement = false
+                        isAccuracyCircleOn = false
+                        locationAcquiringSymbol = PictureMarkerSymbol(activity!!, ContextCompat.getDrawable(activity!!, R.drawable.location_symbol)) as MarkerSymbol?
+                        defaultSymbol = PictureMarkerSymbol(activity!!, ContextCompat.getDrawable(activity!!, R.drawable.location_symbol))
+                        autoPanMode = LocationDisplayManager.AutoPanMode.LOCATION
+                        isShowPings = true
+                        start()
+                        location = this.location
                     }
+                }
+                if (location != null) {
+                    map_view.centerAt(location!!.latitude, location!!.longitude, true)
+                    map_view.scale = 70000.00
+                } else if (ZXLocationUtil.getLocation(activity!!) != null) {
+                    map_view.centerAt(ZXLocationUtil.getLocation(activity!!)!!.latitude, ZXLocationUtil.getLocation(activity!!)!!.longitude, true)
+                    map_view.scale = 70000.00
+                } else {
+                    showToast("当前GPS信号弱，未获取到位置信息，请稍后再试")
                 }
             }
         }

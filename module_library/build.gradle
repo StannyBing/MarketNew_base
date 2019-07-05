@@ -10,9 +10,7 @@ kapt {
 
 android {
     compileSdkVersion 28
-
-
-
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28

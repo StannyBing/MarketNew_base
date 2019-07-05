@@ -19,13 +19,13 @@ import okhttp3.Response
 open class BaseConfigModule(val apiService: Class<*>, var moduleName: String) : ConfigModule {
 
     enum class APP_TYPE(val versionCode: Int, val versionName: String, val realseUrl: String, val debugUrl: String) {
-        BASE(1, "1.0.0", "http://rc.jx968969.com/", "http://192.168.11.248:8101/"),
+        BASE(1, "1.0.0", "http://rc.jx968969.com/", "http://scjg.zxgeo.com/"),
         DX_APP(1, "1.0.0", "http://223.83.172.79:90/", "http://192.168.11.248:8106/"),
         RC_APP(1, "1.0.0", "http://rc.jx968969.com/", "http://192.168.11.248:8101/");
     }
 
     companion object {
-        const val APP_HEAD = "dx"//头部(用于区分不同的应用)
+        const val APP_HEAD = ""//头部(用于区分不同的应用)
         val appInfo = when (APP_HEAD) {
             "dx" -> APP_TYPE.DX_APP
             "rc" -> APP_TYPE.RC_APP

@@ -22,6 +22,8 @@ import kotlinx.android.synthetic.main.activity_map.*
 @Route(path = RoutePath.ROUTE_MAP_MAP)
 class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View {
 
+    override var canSwipeBack: Boolean = false
+
     companion object {
         /**
          * 启动器
@@ -46,7 +48,9 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         toolbar_view.withXApp(XAppMap.get("地图"))
+
         ZXFragmentUtil.addFragment(supportFragmentManager, MapFragment.newInstance(), R.id.fl_map)
+        ZXFragmentUtil.addFragment(supportFragmentManager, MapBtnFragment.newInstance(), R.id.fl_btn)
     }
 
     /**

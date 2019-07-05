@@ -28,9 +28,9 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        ndk {
-            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
-        }
+//        ndk {
+//            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+//        }
     }
 
 
@@ -46,6 +46,7 @@ android {
         }
     }
     compileOptions {
+        incremental = true  //开启增量编译
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -94,7 +95,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.esri.arcgis.android:arcgis-android:10.2.8'
+    implementation 'com.esri.arcgis.android:arcgis-android:10.2.9'
 }
 repositories {
     mavenCentral()
