@@ -50,10 +50,6 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
             lawMainBean = intent.getSerializableExtra("lawBean") as LawMainBean
         }
         queryPostMethod()
-        rv_law_query.apply {
-            layoutManager = LinearLayoutManager(this@LawQueryActivity)
-            adapter = sortListAdapter
-        }
         sv_law_search.setSearchListener {
             lawMainBean = LawMainBean(it, 4, 0)
             queryPostMethod()
@@ -65,9 +61,17 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
      */
     private fun queryPostMethod() {
         if (lawMainBean!!.type == 0) {
+            rv_law_query.apply {
+                layoutManager = LinearLayoutManager(this@LawQueryActivity)
+                adapter = keywordListAdapter
+            }
             mPresenter.getSearchLaw(ApiParamUtil.lawSearchParam(lawMainBean!!.name))
             sv_law_search.setSearchText(lawMainBean!!.name)
         } else if (lawMainBean!!.type == 1) {
+            rv_law_query.apply {
+                layoutManager = LinearLayoutManager(this@LawQueryActivity)
+                adapter = sortListAdapter
+            }
             mPresenter.getLawList(ApiParamUtil.lawSelectParam(UserManager.getUser().departmentCode, UserManager.getUser().id))
         }
     }
