@@ -71,7 +71,7 @@
         <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
     <style name="common_wrap_divider" parent="common_rect_vertical">
-        <item name="android:layout_height">@dimen/dp_1</item>
+        <item name="android:layout_height">1px</item>
         <item name="android:background">@color/divider_color</item>
     </style>
 </resources>

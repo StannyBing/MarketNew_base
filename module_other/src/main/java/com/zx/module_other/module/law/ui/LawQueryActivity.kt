@@ -7,7 +7,10 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
-import android.webkit.*
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.func.tool.UserManager
 import com.zx.module_other.R
@@ -24,9 +27,9 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
 
     private var lawMainBean: LawMainBean? = null
     private var sortDatas = arrayListOf<LawBean>()
-    private var sortListAdapter = LawQueryListAdapter<LawBean>(sortDatas)
+    private var sortListAdapter = LawQueryListAdapter(sortDatas)
     private var keywordDatas = arrayListOf<LawSearchBean>()
-    private var keywordListAdapter = LawQueryListAdapter<LawSearchBean>(keywordDatas)
+    private var keywordListAdapter = LawQueryListAdapter(keywordDatas)
 
     companion object {
         /**

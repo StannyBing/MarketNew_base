@@ -28,10 +28,10 @@ import kotlinx.android.synthetic.main.activity_law.*
 @Route(path = RoutePath.ROUTE_OTHER_LAW)
 class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
     var keywordData = arrayListOf<LawMainBean>()
-    var keywordAdapter = LawMainAdapter<LawMainBean>(keywordData);
+    var keywordAdapter = LawMainAdapter(keywordData);
 
     var sortData = arrayListOf<LawMainBean>()
-    var sortAdapter = LawMainAdapter<LawMainBean>(sortData)
+    var sortAdapter = LawMainAdapter(sortData)
 
     var notifyData = arrayListOf<LawMainBean>()
     var notifyAdapter = LawRecentlyNotifyAdapter(notifyData)

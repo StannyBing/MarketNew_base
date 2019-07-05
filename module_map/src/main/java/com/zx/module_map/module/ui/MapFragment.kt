@@ -2,6 +2,7 @@ package com.zx.module_map.module.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
@@ -77,7 +78,7 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
         super.initView(savedInstanceState)
         ArcGISRuntime.setClientId("5SKIXc21JlankElJ")
         ArcGISRuntime.License.setLicense("runtimestandard,101,rux00000,none,XXXXXXX")
-        map_view.setMapBackground(-1, -1, 0.0f, 0.0f)
+        map_view.setMapBackground(Color.WHITE, -1, 0.0f, 0.0f)
 
 //        map_view.addLayer(ArcGISTiledMapServiceLayer("http://www.tianditucq.com/RemoteRest/services/CQMap_VEC/MapServer"))
 
