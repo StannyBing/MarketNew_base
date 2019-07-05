@@ -5,11 +5,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
+import com.zx.module_other.XAppOther
 import com.zx.module_other.module.law.bean.LawMainBean
 import com.zx.module_other.module.law.func.adapter.LawMainAdapter
 import com.zx.module_other.module.law.func.adapter.LawRecentlyNotifyAdapter
@@ -31,7 +31,7 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
     var keywordAdapter = LawMainAdapter(keywordData);
 
     var sortData = arrayListOf<LawMainBean>()
-    var sortAdapter = LawMainAdapter(sortData)
+    var typeAdapter = LawMainAdapter(sortData)
 
     var notifyData = arrayListOf<LawMainBean>()
     var notifyAdapter = LawRecentlyNotifyAdapter(notifyData)
@@ -59,12 +59,21 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        keyRv.layoutManager = GridLayoutManager(this, 2) as RecyclerView.LayoutManager?
-        keyRv.adapter = keywordAdapter
-        sortRv.layoutManager = GridLayoutManager(this, 2) as RecyclerView.LayoutManager?
-        sortRv.adapter = sortAdapter
-        notifyRv.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
-        notifyRv.adapter = notifyAdapter
+        toolbar_view.withXApp(XAppOther.get("法律法规"))
+        searchView.withXApp(XAppOther.get("法律法规"))
+
+        rv_law_keyword.apply {
+            layoutManager = GridLayoutManager(this@LawActivity, 2)
+            adapter = keywordAdapter
+        }
+        rv_law_type.apply {
+            layoutManager = GridLayoutManager(this@LawActivity, 2)
+            adapter = typeAdapter
+        }
+        rv_law_list.apply {
+            layoutManager = LinearLayoutManager(this@LawActivity)
+            adapter = notifyAdapter
+        }
         searchView.setSearchListener {
             val lawMainBean = LawMainBean(it, 4, 0)
             LawQueryActivity.startAction(this, false, lawMainBean)
@@ -77,7 +86,7 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
      */
     private fun initData() {
         addData(this.resources.getStringArray(R.array.keywordName), this.resources.getIntArray(R.array.keywordId), 0, keywordData, keywordAdapter)
-        addData(this.resources.getStringArray(R.array.sortName), this.resources.getIntArray(R.array.sortId), 1, sortData, sortAdapter)
+        addData(this.resources.getStringArray(R.array.sortName), this.resources.getIntArray(R.array.sortId), 1, sortData, typeAdapter)
         addData(this.resources.getStringArray(R.array.notifyName), this.resources.getIntArray(R.array.notifyId), 2, notifyData, notifyAdapter)
     }
 
@@ -101,13 +110,13 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
             LawQueryActivity.startAction(this, false, keywordData.get(position))
         }
 
-        sortAdapter.setOnItemClickListener { adapter, view, position ->
+        typeAdapter.setOnItemClickListener { adapter, view, position ->
             LawQueryActivity.startAction(this, false, sortData.get(position))
         }
 
         notifyAdapter.setOnItemClickListener { adapter, view, position ->
             if (position != 0) {
-                LawQueryActivity.startAction(this, false, notifyData.get(position))
+                LawDetailActivity.startAction(this, false, notifyData.get(position).id.toString())
             }
         }
 

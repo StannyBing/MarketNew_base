@@ -15,6 +15,7 @@
         <activity android:name=".module.law.ui.LawQueryActivity"/>
         <activity android:name=".module.camera.ui.CameraVideoActivity"/>
         <activity android:name=".module.filepreview.ui.FilePreviewActivity"/>
+        <activity android:name=".module.law.ui.LawDetailActivity"/>
     </application>
 
 </manifest>

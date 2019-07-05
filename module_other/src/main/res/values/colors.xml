@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="backgroundBlue">#0655C3</color>
+    <color name="law_color">#0655C3</color>
+    <color name="print_color">#50b0a5</color>
 </resources>

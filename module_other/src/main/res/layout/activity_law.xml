@@ -1,104 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/common_rect_match"
-    android:background="@drawable/index_bg">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/index_bg"
+    android:orientation="vertical">
 
     <com.zx.module_library.view.ToolBarView
         android:id="@+id/toolbar_view"
-        style="@style/common_rect_vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title_text="@string/law"></com.zx.module_library.view.ToolBarView>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title_text="@string/law">
+
+    </com.zx.module_library.view.ToolBarView>
 
     <TextView
-        android:id="@+id/tvCollect"
-        style="@style/common_textView_white_tiny"
+        android:id="@+id/tv_collect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         android:drawableLeft="@drawable/collect_normal_white"
         android:text="@string/collect"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_view" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_small"/>
 
     <TextView
-        android:id="@+id/tvSystemName"
-        style="@style/common_textView_white_big"
+        android:id="@+id/tv_system_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_48"
+        android:gravity="center"
         android:text="@string/system_name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCollect" />
-
-
-    <TextView
-        android:id="@+id/tvSearch"
-        style="@style/common_textView_white_tiny"
-        android:layout_marginTop="@dimen/dp_24"
-        android:text="@string/open_search"
-        android:textColor="@color/text_color_light"
-        app:layout_constraintRight_toRightOf="@id/tvSystemName"
-        app:layout_constraintTop_toBottomOf="@id/tvSystemName" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_big"/>
 
     <com.zx.module_library.view.SearchView
         android:id="@+id/searchView"
-        style="@style/common_rect_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_24"
         android:layout_marginRight="@dimen/dp_16"
-        app:hint_text="@string/hint_text"
-        app:layout_constraintTop_toBottomOf="@id/tvSearch"></com.zx.module_library.view.SearchView>
+        android:layout_marginTop="@dimen/dp_24"
+        app:hint_text="@string/hint_text">
 
-    <TextView
-        android:id="@+id/keyTv"
-        style="@style/common_textView_white_tiny"
-        android:layout_marginLeft="@dimen/dp_24"
-        android:layout_marginTop="@dimen/dp_8"
-        android:text="@string/keyword"
-        app:layout_constraintLeft_toLeftOf="@id/searchView"
-        app:layout_constraintTop_toBottomOf="@id/searchView" />
+    </com.zx.module_library.view.SearchView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="@string/keyword"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_law_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_8">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_24"
+            android:layout_marginTop="@dimen/dp_8"
+            android:text="@string/sort"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_law_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_4">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/keyRv"
-        style="@style/common_recycler_wrap"
-        android:layout_marginTop="@dimen/dp_8"
-        app:layout_constraintLeft_toRightOf="@id/keyTv"
-        app:layout_constraintTop_toBottomOf="@id/searchView">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:id="@+id/sortTv"
-        style="@style/common_textView_white_tiny"
-        android:layout_marginTop="@dimen/dp_4"
-        android:text="@string/sort"
-        app:layout_constraintLeft_toLeftOf="@id/keyTv"
-        app:layout_constraintTop_toBottomOf="@id/keyRv" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/sortRv"
-        style="@style/common_recycler_wrap"
-        android:layout_marginTop="@dimen/dp_4"
-        app:layout_constraintLeft_toLeftOf="@id/keyRv"
-        app:layout_constraintTop_toBottomOf="@id/keyRv"></android.support.v7.widget.RecyclerView>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/notifyRv"
+        android:id="@+id/rv_law_list"
         style="@style/common_recycler_vertical"
         android:layout_marginLeft="@dimen/dp_54"
-        android:layout_marginTop="@dimen/dp_24"
         android:layout_marginRight="@dimen/dp_54"
+        android:layout_marginTop="@dimen/dp_24"
+        android:background="@drawable/shape_8_colorwhite"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sortRv"
-        android:background="@drawable/shape_8_colorwhite">
+        app:layout_constraintTop_toBottomOf="@id/rv_law_type">
 
     </android.support.v7.widget.RecyclerView>
-    
+
     <TextView
-        style="@style/common_textView_white_tiny"
-        app:layout_constraintRight_toRightOf="@id/notifyRv"
-        app:layout_constraintTop_toBottomOf="@id/notifyRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="@dimen/dp_16"
-        android:text="@string/description"/>
-</android.support.constraint.ConstraintLayout>
+        android:gravity="right"
+        android:text="@string/description"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_small"
+        app:layout_constraintRight_toRightOf="@id/rv_law_list"
+        app:layout_constraintTop_toBottomOf="@id/rv_law_list"/>
+</LinearLayout>

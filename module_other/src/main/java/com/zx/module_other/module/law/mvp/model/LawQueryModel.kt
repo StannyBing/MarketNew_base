@@ -30,11 +30,6 @@ class LawQueryModel : BaseModel(), LawQueryContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun lawDetailData(map: Map<String, String>): Observable<LawDetailBean> {
-         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .getLawDetail(map)
-                .compose(RxHelper.handleResult())
-                .compose(RxSchedulers.io_main())
-    }
+
 
 }

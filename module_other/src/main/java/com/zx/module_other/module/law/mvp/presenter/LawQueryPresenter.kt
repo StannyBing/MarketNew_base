@@ -45,19 +45,4 @@ class LawQueryPresenter : LawQueryContract.Presenter() {
                 })
     }
 
-    override fun getLawDetail(map: Map<String, String>) {
-        mModel.lawDetailData(map)
-                .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<LawDetailBean>(mView) {
-                    override fun _onNext(t: LawDetailBean?) {
-                        if (t != null) {
-                            mView.onLawDetailResult(t)
-                        }
-                    }
-
-                    override fun _onError(code: String?, message: String?) {
-                        mView.handleError(code, message)
-                    }
-                })
-    }
 }
