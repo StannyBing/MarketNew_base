@@ -12,6 +12,6 @@ object XAppLegalcase : XApp() {
 
     override val map: Map<String, XAppBean>
         get() = mapOf(
-                "案件执法" to XAppBean("案件执法", R.color.colorPrimary, R.drawable.ic_camera, R.mipmap.icon_propser_add, RoutePath.ROUTE_LEGALASE_QUERY)
+                "案件执法" to XAppBean("案件执法", R.color.colorPrimary, R.drawable.ic_camera,  RoutePath.ROUTE_LEGALASE_QUERY)
         )
 }

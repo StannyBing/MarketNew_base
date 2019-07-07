@@ -65,7 +65,7 @@ object UserManager {
 
     fun loginOut() {
         BaseConfigModule.TOKEN = ""
-        user?.password = ""
+        passWord = ""
         saveUser()
     }
 

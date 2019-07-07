@@ -11,8 +11,8 @@ import com.zx.module_library.bean.XAppBean
 object XAppMain : XApp() {
     override val map: Map<String, XAppBean>
         get() = mapOf(
-                "累计待办" to XAppBean("累计待办", R.color.light_gray, 0, 0, RoutePath.ROUTE_APP_MYTASK, 5),
-                "即将逾期" to XAppBean("即将逾期", R.color.light_gray, 0, 0, RoutePath.ROUTE_APP_MYTASK, 2),
-                "已经逾期" to XAppBean("已经逾期", R.color.light_gray, 0, 0, RoutePath.ROUTE_APP_MYTASK, 0)
+                "累计待办" to XAppBean("累计待办", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 5),
+                "即将逾期" to XAppBean("即将逾期", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 2),
+                "已经逾期" to XAppBean("已经逾期", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 0)
         )
 }

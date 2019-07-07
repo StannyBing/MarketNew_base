@@ -8,6 +8,6 @@ import java.io.Serializable
  * Created by Xiangb on 2019/3/13.
  * 功能：
  */
-data class XAppBean(var name: String, @ColorRes var moduleColor: Int, @DrawableRes var appIconWhite: Int, @DrawableRes var appIconPrimary: Int, var appRoutePath: String, var num: Int = 0) : Serializable {
+data class XAppBean(var name: String, @ColorRes var moduleColor: Int, @DrawableRes var appIcon: Int, var appRoutePath: String, var num: Int = 0) : Serializable {
 
 }

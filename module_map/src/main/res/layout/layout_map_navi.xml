@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/ll_navi_baidu"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+        <ImageView
+            android:background="@drawable/navi_baidu"
+            android:layout_width="45dp"
+            android:layout_height="45dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="百度地图"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/text_size_smaller"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_navi_gaode"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+        <ImageView
+            android:background="@drawable/navi_gaode"
+            android:layout_width="45dp"
+            android:layout_height="45dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="高德地图"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/text_size_smaller"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_navi_tengxun"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_height="100dp">
+        <ImageView
+            android:background="@drawable/navi_tengxun"
+            android:layout_width="45dp"
+            android:layout_height="45dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="腾讯地图"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/text_size_smaller"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:orientation="horizontal"
+              android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_layer_vector"
+        android:layout_margin="10dp"
+        android:layout_width="45dp"
+        android:background="@drawable/map_layer_vector"
+        android:layout_height="30dp"/>
+
+
+    <ImageView
+        android:background="@drawable/map_layer_image"
+        android:id="@+id/iv_layer_image"
+        android:layout_margin="10dp"
+        android:layout_width="45dp"
+        android:layout_height="30dp"/>
+</LinearLayout>

@@ -51,6 +51,11 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         ZXImageLoaderUtil.display(iv_splash_logo, "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551941647480&di=65f6890d593f6d148f53ff31ff96d009&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171118%2Fe24edb51cf474fe79f121d712a7e78ab.jpeg")
         if (UserManager.userName.isEmpty() || UserManager.passWord.isEmpty()) {
             //进入登录
@@ -76,6 +81,7 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
      * 登录返回
      */
     override fun onLoginResult(userBean: UserBean) {
+        UserManager.setUser(userBean)
         BaseConfigModule.TOKEN = userBean.jwt
         handler.postDelayed({
             MainActivity.startAction(this, true)

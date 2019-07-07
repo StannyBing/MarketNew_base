@@ -12,6 +12,6 @@ object XAppComplain : XApp() {
 
     override val map: Map<String, XAppBean>
         get() = mapOf(
-                "投诉举报" to XAppBean("投诉举报", R.color.complain_color, R.drawable.ic_camera, R.mipmap.icon_propser_add, RoutePath.ROUTE_COMPLAIN_LIST)
+                "投诉举报" to XAppBean("投诉举报", R.color.complain_color, R.drawable.icon_complain, RoutePath.ROUTE_COMPLAIN_LIST)
         )
 }

@@ -24,7 +24,7 @@ class XAppAdapter(dataBeans: List<XAppBean>, val xtype: XAppListBean.XTYPE) : ZX
                 helper.getView<TextView>(R.id.tv_xapp_icon).background = null
                 helper.setText(R.id.tv_xapp_icon, item.num.toString())
             } else {
-                helper.setBackgroundRes(R.id.tv_xapp_icon, item.appIconWhite)
+                helper.setBackgroundRes(R.id.tv_xapp_icon, item.appIcon)
                 helper.setText(R.id.tv_xapp_icon, "")
             }
         }

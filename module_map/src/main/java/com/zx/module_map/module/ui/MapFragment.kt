@@ -11,9 +11,14 @@ import com.esri.android.map.LocationDisplayManager
 import com.esri.android.map.event.OnSingleTapListener
 import com.esri.android.map.event.OnStatusChangedListener
 import com.esri.android.runtime.ArcGISRuntime
+import com.esri.core.geometry.GeometryEngine
+import com.esri.core.geometry.Point
+import com.esri.core.geometry.SpatialReference
+import com.esri.core.map.Graphic
 import com.esri.core.symbol.MarkerSymbol
 import com.esri.core.symbol.PictureMarkerSymbol
 import com.zx.module_library.base.BaseFragment
+import com.zx.module_library.bean.MapTaskBean
 import com.zx.module_map.R
 import com.zx.module_map.module.func.listener.MapListener
 import com.zx.module_map.module.func.tianditu.TianDiTuLayer
@@ -43,21 +48,22 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     private var mLabLayer: TianDiTuLayer? = null
     private var mGridLayer: TianDiTuLayer? = null
 
-    private var mGLayer: GraphicsLayer? = null
     private var mMarkersGLayer: GraphicsLayer? = null// 用于展示主体或任务结果注记
 
     val mapListener = MyListener()
 
     private var locationDisplayManager: LocationDisplayManager? = null
 
+    private var taskBean : MapTaskBean?=null
+
     companion object {
         /**
          * 启动器
          */
-        fun newInstance(): MapFragment {
+        fun newInstance(taskBean : MapTaskBean?): MapFragment {
             val fragment = MapFragment()
             val bundle = Bundle()
-
+            bundle.putSerializable("taskBean", taskBean)
             fragment.arguments = bundle
             return fragment
         }
@@ -76,11 +82,12 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     @SuppressLint("MissingPermission")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+
+        taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+
         ArcGISRuntime.setClientId("5SKIXc21JlankElJ")
         ArcGISRuntime.License.setLicense("runtimestandard,101,rux00000,none,XXXXXXX")
         map_view.setMapBackground(Color.WHITE, -1, 0.0f, 0.0f)
-
-//        map_view.addLayer(ArcGISTiledMapServiceLayer("http://www.tianditucq.com/RemoteRest/services/CQMap_VEC/MapServer"))
 
         initBaseLayer()
     }
@@ -98,11 +105,15 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
         imageGlobalLayer!!.isVisible = false
         imageGlobalLable!!.isVisible = false
 
-        map_view.setOnStatusChangedListener { any, status ->
-            if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
-                mapListener.doLocation()
-            }
-        }
+        mMarkersGLayer = GraphicsLayer()
+        map_view.addLayer(mMarkersGLayer)
+
+        map_view.onStatusChangedListener = this
+//        map_view.setOnStatusChangedListener { any, status ->
+//            if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
+//                mapListener.doLocation()
+//            }
+//        }
     }
 
     /**
@@ -116,6 +127,16 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     override fun onStatusChanged(p0: Any?, status: OnStatusChangedListener.STATUS?) {
         if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
             mapListener.doLocation()
+            if (taskBean!=null&&taskBean!!.longtitude!=null&&taskBean!!.latitude!=null){
+                val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
+                symbol.offsetY = 17f
+                var point = Point(taskBean!!.longtitude!!,taskBean!!.latitude!!)
+                point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
+                val graphic = Graphic(point, symbol)
+                mMarkersGLayer?.addGraphic(graphic)
+                map_view.centerAt(point, true)
+                map_view.scale = 70000.00
+            }
         }
     }
 
@@ -160,8 +181,21 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
             }
         }
 
-        override fun changeMap() {
-
+        override fun changeMap(type : String) {
+            when(type){
+                "vector"->{
+                    vectorGlobalLayer?.isVisible = true
+                    vectorGlobalLable?.isVisible = true
+                    imageGlobalLayer?.isVisible = false
+                    imageGlobalLable?.isVisible = false
+                }
+                "image"->{
+                    vectorGlobalLayer?.isVisible = false
+                    vectorGlobalLable?.isVisible = false
+                    imageGlobalLayer?.isVisible = true
+                    imageGlobalLable?.isVisible = true
+                }
+            }
         }
 
     }

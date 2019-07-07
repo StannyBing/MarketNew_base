@@ -7,5 +7,5 @@ package com.zx.module_map.module.func.listener
 interface MapListener {
     fun doLocation()
 
-    fun changeMap()
+    fun changeMap(type : String)
 }

@@ -14,8 +14,10 @@ import com.zx.module_complain.module.info.bean.DetailBean
 import com.zx.module_complain.module.info.mvp.contract.DetailContract
 import com.zx.module_complain.module.info.mvp.model.DetailModel
 import com.zx.module_complain.module.info.mvp.presenter.DetailPresenter
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.bean.MapTaskBean
 import com.zx.module_library.func.tool.UserManager
 import kotlinx.android.synthetic.main.activity_complain_detail.*
 
@@ -96,6 +98,21 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         //任务处置按钮
         btn_complain_dispose.setOnClickListener {
             DisposeActivity.startAction(this, false, detailBean!!)
+        }
+        //地图按钮
+        toolBar_view.setRightClickListener {
+            if (detailBean!=null){
+                XApp.startXApp(RoutePath.ROUTE_MAP_MAP){
+                    it["taskBean"] = MapTaskBean("投诉举报",
+                            XAppComplain.get("投诉举报")!!.appIcon,
+                            (detailBean!!.baseInfo.fName ?: "") + (detailBean!!.baseInfo.fType ?: "") + (detailBean!!.baseInfo.fEntityName ?: ""),
+                            detailBean!!.baseInfo.fEntityName?:"",
+                            detailBean!!.baseInfo.fEntityAddress?:"",
+                            detailBean!!.baseInfo.fGuid?:"",
+                            detailBean!!.baseInfo.fLongitude,
+                            detailBean!!.baseInfo.fLatitude)
+                }
+            }
         }
     }
 
