@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/common_rect_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_law_standard_queryId"
+        style="@style/common_rect_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/dp_24"
+        android:paddingRight="@dimen/dp_24" />
+
+    <TextView
+        android:id="@+id/tv_law_standard_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textSize="13sp"
+        android:layout_toRightOf="@+id/tv_law_standard_queryId"
+        android:textColor="@color/text_color_drak" />
+
+    <TextView
+        android:id="@+id/tv_law_standard_type"
+        android:textSize="11sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_law_standard_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@color/text_color_noraml" />
+
+    <View
+        android:layout_below="@+id/tv_law_standard_type"
+        android:layout_height="1px"
+        android:layout_width="match_parent"
+        android:background="@color/divider_color"
+        />
+</RelativeLayout>

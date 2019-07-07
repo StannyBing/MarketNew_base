@@ -42,7 +42,7 @@ object ApiParamUtil {
      * @param departmentCode 科室id
      * @param id 用户id
      */
-    fun lawSelectParam(departmentCode: String, id: String): Map<String,String> {
+    fun lawSelectParam(departmentCode: String, id: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["departmentCode"] = departmentCode
         map["id"] = id
@@ -53,7 +53,7 @@ object ApiParamUtil {
      * 法律法规详情
      * @param id 法律法规id
      */
-    fun lawDetailParam(id:String):Map<String,String>{
+    fun lawDetailParam(id: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["id"] = id
         return map
@@ -63,9 +63,51 @@ object ApiParamUtil {
      * 法律法规搜索
      * @param content查询内容
      */
-    fun lawSearchParam(content:String):Map<String,String>{
+    fun lawSearchParam(content: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["content"] = content
+        return map
+    }
+
+    /**
+     * 法律法规添加收藏
+     * @param lawMenuId
+     * @param openId
+     * @param name
+     * @param type
+     */
+    fun lawAddCollectParam(lawMenuId: String, openId: String, name: String, type: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["lawMenuId"] = lawMenuId
+        map["openId"] = openId
+        map["name"] = name
+        map[type] = type
+        return map
+    }
+
+    /**
+     * 删除收藏
+     */
+    fun lawDeleteCollectParam(id: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["id"] = id
+        return map
+    }
+
+    /**
+     * 我的收藏
+     */
+    fun lawMyCollectParam(openId: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["openId"] = openId
+        return map
+    }
+
+    fun lawStandardParam(illegalAct: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["illegalAct"] = illegalAct
+        map["pageNo"] = "1"
+        map["pageSize"] = "8"
         return map
     }
 }

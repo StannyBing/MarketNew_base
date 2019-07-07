@@ -74,7 +74,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
 
         isUserModify = userBean.equals(UserManager.getUser())
 
-        Glide.with(ZXApp.getContext()).load(R.drawable.app_default_headicon)
+        Glide.with(ZXApp.getContext()).load(userBean.imgurl)
                 .apply(RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .error(R.drawable.app_default_headicon)
@@ -94,11 +94,15 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         rv_userDetail_info.adapter = listAdapter
 
         dataBeans.add(KeyValueBean("组织", "组织组织组织组织组织"))
-        dataBeans.add(KeyValueBean("姓名", userBean.userName))
+        dataBeans.add(KeyValueBean("姓名", userBean.realName))
         dataBeans.add(KeyValueBean("电话", userBean.telephone))
         dataBeans.add(KeyValueBean("部门", "部门部门"))
         dataBeans.add(KeyValueBean("部门座机", userBean.officeTel + ""))
-        dataBeans.add(KeyValueBean("职位", "职位职位"))
+        dataBeans.add(KeyValueBean("职位", userBean.department))
+
+        tv_userDetail_name.setText(userBean.realName);
+        tv_userDetail_dept.setText(userBean.remark)
+        tv_userDetail_duty.setText(userBean.department)
     }
 
     /**

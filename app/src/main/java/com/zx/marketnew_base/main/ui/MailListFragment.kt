@@ -1,7 +1,11 @@
 package com.zx.marketnew_base.main.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.main.bean.MailListBean
@@ -67,7 +71,17 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
      */
     override fun onViewListener() {
         //搜索事件
-        sv_mailList_search.setSearchListener { showToast("搜索" + it) }
+        sv_mailList_search.setSearchListener {
+            for (index in 0..dataBeans.size-1) {
+                if (dataBeans.get(index).realName.contains(it)) {
+                    var topSmoothScroller: TopSmoothScroller = TopSmoothScroller(mActivity)
+                    topSmoothScroller.setTargetPosition(index);
+                    rv_maillist_list.layoutManager.startSmoothScroll(topSmoothScroller);
+                    return@setSearchListener
+                }
+            }
+            showToast("没有搜索到" + it)
+        }
         //列表点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
             if (dataBeans[position].listType == 1) {
@@ -80,15 +94,27 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
 //        dataBeans.clear()
         if (mailListBeans.isNotEmpty()) {
             mailListBeans.forEach {
-                dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark?:"", imgurl = it.imgUrl?:"", listType = 0))
+                dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark
+                        ?: "", imgurl = it.imgUrl ?: "", listType = 0))
                 if (it.children.isNotEmpty()) {
                     it.children.forEach {
-                        dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark?:"", imgurl = it.imgUrl?:"", listType = 1))
+                        dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark
+                                ?: "", imgurl = it.imgUrl ?: "", listType = 1))
                     }
                 }
             }
         }
         listAdapter.setNewData(dataBeans)
 //        listAdapter.notifyDataSetChanged()
+    }
+
+    internal class TopSmoothScroller(context: Context) : LinearSmoothScroller(context) {
+        override fun getHorizontalSnapPreference(): Int {
+            return LinearSmoothScroller.SNAP_TO_START
+        }
+
+        override fun getVerticalSnapPreference(): Int {
+            return LinearSmoothScroller.SNAP_TO_START
+        }
     }
 }

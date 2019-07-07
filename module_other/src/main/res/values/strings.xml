@@ -11,6 +11,12 @@
     <string name="description">市场监管处罚裁量标准</string>
     <string name="hint_law_name">请输入法律法规名称</string>
     <string name="law_rgl_query">法律法规查询</string>
+    <string name="hint_law_standard">请输入违法行为</string>
+    <string name="law_standard_query">裁量标准查询</string>
+    <string name="law_standard_Illegal">违法行为</string>
+    <string name="law_standard_qualitative">定性依据</string>
+    <string name="law_standard_punish">处罚依据</string>
+    <string name="law_standard_discretion">裁量标准</string>
     <string name="add_collect">加入收藏</string>
     <string-array name="keywordName">
         <item>食品药品</item>

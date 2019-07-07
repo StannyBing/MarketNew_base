@@ -119,7 +119,12 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
                 LawDetailActivity.startAction(this, false, notifyData.get(position).id.toString())
             }
         }
-
+        tv_collect.setOnClickListener {
+            LawCollectActivity.startAction(this, false)
+        }
+        tv_law_tostandard.setOnClickListener {
+            LawStandardQueryActivity.startAction(this, false)
+        }
     }
 
 }
