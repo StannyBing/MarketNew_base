@@ -15,7 +15,6 @@ import com.zx.module_map.module.func.listener.MapListener
 import com.zx.module_map.module.mvp.contract.MapTaskContract
 import com.zx.module_map.module.mvp.model.MapTaskModel
 import com.zx.module_map.module.mvp.presenter.MapTaskPresenter
-import kotlinx.android.synthetic.main.fragment_map.*
 import kotlinx.android.synthetic.main.fragment_map_task.*
 
 /**
@@ -72,9 +71,9 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
     override fun onViewListener() {
         rl_task.setOnClickListener {
             var point = Point(taskBean!!.longtitude!!,taskBean!!.latitude!!)
-            point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
-            map_view.centerAt(point, true)
-            map_view.scale = 70000.00
+            point = GeometryEngine.project(point, SpatialReference.create(4326), mapListener?.getMap()?.spatialReference) as Point
+            mapListener?.getMap()?.centerAt(point, true)
+            mapListener?.getMap()?.scale = 70000.00
         }
     }
 }

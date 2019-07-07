@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import com.esri.android.map.GraphicsLayer
 import com.esri.android.map.LocationDisplayManager
+import com.esri.android.map.MapView
 import com.esri.android.map.event.OnSingleTapListener
 import com.esri.android.map.event.OnStatusChangedListener
 import com.esri.android.runtime.ArcGISRuntime
@@ -146,6 +147,10 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     }
 
     inner class MyListener : MapListener {
+        override fun getMap(): MapView {
+            return map_view
+        }
+
         override fun doLocation() {
             getPermission(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 var location: Location? = null
