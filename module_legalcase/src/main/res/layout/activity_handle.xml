@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical">
-
     <com.zx.module_library.view.ToolBarView
         android:id="@+id/toolBar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="投诉举报">
+        app:title_text="案件办理">
 
     </com.zx.module_library.view.ToolBarView>
 
@@ -26,11 +24,10 @@
     </com.zx.module_library.view.SearchView>
 
     <com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler
-        android:id="@+id/sr_complain_list"
+        android:id="@+id/sr_legalcase_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="10dp">
 
     </com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler>
-
 </LinearLayout>

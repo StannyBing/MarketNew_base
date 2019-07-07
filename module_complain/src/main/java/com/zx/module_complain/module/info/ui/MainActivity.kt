@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_complain_list.*
  * Create By admin On 2017/7/11
  * 功能：投诉举报列表
  */
-@Route(path = RoutePath.ROUTE_COMPLAIN_LIST)
+@Route(path = RoutePath.ROUTE_COMPLAIN_QUERY)
 class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View {
 
     private var pageNo = 1
@@ -89,12 +89,6 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
                     }
 
                 })
-
-
-        rv_complain_list.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = mAdapter
-        }
         loadData(true)
     }
 

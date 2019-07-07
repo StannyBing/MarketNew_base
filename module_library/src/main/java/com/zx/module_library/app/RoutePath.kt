@@ -16,12 +16,13 @@ object RoutePath {
     const val ROUTE_APP_MYTASK = "/app/mytask"//我的任务
 
     //投诉举报
-    const val ROUTE_COMPLAIN_LIST = "/complain/list"//投诉举报任务列表
+    const val ROUTE_COMPLAIN_QUERY = "/complain/query"//投诉举报任务列表
     const val ROUTE_COMPLAIN_DETAIL = "/complain/detail"//投诉举报任务详情
     const val ROUTE_COMPLAIN_DISPOSE = "/complain/dispose"//投诉举报任务处置
 
     //案件执法
     const val ROUTE_LEGALASE_QUERY = "/legalcase/query"//案件执法查询
+    const val ROUTE_LEGALASE_HANDLE = "/legalcase/handle"//案件执法办理
 
     //监管任务
     const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//监管任务查询
