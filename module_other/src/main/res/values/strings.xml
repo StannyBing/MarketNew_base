@@ -18,6 +18,7 @@
     <string name="law_standard_punish">处罚依据</string>
     <string name="law_standard_discretion">裁量标准</string>
     <string name="add_collect">加入收藏</string>
+    <string name="work_plan">个人工作计划</string>
     <string-array name="keywordName">
         <item>食品药品</item>
         <item>餐饮服务</item>

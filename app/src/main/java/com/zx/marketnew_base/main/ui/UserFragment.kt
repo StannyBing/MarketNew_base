@@ -86,7 +86,9 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
         //菜单点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
             when(dataBeans[position].title){
-                "个人工作计划"->{}//个人工作计划
+                "个人工作计划"->{
+                    XApp.startXApp(RoutePath.ROUTE_OTHER_PLAN)
+                }//个人工作计划
                 "工作成果"->{}//工作成果
                 "政务资讯"->{}//政务资讯
                 "三会一课"->{}//三会一课

@@ -18,7 +18,8 @@
         <activity android:name=".module.law.ui.LawDetailActivity" />
         <activity android:name=".module.law.ui.LawCollectActivity" />
         <activity android:name=".module.law.ui.LawStandardQueryActivity" />
-        <activity android:name=".module.law.ui.StandardDetailActivity"/>
+        <activity android:name=".module.law.ui.StandardDetailActivity" />
+        <activity android:name=".module.workplan.ui.WorkPlanActivity" />
     </application>
 
 </manifest>
