@@ -67,11 +67,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="128" />
-                            <entry key="outputName" value="icon_legalcase_query" />
+                            <entry key="height" value="64" />
+                            <entry key="outputName" value="icon_legalcase_handle" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\dell\Desktop\案件.svg" />
-                            <entry key="width" value="128" />
+                            <entry key="sourceFile" value="C:\Users\dell\Desktop\综合执法.svg" />
+                            <entry key="width" value="64" />
                           </map>
                         </option>
                       </PersistentState>

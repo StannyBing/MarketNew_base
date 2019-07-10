@@ -99,7 +99,24 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             val rvList = filterView.findViewById<RecyclerView>(R.id.rv_filter_list)
             rvList.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = SearchFilterAdapter(filterValues!!, module_color)
+                adapter = SearchFilterAdapter(filterValues!!, module_color).apply {
+                    setSelectCall { index, value ->
+                        if (!rvList.isComputingLayout) {
+                            val selectItemKey = filterValues!![index].filterName
+                            filterValues?.forEachIndexed { index, it ->
+                                if (it.visibleBy != null) {
+                                    val lastEnable = it.isEnable
+                                    if (it.visibleBy?.first == selectItemKey){
+                                        it.isEnable = it.visibleBy?.second == value
+                                    }
+                                    if (lastEnable != it.isEnable) {
+                                        notifyItemChanged(index)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             tvReset.setTextColor(module_color)
             tvSubmit.setTextColor(module_color)

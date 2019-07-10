@@ -21,6 +21,16 @@
         android:layout_margin="5dp"
         android:layout_toRightOf="@id/tv_filter_name">
 
+        <TextView
+            android:id="@+id/tv_filter_tips"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="不可选"
+            android:textSize="@dimen/text_size_small"/>
+
         <EditText
             android:id="@+id/et_filter_value"
             android:layout_width="match_parent"
@@ -30,9 +40,9 @@
             android:background="@null"
             android:gravity="center_vertical"
             android:hint="请输入..."
+            android:maxLength="256"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:maxLength="256"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/shape_search_cursor"
             android:textSize="@dimen/text_size_small"
