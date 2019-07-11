@@ -3,11 +3,14 @@ package com.zx.module_other.module.workplan.ui
 import android.app.Activity
 import android.content.Intent
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_other.R
+import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.workplan.mvp.contract.CreatePlanContract
 import com.zx.module_other.module.workplan.mvp.model.CreatePlanModel
 import com.zx.module_other.module.workplan.mvp.presenter.CreatePlanPresenter
+import kotlinx.android.synthetic.main.activity_create_plan.*
 
-class CreatePlanActivity: BaseActivity<CreatePlanPresenter, CreatePlanModel>(),CreatePlanContract.View{
+class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(), CreatePlanContract.View {
 
     companion object {
         /**
@@ -21,10 +24,16 @@ class CreatePlanActivity: BaseActivity<CreatePlanPresenter, CreatePlanModel>(),C
     }
 
     override fun onViewListener() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        toobar_view.setRightClickListener {
+            mPresenter.createWorkPlan(ApiParamUtil.createWorkPlanParam("", ""))
+        }
     }
 
     override fun getLayoutId(): Int {
+        return R.layout.activity_create_plan
+    }
+
+    override fun getCreateWorkResult(result: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

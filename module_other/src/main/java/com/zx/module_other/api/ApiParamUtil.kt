@@ -115,11 +115,21 @@ object ApiParamUtil {
     }
 
     /**
-     * 工作计划
+     * 获取工作计划
      */
     fun workPlanParam(id: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["id"] = id
+        return map;
+    }
+
+    /**
+     * 创建工作计划
+     */
+    fun createWorkPlanParam(title: String,data:String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["title"] = title
+        map["data"] = data
         return map;
     }
 }
