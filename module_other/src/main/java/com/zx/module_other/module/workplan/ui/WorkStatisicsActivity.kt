@@ -36,10 +36,10 @@ class WorkStatisicsActivity : BaseActivity<WorkStatisicsPresenter, WorkStatisics
         ZXStatusBarCompat.translucent(this,R.color.work_satisics_bg)
         ZXStatusBarCompat.setStatusBarDarkMode(this)
         var data= arrayListOf<Int>()
-        data.add(20)
-        data.add(32)
+        data.add(40)
+        data.add(12)
         data.add(37)
-        data.add(54)
-        sv_statistics.setDatas(data, arrayListOf("1月2日","1月2日","1月2日","1月2日"))
+        data.add(14)
+        sv_statistics.setDatas(data, arrayListOf("1月份","2月份","3月份","4月份"))
     }
 }

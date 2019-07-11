@@ -19,6 +19,7 @@ import com.zx.module_other.module.workplan.mvp.contract.WorkPlanContract
 import com.zx.module_other.module.workplan.mvp.model.WorkPlanModel
 import com.zx.module_other.module.workplan.mvp.presenter.WorkPlanPresenter
 import kotlinx.android.synthetic.main.activity_work_plan.*
+import java.time.Month
 
 @Route(path = RoutePath.ROUTE_OTHER_PLAN)
 class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkPlanContract.View {
@@ -26,6 +27,7 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
     private var workPlanDatas: ArrayList<WorkPlanBean> = arrayListOf()
     private var workPlanAdapter: WorkPlanAdpater<WorkPlanBean> = WorkPlanAdpater(workPlanDatas)
     private var innerPainter: InnerPainter? = null
+    private var defMonth:Month?=null
 
     companion object {
         /**
@@ -62,7 +64,6 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
         toobar_view.showRightImg()
 //        toobar_view.setMidText(work_plan_calendar.getAllSelectDateList().get(0).toString())
         innerPainter = work_plan_calendar.calendarPainter as InnerPainter?
-        work_plan_calendar.setMultipleSelset(true)
         workPlanDatas.add(WorkPlanBean("重庆市大药科技涉嫌违法", "截止日期：2018年8月8日"))
         workPlanDatas.add(WorkPlanBean("重庆市大药科技涉嫌违法", "截止日期：2018年8月8日"))
         workPlanDatas.add(WorkPlanBean("重庆市大药科技涉嫌违法", "截止日期：2018年8月8日"))
