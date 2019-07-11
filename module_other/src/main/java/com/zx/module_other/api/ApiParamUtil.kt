@@ -103,11 +103,23 @@ object ApiParamUtil {
         return map
     }
 
+    /**
+     * 裁量标准
+     */
     fun lawStandardParam(illegalAct: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["illegalAct"] = illegalAct
         map["pageNo"] = "1"
         map["pageSize"] = "8"
         return map
+    }
+
+    /**
+     * 工作计划
+     */
+    fun workPlanParam(id: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["id"] = id
+        return map;
     }
 }

@@ -2,6 +2,7 @@ package com.zx.module_other.api
 
 import com.frame.zxmvp.basebean.BaseRespose
 import com.zx.module_other.module.law.bean.*
+import com.zx.module_other.module.workplan.bean.WorkPlanBean
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.QueryMap
@@ -24,12 +25,15 @@ interface ApiService {
     @POST(ApiConfigModule.URL_LAW + "Law/addWeixinCollect.do")
     fun addWeixinCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<String>>;
 
-    @POST(ApiConfigModule.URL_LAW+"Law/deleteWeixinCollectLaw.do")
+    @POST(ApiConfigModule.URL_LAW + "Law/deleteWeixinCollectLaw.do")
     fun deleteWeixinCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<Int>>
 
     @GET(ApiConfigModule.URL_LAW + "Law/selectWeixinCollectLaw.do")
     fun getCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawCollectResultBean>>
 
-    @GET(ApiConfigModule.URL_LAW+"Law/selectDiscretionStandard.do")
-    fun selectDiscretionStandard(@QueryMap map:Map<String,String>):Observable<BaseRespose<LawStandardQueryResultBean>>
+    @GET(ApiConfigModule.URL_LAW + "Law/selectDiscretionStandard.do")
+    fun selectDiscretionStandard(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawStandardQueryResultBean>>
+
+    @GET(ApiConfigModule.URL_LAW + "")
+    fun getWorkPlan(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<WorkPlanBean>>>
 }

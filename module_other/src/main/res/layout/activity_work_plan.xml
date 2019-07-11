@@ -92,8 +92,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dp_10"
-            android:orientation="vertical"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -139,4 +139,14 @@
                 android:layout_marginTop="@dimen/dp_10"></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </com.necer.calendar.Miui10Calendar>
+
+    <ImageView
+        android:id="@+id/iv_create_plan"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:src="@drawable/collect_select"/>
 </RelativeLayout>
