@@ -2,6 +2,7 @@ package com.zx.module_other.module.workplan.ui
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.api.ApiParamUtil
@@ -25,7 +26,8 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
 
     override fun onViewListener() {
         toobar_view.setRightClickListener {
-            mPresenter.createWorkPlan(ApiParamUtil.createWorkPlanParam("", ""))
+            //            mPresenter.createWorkPlan(ApiParamUtil.createWorkPlanParam("", ""))
+            WorkStatisicsActivity.startAction(this, false)
         }
     }
 
@@ -35,6 +37,10 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
 
     override fun getCreateWorkResult(result: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        super.initView(savedInstanceState)
     }
 
 }

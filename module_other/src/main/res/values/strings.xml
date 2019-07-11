@@ -24,6 +24,13 @@
     <string name="save">保存</string>
     <string name="add_plan_title">添加计划标题</string>
     <string name="plan_out_time">截止时间：</string>
+    <string name="work_achievements">工作成果</string>
+    <string name="work_cumulative">您已累计完成</string>
+    <string name="complaints_reprt">投诉举报</string>
+    <string name="comprehensive_law">综合执法</string>
+    <string name="on_inspection">现场检查</string>
+    <string name="supervisory_tasks">监管任务</string>
+    <string name="second">次</string>
     <string-array name="keywordName">
         <item>食品药品</item>
         <item>餐饮服务</item>
