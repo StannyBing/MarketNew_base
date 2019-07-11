@@ -10,7 +10,11 @@
             android:value="ConfigModule"/>
 
         <activity android:name=".module.query.ui.QueryActivity"/>
-        <activity android:name=".module.handle.ui.HandleActivity"/>
+        <activity android:name=".module.query.ui.DetailActivity"/>
+        <activity android:name=".module.query.ui.DisposeNormalActivity"/>
+        <activity android:name=".module.query.ui.DisposeForceActivity"/>
+        <activity android:name=".module.query.ui.DisposeSimpleActivity"/>
+        <activity android:name=".module.query.ui.DisposeTransActivity"/>
     </application>
 
 </manifest>

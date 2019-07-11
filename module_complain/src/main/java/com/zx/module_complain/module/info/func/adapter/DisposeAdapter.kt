@@ -13,6 +13,7 @@ import com.zx.module_complain.module.info.bean.DisposeBean
 import com.zx.zxutils.entity.KeyValueEntity
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
+import com.zx.zxutils.util.ZXToastUtil
 import com.zx.zxutils.views.ZXSpinner
 
 /**
@@ -122,6 +123,7 @@ class DisposeAdapter(dataList: List<DisposeBean>) : ZXQuickAdapter<DisposeBean, 
                 }
                 if (position == -1) {
                     bean.resultValue = ""
+                    onSpinnerCall(tag as Int)
                     return
                 } else if (bean.resultValue == bean.disposeValue[position].value) {
                     return
@@ -132,6 +134,37 @@ class DisposeAdapter(dataList: List<DisposeBean>) : ZXQuickAdapter<DisposeBean, 
                 onSpinnerCall(tag as Int)
             }
         }
+    }
+
+    /**
+     * 检查item是否已填写完成
+     */
+    fun checkItem(): Boolean {
+        if (data.isNotEmpty()) {
+            data.forEach {
+                when (it.disposeType) {
+                    DisposeBean.DisposeType.Text -> {
+
+                    }
+                    DisposeBean.DisposeType.Edit -> {
+                        if (it.resultValue.isEmpty() && it.isRequired) {
+                            ZXToastUtil.showToast("请输入${it.disposeName}")
+                            return false
+                        }
+                    }
+                    DisposeBean.DisposeType.Spinner -> {
+                        if (it.resultValue.isEmpty() && it.isRequired) {
+                            ZXToastUtil.showToast("请选择${it.disposeName}")
+                            return false
+                        }
+                    }
+                    DisposeBean.DisposeType.Time -> {
+
+                    }
+                }
+            }
+        }
+        return true
     }
 
     fun setModuleColor(moduleColor: Int) {

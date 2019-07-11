@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="legalcase_query_color">#e57f3d</color>
-    <color name="legalcase_handle_color">#df604d</color>
+    <color name="legalcase_color">#e57f3d</color>
 </resources>

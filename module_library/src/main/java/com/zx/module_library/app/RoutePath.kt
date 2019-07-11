@@ -21,8 +21,12 @@ object RoutePath {
     const val ROUTE_COMPLAIN_DISPOSE = "/complain/dispose"//投诉举报任务处置
 
     //案件执法
-    const val ROUTE_LEGALASE_QUERY = "/legalcase/query"//案件执法查询
-    const val ROUTE_LEGALASE_HANDLE = "/legalcase/handle"//案件执法办理
+    const val ROUTE_LEGALCASE_QUERY = "/legalcase/query"//案件执法
+    const val ROUTE_LEGALCASE_DETAIL = "/legalcase/detail"//案件执法-详情
+    const val ROUTE_LEGALCASE_DISPOSENORMAL = "/legalcase/disposenormal"//案件执法-普通处置
+    const val ROUTE_LEGALCASE_DISPOSEFORCE = "/legalcase/disposeforce"//案件执法-强制措施
+    const val ROUTE_LEGALCASE_DISPOSETRANS = "/legalcase/disposetrans"//案件执法-案件移送
+    const val ROUTE_LEGALCASE_DISPOSESIMPLE = "/legalcase/disposesimple"//案件执法-简易流程
 
     //监管任务
     const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//监管任务查询

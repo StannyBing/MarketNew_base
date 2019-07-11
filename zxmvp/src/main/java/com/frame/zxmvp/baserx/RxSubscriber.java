@@ -81,7 +81,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
             message = e.getMessage();
             code = ((ServerException) e).code;
         } else if (e instanceof JsonSyntaxException) {
-            Log.e("error", "未对结果进行正确封装，请检查");
+            Log.e("error", "未对结果进行正确封装，请检查"+e.getMessage());
             message = "结果未正确封装，请稍后重试";
         }
         //其它

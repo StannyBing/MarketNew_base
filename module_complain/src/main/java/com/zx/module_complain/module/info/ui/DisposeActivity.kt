@@ -103,7 +103,7 @@ class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeC
         }
         //提交事件
         btn_complain_submit.setOnClickListener {
-            if (checkDisposeItem()) {
+            if (disposeAdapter.checkItem()) {
                 ZXDialogUtil.showYesNoDialog(this@DisposeActivity, "提示", "是否提交任务处理信息？") { dialog, which ->
                     if (disposeList.getItem("操作") != null && disposeList.getItem("操作")!!.resultValue == "return") {//退回
                         mPresenter.submitDispose(ApiParamUtil.disposeParam(detailBean.baseInfo.fGuid!!,
@@ -321,37 +321,6 @@ class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeC
             }
         }
         disposeAdapter.notifyDataSetChanged()
-    }
-
-    /**
-     * 检查item是否已填写完成
-     */
-    private fun checkDisposeItem(): Boolean {
-        if (disposeList.isNotEmpty()) {
-            disposeList.forEach {
-                when (it.disposeType) {
-                    DisposeBean.DisposeType.Text -> {
-
-                    }
-                    DisposeBean.DisposeType.Edit -> {
-                        if (it.resultValue.isEmpty() && it.isRequired) {
-                            showToast("请输入${it.disposeName}")
-                            return false
-                        }
-                    }
-                    DisposeBean.DisposeType.Spinner -> {
-                        if (it.resultValue.isEmpty() && it.isRequired) {
-                            showToast("请选择${it.disposeName}")
-                            return false
-                        }
-                    }
-                    DisposeBean.DisposeType.Time -> {
-
-                    }
-                }
-            }
-        }
-        return true
     }
 
     override fun onDisposeResult() {

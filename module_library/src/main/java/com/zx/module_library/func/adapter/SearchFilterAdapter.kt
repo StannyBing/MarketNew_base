@@ -22,10 +22,14 @@ import com.zx.zxutils.views.ZXSpinner
  */
 @SuppressLint("NewApi")
 class SearchFilterAdapter(dataBeans: List<SearchFilterBean>, var color: Int) : ZXQuickAdapter<SearchFilterBean, ZXBaseHolder>(R.layout.item_filter_view, dataBeans) {
+
+    private var selectCall: (Int, String) -> Unit = { _, _ -> }
+
     override fun convert(helper: ZXBaseHolder?, item: SearchFilterBean?) {
         if (helper != null && item != null) {
             val etValue = helper.getView<EditText>(R.id.et_filter_value)
             val spValue = helper.getView<ZXSpinner>(R.id.sp_filter_value)
+            val tvTips = helper.getView<TextView>(R.id.tv_filter_tips)
             helper.setText(R.id.tv_filter_name, item.filterName + ":")
             when (item.filterType) {
                 SearchFilterBean.FilterType.EDIT_TYPE -> {
@@ -38,8 +42,16 @@ class SearchFilterAdapter(dataBeans: List<SearchFilterBean>, var color: Int) : Z
                     etValue.visibility = View.GONE
                     spValue.visibility = View.VISIBLE
 
+                    spValue.tag = helper.adapterPosition
                     spValue.init(item)
                 }
+            }
+            if (!item.isEnable) {
+                etValue.visibility = View.GONE
+                spValue.visibility = View.GONE
+                tvTips.visibility = View.VISIBLE
+            }else{
+                tvTips.visibility = View.GONE
             }
 
             try {
@@ -52,6 +64,10 @@ class SearchFilterAdapter(dataBeans: List<SearchFilterBean>, var color: Int) : Z
                 e.printStackTrace()
             }
         }
+    }
+
+    fun setSelectCall(selectCall: (Int, String) -> Unit) {
+        this.selectCall = selectCall
     }
 
     private fun EditText.init(list: List<SearchFilterBean.ValueBean>) {
@@ -98,7 +114,8 @@ class SearchFilterAdapter(dataBeans: List<SearchFilterBean>, var color: Int) : Z
                 if (position == -1) {
                     return
                 }
-                bean.values.get(position).isSelect = true
+                bean.values[position].isSelect = true
+                selectCall(tag as Int, bean.values[position].value)
             }
 
         }
