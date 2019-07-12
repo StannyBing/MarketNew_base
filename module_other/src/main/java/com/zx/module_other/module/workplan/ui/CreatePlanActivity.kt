@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
+import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.workplan.mvp.contract.CreatePlanContract
 import com.zx.module_other.module.workplan.mvp.model.CreatePlanModel
@@ -29,6 +30,9 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
             //            mPresenter.createWorkPlan(ApiParamUtil.createWorkPlanParam("", ""))
             WorkStatisicsActivity.startAction(this, false)
         }
+        mc_create_plan.setOnCalendarChangedListener { baseCalendar, year, month, localDate ->
+            tv_create_date.setText(localDate.toString())
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -41,6 +45,7 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        toobar_view.withXApp(XAppOther.get("个人工作计划"))
     }
 
 }

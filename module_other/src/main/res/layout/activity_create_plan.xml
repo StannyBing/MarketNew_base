@@ -56,9 +56,10 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/dp_20">
             <TextView
+                android:id="@+id/tv_create_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="8月1日 星期三"
+                android:text=""
                 android:textSize="@dimen/text_size_normal"
                 />
         <ImageView
@@ -69,4 +70,81 @@
             android:layout_marginLeft="10dp"/>
         </LinearLayout>
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_week"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toobar_view"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp_8"
+        android:weightSum="7">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="日"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="一"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="二"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="三"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="四"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="五"
+            android:textColor="@color/text_color_light" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="六"
+            android:textColor="@color/text_color_light" />
+    </LinearLayout>
+
+    <com.necer.calendar.MonthCalendar
+        android:id="@+id/mc_create_plan"
+        android:layout_width="match_parent"
+        app:todaySolarTextColor="#00c3aa"
+        app:selectCircleColor="#00c3aa"
+        app:hollowCircleColor="#00c3aa"
+        android:layout_height="@dimen/dp_250"
+    />
 </LinearLayout>

@@ -1,9 +1,11 @@
 package com.zx.module_other.api
 
+import android.text.TextUtils
 import android.util.Base64
 import com.google.gson.Gson
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import org.w3c.dom.Text
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -117,19 +119,33 @@ object ApiParamUtil {
     /**
      * 获取工作计划
      */
-    fun workPlanParam(id: String): Map<String, String> {
+    fun workPlanParam(startDateMin: String, startDateMax: String): Map<String, String> {
         val map = hashMapOf<String, String>()
-        map["id"] = id
+//        if (!TextUtils.isEmpty(startDateMin)) {
+//            map["startDateMin"] = startDateMin
+//        }
+//        if (!TextUtils.isEmpty(startDateMax)) {
+//            map["startDateMax"] = startDateMax
+//        }
         return map;
     }
 
     /**
      * 创建工作计划
      */
-    fun createWorkPlanParam(title: String,data:String): Map<String, String> {
+    fun createWorkPlanParam(title: String, data: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["title"] = title
         map["data"] = data
+        return map;
+    }
+
+    /**
+     * 获取工作成果
+     */
+    fun workStatisicsPlanParam(monthNum: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["monthNum"] = monthNum
         return map;
     }
 }

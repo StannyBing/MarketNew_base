@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
+import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.law.bean.*
 import com.zx.module_other.module.law.func.adapter.LawCollectAdapter
@@ -15,7 +16,6 @@ import com.zx.module_other.module.law.mvp.contract.LawCollectContract
 import com.zx.module_other.module.law.mvp.model.LawCollectModel
 import com.zx.module_other.module.law.mvp.presenter.LawCollectPresenter
 import kotlinx.android.synthetic.main.activity_law_collect.*
-import kotlinx.android.synthetic.main.activity_law_query.*
 
 class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(), LawCollectContract.View {
 
@@ -45,6 +45,7 @@ class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(),
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        toobar_view.withXApp(XAppOther.get("法律法规"))
         rv_law_collect.apply {
             layoutManager = GridLayoutManager(this@LawCollectActivity, 2)
             adapter = lawCollectAdapter

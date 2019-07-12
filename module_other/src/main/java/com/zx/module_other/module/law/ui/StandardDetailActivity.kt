@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.frame.zxmvp.base.BaseModel
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
+import com.zx.module_other.XAppOther
 import com.zx.module_other.module.law.bean.LawStandardQueryBean
 import com.zx.module_other.module.law.func.util.util
 import com.zx.module_other.module.law.mvp.presenter.LawStandardPresenter
@@ -34,6 +35,7 @@ class StandardDetailActivity : BaseActivity<LawStandardPresenter, BaseModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        toolbar_view.withXApp(XAppOther.get("法律法规"))
         val lawStandrdQueryBean: LawStandardQueryBean = intent.getSerializableExtra("lawStandardQueryBean") as LawStandardQueryBean;
         lawStandrdQueryBean.type?.let { toolbar_view.setMidText(it) }
         tv_tandard_Illegal.setText(lawStandrdQueryBean.illegalAct?.let { util.getHtmlText(it) })

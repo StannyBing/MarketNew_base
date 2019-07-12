@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
+import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.law.bean.LawBean
 import com.zx.module_other.module.law.bean.LawMainBean
@@ -16,7 +17,6 @@ import com.zx.module_other.module.law.func.adapter.LawStandardQueryAdapter
 import com.zx.module_other.module.law.mvp.contract.LawStandardQueryContract
 import com.zx.module_other.module.law.mvp.model.LawStandardModel
 import com.zx.module_other.module.law.mvp.presenter.LawStandardPresenter
-import kotlinx.android.synthetic.main.activity_law_query.*
 import kotlinx.android.synthetic.main.activity_law_standard_query.*
 
 class LawStandardQueryActivity : BaseActivity<LawStandardPresenter, LawStandardModel>(), LawStandardQueryContract.View {
@@ -50,6 +50,7 @@ class LawStandardQueryActivity : BaseActivity<LawStandardPresenter, LawStandardM
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        toobar_view.withXApp(XAppOther.get("法律法规"))
         rv_law_standard_query.apply {
             layoutManager = LinearLayoutManager(this@LawStandardQueryActivity)
             adapter = standardAdapter

@@ -62,6 +62,7 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
         toolbar_view.withXApp(XAppOther.get("法律法规"))
         searchView.withXApp(XAppOther.get("法律法规"))
 
+
         rv_law_keyword.apply {
             layoutManager = GridLayoutManager(this@LawActivity, 2)
             adapter = keywordAdapter

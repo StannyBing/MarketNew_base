@@ -44,4 +44,5 @@ object RoutePath {
     const val ROUTE_OTHER_CAMERA = "/other/camera"//其他-图片
     const val ROUTE_OTHER_PREVIEW = "/other/filepreview"//其他-文件预览
     const val ROUTE_OTHER_PLAN = "/other/workplan"//其他-个人工作计划
+    const val ROUTE_OTHER_STATISICSACTIVITY = "/other/workstatisics"//其他-工作成果
 }

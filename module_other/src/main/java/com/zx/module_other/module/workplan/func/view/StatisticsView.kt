@@ -5,21 +5,20 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.zx.module_other.R
-import com.zx.zxutils.views.MPChart.ChartColor.setColor
 
 
 class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private var hight: Int = 0
-    private var widths: Int = 0
-    private var paint: Paint = Paint()
-    private var TextPaint: Paint = Paint()
-    private var datas = arrayListOf<Int>()
-    private var times = arrayListOf<String>()
-    private var interval: Int = 5
-    private var yItemValue: Float = 0f
-    private var xItemValue: Float = 0f
-    private val mBound: Rect = Rect()
-    private var valuePoint = arrayListOf<PointF>()
+    private var hight: Int = 0 //View 高度
+    private var widths: Int = 0 //View 宽度
+    private var paint: Paint = Paint()//画笔
+    private var TextPaint: Paint = Paint()//文字画笔
+    private var datas = arrayListOf<Int>()//数据list
+    private var times = arrayListOf<String>()//文字list
+    private var interval: Int = 5 //虚线空白长度
+    private var yItemValue: Float = 0f//每个工作量占据的高度
+    private var xItemValue: Float = 0f//数据点间隔宽度
+    private val mBound: Rect = Rect() //文字矩形
+    private var valuePoint = arrayListOf<PointF>()//数据点坐标
     private var SMOOTHNESS = 0.16f
 
 
@@ -41,14 +40,6 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
         super.onSizeChanged(w, h, oldw, oldh)
         this.hight = h
         this.widths = w
-        var big: Int = 0
-        for (i in datas) {
-            if (i > big) {
-                big = i
-            }
-        }
-        yItemValue = ((hight - hight * 0.3) / big).toFloat()
-        xItemValue = (width / (datas.size + 1)).toFloat()
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -69,7 +60,7 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
             var starty: Float = 0f
             if (index == 0) {
                 startx = 0f
-                starty = (hight - hight * 0.1 - 10 * yItemValue).toFloat()
+                starty = (hight - hight * 0.1 - 1 * yItemValue).toFloat()
                 valuePoint.add(PointF(startx, starty))
             } else {
                 startx = (index * width / (datas.size + 1)).toFloat()
@@ -169,7 +160,6 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
             if (valueIndex == 0) {
                 // 将Path移动到开始点
                 mPath.moveTo(currentPointX, currentPointY)
-                //mAssistPath.moveTo(currentPointX, currentPointY)
             } else {
                 // 求出控制点坐标
                 val firstDiffX = currentPointX - prePreviousPointX
@@ -184,9 +174,6 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
                 mPath.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY,
                         currentPointX, currentPointY)
                 //将控制点保存到辅助路径上
-//                mAssistPath.lineTo(firstControlPointX, firstControlPointY)
-//                mAssistPath.lineTo(secondControlPointX, secondControlPointY)
-//                mAssistPath.lineTo(currentPointX, currentPointY)
             }
 
             // 更新值,
@@ -205,6 +192,14 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
         this.datas.clear()
         this.datas.addAll(datas)
         this.times.addAll(times)
+        var big: Int = 0
+        for (i in datas) {
+            if (i > big) {
+                big = i
+            }
+        }
+        yItemValue = ((hight - hight * 0.3) / big).toFloat()
+        xItemValue = (widths / (datas.size + 1)).toFloat()
         invalidate()
     }
 }
