@@ -1,12 +1,9 @@
 package com.zx.marketnew_base.api
 
 import com.frame.zxmvp.basebean.BaseRespose
-import com.zx.marketnew_base.main.bean.MailListBean
-import com.zx.marketnew_base.main.bean.MessageBean
-import com.zx.marketnew_base.main.bean.VersionBean
+import com.zx.marketnew_base.main.bean.*
 import com.zx.marketnew_base.system.bean.VerifiCodeBean
 import com.zx.module_library.bean.NormalList
-import com.zx.marketnew_base.main.bean.TaskBean
 import com.zx.module_library.bean.UserBean
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -44,4 +41,9 @@ interface ApiService {
     @POST(ApiConfigModule.URL_APP + "pushMsg/getPushMsgPage.do")
     fun getTaskLsit(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<TaskBean>>>
 
+    @GET(ApiConfigModule.URL_APP + "office/getOfficeList.do")
+    fun getOfficeInfo(): Observable<BaseRespose<OfficeBean>>
+
+    @POST(ApiConfigModule.URL_APP + "optLog/addOptLog.do")
+    fun sendXAppOpt(@Body body: RequestBody): Observable<BaseRespose<String>>
 }

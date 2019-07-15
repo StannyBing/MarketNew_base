@@ -56,15 +56,16 @@ data class DetailBean(var info: InfoBean, var files: List<FileBean>?) : Serializ
                         var sysRegUserId: String,
                         var createUser: String,
                         var enterpriseId: String,
-                        var taskId: String,
+                        var taskId: String?,
                         var domainCode: String,
                         var domainName: String,
                         var illegalityCode: String,
                         var illegalityName: String,
                         var assignee: String,
                         var isCompel: String,
-                        var compelStatusName: String,
-                        var compelStatus: String) : Serializable
+                        var compelStatusName: String?,
+                        var compelStatus: String,
+                        var processType: String?) : Serializable
 
     data class FileBean(var id: String,
                         var caseId: String,

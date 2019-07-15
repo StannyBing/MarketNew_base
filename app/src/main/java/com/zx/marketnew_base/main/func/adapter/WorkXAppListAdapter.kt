@@ -6,7 +6,7 @@ import android.view.View
 import android.widget.TextView
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.main.bean.XAppListBean
-import com.zx.module_library.XApp
+import com.zx.module_library.bean.XAppBean
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
 
@@ -16,7 +16,8 @@ import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
  */
 class WorkXAppListAdapter(dataBeans: ArrayList<XAppListBean>) : ZXQuickAdapter<XAppListBean, ZXBaseHolder>(R.layout.item_work_xapplist, dataBeans) {
 
-    private lateinit var onManagerClick: (XAppListBean.XTYPE) -> Unit//manager的点击事件
+    private var onManagerClick: (XAppListBean.XTYPE) -> Unit = {}//manager的点击事件
+    private var onXAppClick: (String, XAppBean) -> Unit = { _, _ -> }//xapp点击事件
 
     override fun convert(helper: ZXBaseHolder?, item: XAppListBean?) {
         if (helper != null && item != null) {
@@ -44,9 +45,13 @@ class WorkXAppListAdapter(dataBeans: ArrayList<XAppListBean>) : ZXQuickAdapter<X
                 layoutManager = GridLayoutManager(mContext, 4) as RecyclerView.LayoutManager?
                 val xAppAdapter = XAppAdapter(item.xAppList, item.type)
                 adapter = xAppAdapter
-                xAppAdapter.setOnItemClickListener { adapter, view, position -> XApp.startXApp(item.xAppList[position]) }
+                xAppAdapter.setOnItemClickListener { _, _, position -> onXAppClick(item.title, item.xAppList[position]) }
             }
         }
+    }
+
+    fun setXAppClickLiistener(onXAppClick: (String, XAppBean) -> Unit) {
+        this.onXAppClick = onXAppClick
     }
 
     fun setManagerClickListener(onClick: (XAppListBean.XTYPE) -> Unit) {

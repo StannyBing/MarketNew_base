@@ -3,12 +3,15 @@ package com.zx.marketnew_base.main.ui
 import android.os.Bundle
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.XAppMain
+import com.zx.marketnew_base.api.ApiParamUtil
+import com.zx.marketnew_base.main.bean.OfficeBean
 import com.zx.marketnew_base.main.bean.XAppListBean
 import com.zx.marketnew_base.main.func.adapter.WorkXAppListAdapter
 import com.zx.marketnew_base.main.mvp.contract.WorkContract
 import com.zx.marketnew_base.main.mvp.model.WorkModel
 import com.zx.marketnew_base.main.mvp.presenter.WorkPresenter
 import com.zx.module_complain.XAppComplain
+import com.zx.module_entity.XAppEntity
 import com.zx.module_legalcase.XAppLegalcase
 import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
@@ -64,14 +67,66 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
             layoutManager = ZXInScrollRecylerManager(activity)
             adapter = listAdapter
         }
-        dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
-                XAppMain.get("累计待办")!!.apply { num = 5 },
-                XAppMain.get("即将逾期")!!.apply { num = 2 },
-                XAppMain.get("已经逾期")!!.apply { num = 0 }
-        )))
-        dataBeans.add(XAppListBean("最近使用", XAppListBean.XTYPE.MY_XAPP, getXAppList(listOf("投诉举报", "案件执法", "监管任务"))))
-        dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("投诉举报", "案件执法", "监管任务"))))
-        dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList()))
+
+        if (mSharedPrefUtil.contains("officeBean")) {
+            val officeBean = mSharedPrefUtil.getObject<OfficeBean>("officeBean")
+            onOfficeResult(officeBean)
+        } else {
+            onOfficeResult(null)
+        }
+        mPresenter.getOfficeInfo()
+    }
+
+    /**
+     * View事件设置
+     */
+    override fun onViewListener() {
+        //xapp编辑按钮点击事件
+        listAdapter.setManagerClickListener {
+
+        }
+        //xapp点击事件
+        listAdapter.setXAppClickLiistener { title, xapp ->
+            mPresenter.sendXappOpt(ApiParamUtil.xappOptParam("APP", "办公", title, xapp.name))
+            XApp.startXApp(xapp.appRoutePath)
+        }
+        //公司详情按钮点击事件
+        iv_work_compannyInfo.setOnClickListener {
+            XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
+                it["mTitle"] = "重庆知行宏图科技有限公司"
+                it["mUrl"] = "http://www.zxgeo.com"
+            }
+        }
+    }
+
+    override fun onOfficeResult(officeBean: OfficeBean?) {
+        dataBeans.clear()
+        if (officeBean == null) {
+            dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
+                    XAppMain.get("累计待办")!!.apply { num = 0 },
+                    XAppMain.get("即将逾期")!!.apply { num = 0 },
+                    XAppMain.get("已经逾期")!!.apply { num = 0 }
+            )))
+            dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "监管任务"))))
+            dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList()))
+        } else {
+            mSharedPrefUtil.putObject("officeBean", officeBean)
+            dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
+                    XAppMain.get("累计待办")!!.apply { num = officeBean.todo.allTask },
+                    XAppMain.get("即将逾期")!!.apply { num = officeBean.todo.willOverdue },
+                    XAppMain.get("已经逾期")!!.apply { num = officeBean.todo.overdue }
+            )))
+            if (officeBean.myXApp.isNotEmpty()) {
+                dataBeans.add(XAppListBean("最近使用", XAppListBean.XTYPE.MY_XAPP, getXAppList(officeBean.myXApp)))
+            }
+            if (officeBean.normalXApp.isNotEmpty()) {
+                dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(officeBean.normalXApp)))
+            }
+            if (officeBean.allXApp.isNotEmpty()) {
+                dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList(officeBean.allXApp)))
+            }
+        }
+        listAdapter.notifyDataSetChanged()
     }
 
     /**
@@ -94,6 +149,8 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
                     XAppOther.get(it)
                 } else if (XAppMap.get(it) != null) {
                     XAppMap.get(it)
+                } else if (XAppEntity.get(it) != null) {
+                    XAppEntity.get(it)
                 } else {
                     null
                 }
@@ -102,6 +159,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
                 }
             }
         } else {//获取全部
+            xAppBeans.addAll(XAppEntity.all())
             xAppBeans.addAll(XAppComplain.all())
             xAppBeans.addAll(XAppLegalcase.all())
             xAppBeans.addAll(XAppSupervise.all())
@@ -112,20 +170,4 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         return xAppBeans
     }
 
-    /**
-     * View事件设置
-     */
-    override fun onViewListener() {
-        //xapp编辑按钮点击事件
-        listAdapter.setManagerClickListener {
-
-        }
-        //公司详情按钮点击事件
-        iv_work_compannyInfo.setOnClickListener {
-            XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
-                it["mTitle"] = "重庆知行宏图科技有限公司"
-                it["mUrl"] = "http://www.zxgeo.com"
-            }
-        }
-    }
 }

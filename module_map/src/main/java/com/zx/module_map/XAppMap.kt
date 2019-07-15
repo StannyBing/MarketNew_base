@@ -12,6 +12,6 @@ import com.zx.module_library.bean.XAppBean
 object XAppMap : XApp() {
     override val map: Map<String, XAppBean>
         get() = mapOf(
-                "地图" to XAppBean("地图", R.color.map_color, R.drawable.ic_camera, RoutePath.ROUTE_MAP_MAP)
+                "地图" to XAppBean("地图", R.color.map_color, R.drawable.icon_map, RoutePath.ROUTE_MAP_MAP)
         )
 }

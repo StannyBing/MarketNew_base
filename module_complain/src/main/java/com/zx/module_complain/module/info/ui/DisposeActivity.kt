@@ -15,6 +15,7 @@ import com.zx.module_complain.module.info.bean.DeptBean
 import com.zx.module_complain.module.info.bean.DetailBean
 import com.zx.module_complain.module.info.bean.DisposeBean
 import com.zx.module_complain.module.info.func.adapter.DisposeAdapter
+import com.zx.module_complain.module.info.func.tool.ComplainStatusTool
 import com.zx.module_complain.module.info.mvp.contract.DisposeContract
 import com.zx.module_complain.module.info.mvp.model.DisposeModel
 import com.zx.module_complain.module.info.mvp.presenter.DisposePresenter
@@ -68,6 +69,7 @@ class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeC
         super.initView(savedInstanceState)
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
+        toolBar_view.setMidText("任务处理-${ComplainStatusTool.getStatusString(detailBean.baseInfo.fStatus)}")
         toolBar_view.withXApp(XAppComplain.get("投诉举报"))
         btn_complain_submit.background.setTint(ContextCompat.getColor(this, XAppComplain.get("投诉举报")!!.moduleColor))
 

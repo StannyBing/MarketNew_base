@@ -91,11 +91,15 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         toolbarRightText.setOnClickListener { onClick() }
     }
 
+    fun setMidClickListener(onClick : () -> Unit){
+        toolbarTitle.setOnClickListener { onClick() }
+    }
+
     /**
      * 设置中间文字
      */
-    fun setMidText(titleText: String) {
-        toolbarTitle.setText(titleText)
+    fun setMidText(titleText: String?) {
+        toolbarTitle.text = titleText
         toolbarTitle.ellipsize = TextUtils.TruncateAt.MARQUEE
         toolbarTitle.setSingleLine(true)
         toolbarTitle.isSelected = true

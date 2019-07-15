@@ -36,8 +36,8 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
     var sIsLoginClear = false
     open var canSwipeBack = true
 
-    private lateinit var permessionBack: () -> Unit
-    private lateinit var permissionArray: Array<String>
+    private var permessionBack: () -> Unit = {}
+    private var permissionArray: Array<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,6 +154,9 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (permissionArray==null){
+            return
+        }
         if (ZXPermissionUtil.checkPermissionsByArray(permissionArray)) {
             permessionBack()
         } else {

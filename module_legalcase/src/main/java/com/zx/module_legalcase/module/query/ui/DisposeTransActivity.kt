@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_dispose_trans.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：案件执法-案源移交
+ * 功能：综合执法-案源移交
  */
 @SuppressLint("NewApi")
 @Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSETRANS)
@@ -43,7 +43,7 @@ class DisposeTransActivity : BaseActivity<DisposeTransPresenter, DisposeTransMod
         fun startAction(activity: Activity, isFinish: Boolean, detailBean: DetailBean) {
             val intent = Intent(activity, DisposeTransActivity::class.java)
             intent.putExtra("detailBean", detailBean)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent,0x01)
             if (isFinish) activity.finish()
         }
     }
@@ -62,13 +62,13 @@ class DisposeTransActivity : BaseActivity<DisposeTransPresenter, DisposeTransMod
         super.initView(savedInstanceState)
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
-        toolBar_view.withXApp(XAppLegalcase.get("案件执法"))
-        btn_submit_trans.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("案件执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
+        btn_submit_trans.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
 
         rv_dispose_trans.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeTransActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeTransActivity, XAppLegalcase.get("案件执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeTransActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
             }
         }
 

@@ -1,6 +1,5 @@
 package com.zx.module_legalcase.module.query.func.adapter
 
-import android.widget.ImageView
 import com.zx.module_legalcase.R
 import com.zx.module_legalcase.module.query.mvp.bean.LegalcaseListBean
 import com.zx.module_library.func.tool.TaskTimeUtil
@@ -27,11 +26,11 @@ class LegalcaseListAdapter(dataList: List<LegalcaseListBean>) : ZXRecyclerQuickA
                         TaskTimeUtil.displayTime(item.foundDate!!)
 //                        ZXTimeUtil.getTime(item.foundDate!!).replace(" ", "\n")
                     })
-            helper.setText(R.id.tv_legalcase_itemStatus, "状态：" + if (item.isCompel == "0") {
-                item.compelStatusName
-            } else {
-                item.statusName
-            })
+//            helper.setText(R.id.tv_legalcase_itemStatus, "状态：" + if (item.isCompel == "0") {
+//                item.compelStatusName
+//            } else {
+//                item.statusName
+//            })
             if ("01" == item.domainCode) {
                 helper.setBackgroundRes(R.id.iv_legalcase_itemPic, R.drawable.case_gs)
                 helper.setText(R.id.tv_legalcase_itemType, "市场经营")
@@ -42,8 +41,8 @@ class LegalcaseListAdapter(dataList: List<LegalcaseListBean>) : ZXRecyclerQuickA
                 helper.setBackgroundRes(R.id.iv_legalcase_itemPic, R.drawable.case_syj)
                 helper.setText(R.id.tv_legalcase_itemType, "食品药品")
             } else {
-                helper.getView<ImageView>(R.id.iv_legalcase_itemPic).background = null
-                helper.setText(R.id.tv_legalcase_itemType, "")
+                helper.setBackgroundRes(R.id.iv_legalcase_itemPic, R.drawable.case_gs)
+                helper.setText(R.id.tv_legalcase_itemType, "市场经营")
             }
 //            val id = mContext.resources.getIdentifier("legalcase_task_${item.fStatus}", "drawable", mContext.packageName)
 //            helper.setBackgroundRes(R.id.iv_legalcase_itemPic, id)

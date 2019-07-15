@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_dynamic.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：案件执法-详情-流程轨迹
+ * 功能：综合执法-详情-流程轨迹
  */
 class DynamicFragment : BaseFragment<DynamicPresenter, DynamicModel>(), DynamicContract.View {
 
@@ -53,7 +53,7 @@ class DynamicFragment : BaseFragment<DynamicPresenter, DynamicModel>(), DynamicC
         rv_legalcase_dynamic.apply {
             layoutManager = LinearLayoutManager(activity!!)
             adapter = dynamicAdapter.apply {
-                setModuleColor(ContextCompat.getColor(activity!!, XAppLegalcase.get("案件执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(activity!!, XAppLegalcase.get("综合执法")!!.moduleColor))
             }
         }
 

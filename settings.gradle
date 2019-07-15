@@ -1,1 +1,1 @@
-include ':app',':module_library', ':module_supervise', ':module_complain', ':module_legalcase', ':module_statistics',':module_other',":module_map",":zxmvp"
+include ':app',':module_library', ':module_supervise', ':module_complain', ':module_legalcase', ':module_statistics',':module_other',":module_map",":module_entity",":zxmvp"

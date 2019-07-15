@@ -85,7 +85,7 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
         BaseConfigModule.TOKEN = userBean.jwt
         handler.postDelayed({
             MainActivity.startAction(this, true)
-        }, 1000)
+        }, 500)
     }
 
     override fun onLoginError() {

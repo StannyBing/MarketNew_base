@@ -131,6 +131,7 @@ dependencies {
     api project(':module_legalcase')
     api project(':module_statistics')
     api project(':module_map')
+    api project(':module_entity')
     api project(':module_other')
     implementation 'com.youth.banner:banner:1.4.10'
     //api 'com.github.StannyBing:ZXUtils:2.2.0'

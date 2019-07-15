@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.zx.module_entity">
+
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/MainAppTheme">
+        <meta-data
+            android:name="com.zx.module_entity.api.ApiConfigModule"
+            android:value="ConfigModule"/>
+
+        <activity android:name=".module.entity.ui.QueryActivity"/>
+    </application>
+
+</manifest>

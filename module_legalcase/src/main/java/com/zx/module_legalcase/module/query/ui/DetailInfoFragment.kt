@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_detail_info.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：案件执法-详情-信息
+ * 功能：综合执法-详情-信息
  */
 class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(), DetailInfoContract.View {
 

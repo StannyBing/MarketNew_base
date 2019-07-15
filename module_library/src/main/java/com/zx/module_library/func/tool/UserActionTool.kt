@@ -19,7 +19,7 @@ object UserActionTool {
         Supervise_Daily("事件", "日常检查"),
         Supervise_Task("事件", "监管任务"),
         Complain("事件", "投诉举报"),
-        CaseLegal("事件", "案件执法");
+        CaseLegal("事件", "综合执法");
     }
 
     fun addUserAction(activity: Activity, actionType: ActionType, id: String) {

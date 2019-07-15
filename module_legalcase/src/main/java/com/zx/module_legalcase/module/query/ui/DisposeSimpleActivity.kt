@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_dispose_simple.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：案件执法处置-简易流程
+ * 功能：综合执法处置-简易流程
  */
 @SuppressLint("NewApi")
 @Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSESIMPLE)
@@ -45,7 +45,7 @@ class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimple
         fun startAction(activity: Activity, isFinish: Boolean, detailBean: DetailBean) {
             val intent = Intent(activity, DisposeSimpleActivity::class.java)
             intent.putExtra("detailBean", detailBean)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent,0x01)
             if (isFinish) activity.finish()
         }
     }
@@ -65,13 +65,13 @@ class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimple
 
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
-        toolBar_view.withXApp(XAppLegalcase.get("案件执法"))
-        btn_submit_simple.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("案件执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
+        btn_submit_simple.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
 
         rv_dispose_simple.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeSimpleActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeSimpleActivity, XAppLegalcase.get("案件执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeSimpleActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
             }
         }
 

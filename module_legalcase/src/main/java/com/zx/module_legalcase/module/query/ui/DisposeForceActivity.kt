@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_dispose_force.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：案件执法处置-强制措施
+ * 功能：综合执法处置-强制措施
  */
 @SuppressLint("NewApi")
 @Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSEFORCE)
@@ -45,7 +45,7 @@ class DisposeForceActivity : BaseActivity<DisposeForcePresenter, DisposeForceMod
         fun startAction(activity: Activity, isFinish: Boolean, detailBean: DetailBean) {
             val intent = Intent(activity, DisposeForceActivity::class.java)
             intent.putExtra("detailBean", detailBean)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
         }
     }
@@ -65,13 +65,14 @@ class DisposeForceActivity : BaseActivity<DisposeForcePresenter, DisposeForceMod
 
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
-        toolBar_view.withXApp(XAppLegalcase.get("案件执法"))
-        btn_submit_force.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("案件执法")!!.moduleColor))
+        toolBar_view.setMidText("任务处理-${detailBean.info.compelStatusName}")
+        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
+        btn_submit_force.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
 
         rv_dispose_force.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeForceActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeForceActivity, XAppLegalcase.get("案件执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeForceActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
             }
         }
 

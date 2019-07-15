@@ -3,6 +3,7 @@ package com.zx.module_legalcase.module.query.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_legalcase.R
@@ -17,14 +18,15 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_library.bean.SearchFilterBean
+import com.zx.module_library.func.tool.animateToTop
 import com.zx.module_library.func.tool.getSelect
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
-import kotlinx.android.synthetic.main.activity_query.*
+import kotlinx.android.synthetic.main.activity_legalcase_query.*
 
 
 /**
  * Create By admin On 2017/7/11
- * 功能：案件执法-主页
+ * 功能：综合执法-主页
  */
 @Route(path = RoutePath.ROUTE_LEGALCASE_QUERY)
 class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.View {
@@ -55,7 +57,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
      * layout配置
      */
     override fun getLayoutId(): Int {
-        return R.layout.activity_query
+        return R.layout.activity_legalcase_query
     }
 
     /**
@@ -63,8 +65,9 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppLegalcase.get("案件执法"))
-        search_view.withXApp(XAppLegalcase.get("案件执法"))
+        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
+        search_view.withXApp(XAppLegalcase.get("综合执法"))
+        tv_legalcase_tips.setTextColor(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
 
         sr_legalcase_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
@@ -84,7 +87,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                     override fun onItemClick(item: LegalcaseListBean?, position: Int) {
-                        DetailActivity.startAction(this@QueryActivity, false, item!!.id!!, searchType != "1" || todo != "1")
+                        DetailActivity.startAction(this@QueryActivity, false, item!!.id, item.taskId, searchType != "1" || todo != "1", item.processType)
                     }
 
                 })
@@ -130,6 +133,8 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             searchText = it
             loadData(true)
         }
+        //顶部点击滚动到开头
+        toolBar_view.setMidClickListener { sr_legalcase_list.recyclerView.animateToTop(0) }
     }
 
     /**
@@ -152,6 +157,14 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     }
 
     override fun onCaseListResult(caseList: NormalList<LegalcaseListBean>) {
+        val type = if (searchType == "1") {
+            "全部案件"
+        } else if (todo == "0") {
+            "我的待办案件"
+        } else {
+            "我的已办案件"
+        }
+        tv_legalcase_tips.text = "检索到${type}共${caseList.total}条"
         sr_legalcase_list.refreshData(caseList.list, caseList.total)
     }
 

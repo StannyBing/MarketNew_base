@@ -3,6 +3,7 @@ package com.zx.module_complain.module.info.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_complain.R
@@ -17,6 +18,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_library.bean.SearchFilterBean
+import com.zx.module_library.func.tool.animateToTop
 import com.zx.module_library.func.tool.getSelect
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_complain_list.*
@@ -66,6 +68,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
         toolBar_view.withXApp(XAppComplain.get("投诉举报"))
         search_view.withXApp(XAppComplain.get("投诉举报"))
+        tv_complain_tips.setTextColor(ContextCompat.getColor(this, XAppComplain.get("投诉举报")!!.moduleColor))
 
         sr_complain_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
@@ -149,15 +152,23 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
             searchText = it
             loadData(true)
         }
+        //顶部点击滚动到开头
+        toolBar_view.setMidClickListener { sr_complain_list.recyclerView.animateToTop(0)}
     }
 
     override fun onComplainListResult(complainList: NormalList<ComplainListBean>) {
+        val type = if (searchType == "0") {
+            "我的任务"
+        } else {
+            "全部任务"
+        }
+        tv_complain_tips.text = "检索到${type}共${complainList.total}条"
         sr_complain_list.refreshData(complainList.list, complainList.total)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 0x01){
+        if (resultCode == 0x01) {
             loadData(true)
         }
     }

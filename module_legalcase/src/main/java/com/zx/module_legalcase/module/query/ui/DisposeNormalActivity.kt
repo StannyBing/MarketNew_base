@@ -46,7 +46,7 @@ class DisposeNormalActivity : BaseActivity<DisposeNormalPresenter, DisposeNormal
         fun startAction(activity: Activity, isFinish: Boolean, detailBean: DetailBean) {
             val intent = Intent(activity, DisposeNormalActivity::class.java)
             intent.putExtra("detailBean", detailBean)
-            activity.startActivity(intent)
+            activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
         }
     }
@@ -65,13 +65,14 @@ class DisposeNormalActivity : BaseActivity<DisposeNormalPresenter, DisposeNormal
         super.initView(savedInstanceState)
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
-        toolBar_view.withXApp(XAppLegalcase.get("案件执法"))
-        btn_submit_normal.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("案件执法")!!.moduleColor))
+        toolBar_view.setMidText("任务处理-${detailBean.info.statusName}")
+        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
+        btn_submit_normal.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
 
         rv_dispose_normal.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeNormalActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeNormalActivity, XAppLegalcase.get("案件执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeNormalActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
             }
         }
 

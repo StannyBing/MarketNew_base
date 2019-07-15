@@ -84,31 +84,31 @@ object ApiParamUtil {
         return toJson(map)
     }
 
-    fun caseDisposeWithAgreeParam(isAgree: String, caseId: String, taskId: String, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
+    fun caseDisposeWithAgreeParam(isAgree: String, caseId: String, taskId: String?, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["isAgree"] = isAgree
         map["caseId"] = caseId
-        map["taskId"] = taskId
+        map["taskId"] = taskId ?: ""
         map["acceptUserId"] = acceptUserId
         map["acceptUser"] = acceptUser
         map["remark"] = remark
         return toJson(map)
     }
 
-    fun caseDisposeSimpleParam(caseId: String, taskId: String, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
+    fun caseDisposeSimpleParam(caseId: String, taskId: String?, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["caseId"] = caseId
-        map["taskId"] = taskId
+        map["taskId"] = taskId ?: ""
         map["acceptUserId"] = acceptUserId
         map["acceptUser"] = acceptUser
         map["remark"] = remark
         return toJson(map)
     }
 
-    fun caseEndParam(caseId: String, taskId: String, remark: String): RequestBody {
+    fun caseEndParam(caseId: String, taskId: String?, remark: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["caseId"] = caseId
-        map["taskId"] = taskId
+        map["taskId"] = taskId ?: ""
         map["remark"] = remark
         return toJson(map)
     }
@@ -120,11 +120,11 @@ object ApiParamUtil {
         return toJson(map)
     }
 
-    fun caseEasyAuditingParam(isAgree: String, caseId: String, taskId: String, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
+    fun caseEasyAuditingParam(isAgree: String, caseId: String, taskId: String?, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["isAgree"] = isAgree
         map["caseId"] = caseId
-        map["taskId"] = taskId
+        map["taskId"] = taskId ?: ""
         map["acceptUserId"] = acceptUserId
         map["acceptUser"] = acceptUser
         map["remark"] = remark
@@ -149,21 +149,21 @@ object ApiParamUtil {
         return toJson(map)
     }
 
-    fun caseForceWithAgreeParam(isAgree: String, caseId: String, taskId: String, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
+    fun caseForceWithAgreeParam(isAgree: String, caseId: String, taskId: String?, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["isAgree"] = isAgree
         map["caseId"] = caseId
-        map["taskId"] = taskId
+        map["taskId"] = taskId ?: ""
         map["acceptUserId"] = acceptUserId
         map["acceptUser"] = acceptUser
         map["remark"] = remark
         return toJson(map)
     }
 
-    fun caseForceSimpleParam(caseId: String, taskId: String, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
+    fun caseForceSimpleParam(caseId: String, taskId: String?, acceptUserId: String, acceptUser: String, remark: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["caseId"] = caseId
-        map["taskId"] = taskId
+        map["taskId"] = taskId ?: ""
         map["acceptUserId"] = acceptUserId
         map["acceptUser"] = acceptUser
         map["remark"] = remark

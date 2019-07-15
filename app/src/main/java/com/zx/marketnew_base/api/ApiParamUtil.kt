@@ -80,4 +80,14 @@ object ApiParamUtil {
         return map
     }
 
+    //添加xapp操作日志
+    fun xappOptParam(sysId: String, firstModule: String, secendModule: String, threeModule: String): RequestBody {
+        val map = hashMapOf<String, String>()
+        map["sysId"] = sysId
+        map["firstModule"] = firstModule
+        map["secendModule"] = secendModule
+        map["threeModule"] = threeModule
+        return toJson(map)
+    }
+
 }

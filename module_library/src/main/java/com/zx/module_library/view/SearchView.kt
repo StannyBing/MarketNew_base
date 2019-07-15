@@ -6,6 +6,8 @@ import android.content.Context
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -37,9 +39,11 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private var module_color: Int//主题色
     private var filterBubble: ZXBubbleView? = null
 
+    private var justSearchButton = false
     private var doSearch: (String) -> Unit = {}
     private var doFunc: () -> Unit = {}
     private var filterValues: List<SearchFilterBean>? = null
+    private var filterAdater: SearchFilterAdapter? = null
 
     init {
         val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.SearchView, defStyleAttr, 0)
@@ -63,17 +67,23 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             }
             return@setOnEditorActionListener false
         }
+        searchText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!justSearchButton) {
+                    doSearch(false)
+                }
+            }
+        })
         val funcText = if (typedArray.hasValue(R.styleable.SearchView_func_text)) typedArray.getString(R.styleable.SearchView_func_text) else ""
         val showFunc = typedArray.getBoolean(R.styleable.SearchView_show_func, false)
         searchText.hint = if (typedArray.hasValue(R.styleable.SearchView_hint_text)) typedArray.getString(R.styleable.SearchView_hint_text) else "搜索";
         module_color = typedArray.getColor(R.styleable.SearchView_module_color, ContextCompat.getColor(context, R.color.colorPrimary))
-
-        searchText.setOnTouchListener { v, event ->
-            val searchDrawable = ContextCompat.getDrawable(context, R.drawable.library_search_primary)
-            searchDrawable!!.setTint(module_color)
-            searchBtn.setImageDrawable(searchDrawable)
-            false
-        }
 
         resetColor()
 
@@ -100,13 +110,14 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             rvList.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = SearchFilterAdapter(filterValues!!, module_color).apply {
+                    filterAdater = this
                     setSelectCall { index, value ->
                         if (!rvList.isComputingLayout) {
                             val selectItemKey = filterValues!![index].filterName
                             filterValues?.forEachIndexed { index, it ->
                                 if (it.visibleBy != null) {
                                     val lastEnable = it.isEnable
-                                    if (it.visibleBy?.first == selectItemKey){
+                                    if (it.visibleBy?.first == selectItemKey) {
                                         it.isEnable = it.visibleBy?.second == value
                                     }
                                     if (lastEnable != it.isEnable) {
@@ -166,8 +177,9 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
     }
 
-    //搜索功能
-    fun setSearchListener(doSearch: (String) -> Unit) {
+    //搜索功能-点击搜索
+    fun setSearchListener(justSearchButton: Boolean = false, doSearch: (String) -> Unit) {
+        this.justSearchButton = justSearchButton
         this@SearchView.doSearch = doSearch
     }
 
@@ -213,14 +225,18 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         searchFunc.text = text
     }
 
+    fun notifyDataSetChanged() {
+        filterAdater?.notifyDataSetChanged()
+    }
+
     fun setSearchText(searchKeywords: String) {
         searchText.setText(searchKeywords)
     }
 
-    private fun doSearch() {
+    private fun doSearch(closeKeybord: Boolean = true) {
         doSearch(searchText.text.toString())
         try {
-            ZXSystemUtil.closeKeybord(context as Activity)
+            if (closeKeybord) ZXSystemUtil.closeKeybord(context as Activity)
         } catch (e: Exception) {
         }
     }
