@@ -20,6 +20,7 @@ class XAppAdapter(dataBeans: List<XAppBean>, val xtype: XAppListBean.XTYPE) : ZX
             helper.setText(R.id.tv_xapp_name, item.name)
             val gradientDrawable = helper.getView<RelativeLayout>(R.id.rl_xapp_bg).background as GradientDrawable
             gradientDrawable.setColor(ContextCompat.getColor(mContext, item.moduleColor))
+            gradientDrawable.mutate()
             if (xtype == XAppListBean.XTYPE.TASK_STATISTICS) {
                 helper.getView<TextView>(R.id.tv_xapp_icon).background = null
                 helper.setText(R.id.tv_xapp_icon, item.num.toString())

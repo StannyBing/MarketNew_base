@@ -10,8 +10,8 @@ import java.io.Serializable
 data class MapTaskBean(var typeName : String,
                        @DrawableRes var typeIcon : Int,
                        var name : String,
-                       var entity : String,
                        var address : String,
+                       var other : String,
                        var id : String,
                        var longtitude : Double?,
                        var latitude : Double?) : Serializable{

@@ -42,7 +42,7 @@ data class DetailBean(var info: InfoBean, var files: List<FileBean>?) : Serializ
                         var enterpriseContact: String?,
                         var processId: String,
                         var isExpandCheck: String?,
-                        var enterpriseAddress: String,
+                        var enterpriseAddress: String?,
                         var statusName: String,
                         var caseTime: String?,
                         var isCase: Int,

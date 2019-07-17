@@ -183,7 +183,7 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         }
     }
 
-    //显示删除按钮
+    //可修改
     fun setModifiable(): AddFileView {
         modifiable = true
         fileAdapter.init(module_color, modifiable)

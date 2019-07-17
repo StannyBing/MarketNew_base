@@ -48,7 +48,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         fun startAction(activity: Activity, isFinish: Boolean, fGuid: String) {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra("fGuid", fGuid)
-            activity.startActivityForResult(intent,0x01)
+            activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
         }
     }
@@ -101,14 +101,14 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         }
         //地图按钮
         toolBar_view.setRightClickListener {
-            if (detailBean!=null){
-                XApp.startXApp(RoutePath.ROUTE_MAP_MAP){
+            if (detailBean != null) {
+                XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["taskBean"] = MapTaskBean("投诉举报",
                             XAppComplain.get("投诉举报")!!.appIcon,
                             (detailBean!!.baseInfo.fName ?: "") + (detailBean!!.baseInfo.fType ?: "") + (detailBean!!.baseInfo.fEntityName ?: ""),
-                            detailBean!!.baseInfo.fEntityName?:"",
-                            detailBean!!.baseInfo.fEntityAddress?:"",
-                            detailBean!!.baseInfo.fGuid?:"",
+                            "主体地址：" + (detailBean!!.baseInfo.fEntityAddress ?: ""),
+                            "涉及主体：" + (detailBean!!.baseInfo.fEntityName ?: ""),
+                            detailBean!!.baseInfo.fGuid ?: "",
                             detailBean!!.baseInfo.fLongitude,
                             detailBean!!.baseInfo.fLatitude)
                 }
@@ -121,30 +121,30 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
      */
     override fun onDetailResult(detailBean: DetailBean) {
         this.detailBean = detailBean
-            toolBar_view.setMidText((detailBean.baseInfo.fName ?: "")
-                    + (detailBean.baseInfo.fType ?: "")
-                    + (detailBean.baseInfo.fEntityName ?: ""))
-            //设置按钮
-            val fStatus = detailBean.baseInfo.fStatus
-            val roles = UserManager.getUser().role
-            btn_complain_dispose.visibility = View.VISIBLE
-            if (fStatus == 20 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
-                btn_complain_dispose.text = "任务处置(分流)"
-            } else if (fStatus == 30 && roles.containsAll(arrayListOf("1001", "2020"))) {
-                btn_complain_dispose.text = "任务处置(指派)"
-            } else if (fStatus == 40 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
-                btn_complain_dispose.text = "任务处置(联系)"
-            } else if (fStatus == 50 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
-                btn_complain_dispose.text = "任务处置(处置)"
-            } else if (fStatus == 60 && roles.containsAll(arrayListOf("1001", "2020"))) {
-                btn_complain_dispose.text = "任务处置(初审)"
-            } else if (fStatus == 70 && roles.contains("2010")) {
-                btn_complain_dispose.text = "任务处置(终审)"
-            } else if (fStatus == 80 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
-                btn_complain_dispose.text = "任务处置(办结)"
-            } else {
-                btn_complain_dispose.visibility = View.GONE
-            }
+        toolBar_view.setMidText((detailBean.baseInfo.fName ?: "")
+                + (detailBean.baseInfo.fType ?: "")
+                + (detailBean.baseInfo.fEntityName ?: ""))
+        //设置按钮
+        val fStatus = detailBean.baseInfo.fStatus
+        val roles = UserManager.getUser().role
+        btn_complain_dispose.visibility = View.VISIBLE
+        if (fStatus == 20 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+            btn_complain_dispose.text = "任务处置(分流)"
+        } else if (fStatus == 30 && roles.containsAll(arrayListOf("1001", "2020"))) {
+            btn_complain_dispose.text = "任务处置(指派)"
+        } else if (fStatus == 40 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+            btn_complain_dispose.text = "任务处置(联系)"
+        } else if (fStatus == 50 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+            btn_complain_dispose.text = "任务处置(处置)"
+        } else if (fStatus == 60 && roles.containsAll(arrayListOf("1001", "2020"))) {
+            btn_complain_dispose.text = "任务处置(初审)"
+        } else if (fStatus == 70 && roles.contains("2010")) {
+            btn_complain_dispose.text = "任务处置(终审)"
+        } else if (fStatus == 80 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+            btn_complain_dispose.text = "任务处置(办结)"
+        } else {
+            btn_complain_dispose.visibility = View.GONE
+        }
         //初始化数据
         regInfoFragment.reSetInfo(detailBean.baseInfo)
         entityInfoFragment.reSetInfo(detailBean.baseInfo)

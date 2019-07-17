@@ -119,14 +119,14 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
 
         //地图按钮
         toolBar_view.setRightClickListener {
-            if (detailBean!=null){
-                XApp.startXApp(RoutePath.ROUTE_MAP_MAP){
+            if (detailBean != null) {
+                XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["taskBean"] = MapTaskBean("案件执法",
-                            XAppLegalcase.get("案件执法")!!.appIcon,
+                            XAppLegalcase.get("综合执法")!!.appIcon,
                             detailBean!!.info.caseName,
-                            detailBean!!.info.enterpriseName?:"",
-                            detailBean!!.info.enterpriseAddress?:"",
-                            detailBean!!.info.id?:"",
+                            "主体地址：" + (detailBean!!.info.enterpriseAddress?:""),
+                            "涉及主体：" + detailBean!!.info.enterpriseName,
+                            detailBean!!.info.id ?: "",
                             detailBean!!.info.longitude,
                             detailBean!!.info.latitude)
                 }
@@ -144,7 +144,8 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         } else if (detailBean.info.processType == "pro_case" && optable) {
             optList.add("流程操作" + "-${detailBean.info.statusName}")
         }
-        if (optable) optList.add("强制措施" + if (detailBean.info.processType == "pro_qzcs") "-${detailBean.info.compelStatusName?:""}" else "")
+        if (optable) optList.add("强制措施" + if (detailBean.info.processType == "pro_qzcs") "-${detailBean.info.compelStatusName
+                ?: ""}" else "")
         if (optable) optList.add("简易流程" + if (detailBean.info.processType == "pro_jylc") "-处置" else "")
         optList.add("案件移送")
 

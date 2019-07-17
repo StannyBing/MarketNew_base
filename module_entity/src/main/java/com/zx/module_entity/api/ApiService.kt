@@ -1,10 +1,7 @@
 package com.zx.module_entity.api
 
 import com.frame.zxmvp.basebean.BaseRespose
-import com.zx.module_entity.module.entity.bean.DicTypeBean
-import com.zx.module_entity.module.entity.bean.EntityDetailBean
-import com.zx.module_entity.module.entity.bean.EntityLevelBean
-import com.zx.module_entity.module.entity.bean.EntityStationBean
+import com.zx.module_entity.module.entity.bean.*
 import com.zx.module_entity.module.entity.func.adapter.EntityBean
 import com.zx.module_library.bean.NormalList
 import okhttp3.RequestBody
@@ -40,4 +37,10 @@ interface ApiService {
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST(ApiConfigModule.URL_SUPERVISE + "entity/update.do")
     fun modifyInfo(@Body body: RequestBody): Observable<BaseRespose<Any>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "entity/getEntityCreditInfo.do")
+    fun getCreditInfo(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<CreditBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "entity/getEntityBusinessInfo.do")
+    fun getBusinessInfo(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<BusinessBean>>>
 }

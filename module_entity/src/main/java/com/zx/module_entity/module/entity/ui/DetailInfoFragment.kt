@@ -134,7 +134,7 @@ class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(),
                 }
             }.apply {
                 setOnItemClickListener { _, _, position ->
-                    allTagList.get(position).select = !allTagList.get(position).select
+                    allTagList[position].select = !allTagList[position].select
                     this.notifyItemChanged(position)
                 }
             }
@@ -151,6 +151,15 @@ class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(),
             if (tags.isNotEmpty()) {
                 tags = tags.substring(1)
             }
+            myTagsList.clear()
+            if (allTagList.isNotEmpty() && tags.isNotEmpty()) {
+                allTagList.forEach {
+                    if (tags.contains(it.dicName)) {
+                        myTagsList.add(it)
+                    }
+                }
+            }
+            myTagsAdapter?.notifyDataSetChanged()
             mPresenter.modifyInfo(hashMapOf("fEntityGuid" to detailBean?.fEntityGuid, "fTags" to tags).toJson())
         }, { _, _ -> })
         val params = dialog.window.attributes
@@ -202,6 +211,23 @@ class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(),
 
     override fun onDicListResult(dicTypeBeans: List<DicTypeBean>) {
         allTagList.addAll(dicTypeBeans)
+        notifyTagChange()
+    }
+
+
+    private fun notifyTagChange() {
+        myTagsList.clear()
+        if (allTagList.isNotEmpty() && detailBean?.fTags != null) {
+            allTagList.forEach {
+                if (detailBean?.fTags!!.contains(it.dicName)) {
+                    it.select = true
+                    myTagsList.add(it)
+                } else {
+                    it.select = false
+                }
+            }
+        }
+        myTagsAdapter?.notifyDataSetChanged()
     }
 
     fun resetInfo(entityDetail: EntityDetailBean) {
@@ -233,17 +259,7 @@ class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(),
         }
         mAdapter.notifyDataSetChanged()
 
-        myTagsList.clear()
-        if (allTagList.isNotEmpty() && detailBean?.fTags != null) {
-            allTagList.forEach {
-                if (detailBean?.fTags!!.contains(it.dicName)) {
-                    it.select = true
-                    myTagsList.add(it)
-                } else {
-                    it.select = false
-                }
-            }
-        }
-        myTagsAdapter?.notifyDataSetChanged()
+        notifyTagChange()
     }
+
 }

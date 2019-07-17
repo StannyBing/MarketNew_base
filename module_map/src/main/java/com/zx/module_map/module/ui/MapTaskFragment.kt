@@ -23,17 +23,17 @@ import kotlinx.android.synthetic.main.fragment_map_task.*
  */
 @SuppressLint("NewApi")
 class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskContract.View {
-    var mapListener : MapListener?=null
-    private var taskBean : MapTaskBean?=null
+    var mapListener: MapListener? = null
+    private var taskBean: MapTaskBean? = null
 
     companion object {
         /**
          * 启动器
          */
-        fun newInstance(taskBean : MapTaskBean?): MapTaskFragment {
+        fun newInstance(taskBean: MapTaskBean?): MapTaskFragment {
             val fragment = MapTaskFragment()
             val bundle = Bundle()
-            bundle.putSerializable("taskBean",taskBean)
+            bundle.putSerializable("taskBean", taskBean)
             fragment.arguments = bundle
             return fragment
         }
@@ -52,17 +52,17 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
-        if (taskBean!=null){
+        if (taskBean != null) {
             rl_task.visibility = View.VISIBLE
             tv_task_type.text = taskBean?.typeName
             val typeDrawable = ContextCompat.getDrawable(activity!!, taskBean!!.typeIcon)
-            typeDrawable?.setTint(ContextCompat.getColor(activity!!,XAppMap.get("地图")!!.moduleColor))
+            typeDrawable?.setTint(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
             typeDrawable?.mutate()
             iv_task_type.setImageDrawable(typeDrawable)
             tv_task_name.text = taskBean?.name
             tv_task_name.setTextColor(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
-            tv_task_entity.text = "涉及主体：${taskBean?.entity}"
-            tv_task_address.text = "主体地址：${taskBean?.address}"
+            tv_task_other.text = taskBean?.other
+            tv_task_address.text = taskBean?.address
         }
     }
 
@@ -71,7 +71,7 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
      */
     override fun onViewListener() {
         rl_task.setOnClickListener {
-            var point = Point(taskBean!!.longtitude!!,taskBean!!.latitude!!)
+            var point = Point(taskBean!!.longtitude!!, taskBean!!.latitude!!)
             point = GeometryEngine.project(point, SpatialReference.create(4326), mapListener?.getMap()?.spatialReference) as Point
             mapListener?.getMap()?.centerAt(point, true)
             mapListener?.getMap()?.scale = 70000.00

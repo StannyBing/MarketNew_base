@@ -12,8 +12,10 @@ import com.zx.module_entity.module.entity.bean.EntityDetailBean
 import com.zx.module_entity.module.entity.mvp.contract.DetailContract
 import com.zx.module_entity.module.entity.mvp.model.DetailModel
 import com.zx.module_entity.module.entity.mvp.presenter.DetailPresenter
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.bean.MapTaskBean
 import kotlinx.android.synthetic.main.activity_entity_detail.*
 
 
@@ -28,6 +30,8 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
     private lateinit var creditFragment: DetailCreditFragment
     private lateinit var businessFragment: DetailBusinessFragment
     private lateinit var imageFragment: DetailImageFragment
+
+    private var detailBean: EntityDetailBean? = null
 
     private var fEntityGuid = ""
     private var isSpeacial = false
@@ -108,18 +112,18 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
     override fun onViewListener() {
 //地图按钮
         toolBar_view.setRightClickListener {
-            //            if (detailBean!=null){
-//                XApp.startXApp(RoutePath.ROUTE_MAP_MAP){
-//                    it["taskBean"] = MapTaskBean("主体查询",
-//                            XAppEntity.get("主体查询")!!.appIcon,
-//                            (detailBean!!.baseInfo.fName ?: "") + (detailBean!!.baseInfo.fType ?: "") + (detailBean!!.baseInfo.fEntityName ?: ""),
-//                            detailBean!!.baseInfo.fEntityName?:"",
-//                            detailBean!!.baseInfo.fEntityAddress?:"",
-//                            detailBean!!.baseInfo.fGuid?:"",
-//                            detailBean!!.baseInfo.fLongitude,
-//                            detailBean!!.baseInfo.fLatitude)
-//                }
-//            }
+            if (detailBean != null) {
+                XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
+                    it["taskBean"] = MapTaskBean("主体查询",
+                            XAppEntity.get("主体查询")!!.appIcon,
+                            detailBean!!.fEntityName ?: "",
+                            "主体地址：" + (detailBean!!.fAddress ?: ""),
+                            "所属片区：" + (detailBean!!.fStation ?: "") + "-" + (detailBean!!.fGrid ?: ""),
+                            detailBean!!.fEntityGuid ?: "",
+                            detailBean!!.fLongitude,
+                            detailBean!!.fLatitude)
+                }
+            }
         }
     }
 
@@ -129,6 +133,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
             finish()
             return
         }
+        detailBean = entityDetail
         if (entityDetail.fCreditLevel == "Z") {
             tvp_entity_detail.tabLayout.visibility = View.GONE
             tvp_entity_detail.setTabScrollable(false)
