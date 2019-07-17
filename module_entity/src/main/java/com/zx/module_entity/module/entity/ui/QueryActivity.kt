@@ -23,6 +23,7 @@ import com.zx.module_library.bean.NormalList
 import com.zx.module_library.bean.SearchFilterBean
 import com.zx.module_library.func.tool.animateToTop
 import com.zx.module_library.func.tool.getItem
+import com.zx.module_library.func.tool.getPosition
 import com.zx.module_library.func.tool.getSelect
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_entity_query.*
@@ -41,7 +42,10 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     private var mAdapter = EntityListAdapter(dataBeans)
 
     private val filterList = arrayListOf<SearchFilterBean>()//过滤条件
-    private var fStation = ""
+    private var fTags = ""//主体标识
+    private var fCreditLevel = ""//主体等级
+    private var fStatus = ""//主体状态
+    private var areaCode = ""//片区
 
     companion object {
         /**
@@ -89,7 +93,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                     override fun onItemClick(item: EntityBean?, position: Int) {
-//                        DetailActivity.startAction(this@QueryActivity, false, item!!.fGuid)
+                        DetailActivity.startAction(this@QueryActivity, false, item!!.fEntityGuid!!, item.fTags?.contains("特殊主体") ?: false)
                     }
 
                 })
@@ -106,7 +110,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             pageNo = 1
             sr_entity_list.clearStatus()
         }
-        mPresenter.getEntityList(ApiParamUtil.searchParam(pageNo, 15, searchText))
+        mPresenter.getEntityList(ApiParamUtil.searchParam(pageNo, 15, searchText, fTags = fTags, fCreditLevel = fCreditLevel, fStatus = fStatus, areaCode = areaCode))
     }
 
     /**
@@ -115,16 +119,16 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     override fun onViewListener() {
         //过滤事件
         search_view.setFuncListener(filterList) {
-            if (filterList.getSelect(name = "监管局").isEmpty() && fStation.isNotEmpty()) {
+            if (filterList.getSelect(name = "监管局").isEmpty() && areaCode.isNotEmpty()) {
                 onDeptListResult(arrayListOf())
-            } else if (fStation != filterList.getSelect(name = "监管局")) {
+            } else if (areaCode != filterList.getSelect(name = "监管局")) {
                 mPresenter.getAreaDeptList(ApiParamUtil.entityStationParam(filterList.getSelect(name = "监管局")))
             }
-            fStation = filterList.getSelect(name = "监管局")
-//            searchType = filterList.getSelect(0)
-//            fType = filterList.getSelect(1)
-//            fStatus = filterList.getSelect(2)
-//            overdue = filterList.getSelect(3)
+            fTags = filterList.getSelect(name = "主体标识")
+            fCreditLevel = filterList.getSelect(name = "信用等级")
+            fStatus = filterList.getSelect(name = "主体状态")
+            areaCode = filterList.getSelect(name = "监管所")
+            if (filterList.getSelect(name = "监管片区").isNotEmpty()) areaCode = filterList.getSelect(name = "监管片区")
         }
         //搜索事件
         search_view.setSearchListener {
@@ -142,6 +146,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                 dicTypeList.forEach {
                     add(SearchFilterBean.ValueBean(it.dicName, it.id))
                 }
+                add(SearchFilterBean.ValueBean("特殊主体", "特殊主体"))
             }))
         }
     }
@@ -168,9 +173,12 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                 stationBeans.forEach {
                     add(SearchFilterBean.ValueBean(it.value, it.id))
                 }
-            }))
+            }, singleFunc = true))
             filterList.add(SearchFilterBean("监管片区", SearchFilterBean.FilterType.SELECT_TYPE))
+        } else {
+            filterList.getItem("监管片区")?.values?.clear()
         }
+        search_view.notifyItemChanged(filterList.getPosition("监管片区"))
     }
 
     //监管片区
@@ -183,7 +191,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                 }
             }
         }
-        search_view.notifyDataSetChanged()
+        search_view.notifyItemChanged(filterList.getPosition("监管片区"))
     }
 
     override fun onEntityListResult(entityList: NormalList<EntityBean>) {

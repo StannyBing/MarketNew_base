@@ -42,7 +42,8 @@ class WorkStatisicsActivity : BaseActivity<WorkStatisicsPresenter, WorkStatisics
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         ZXStatusBarCompat.translucent(this, R.color.work_satisics_bg)
-        ZXStatusBarCompat.setStatusBarDarkMode(this)
+        ZXStatusBarCompat.setStatusBarLightMode(this)
+
         mPresenter.getWorkStatisicsList(ApiParamUtil.workStatisicsPlanParam("4"))
     }
 

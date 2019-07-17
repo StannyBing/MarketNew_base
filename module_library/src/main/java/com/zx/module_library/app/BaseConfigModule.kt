@@ -18,10 +18,10 @@ import okhttp3.Response
  */
 open class BaseConfigModule(val apiService: Class<*>, var moduleName: String) : ConfigModule {
 
-    enum class APP_TYPE(val versionCode: Int, val versionName: String, val realseUrl: String, val debugUrl: String) {
-        BASE(1, "1.0.0", "http://rc.jx968969.com/", "http://scjg.zxgeo.com/"),
-        DX_APP(1, "1.0.0", "http://223.83.172.79:90/", "http://192.168.11.248:8106/"),
-        RC_APP(1, "1.0.0", "http://rc.jx968969.com/", "http://192.168.11.248:8101/");
+    enum class APP_TYPE(val versionCode: Int, val versionName: String, val realseUrl: String, val debugUrl: String, val areaParentId : String) {
+        BASE(1, "1.0.0", "http://rc.jx968969.com/", "http://scjg.zxgeo.com/", "360481"),
+        DX_APP(1, "1.0.0", "http://223.83.172.79:90/", "http://192.168.11.248:8106/", "360481"),
+        RC_APP(1, "1.0.0", "http://rc.jx968969.com/", "http://192.168.11.248:8101/", "360481");
     }
 
     companion object {

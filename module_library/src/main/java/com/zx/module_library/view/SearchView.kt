@@ -112,6 +112,9 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 adapter = SearchFilterAdapter(filterValues!!, module_color).apply {
                     filterAdater = this
                     setSelectCall { index, value ->
+                        if (filterValues!![index].singleFunc){
+                            doFunc()
+                        }
                         if (!rvList.isComputingLayout) {
                             val selectItemKey = filterValues!![index].filterName
                             filterValues?.forEachIndexed { index, it ->
@@ -146,7 +149,7 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                     }
                 }
                 //重置列表状态
-                rvList.adapter.notifyDataSetChanged()
+                rvList.adapter?.notifyDataSetChanged()
                 //重置搜索栏
                 searchText.setText("")
                 doFunc()
@@ -223,6 +226,10 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     fun setFuncVisible(visible: Boolean, text: String = "筛选") {
         searchFunc.visibility = if (visible) View.VISIBLE else View.GONE
         searchFunc.text = text
+    }
+
+    fun notifyItemChanged(position : Int){
+        filterAdater?.notifyItemChanged(position)
     }
 
     fun notifyDataSetChanged() {

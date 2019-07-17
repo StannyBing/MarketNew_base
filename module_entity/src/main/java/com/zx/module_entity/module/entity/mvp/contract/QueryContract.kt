@@ -36,7 +36,7 @@ interface QueryContract {
 
         fun entityLevelData(): Observable<List<EntityLevelBean>>
 
-        fun deptListData(): Observable<List<EntityStationBean>>
+        fun deptListData(map: Map<String, String>): Observable<List<EntityStationBean>>
 
         fun areaDeptListData(map: Map<String, String>): Observable<List<EntityStationBean>>
     }

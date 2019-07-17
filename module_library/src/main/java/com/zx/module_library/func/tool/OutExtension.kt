@@ -5,7 +5,10 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
 import android.util.DisplayMetrics
+import com.google.gson.Gson
 import com.zx.module_library.bean.SearchFilterBean
+import okhttp3.MediaType
+import okhttp3.RequestBody
 
 /**
  * Created by Xiangb on 2019/6/27.
@@ -46,6 +49,17 @@ fun ArrayList<SearchFilterBean>.getSelect(position: Int = -1, name: String = "")
     }
 }
 
+fun ArrayList<SearchFilterBean>.getPosition(name: String): Int {
+    if (isNotEmpty()) {
+        forEachIndexed { index, it ->
+            if (it.filterName == name) {
+                return index
+            }
+        }
+    }
+    return 0
+}
+
 fun ArrayList<SearchFilterBean>.getItem(name: String): SearchFilterBean? {
     if (isNotEmpty()) {
         forEach {
@@ -64,7 +78,7 @@ fun RecyclerView.animateToTop(position: Int) {
     if (layoutManager is LinearLayoutManager) {
         val scroller = TopSmoothScroll(context)
         scroller.targetPosition = position
-        layoutManager.startSmoothScroll(scroller)
+        (layoutManager as LinearLayoutManager).startSmoothScroll(scroller)
     }
 }
 
@@ -91,4 +105,12 @@ private class EndSmoothScroll(context: Context) : LinearSmoothScroller(context) 
     override fun getVerticalSnapPreference(): Int {
         return SNAP_TO_END
     }
+}
+
+/**
+ * map转json
+ */
+fun <K, Y> Map<K, Y>.toJson(): RequestBody {
+    val json = Gson().toJson(this)
+    return RequestBody.create(MediaType.parse("application/json; charset=utf-8"), json)
 }

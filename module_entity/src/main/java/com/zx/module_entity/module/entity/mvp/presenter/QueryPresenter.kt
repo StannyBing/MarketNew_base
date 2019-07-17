@@ -6,6 +6,7 @@ import com.zx.module_entity.api.ApiParamUtil
 import com.zx.module_entity.module.entity.bean.EntityStationBean
 import com.zx.module_entity.module.entity.func.adapter.EntityBean
 import com.zx.module_entity.module.entity.mvp.contract.QueryContract
+import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.bean.NormalList
 
 
@@ -40,9 +41,9 @@ class QueryPresenter : QueryContract.Presenter() {
                 }
                 .flatMap {
                     mView.onEntityLevelResult(it)
-                    mModel.deptListData()
+                    mModel.deptListData(ApiParamUtil.entityStationParam(BaseConfigModule.appInfo.areaParentId))
                 }
-                .subscribe(object : RxSubscriber<List<EntityStationBean>>(mView) {
+                .subscribe(object : RxSubscriber<List<EntityStationBean>>() {
                     override fun _onNext(stationBeans: List<EntityStationBean>) {
                         mView.onDeptListResult(stationBeans)
                     }

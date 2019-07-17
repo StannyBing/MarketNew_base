@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.content.ContextCompat
 import cn.jpush.android.api.JPushInterface
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -74,18 +73,6 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
                 .showDivider(ContextCompat.getColor(this, R.color.text_color_light))
                 .setTabImageSize(26)
                 .build()
-        tvp_main.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-
-            }
-
-        })
 
         if (BuildConfig.isRelease) {
             CrashReport.setUserId(UserManager.getUser().id)

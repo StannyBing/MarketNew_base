@@ -2,8 +2,6 @@ package com.zx.marketnew_base.main.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSmoothScroller
 import android.support.v7.widget.RecyclerView
@@ -76,7 +74,7 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
                 if (dataBeans.get(index).realName.contains(it)) {
                     var topSmoothScroller: TopSmoothScroller = TopSmoothScroller(mActivity)
                     topSmoothScroller.setTargetPosition(index);
-                    rv_maillist_list.layoutManager.startSmoothScroll(topSmoothScroller);
+                    rv_maillist_list.layoutManager?.startSmoothScroll(topSmoothScroller);
                     return@setSearchListener
                 }
             }

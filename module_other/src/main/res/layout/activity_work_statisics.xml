@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/work_satisics_bg"
-   >
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/work_satisics_bg"
+                android:paddingTop="10dp">
+
     <RelativeLayout
         android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_10">
-        <ImageView
-            android:layout_width="@dimen/dp_50"
-            android:layout_height="@dimen/dp_50"
-            android:padding="15dp"
-            android:src="@drawable/back_white"/>
+        android:layout_marginTop="@dimen/dp_10">
+
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/back_white"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_biger"
-            android:text="@string/work_achievements"
             android:layout_centerInParent="true"
+            android:text="@string/work_achievements"
             android:textColor="@color/white"
-            />
+            android:textSize="@dimen/text_size_normal"/>
     </RelativeLayout>
+
     <com.zx.module_other.module.workplan.func.view.StatisticsView
         android:id="@+id/sv_statistics"
         android:layout_width="match_parent"
@@ -34,6 +43,7 @@
         android:layout_marginBottom="@dimen/dp_10"
         android:layout_marginTop="10dp"
         />
+
     <LinearLayout
         android:id="@+id/ll_work_info"
         android:layout_width="match_parent"
@@ -41,255 +51,289 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp_40"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_30">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_3"
-                android:background="@color/white"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp_10"
                 android:layout_toLeftOf="@+id/tv_cumulative"
-                android:layout_marginRight="@dimen/dp_10"/>
+                android:background="@color/white"/>
+
             <TextView
                 android:id="@+id/tv_cumulative"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_biger"
+                android:layout_centerInParent="true"
                 android:text="@string/work_cumulative"
                 android:textColor="@color/white"
-                android:layout_centerInParent="true"/>
+                android:textSize="@dimen/text_size_biger"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp_3"
-                android:background="@color/white"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_10"
                 android:layout_toRightOf="@+id/tv_cumulative"
-                android:layout_marginLeft="@dimen/dp_10"/>
+                android:background="@color/white"/>
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_120"
+            android:layout_marginTop="@dimen/dp_10"
             android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginTop="@dimen/dp_10">
+            android:weightSum="2">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/work_satisics_infobg"
                 >
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true">
-                <ImageView
-                    android:id="@+id/iv_report"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    android:src="@drawable/collect_normal_white"
-                    />
+
+                    <ImageView
+                        android:id="@+id/iv_report"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:src="@drawable/collect_normal_white"
+                        />
+
                     <TextView
                         android:id="@+id/tv_report"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_normal"
-                        android:layout_toRightOf="@+id/iv_report"
                         android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_report"
                         android:text="@string/complaints_reprt"
                         android:textColor="@color/work_satisics_info"
+                        android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold"
                         />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_toRightOf="@+id/iv_report"
-                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_below="@+id/tv_report"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_report"
+                        android:orientation="horizontal"
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="28sp"
                             android:text="152"
-                            android:textStyle="bold"
                             android:textColor="@color/work_satisics_info"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
                             />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
                             android:text="@string/second"
-                            android:textSize="@dimen/text_size_big"
                             android:textColor="@color/d6d4e6"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="@dimen/dp_8"/>
+                            android:textSize="@dimen/text_size_big"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 >
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true">
+
                     <ImageView
                         android:id="@+id/iv_law"
                         android:layout_width="@dimen/dp_40"
                         android:layout_height="@dimen/dp_40"
                         android:src="@drawable/collect_normal_white"
                         />
+
                     <TextView
                         android:id="@+id/tv_law"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_normal"
-                        android:layout_toRightOf="@+id/iv_law"
                         android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_law"
                         android:text="@string/comprehensive_law"
                         android:textColor="@color/work_satisics_info"
+                        android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold"
                         />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_toRightOf="@+id/iv_law"
-                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_below="@+id/tv_law"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_law"
+                        android:orientation="horizontal"
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="28sp"
                             android:text="152"
-                            android:textStyle="bold"
                             android:textColor="@color/work_satisics_info"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
                             />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
                             android:text="@string/second"
-                            android:textSize="@dimen/text_size_big"
                             android:textColor="@color/d6d4e6"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="@dimen/dp_8"/>
+                            android:textSize="@dimen/text_size_big"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_120"
             android:orientation="horizontal"
             android:weightSum="2">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 >
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true">
+
                     <ImageView
                         android:id="@+id/iv_inspection"
                         android:layout_width="@dimen/dp_40"
                         android:layout_height="@dimen/dp_40"
                         android:src="@drawable/collect_normal_white"
                         />
+
                     <TextView
                         android:id="@+id/tv_inspection"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_normal"
-                        android:layout_toRightOf="@+id/iv_inspection"
                         android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_inspection"
                         android:text="@string/on_inspection"
                         android:textColor="@color/work_satisics_info"
+                        android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold"
                         />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_toRightOf="@+id/iv_inspection"
-                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_below="@+id/tv_inspection"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_inspection"
+                        android:orientation="horizontal"
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="28sp"
                             android:text="152"
-                            android:textStyle="bold"
                             android:textColor="@color/work_satisics_info"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
                             />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
                             android:text="@string/second"
-                            android:textSize="@dimen/text_size_big"
                             android:textColor="@color/d6d4e6"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="@dimen/dp_8"/>
+                            android:textSize="@dimen/text_size_big"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/work_satisics_infobg"
                 >
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true">
+
                     <ImageView
                         android:id="@+id/iv_tasks"
                         android:layout_width="@dimen/dp_40"
                         android:layout_height="@dimen/dp_40"
                         android:src="@drawable/collect_normal_white"
                         />
+
                     <TextView
                         android:id="@+id/tv_tasks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/text_size_normal"
-                        android:layout_toRightOf="@+id/iv_tasks"
                         android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_tasks"
                         android:text="@string/supervisory_tasks"
                         android:textColor="@color/work_satisics_info"
+                        android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold"
                         />
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_toRightOf="@+id/iv_tasks"
-                        android:layout_marginLeft="@dimen/dp_10"
                         android:layout_below="@+id/tv_tasks"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_toRightOf="@+id/iv_tasks"
+                        android:orientation="horizontal"
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="28sp"
                             android:text="152"
-                            android:textStyle="bold"
                             android:textColor="@color/work_satisics_info"
+                            android:textSize="28sp"
+                            android:textStyle="bold"
                             />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_8"
                             android:text="@string/second"
-                            android:textSize="@dimen/text_size_big"
                             android:textColor="@color/d6d4e6"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="@dimen/dp_8"/>
+                            android:textSize="@dimen/text_size_big"
+                            android:textStyle="bold"/>
                     </LinearLayout>
                 </RelativeLayout>
             </RelativeLayout>

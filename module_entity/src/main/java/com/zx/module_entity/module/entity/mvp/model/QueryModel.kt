@@ -38,9 +38,9 @@ class QueryModel : BaseModel(), QueryContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun deptListData(): Observable<List<EntityStationBean>> {
+    override fun deptListData(map: Map<String, String>): Observable<List<EntityStationBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .getEntityStation(hashMapOf())
+                .getEntityStation(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }

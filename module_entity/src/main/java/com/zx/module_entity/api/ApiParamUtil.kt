@@ -38,12 +38,16 @@ object ApiParamUtil {
     }
 
     //搜索
-    fun searchParam(pageNo: Int, pageSize: Int, fCondition: String = "", positionList: String = "", radius: String = ""): Map<String, String> {
+    fun searchParam(pageNo: Int, pageSize: Int, fCondition: String = "", positionList: String = "", radius: String = "", fTags: String = "", fCreditLevel: String = "", fStatus: String = "", areaCode: String = ""): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["pageNo"] = pageNo.toString()
         map["pageSize"] = pageSize.toString()
         if (positionList.isEmpty()) {
-            map["fCondition"] = fCondition
+            if (fCondition.isNotEmpty()) map["fCondition"] = fCondition
+            if (fTags.isNotEmpty()) map["fTags"] = fTags
+            if (fCreditLevel.isNotEmpty()) map["fCreditLevelList"] = fCreditLevel
+            if (fStatus.isNotEmpty()) map["fStatus"] = fStatus
+            if (areaCode.isNotEmpty()) map["areaCode"] = areaCode
         } else {
             map["positionList"] = positionList
             map["radius"] = radius
@@ -61,6 +65,22 @@ object ApiParamUtil {
         val map = hashMapOf<String, String>()
         map["parentId"] = parentId
         return map
+    }
+
+    fun infoModifyParam(fEntityGuid: String, contactName: String = "", fContactPhone: String = "", fContactAddress: String = ""): RequestBody {
+        val map = hashMapOf<String, String>()
+        map["fEntityGuid"] = fEntityGuid
+        if (contactName.isNotEmpty()) map["fContactPeople"] = contactName
+        if (fContactPhone.isNotEmpty()) map["fContactPhone"] = fContactPhone
+        if (fContactAddress.isNotEmpty()) map["fContactAddress"] = fContactAddress
+        return toJson(map)
+    }
+
+    fun updateEntityTags(fEntityGuid: String, fTags: String): RequestBody {
+        val map = hashMapOf<String, String>()
+        map["fEntityGuid"] = fEntityGuid
+        map["fTags"] = fTags
+        return toJson(map)
     }
 
 }

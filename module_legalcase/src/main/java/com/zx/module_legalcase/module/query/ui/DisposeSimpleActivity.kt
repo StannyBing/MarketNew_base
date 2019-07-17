@@ -17,6 +17,7 @@ import com.zx.module_legalcase.module.query.func.adapter.DisposeAdapter
 import com.zx.module_legalcase.module.query.mvp.contract.DisposeSimpleContract
 import com.zx.module_legalcase.module.query.mvp.model.DisposeSimpleModel
 import com.zx.module_legalcase.module.query.mvp.presenter.DisposeSimplePresenter
+import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.UserBean
@@ -135,7 +136,7 @@ class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimple
                 addDept = false
             }
         }
-        mPresenter.getDeptList(ApiParamUtil.deptListParam("360481"))
+        mPresenter.getDeptList(ApiParamUtil.deptListParam(BaseConfigModule.appInfo.areaParentId))
         disposeList.apply {
             if (isAgree) add(DisposeBean(DisposeBean.DisposeType.Spinner, "处理结果", arrayListOf<DisposeBean.ValueBean>().apply {
                 add(DisposeBean.ValueBean("同意", "0", true))

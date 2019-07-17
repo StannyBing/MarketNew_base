@@ -14,8 +14,10 @@ import com.zx.module_legalcase.module.query.bean.DetailBean
 import com.zx.module_legalcase.module.query.mvp.contract.DetailContract
 import com.zx.module_legalcase.module.query.mvp.model.DetailModel
 import com.zx.module_legalcase.module.query.mvp.presenter.DetailPresenter
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.bean.MapTaskBean
 import com.zx.zxutils.util.ZXDialogUtil
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -113,6 +115,22 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                     }
                 }
             }, true)
+        }
+
+        //地图按钮
+        toolBar_view.setRightClickListener {
+            if (detailBean!=null){
+                XApp.startXApp(RoutePath.ROUTE_MAP_MAP){
+                    it["taskBean"] = MapTaskBean("案件执法",
+                            XAppLegalcase.get("案件执法")!!.appIcon,
+                            detailBean!!.info.caseName,
+                            detailBean!!.info.enterpriseName?:"",
+                            detailBean!!.info.enterpriseAddress?:"",
+                            detailBean!!.info.id?:"",
+                            detailBean!!.info.longitude,
+                            detailBean!!.info.latitude)
+                }
+            }
         }
     }
 

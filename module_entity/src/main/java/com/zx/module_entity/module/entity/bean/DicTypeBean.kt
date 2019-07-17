@@ -11,6 +11,7 @@ data class DicTypeBean(var id: String,
                        var dicNameAlias: String?,
                        var dicSort: String?,
                        var parentId: String?,
-                       var dicRemark: String?) {
+                       var dicRemark: String?,
+                       var select : Boolean = false) {
 
 }

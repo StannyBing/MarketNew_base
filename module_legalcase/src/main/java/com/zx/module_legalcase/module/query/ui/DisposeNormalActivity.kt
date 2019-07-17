@@ -17,6 +17,7 @@ import com.zx.module_legalcase.module.query.func.adapter.DisposeAdapter
 import com.zx.module_legalcase.module.query.mvp.contract.DisposeNormalContract
 import com.zx.module_legalcase.module.query.mvp.model.DisposeNormalModel
 import com.zx.module_legalcase.module.query.mvp.presenter.DisposeNormalPresenter
+import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.UserBean
@@ -294,7 +295,7 @@ class DisposeNormalActivity : BaseActivity<DisposeNormalPresenter, DisposeNormal
             }
         }
         if (addDept) {
-            mPresenter.getDeptList(ApiParamUtil.deptListParam("360481"))
+            mPresenter.getDeptList(ApiParamUtil.deptListParam(BaseConfigModule.appInfo.areaParentId))
         }
         disposeList.apply {
             if (addAgree) add(DisposeBean(DisposeBean.DisposeType.Spinner, "处理结果", arrayListOf<DisposeBean.ValueBean>().apply {

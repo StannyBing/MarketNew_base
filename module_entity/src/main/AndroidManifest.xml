@@ -10,6 +10,7 @@
             android:value="ConfigModule"/>
 
         <activity android:name=".module.entity.ui.QueryActivity"/>
+        <activity android:name=".module.entity.ui.DetailActivity"/>
     </application>
 
 </manifest>

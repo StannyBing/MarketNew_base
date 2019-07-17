@@ -50,7 +50,7 @@ class SearchFilterAdapter(dataBeans: List<SearchFilterBean>, var color: Int) : Z
                 etValue.visibility = View.GONE
                 spValue.visibility = View.GONE
                 tvTips.visibility = View.VISIBLE
-            }else{
+            } else {
                 tvTips.visibility = View.GONE
             }
 
@@ -112,6 +112,9 @@ class SearchFilterAdapter(dataBeans: List<SearchFilterBean>, var color: Int) : Z
                     it.isSelect = false
                 }
                 if (position == -1) {
+                    if (bean.singleFunc) {
+                        selectCall(tag as Int, "")
+                    }
                     return
                 }
                 bean.values[position].isSelect = true
