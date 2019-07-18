@@ -21,7 +21,10 @@
         <activity android:name=".module.law.ui.StandardDetailActivity" />
         <activity android:name=".module.workplan.ui.WorkPlanActivity" />
         <activity android:name=".module.workplan.ui.CreatePlanActivity" />
-        <activity android:name=".module.workplan.ui.WorkStatisicsActivity"/>
+        <activity android:name=".module.workplan.ui.WorkStatisicsActivity" />
+        <activity android:name=".module.workplan.ui.DocumentActivity" />
+        <activity android:name=".module.workplan.ui.DocumentFillActivity" />
+        <activity android:name=".module.workplan.ui.DocumentSeeActivity" />
     </application>
 
 </manifest>

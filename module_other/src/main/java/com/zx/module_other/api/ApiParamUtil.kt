@@ -148,4 +148,13 @@ object ApiParamUtil {
         map["monthNum"] = monthNum
         return map;
     }
+
+    /**
+     * 获取文书数据
+     */
+    fun getDocumentParam(id: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["id"] = id
+        return map;
+    }
 }

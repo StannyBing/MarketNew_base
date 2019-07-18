@@ -31,6 +31,13 @@
     <string name="on_inspection">现场检查</string>
     <string name="supervisory_tasks">监管任务</string>
     <string name="second">次</string>
+    <string name="see_document">文书查看</string>
+    <string name="fill_document">文书填写</string>
+    <string name="print_document">文书打印</string>
+    <string name="preview_document">文书预览</string>
+    <string name="goon_fill">继续填写</string>
+    <string name="search">搜索</string>
+    <string name="userful_document">常用文书：</string>
     <string-array name="keywordName">
         <item>食品药品</item>
         <item>餐饮服务</item>
@@ -63,5 +70,14 @@
         <item>174</item>
         <item>175</item>
         <item>176</item>
+    </integer-array>
+
+    <string-array name="documentName">
+        <item>责令整改通知书</item>
+        <item>送达回证</item>
+    </string-array>
+    <integer-array name="documentId">
+        <item>0</item>
+        <item>1</item>
     </integer-array>
 </resources>
