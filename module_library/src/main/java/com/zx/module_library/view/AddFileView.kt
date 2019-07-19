@@ -37,11 +37,15 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private lateinit var rvFileList: RecyclerView
     private lateinit var ivAddFile: ImageView
+    private lateinit var llSaveFile: LinearLayout
+    private lateinit var ivSaveFile: ImageView
+    private lateinit var tvSaveFile: TextView
     private lateinit var tvAddInfo: TextView
     val fileList = arrayListOf<FileBean>()
-    private val fileAdapter = AddFileAdapter(fileList)
+    val fileAdapter = AddFileAdapter(fileList)
     private var module_color: Int//xapp主题色
     private var modifiable: Boolean//可修改的
+    private var saveable: Boolean = false//展示保存按钮
     private var listType: Int = 0//列表类型 0 普通列表  1九宫格
     private var fileFuncListener: FileFuncListener? = null
     private var addType = AddType.NORMAL
@@ -73,8 +77,9 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         rvFileList = findViewById(R.id.rv_file_list)
         tvAddInfo = findViewById(R.id.tv_add_file_info)
 
-        val addDrawable = ivAddFile.drawable.mutate()
-        addDrawable.setTint(module_color)
+        ivAddFile.drawable.mutate().setTint(module_color)
+        ivSaveFile.drawable.mutate().setTint(module_color)
+        tvSaveFile.setTextColor(module_color)
 
         rvFileList.apply {
             layoutManager = if (listType == 0) {
@@ -87,12 +92,10 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 setOnItemChildClickListener { _, view, position ->
                     when (view.id) {
                         R.id.iv_file_delete -> {
-                            if (fileFuncListener != null) {
-                                fileFuncListener!!.onFileDelete(fileList[position], position)
+                            if (fileFuncListener == null || fileFuncListener!!.onFileDelete(fileList[position], position)) {
+                                fileList.removeAt(position)
+                                fileAdapter.notifyItemRemoved(position)
                             }
-                            fileList.removeAt(position)
-                            fileAdapter.notifyItemRemoved(position)
-
                         }
                     }
                 }
@@ -110,6 +113,9 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                 if (modifiable) {
                     addFooterView(footerView)
                 }
+                if (saveable) {
+                    llSaveFile.visibility = View.VISIBLE
+                }
             }
         }
         if (modifiable) {
@@ -124,7 +130,11 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
 
     private fun initFooterView() {
         footerView = LayoutInflater.from(context).inflate(R.layout.layout_add_file_foot, null, false)
+        llSaveFile = footerView.findViewById(R.id.ll_file_save)
+        ivSaveFile = footerView.findViewById(R.id.iv_file_save)
+        tvSaveFile = footerView.findViewById(R.id.tv_file_save)
         ivAddFile = footerView.findViewById(R.id.iv_file_add)
+        llSaveFile.setOnClickListener { fileFuncListener?.onFileSave() }
         footerView.setOnClickListener {
             (context as BaseActivity<*, *>).getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
                 if (addType == AddType.IMAGE) {
@@ -206,6 +216,13 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         return this
     }
 
+    //展示保存
+    fun showSaveView(): AddFileView {
+        saveable = true
+        llSaveFile.visibility = View.VISIBLE
+        return this
+    }
+
     //设置文件获取方式
     fun setAddType(addType: AddType): AddFileView {
         this.addType = addType
@@ -222,9 +239,9 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     fun setDatas(files: List<FileBean>): AddFileView {
         fileList.addAll(files)
         fileAdapter.notifyDataSetChanged()
-        if (!modifiable&&fileList.isEmpty()){
+        if (!modifiable && fileList.isEmpty()) {
             tvAddInfo.visibility = View.VISIBLE
-        }else{
+        } else {
             tvAddInfo.visibility = View.GONE
         }
         return this

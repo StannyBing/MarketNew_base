@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.TextView
 import com.zx.module_complain.R
 import com.zx.module_complain.module.info.bean.DisposeBean
+import com.zx.module_library.func.tool.DatePickerTool
 import com.zx.zxutils.entity.KeyValueEntity
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
@@ -52,7 +53,8 @@ class DisposeAdapter(dataList: List<DisposeBean>) : ZXQuickAdapter<DisposeBean, 
                     spValue.init(item)
                 }
                 DisposeBean.DisposeType.Time -> {
-
+                    tvValue.visibility = View.VISIBLE
+                    tvValue.init(item)
                 }
             }
 
@@ -70,6 +72,17 @@ class DisposeAdapter(dataList: List<DisposeBean>) : ZXQuickAdapter<DisposeBean, 
 
     fun setSpinnerCall(onSpinnerCall: (Int) -> Unit) {
         this.onSpinnerCall = onSpinnerCall
+    }
+
+    private fun TextView.init(bean: DisposeBean) {
+        if (bean.disposeType == DisposeBean.DisposeType.Time) {
+            hint = "请选择..."
+            setOnClickListener {
+                DatePickerTool.showDatePicker(mContext, this){
+                    bean.resultValue = it
+                }
+            }
+        }
     }
 
     private fun EditText.init(bean: DisposeBean) {

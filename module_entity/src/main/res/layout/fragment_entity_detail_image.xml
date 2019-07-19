@@ -4,10 +4,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+
     <com.zx.module_library.view.AddFileView
         android:id="@+id/file_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </com.zx.module_library.view.AddFileView>
+
 </LinearLayout>

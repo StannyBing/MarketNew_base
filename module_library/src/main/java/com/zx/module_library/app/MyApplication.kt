@@ -8,8 +8,6 @@ import cn.jpush.android.api.JPushInterface
 import com.alibaba.android.arouter.launcher.ARouter
 import com.frame.zxmvp.baseapp.BaseApplication
 import com.frame.zxmvp.di.component.AppComponent
-import com.github.moduth.blockcanary.BlockCanary
-import com.github.moduth.blockcanary.BlockCanaryContext
 import com.tencent.bugly.crashreport.CrashReport
 import com.zx.module_library.BuildConfig
 import com.zx.zxutils.ZXApp
@@ -64,9 +62,6 @@ open class MyApplication : BaseApplication() {
             val builder = StrictMode.VmPolicy.Builder()
             StrictMode.setVmPolicy(builder.build())
         }
-
-        // 在主进程初始化调用
-        BlockCanary.install(this, BlockCanaryContext()).start()
 
         //初始化
         ConstStrings.LOCAL_PATH = ZXSystemUtil.getSDCardPath()

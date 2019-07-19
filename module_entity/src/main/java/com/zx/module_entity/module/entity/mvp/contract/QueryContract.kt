@@ -6,7 +6,7 @@ import com.frame.zxmvp.base.IView
 import com.zx.module_entity.module.entity.bean.DicTypeBean
 import com.zx.module_entity.module.entity.bean.EntityLevelBean
 import com.zx.module_entity.module.entity.bean.EntityStationBean
-import com.zx.module_entity.module.entity.func.adapter.EntityBean
+import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.module_library.bean.NormalList
 import rx.Observable
 

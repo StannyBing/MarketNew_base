@@ -11,7 +11,6 @@ import com.zx.module_legalcase.module.query.mvp.presenter.FileInfoPresenter
 import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.base.BaseFragment
 import com.zx.module_library.bean.FileBean
-import com.zx.module_library.func.listener.FileFuncListener
 import com.zx.module_library.view.AddFileView
 import kotlinx.android.synthetic.main.fragment_file_info.*
 
@@ -47,11 +46,6 @@ class FileInfoFragment : BaseFragment<FileInfoPresenter, FileInfoModel>(), FileI
         super.initView(savedInstanceState)
         file_view.withXApp(XAppLegalcase.get("综合执法"))
                 .setAddType(AddFileView.AddType.NORMAL)
-                .setFileListener(object : FileFuncListener {
-                    override fun onFileDelete(fileBean: FileBean, position: Int) {
-
-                    }
-                })
     }
 
     /**

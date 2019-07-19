@@ -121,6 +121,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         toolBar_view.setRightClickListener {
             if (detailBean != null) {
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
+                    it["type"] = 1
                     it["taskBean"] = MapTaskBean("案件执法",
                             XAppLegalcase.get("综合执法")!!.appIcon,
                             detailBean!!.info.caseName,

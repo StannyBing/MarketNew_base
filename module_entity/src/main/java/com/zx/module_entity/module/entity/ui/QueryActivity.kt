@@ -12,7 +12,7 @@ import com.zx.module_entity.api.ApiParamUtil
 import com.zx.module_entity.module.entity.bean.DicTypeBean
 import com.zx.module_entity.module.entity.bean.EntityLevelBean
 import com.zx.module_entity.module.entity.bean.EntityStationBean
-import com.zx.module_entity.module.entity.func.adapter.EntityBean
+import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.module_entity.module.entity.func.adapter.EntityListAdapter
 import com.zx.module_entity.module.entity.mvp.contract.QueryContract
 import com.zx.module_entity.module.entity.mvp.model.QueryModel

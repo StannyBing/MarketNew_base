@@ -31,6 +31,8 @@ object RoutePath {
     //主体查询
     const val ROUTE_ENTITY_QUERY = "/entity/query"//主体查询
     const val ROUTE_ENTITY_DETAIL = "/entity/detail"//主体查询-详情
+    const val ROUTE_ENTITY_SPECIALADD = "/entity/specialAdd"//特殊主体-上报
+    const val ROUTE_ENTITY_SPECIALLIST = "/entity/specialList"//特殊主体-上报记录
 
     //监管任务
     const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//监管任务查询

@@ -26,14 +26,16 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
     var mapListener: MapListener? = null
     private var taskBean: MapTaskBean? = null
 
+    private var type = 0
+
     companion object {
         /**
          * 启动器
          */
-        fun newInstance(taskBean: MapTaskBean?): MapTaskFragment {
+        fun newInstance(type : Int): MapTaskFragment {
             val fragment = MapTaskFragment()
             val bundle = Bundle()
-            bundle.putSerializable("taskBean", taskBean)
+            bundle.putInt("type", type)
             fragment.arguments = bundle
             return fragment
         }
@@ -51,18 +53,28 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
-        if (taskBean != null) {
-            rl_task.visibility = View.VISIBLE
-            tv_task_type.text = taskBean?.typeName
-            val typeDrawable = ContextCompat.getDrawable(activity!!, taskBean!!.typeIcon)
-            typeDrawable?.setTint(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
-            typeDrawable?.mutate()
-            iv_task_type.setImageDrawable(typeDrawable)
-            tv_task_name.text = taskBean?.name
-            tv_task_name.setTextColor(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
-            tv_task_other.text = taskBean?.other
-            tv_task_address.text = taskBean?.address
+
+        type = arguments!!.getInt("type")
+
+        when(type){
+            1->{
+                taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+                if (taskBean != null) {
+                    rl_task.visibility = View.VISIBLE
+                    tv_task_type.text = taskBean?.typeName
+                    val typeDrawable = ContextCompat.getDrawable(activity!!, taskBean!!.typeIcon)
+                    typeDrawable?.setTint(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
+                    typeDrawable?.mutate()
+                    iv_task_type.setImageDrawable(typeDrawable)
+                    tv_task_name.text = taskBean?.name
+                    tv_task_name.setTextColor(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
+                    tv_task_other.text = taskBean?.other
+                    tv_task_address.text = taskBean?.address
+                }
+            }
+            2->{
+
+            }
         }
     }
 

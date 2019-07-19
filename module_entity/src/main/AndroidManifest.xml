@@ -11,6 +11,8 @@
 
         <activity android:name=".module.entity.ui.QueryActivity"/>
         <activity android:name=".module.entity.ui.DetailActivity"/>
+        <activity android:name=".module.special.ui.SpecialAddActivity"/>
+        <activity android:name=".module.special.ui.SpecialListActivity"/>
     </application>
 
 </manifest>

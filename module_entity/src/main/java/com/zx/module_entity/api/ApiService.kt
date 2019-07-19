@@ -2,7 +2,8 @@ package com.zx.module_entity.api
 
 import com.frame.zxmvp.basebean.BaseRespose
 import com.zx.module_entity.module.entity.bean.*
-import com.zx.module_entity.module.entity.func.adapter.EntityBean
+import com.zx.module_entity.module.entity.bean.EntityBean
+import com.zx.module_entity.module.special.bean.DeptBean
 import com.zx.module_library.bean.NormalList
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -43,4 +44,21 @@ interface ApiService {
 
     @GET(ApiConfigModule.URL_SUPERVISE + "entity/getEntityBusinessInfo.do")
     fun getBusinessInfo(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<BusinessBean>>>
+
+    @POST(ApiConfigModule.URL_SUPERVISE + "file/upload.do")
+    fun uploadFile(@Body body: RequestBody): Observable<BaseRespose<List<String>>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST(ApiConfigModule.URL_SUPERVISE + "file/delete.do")
+    fun deleteFile(@Body body: RequestBody): Observable<BaseRespose<Any>>
+
+    @GET(ApiConfigModule.URL + "department/queary.do")
+    fun getDeptList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<DeptBean>>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST(ApiConfigModule.URL_SUPERVISE + "entitySpecial/addEntitySpecialInfo.do")
+    fun addSpecialEntity(@Body body: RequestBody): Observable<BaseRespose<String>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "entitySpecial/getEntitySpecialPage.do")
+    fun getSpecialList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<EntityBean>>>
 }

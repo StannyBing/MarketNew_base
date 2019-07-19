@@ -26,22 +26,24 @@ import kotlinx.android.synthetic.main.fragment_map_btn.*
  */
 class MapBtnFragment : BaseFragment<MapBtnPresenter, MapBtnModel>(), MapBtnContract.View {
 
-    var mapListener : MapListener?=null
+    var mapListener: MapListener? = null
     private val btnList = arrayListOf<MapBtnBean>()
     private val btnAdapter = BtnAdapter(btnList)
 
-    private var layerBubble : ZXBubbleView?=null
+    private var layerBubble: ZXBubbleView? = null
 
-    private var taskBean : MapTaskBean?=null
+    private var taskBean: MapTaskBean? = null
+
+    private var type = 0
 
     companion object {
         /**
          * 启动器
          */
-        fun newInstance(taskBean : MapTaskBean?): MapBtnFragment {
+        fun newInstance(type: Int): MapBtnFragment {
             val fragment = MapBtnFragment()
             val bundle = Bundle()
-            bundle.putSerializable("taskBean", taskBean)
+            bundle.putInt("type", type)
             fragment.arguments = bundle
             return fragment
         }
@@ -60,9 +62,18 @@ class MapBtnFragment : BaseFragment<MapBtnPresenter, MapBtnModel>(), MapBtnContr
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+        type = arguments!!.getInt("type")
 
-        btnAdapter.setColor(ContextCompat.getColor(activity!!,XAppMap.get("地图")!!.moduleColor))
+        when (type) {
+            1 -> {
+                taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+            }
+            2 -> {
+
+            }
+        }
+
+        btnAdapter.setColor(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
         rv_map_btn.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = btnAdapter
@@ -77,14 +88,14 @@ class MapBtnFragment : BaseFragment<MapBtnPresenter, MapBtnModel>(), MapBtnContr
     private fun initBtn() {
         btnAdapter.addData(MapBtnBean("图层", R.drawable.btn_layer))
         btnAdapter.addData(MapBtnBean("定位", R.drawable.btn_location))
-        if (taskBean!=null){
+        if (type == 1 && taskBean != null) {
             btnAdapter.addData(MapBtnBean("导航", R.drawable.btn_navi))
         }
     }
 
     //初始化图层弹窗
     private fun initLayerBubble() {
-        val layerView = LayoutInflater.from(activity).inflate(R.layout.layout_layer_view, null,false)
+        val layerView = LayoutInflater.from(activity).inflate(R.layout.layout_layer_view, null, false)
         val ivVector = layerView.findViewById<ImageView>(R.id.iv_layer_vector)
         val ivImage = layerView.findViewById<ImageView>(R.id.iv_layer_image)
         ivVector.setOnClickListener { mapListener?.changeMap("vector") }
@@ -102,15 +113,15 @@ class MapBtnFragment : BaseFragment<MapBtnPresenter, MapBtnModel>(), MapBtnContr
         }
 
         btnAdapter.setOnItemClickListener { _, view, position ->
-            when(btnList[position].name){
-                "图层"->{
+            when (btnList[position].name) {
+                "图层" -> {
                     layerBubble?.show(view, Gravity.LEFT)
                 }
-                "定位"->{
+                "定位" -> {
                     mapListener?.doLocation()
                 }
-                "导航"->{
-                    NaviTool.openNavi(activity!!,taskBean)
+                "导航" -> {
+                    NaviTool.openNavi(activity!!, taskBean)
                 }
             }
         }

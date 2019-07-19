@@ -1,4 +1,4 @@
-package com.zx.module_legalcase.module.query.func.adapter
+package com.zx.module_entity.module.special.func.adapter
 
 import android.annotation.SuppressLint
 import android.support.v4.content.ContextCompat
@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.TextView
-import com.zx.module_legalcase.R
-import com.zx.module_legalcase.module.query.bean.DisposeBean
+import com.zx.module_entity.R
+import com.zx.module_entity.module.special.bean.DisposeBean
 import com.zx.module_library.func.tool.DatePickerTool
 import com.zx.zxutils.entity.KeyValueEntity
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
@@ -178,28 +178,6 @@ class DisposeAdapter(dataList: List<DisposeBean>) : ZXQuickAdapter<DisposeBean, 
             }
         }
         return true
-    }
-
-    fun getItem(name: String): DisposeBean? {
-        if (data.isNotEmpty()) {
-            data.forEach {
-                if (it.disposeName == name) {
-                    return it
-                }
-            }
-        }
-        return null
-    }
-
-    fun getItemPosition(name: String): Int {
-        if (data.isNotEmpty()) {
-            data.forEachIndexed { index, it ->
-                if (it.disposeName == name) {
-                    return index
-                }
-            }
-        }
-        return -1
     }
 
     fun setModuleColor(moduleColor: Int) {

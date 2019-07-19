@@ -4,7 +4,7 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_entity.api.ApiParamUtil
 import com.zx.module_entity.module.entity.bean.EntityStationBean
-import com.zx.module_entity.module.entity.func.adapter.EntityBean
+import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.module_entity.module.entity.mvp.contract.QueryContract
 import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.bean.NormalList

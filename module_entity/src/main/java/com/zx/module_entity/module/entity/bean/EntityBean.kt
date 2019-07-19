@@ -1,4 +1,4 @@
-package com.zx.module_entity.module.entity.func.adapter
+package com.zx.module_entity.module.entity.bean
 
 /**
  * Created by Xiangb on 2019/7/12.

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.support.v4.content.ContextCompat
 import android.widget.ImageView
 import com.zx.module_entity.R
+import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
 import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecyclerQuickAdapter
 

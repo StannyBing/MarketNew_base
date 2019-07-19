@@ -12,13 +12,14 @@ import com.zx.module_entity.module.entity.mvp.contract.DetailContract
  */
 class DetailPresenter : DetailContract.Presenter() {
     override fun getEntityDetail(type: Int, map: Map<String, String>) {
-        if (type == 0) {
+        val observable = if (type == 0) {
             mModel.entityDetailSpecialData(map)
         } else if (type == 1) {
             mModel.entityDetailNormalData(map)
         } else {
             mModel.entityDetailBizlicData(map)
-        }.compose(RxHelper.bindToLifecycle(mView))
+        }
+        observable.compose(RxHelper.bindToLifecycle(mView))
                 .subscribe(object : RxSubscriber<EntityDetailBean>() {
                     override fun _onNext(t: EntityDetailBean?) {
                         mView.onEntityDetailResult(t)

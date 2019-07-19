@@ -8,9 +8,11 @@ import com.zx.module_library.bean.FileBean
  */
 interface FileFuncListener {
 
-    fun onFileDelete(fileBean: FileBean, position: Int) {}
+    fun onFileDelete(fileBean: FileBean, position: Int) : Boolean {return false}
 
     fun onFileAdd(fileBean: FileBean) {}
 
     fun onFileClick(fileBean: FileBean, position: Int) {}
+
+    fun onFileSave(){}
 }

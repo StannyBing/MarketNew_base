@@ -27,9 +27,14 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
     private lateinit var btnFragment: MapBtnFragment
     private lateinit var taskFragment: MapTaskFragment
 
-    private var taskBean : MapTaskBean?=null
+    private var taskBean: MapTaskBean? = null
 
     override var canSwipeBack: Boolean = false
+
+    private var type: Int = 0
+    //0普通
+    //1主体查看
+    //2坐标选取
 
     companion object {
         /**
@@ -56,11 +61,11 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
         super.initView(savedInstanceState)
         toolbar_view.withXApp(XAppMap.get("地图"))
 
-        taskBean = if (intent.hasExtra("taskBean")) intent.getSerializableExtra("taskBean") as MapTaskBean? else null
+        type = if (intent.hasExtra("type")) intent.getIntExtra("type", 0) else 0
 
-        ZXFragmentUtil.addFragment(supportFragmentManager, MapFragment.newInstance(taskBean).apply { mapFragment = this }, R.id.fl_map)
-        ZXFragmentUtil.addFragment(supportFragmentManager, MapBtnFragment.newInstance(taskBean).apply { btnFragment = this }, R.id.fl_btn)
-        ZXFragmentUtil.addFragment(supportFragmentManager, MapTaskFragment.newInstance(taskBean).apply { taskFragment = this }, R.id.fl_task)
+        ZXFragmentUtil.addFragment(supportFragmentManager, MapFragment.newInstance(type).apply { mapFragment = this }, R.id.fl_map)
+        ZXFragmentUtil.addFragment(supportFragmentManager, MapBtnFragment.newInstance(type).apply { btnFragment = this }, R.id.fl_btn)
+        ZXFragmentUtil.addFragment(supportFragmentManager, MapTaskFragment.newInstance(type).apply { taskFragment = this }, R.id.fl_task)
 
         mapFragment.mapListener.apply {
             btnFragment.mapListener = this

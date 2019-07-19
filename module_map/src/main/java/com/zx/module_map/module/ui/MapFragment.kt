@@ -2,6 +2,7 @@ package com.zx.module_map.module.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
@@ -55,16 +56,18 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
 
     private var locationDisplayManager: LocationDisplayManager? = null
 
-    private var taskBean : MapTaskBean?=null
+    private var taskBean: MapTaskBean? = null
+
+    private var type: Int = 0
 
     companion object {
         /**
          * 启动器
          */
-        fun newInstance(taskBean : MapTaskBean?): MapFragment {
+        fun newInstance(type: Int): MapFragment {
             val fragment = MapFragment()
             val bundle = Bundle()
-            bundle.putSerializable("taskBean", taskBean)
+            bundle.putInt("type", type)
             fragment.arguments = bundle
             return fragment
         }
@@ -84,11 +87,20 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
-
         ArcGISRuntime.setClientId("5SKIXc21JlankElJ")
         ArcGISRuntime.License.setLicense("runtimestandard,101,rux00000,none,XXXXXXX")
         map_view.setMapBackground(Color.WHITE, -1, 0.0f, 0.0f)
+
+        type = arguments!!.getInt("type")
+
+        when (type) {
+            1 -> {
+                taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+            }
+            2 -> {
+
+            }
+        }
 
         initBaseLayer()
     }
@@ -110,6 +122,7 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
         map_view.addLayer(mMarkersGLayer)
 
         map_view.onStatusChangedListener = this
+        map_view.onSingleTapListener = this
 //        map_view.setOnStatusChangedListener { any, status ->
 //            if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
 //                mapListener.doLocation()
@@ -128,22 +141,43 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     override fun onStatusChanged(p0: Any?, status: OnStatusChangedListener.STATUS?) {
         if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
             mapListener.doLocation()
-            if (taskBean!=null&&taskBean!!.longtitude!=null&&taskBean!!.latitude!=null){
-                val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
-                symbol.offsetY = 17f
-                var point = Point(taskBean!!.longtitude!!,taskBean!!.latitude!!)
-                point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
-                val graphic = Graphic(point, symbol)
-                mMarkersGLayer?.addGraphic(graphic)
-                map_view.centerAt(point, true)
-                map_view.scale = 70000.00
+            if (type == 1) {
+                if (taskBean != null && taskBean!!.longtitude != null && taskBean!!.latitude != null) {
+                    val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
+                    symbol.offsetY = 17f
+                    var point = Point(taskBean!!.longtitude!!, taskBean!!.latitude!!)
+                    point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
+                    val graphic = Graphic(point, symbol)
+                    mMarkersGLayer?.addGraphic(graphic)
+                    map_view.centerAt(point, true)
+                    map_view.scale = 70000.00
+                }
+            } else if (type == 2) {
+                val longitude = activity?.intent?.getFloatExtra("longitude", 0f)
+                val latitude = activity?.intent?.getFloatExtra("latitude", 0f)
+                if (longitude != null && latitude != null && longitude != 0f && latitude != 0f) {
+                    val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
+                    symbol.offsetY = 17f
+                    var point = Point(longitude.toDouble(), latitude.toDouble())
+                    point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
+                    val graphic = Graphic(point, symbol)
+                    mMarkersGLayer?.addGraphic(graphic)
+                    map_view.centerAt(point, true)
+                    map_view.scale = 70000.00
+                }
             }
         }
     }
 
     //地图点击事件
-    override fun onSingleTap(p0: Float, p1: Float) {
-
+    override fun onSingleTap(x: Float, y: Float) {
+        if (type == 2) {
+            val intent = Intent()
+            intent.putExtra("longitude", map_view.toMapPoint(x, y).x)
+            intent.putExtra("latitude", map_view.toMapPoint(x, y).y)
+            activity!!.setResult(100, intent)
+            activity!!.finish()
+        }
     }
 
     inner class MyListener : MapListener {
@@ -186,15 +220,15 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
             }
         }
 
-        override fun changeMap(type : String) {
-            when(type){
-                "vector"->{
+        override fun changeMap(type: String) {
+            when (type) {
+                "vector" -> {
                     vectorGlobalLayer?.isVisible = true
                     vectorGlobalLable?.isVisible = true
                     imageGlobalLayer?.isVisible = false
                     imageGlobalLable?.isVisible = false
                 }
-                "image"->{
+                "image" -> {
                     vectorGlobalLayer?.isVisible = false
                     vectorGlobalLable?.isVisible = false
                     imageGlobalLayer?.isVisible = true

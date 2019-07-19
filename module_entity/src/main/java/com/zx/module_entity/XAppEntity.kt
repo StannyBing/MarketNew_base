@@ -11,6 +11,7 @@ import com.zx.module_library.bean.XAppBean
 object XAppEntity : XApp() {
     override val map: Map<String, XAppBean>
         get() = mapOf(
-                "主体查询" to XAppBean("主体查询", R.color.entity_color, R.drawable.icon_entity, RoutePath.ROUTE_ENTITY_QUERY)
+                "主体查询" to XAppBean("主体查询", R.color.entity_color, R.drawable.icon_entity, RoutePath.ROUTE_ENTITY_QUERY),
+                "特殊主体" to XAppBean("特殊主体", R.color.special_color, R.drawable.icon_special, RoutePath.ROUTE_ENTITY_SPECIALADD)
         )
 }
