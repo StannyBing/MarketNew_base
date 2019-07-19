@@ -12,17 +12,14 @@ import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
-import com.zx.module_other.module.documentmanage.bean.DocumentContentBean
+import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.documentmanage.bean.DocumentBean
 import com.zx.module_other.module.documentmanage.bean.DocumentMainBean
-import com.zx.module_other.module.documentmanage.bean.DocumentTitelBean
 import com.zx.module_other.module.documentmanage.func.adapter.DocumentAdpater
 import com.zx.module_other.module.documentmanage.func.adapter.DocumentMainAdapter
-import com.zx.module_other.module.law.bean.LawMainBean
-import com.zx.module_other.module.law.func.adapter.LawMainAdapter
 import com.zx.module_other.module.workplan.mvp.contract.DocumentContract
 import com.zx.module_other.module.workplan.mvp.model.DocumentModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentPresenter
-import com.zx.module_other.module.workstatisics.bean.DocumentBean
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
 import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity
@@ -51,7 +48,7 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     override fun onViewListener() {
         adapter.setOnItemClickListener { adapter, view, position ->
             if (adapterDatas[position].itemType == DocumentAdpater.TYPE_LEVEL_1) {
-                DocumentSeeActivity.startAction(this, false,adapterDatas[position] as DocumentContentBean,DocumentSeeActivity.TYPE_FILL)
+                DocumentSeeActivity.startAction(this, false,adapterDatas[position] as Children,DocumentSeeActivity.TYPE_FILL,"")
             }
         }
     }
@@ -65,11 +62,6 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
         super.initView(savedInstanceState)
         toobar_view.withXApp(XAppOther.get("文书"))
         sv_document_search.withXApp(XAppOther.get("文书"))
-        mPresenter.getDocumentList(ApiParamUtil.getDocumentParam("4"))
-        adapter.addData(DocumentTitelBean("fs"))
-        adapter.addData(DocumentContentBean("dsdsd"))
-        adapter.addData(DocumentContentBean("dsdsd"))
-        adapter.addData(DocumentContentBean("dsdsd"))
         rv_document.apply {
             layoutManager = LinearLayoutManager(this@DocumentActivity)
             adapter = adapter
@@ -78,6 +70,7 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
             layoutManager = GridLayoutManager(this@DocumentActivity, 2)
             adapter = userfulAdapter
         }
+        mPresenter.getDocumentList(ApiParamUtil.getDocumentParam("4"))
         initData()
     }
 
@@ -100,7 +93,13 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
         }
     }
 
-    override fun getDocumentResult(workStatisicsDatas: List<DocumentBean>) {
-
+    override fun getDocumentResult(documents: List<DocumentBean>) {
+        for (document in documents){
+            adapterDatas.add(document)
+            for (child in document.children){
+                adapterDatas.add(child)
+            }
+        }
+        adapter.setNewData(adapterDatas)
     }
 }

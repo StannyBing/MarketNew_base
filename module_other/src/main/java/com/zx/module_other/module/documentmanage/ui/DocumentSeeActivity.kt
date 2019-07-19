@@ -2,9 +2,12 @@ package com.zx.module_other.module.workplan.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -12,7 +15,9 @@ import android.webkit.WebViewClient
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
-import com.zx.module_other.module.documentmanage.bean.DocumentContentBean
+import com.zx.module_other.api.ApiConfigModule
+import com.zx.module_other.api.ApiParamUtil
+import com.zx.module_other.module.documentmanage.bean.Children
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
 import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
@@ -26,20 +31,25 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, documentContentBean: DocumentContentBean, type: Int) {
+        fun startAction(activity: Activity, isFinish: Boolean, children: Children, type: Int,printUrl:String) {
             val intent = Intent(activity, DocumentSeeActivity::class.java)
-            intent.putExtra("documentContentBean", documentContentBean)
+            intent.putExtra("children", children)
             intent.putExtra("type", type)
+            intent.putExtra("printUrl",printUrl)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewListener() {
         tv_fill_document.setOnClickListener {
-            DocumentFillActivity.startAction(this, false, intent.getSerializableExtra("documentContentBean") as DocumentContentBean)
+            DocumentFillActivity.startAction(this, false, intent.getSerializableExtra("children") as Children)
         }
         tv_print_document.setOnClickListener {
+//            getSystemService(Context.PRINT_SERVICE).apply {
+//                print("",wv_documentsee.createPrintDocumentAdapter(""),null)
+//            }
 
         }
     }
@@ -52,14 +62,6 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         toobar_view.withXApp(XAppOther.get("文书"))
-        when (intent.getIntExtra("type", TYPE_FILL)) {
-            TYPE_FILL -> {
-                toobar_view.setMidText(resources.getString(R.string.fill_document))
-            }
-            TYPE_CHANGE -> {
-                toobar_view.setMidText(resources.getString(R.string.goon_fill))
-            }
-        }
         wv_documentsee.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
@@ -79,7 +81,15 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
                 }
             }
         }
-        setHtml("http://www.baidu.com")
+        when (intent.getIntExtra("type", TYPE_FILL)) {
+            TYPE_FILL -> {
+                toobar_view.setMidText(resources.getString(R.string.fill_document))
+                mPresenter.getDocumentWeb(ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id))
+            }
+            TYPE_CHANGE -> {
+                toobar_view.setMidText(resources.getString(R.string.goon_fill))
+            }
+        }
     }
 
     override fun getDocumentWebSeeResult(weburl: String) {

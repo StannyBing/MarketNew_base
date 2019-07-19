@@ -3,7 +3,6 @@ package com.zx.module_other.module.workplan.mvp.presenter
 import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
-import com.zx.module_other.module.workstatisics.bean.DocumentBean
 
 class DocumentSeePresenter : DocumentSeeContract.Presenter() {
     override fun getDocumentWeb(map: Map<String, String>) {

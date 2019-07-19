@@ -3,6 +3,7 @@ package com.zx.module_other.api
 import android.text.TextUtils
 import android.util.Base64
 import com.google.gson.Gson
+import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import org.w3c.dom.Text
@@ -152,9 +153,38 @@ object ApiParamUtil {
     /**
      * 获取文书数据
      */
-    fun getDocumentParam(id: String): Map<String, String> {
+    fun getDocumentParam(name: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        if (!TextUtils.isEmpty(name)) {
+            map["name"] = name
+        }
+        return map;
+    }
+
+    /**
+     * 获取文书应该填入的字段
+     */
+    fun getDocumentFieldParam(id: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+            map["id"] = id
+        return map;
+    }
+
+    /**
+     * 获取文书模板
+     */
+    fun getDocumentMoldeParam(id: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["id"] = id
         return map;
     }
+
+//    /**
+//     * 获取打印文书html
+//     */
+//    fun getDocumentPrintParam(id: String,fields:List<TemplateFieldBean>): Map<String, String> {
+//        val map = hashMapOf<String, String>()
+//        map["id"] = id
+//        return map;
+//    }
 }

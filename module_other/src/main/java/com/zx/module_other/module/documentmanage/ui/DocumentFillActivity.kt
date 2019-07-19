@@ -5,27 +5,35 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.EditText
+import android.widget.RelativeLayout
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
-import com.zx.module_other.module.documentmanage.bean.DocumentContentBean
+import com.zx.module_other.api.ApiParamUtil
+import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.documentmanage.func.adapter.DocumentFillAdapter
+import com.zx.module_other.module.workplan.mvp.contract.DocumentFillContract
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
+import com.zx.module_other.module.workplan.mvp.model.DocumentFillModel
 import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
+import com.zx.module_other.module.workplan.mvp.presenter.DocumentFillPresenter
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import kotlinx.android.synthetic.main.activity_document_fill.*
 
-class DocumentFillActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
-    var stringDatas = arrayListOf<String>()
-    var fillAdapter: DocumentFillAdapter<String> = DocumentFillAdapter(stringDatas)
+class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillModel>(), DocumentFillContract.View {
+
+    var fieldDatas = arrayListOf<TemplateFieldBean>()
+    var fillAdapter: DocumentFillAdapter<TemplateFieldBean> = DocumentFillAdapter(fieldDatas)
 
     companion object {
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, documentContentBean: DocumentContentBean) {
+        fun startAction(activity: Activity, isFinish: Boolean, children: Children) {
             val intent = Intent(activity, DocumentFillActivity::class.java)
-            intent.putExtra("documentContentBean", documentContentBean)
+            intent.putExtra("children", children)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
@@ -33,7 +41,12 @@ class DocumentFillActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel
 
     override fun onViewListener() {
         rv_document_fill.setOnClickListener {
-            DocumentSeeActivity.startAction(this, false, intent.getSerializableExtra("documentContentBean") as DocumentContentBean, DocumentSeeActivity.TYPE_CHANGE)
+            val map = hashMapOf<String, String>()
+            map["id"] = (intent.getSerializableExtra("children") as Children).id
+            for (index in 0..fieldDatas.size){
+                map[fieldDatas[index].templateId] = ((rv_document_fill.getChildAt(index) as RelativeLayout).getChildAt(1) as EditText).text.toString()
+            }
+            mPresenter.getDocumentPrintHtml(map)
         }
     }
 
@@ -49,22 +62,16 @@ class DocumentFillActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel
             layoutManager = LinearLayoutManager(this@DocumentFillActivity)
             adapter = fillAdapter
         }
-        initData()
+        mPresenter.getDocumentFieldList(ApiParamUtil.getDocumentFieldParam((intent.getSerializableExtra("children") as Children).id))
     }
 
-    fun initData() {
-        if (stringDatas != null) {
-            stringDatas.add("市监：")
-            stringDatas.add("字号：")
-            stringDatas.add("单位名称：")
-            stringDatas.add("违法规定：")
-            stringDatas.add("时间：")
-            stringDatas.add("处罚规定：")
-            fillAdapter.setNewData(stringDatas)
-        }
+    override fun getDocumentFieldResult(fields: List<TemplateFieldBean>) {
+        fieldDatas.clear()
+        fieldDatas.addAll(fields)
+        fillAdapter.setNewData(fieldDatas)
     }
 
-    override fun getDocumentWebSeeResult(weburl: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getDocumentPrintResult(print: String) {
+        DocumentSeeActivity.startAction(this, false, intent.getSerializableExtra("children") as Children, DocumentSeeActivity.TYPE_CHANGE,print)
     }
 }

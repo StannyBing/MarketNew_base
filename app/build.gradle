@@ -12,15 +12,15 @@ kapt {
 }
 
 android {
-    signingConfigs {
-        release {
-            keyAlias 'zxdlxx'
-            keyPassword '123456'
-            storeFile file('F:/keystore/zxdl.jks')
-            storePassword '123456'
-            v1SigningEnabled true
-        }
-    }
+//    signingConfigs {
+//        release {
+//            keyAlias 'zxdlxx'
+//            keyPassword '123456'
+//            storeFile file('F:/keystore/zxdl.jks')
+//            storePassword '123456'
+//            v1SigningEnabled true
+//        }
+//    }
     compileSdkVersion 27
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
@@ -91,12 +91,12 @@ android {
             buildConfigField "boolean", "RELEASE", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        release {
-            minifyEnabled false
-            signingConfig signingConfigs.release
-            buildConfigField "boolean", "RELEASE", "true"
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+//        release {
+//            minifyEnabled false
+//            signingConfig signingConfigs.release
+//            buildConfigField "boolean", "RELEASE", "true"
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
     }
 }
 

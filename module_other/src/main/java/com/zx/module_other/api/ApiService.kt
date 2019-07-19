@@ -1,9 +1,10 @@
 package com.zx.module_other.api
 
 import com.frame.zxmvp.basebean.BaseRespose
+import com.zx.module_other.module.documentmanage.bean.DocumentBean
+import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.law.bean.*
 import com.zx.module_other.module.workplan.bean.WorkPlanBean
-import com.zx.module_other.module.workstatisics.bean.DocumentBean
 import com.zx.module_other.module.workstatisics.bean.WorkStatisicsBean
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -46,9 +47,15 @@ interface ApiService {
     fun getWorkSatistics(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<WorkStatisicsBean>>>
 
 
-    @GET(ApiConfigModule.URL_WORKPLAN + "getWorkResultRecently.do")
+    @GET(ApiConfigModule.URL_DOCUMENT + "queryTree.do")
     fun getDocument(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<DocumentBean>>>
 
-    @GET(ApiConfigModule.URL_WORKPLAN + "getWorkResultRecently.do")
+    @GET(ApiConfigModule.URL_DOCUMENT + "queryField.do")
+    fun getDocumentField(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TemplateFieldBean>>>
+
+    @GET(ApiConfigModule.URL_DOCUMENT + "queryDetailHtml.do")
     fun getDocumentSee(@QueryMap map: Map<String, String>): Observable<BaseRespose<String>>
+
+    @GET(ApiConfigModule.URL_DOCUMENT + "queryField.do")
+    fun getDocumentPrintHtml(@QueryMap map: Map<String, String>): Observable<String>
 }
