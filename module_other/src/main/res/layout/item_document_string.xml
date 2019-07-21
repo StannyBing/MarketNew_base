@@ -8,7 +8,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingRight="@dimen/dp_8"
-        android:paddingBottom="@dimen/dp_4"/>
+        android:paddingBottom="@dimen/dp_4"
+        android:textColor="@color/blue"
+        />
     <View
         style="@style/common_wrap_divider"
         android:visibility="gone"

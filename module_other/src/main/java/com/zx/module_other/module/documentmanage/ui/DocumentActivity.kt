@@ -32,7 +32,7 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     var userfulAdapter = DocumentMainAdapter(userfulData);
 
     private var adapterDatas = arrayListOf<MultiItemEntity>()
-    private var adapter = DocumentAdpater(adapterDatas)
+    private var documentAdapter = DocumentAdpater(adapterDatas)
 
     companion object {
         /**
@@ -46,10 +46,14 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     }
 
     override fun onViewListener() {
-        adapter.setOnItemClickListener { adapter, view, position ->
+        documentAdapter.setOnItemClickListener { adapter, view, position ->
             if (adapterDatas[position].itemType == DocumentAdpater.TYPE_LEVEL_1) {
-                DocumentSeeActivity.startAction(this, false,adapterDatas[position] as Children,DocumentSeeActivity.TYPE_FILL,"")
+                DocumentSeeActivity.startAction(this, false, adapterDatas[position] as Children, DocumentSeeActivity.TYPE_FILL, "")
             }
+        }
+
+        userfulAdapter.setOnItemClickListener { adapter, view, position ->
+            mPresenter.getDocumentList(ApiParamUtil.getDocumentParam(userfulData[position].name))
         }
     }
 
@@ -64,14 +68,27 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
         sv_document_search.withXApp(XAppOther.get("文书"))
         rv_document.apply {
             layoutManager = LinearLayoutManager(this@DocumentActivity)
-            adapter = adapter
+            adapter = documentAdapter
         }
         rv_document_useful.apply {
             layoutManager = GridLayoutManager(this@DocumentActivity, 2)
             adapter = userfulAdapter
         }
-        mPresenter.getDocumentList(ApiParamUtil.getDocumentParam("4"))
+        sv_document_search.setSearchListener {
+            mPresenter.getDocumentList(ApiParamUtil.getDocumentParam(it))
+        }
+        mPresenter.getDocumentList(ApiParamUtil.getDocumentParam(""))
         initData()
+        var c = arrayListOf<Children>()
+        c.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
+        c.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
+
+        var documentBean=DocumentBean(c,"0004","公用文书",null,null,"0","0",null)
+        adapterDatas.add(documentBean)
+        adapterDatas.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
+        adapterDatas.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
+        adapterDatas.add(documentBean)
+        documentAdapter.setNewData(adapterDatas)
     }
 
     /**
@@ -94,12 +111,12 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     }
 
     override fun getDocumentResult(documents: List<DocumentBean>) {
-        for (document in documents){
+        for (document in documents) {
             adapterDatas.add(document)
-            for (child in document.children){
+            for (child in document.children) {
                 adapterDatas.add(child)
             }
         }
-        adapter.setNewData(adapterDatas)
+        documentAdapter.setNewData(adapterDatas)
     }
 }

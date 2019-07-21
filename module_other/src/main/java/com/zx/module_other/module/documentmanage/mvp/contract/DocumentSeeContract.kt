@@ -11,7 +11,7 @@ interface DocumentSeeContract {
     }
 
     interface Model : IModel {
-        fun getDocumentWeb(map: Map<String, String>): rx.Observable<String>
+        fun getDocumentWeb(map: Map<String, String>): rx.Observable<okhttp3.ResponseBody>
     }
 
     abstract class Presenter : BasePresenter<View, Model>() {

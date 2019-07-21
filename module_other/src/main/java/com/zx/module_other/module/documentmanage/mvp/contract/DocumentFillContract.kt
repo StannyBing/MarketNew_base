@@ -5,6 +5,7 @@ import com.frame.zxmvp.base.IModel
 import com.frame.zxmvp.base.IView
 import com.zx.module_other.module.documentmanage.bean.DocumentBean
 import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
+import okhttp3.ResponseBody
 
 interface DocumentFillContract {
 
@@ -15,7 +16,7 @@ interface DocumentFillContract {
 
     interface Model : IModel {
         fun getDocumentField(map: Map<String, String>): rx.Observable<List<TemplateFieldBean>>
-        fun getDocumentPrint(map: Map<String, String>): rx.Observable<String>
+        fun getDocumentPrint(map: Map<String, String>): rx.Observable<ResponseBody>
     }
 
     abstract class Presenter : BasePresenter<View, Model>() {

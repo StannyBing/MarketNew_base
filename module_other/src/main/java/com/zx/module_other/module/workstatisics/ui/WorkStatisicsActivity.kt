@@ -12,6 +12,7 @@ import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.workplan.mvp.contract.WorkStatisicsContract
 import com.zx.module_other.module.workplan.mvp.model.WorkStatisicsModel
 import com.zx.module_other.module.workplan.mvp.presenter.WorkStatisicsPresenter
+import com.zx.module_other.module.workstatisics.bean.WorkOverAllBean
 import com.zx.module_other.module.workstatisics.bean.WorkStatisicsBean
 import com.zx.zxutils.views.ZXStatusBarCompat
 import kotlinx.android.synthetic.main.activity_work_statisics.*
@@ -45,6 +46,7 @@ class WorkStatisicsActivity : BaseActivity<WorkStatisicsPresenter, WorkStatisics
         ZXStatusBarCompat.setStatusBarLightMode(this)
 
         mPresenter.getWorkStatisicsList(ApiParamUtil.workStatisicsPlanParam("4"))
+        mPresenter.getWorkOverallList(mapOf())
     }
 
     override fun getWorkStatisicsResult(workStatisicsDatas: List<WorkStatisicsBean>) {
@@ -55,5 +57,16 @@ class WorkStatisicsActivity : BaseActivity<WorkStatisicsPresenter, WorkStatisics
             dates.add(workStatisics.date)
         }
         sv_statistics.setDatas(nums, dates)
+    }
+
+    override fun getWorkOverallResult(workOverAlls: List<WorkOverAllBean>) {
+        tv_report.setText(workOverAlls[0].business)
+        tv_report_num.setText(workOverAlls[0].num.toString())
+        tv_law.setText(workOverAlls[1].business)
+        tv_law_num.setText(workOverAlls[1].num.toString())
+        tv_inspection.setText(workOverAlls[2].business)
+        tv_inspection_num.setText(workOverAlls[2].num.toString())
+        tv_tasks.setText(workOverAlls[3].business)
+        tv_tasks_num.setText(workOverAlls[3].num.toString())
     }
 }

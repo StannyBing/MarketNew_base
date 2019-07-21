@@ -24,8 +24,15 @@ import kotlinx.android.synthetic.main.activity_document_fill.*
 
 class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillModel>(), DocumentFillContract.View {
 
+    val map = hashMapOf<String, String>()
+
     var fieldDatas = arrayListOf<TemplateFieldBean>()
-    var fillAdapter: DocumentFillAdapter<TemplateFieldBean> = DocumentFillAdapter(fieldDatas)
+    var fillAdapter: DocumentFillAdapter<TemplateFieldBean> = DocumentFillAdapter(fieldDatas, object : DocumentFillAdapter.setDataCallBack {
+        override fun setData(key: String, text: String) {
+            map[key] = text
+        }
+
+    })
 
     companion object {
         /**
@@ -40,12 +47,8 @@ class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillMod
     }
 
     override fun onViewListener() {
-        rv_document_fill.setOnClickListener {
-            val map = hashMapOf<String, String>()
+        tv_fill_preview.setOnClickListener {
             map["id"] = (intent.getSerializableExtra("children") as Children).id
-            for (index in 0..fieldDatas.size){
-                map[fieldDatas[index].templateId] = ((rv_document_fill.getChildAt(index) as RelativeLayout).getChildAt(1) as EditText).text.toString()
-            }
             mPresenter.getDocumentPrintHtml(map)
         }
     }
@@ -72,6 +75,6 @@ class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillMod
     }
 
     override fun getDocumentPrintResult(print: String) {
-        DocumentSeeActivity.startAction(this, false, intent.getSerializableExtra("children") as Children, DocumentSeeActivity.TYPE_CHANGE,print)
+        DocumentSeeActivity.startAction(this, false, intent.getSerializableExtra("children") as Children, DocumentSeeActivity.TYPE_CHANGE, print)
     }
 }

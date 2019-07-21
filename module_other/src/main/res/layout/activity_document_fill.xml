@@ -19,16 +19,17 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_big"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dp_20"/>
+        android:layout_marginTop="@dimen/dp_10"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_20">
+        >
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_document_fill"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_100">
 
         </android.support.v7.widget.RecyclerView>
         <TextView
@@ -39,8 +40,9 @@
             android:layout_marginRight="@dimen/dp_30"
             android:layout_marginLeft="@dimen/dp_30"
             android:layout_marginBottom="@dimen/dp_30"
-            android:background="@color/blue8c"
+            android:background="@drawable/shape_10_colorblue"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text="@string/preview_document"
             android:textSize="@dimen/text_size_big" />
     </RelativeLayout>

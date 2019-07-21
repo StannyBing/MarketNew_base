@@ -31,9 +31,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_15"
-            android:background="@color/blue8c"
+            android:background="@drawable/shape_10_colorblue"
             android:gravity="center"
             android:text="@string/fill_document"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_big" />
 
         <TextView
@@ -44,9 +45,10 @@
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_marginBottom="@dimen/dp_15"
-            android:background="@color/blue8c"
+            android:background="@drawable/shape_10_colorblue"
             android:gravity="center"
             android:text="@string/print_document"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_size_big" />
     </RelativeLayout>
 </LinearLayout>

@@ -8,10 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -31,11 +28,11 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, children: Children, type: Int,printUrl:String) {
+        fun startAction(activity: Activity, isFinish: Boolean, children: Children, type: Int, printUrl: String) {
             val intent = Intent(activity, DocumentSeeActivity::class.java)
             intent.putExtra("children", children)
             intent.putExtra("type", type)
-            intent.putExtra("printUrl",printUrl)
+            intent.putExtra("printUrl", printUrl)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
@@ -47,7 +44,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             DocumentFillActivity.startAction(this, false, intent.getSerializableExtra("children") as Children)
         }
         tv_print_document.setOnClickListener {
-//            getSystemService(Context.PRINT_SERVICE).apply {
+            //            getSystemService(Context.PRINT_SERVICE).apply {
 //                print("",wv_documentsee.createPrintDocumentAdapter(""),null)
 //            }
 
@@ -65,10 +62,10 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         wv_documentsee.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
-//            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
+           // settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
             scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
-            //settings.loadWithOverviewMode = true
-            //settings.useWideViewPort = true
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
             webViewClient = WebViewClient()
             webChromeClient = object : WebChromeClient() {
                 override fun onShowFileChooser(webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?, fileChooserParams: FileChooserParams?): Boolean {
@@ -93,7 +90,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     }
 
     override fun getDocumentWebSeeResult(weburl: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        setHtml(weburl)
     }
 
     /**

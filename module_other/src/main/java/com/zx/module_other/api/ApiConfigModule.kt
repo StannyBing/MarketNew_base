@@ -10,6 +10,6 @@ class ApiConfigModule : BaseConfigModule(ApiService::class.java, "other"){
     companion object {
         const val URL_LAW = APP_HEAD + "law/"
         const val URL_WORKPLAN = APP_HEAD + "app/workPlan/"
-        const val URL_DOCUMENT = APP_HEAD + "rcsupervise/docTemplate/"
+        const val URL_DOCUMENT = APP_HEAD + "supervise/docTemplate/"
     }
 }

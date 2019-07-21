@@ -8,10 +8,11 @@ import com.zx.module_other.module.documentmanage.bean.DocumentBean
 import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.workplan.mvp.contract.DocumentContract
 import com.zx.module_other.module.workplan.mvp.contract.DocumentFillContract
+import okhttp3.ResponseBody
 import rx.Observable
 
 class DocumentFillModel : BaseModel(), DocumentFillContract.Model {
-    override fun getDocumentPrint(map: Map<String, String>): Observable<String> {
+    override fun getDocumentPrint(map: Map<String, String>): Observable<ResponseBody> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getDocumentPrintHtml(map)
     }

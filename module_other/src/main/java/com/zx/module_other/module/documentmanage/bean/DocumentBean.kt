@@ -7,11 +7,11 @@ data class DocumentBean(
     val children: List<Children>,
     val id: String,
     val name: String,
-    val pId: Any,
-    val remarks: Any,
+    val pId: Any?=null,
+    val remarks: Any?=null,
     val status: String,
     val type: String,
-    val url: Any
+    val url: Any?=null
 ): MultiItemEntity{
     override fun getItemType(): Int {
         return DocumentAdpater.TYPE_LEVEL_0
@@ -19,14 +19,14 @@ data class DocumentBean(
 }
 
 data class Children(
-    val children: Any,
+    val children: Any?=null,
     val id: String,
     val name: String,
     val pId: String,
-    val remarks: Any,
+    val remarks: Any?=null,
     val status: String,
     val type: String,
-    val url: Any
+    val url: Any?=null
 ):MultiItemEntity,Serializable{
     override fun getItemType(): Int {
         return DocumentAdpater.TYPE_LEVEL_1
