@@ -7,7 +7,7 @@ import com.frame.zxmvp.base.IView
 interface CreatePlanContract {
 
     interface View : IView {
-        fun getCreateWorkResult(result: String)
+        fun getCreateWorkResult()
     }
 
     interface Model : IModel {

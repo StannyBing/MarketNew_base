@@ -3,10 +3,12 @@ package com.zx.module_other.module.workplan.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
+import com.zx.module_other.module.workplan.func.util.DateUtil
 import com.zx.module_other.module.workplan.mvp.contract.CreatePlanContract
 import com.zx.module_other.module.workplan.mvp.model.CreatePlanModel
 import com.zx.module_other.module.workplan.mvp.presenter.CreatePlanPresenter
@@ -27,8 +29,12 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
 
     override fun onViewListener() {
         toobar_view.setRightClickListener {
-            //            mPresenter.createWorkPlan(ApiParamUtil.createWorkPlanParam("", ""))
-            WorkStatisicsActivity.startAction(this, false)
+            if (!TextUtils.isEmpty(et_work_content.text.toString())) {
+                mPresenter.createWorkPlan(ApiParamUtil.createWorkPlanParam(et_work_content.text.toString(), DateUtil.timeStringToStamp2(tv_create_date.text.toString()).toString()))
+            } else {
+                showToast("内容不能为空！！")
+            }
+//            WorkStatisicsActivity.startAction(this, false)
         }
         mc_create_plan.setOnCalendarChangedListener { baseCalendar, year, month, localDate ->
             tv_create_date.setText(localDate.toString())
@@ -39,8 +45,8 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
         return R.layout.activity_create_plan
     }
 
-    override fun getCreateWorkResult(result: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getCreateWorkResult() {
+        showToast("创建成功")
     }
 
     override fun initView(savedInstanceState: Bundle?) {

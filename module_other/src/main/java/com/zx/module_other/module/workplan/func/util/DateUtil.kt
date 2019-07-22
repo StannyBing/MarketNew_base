@@ -12,6 +12,12 @@ class DateUtil {
             return simpleDateFormat.parse(timeString).time
         }
 
+        //日期转时间戳2
+        fun timeStringToStamp2(timeString: String): Long {
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
+            return simpleDateFormat.parse(timeString).time
+        }
+
         //日期转星期
         fun  dateToWeek(datetime:String):String{
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")

@@ -42,7 +42,7 @@ interface ApiService {
     @GET(ApiConfigModule.URL_WORKPLAN + "getWorkPlan.do")
     fun getWorkPlan(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<WorkPlanBean>>>
 
-    @GET(ApiConfigModule.URL_LAW + "")
+    @POST(ApiConfigModule.URL_WORKPLAN + "addWorkPlan.do")
     fun createWorkPlan(@QueryMap map: Map<String, String>): Observable<BaseRespose<String>>
 
     @GET(ApiConfigModule.URL_WORKPLAN + "getWorkResultRecently.do")

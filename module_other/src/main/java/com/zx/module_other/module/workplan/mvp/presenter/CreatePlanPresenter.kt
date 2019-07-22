@@ -11,9 +11,7 @@ class CreatePlanPresenter : CreatePlanContract.Presenter() {
                 .compose(RxHelper.bindToLifecycle(mView))
                 .subscribe(object : RxSubscriber<String>(mView) {
                     override fun _onNext(t: String?) {
-                        if (t != null) {
-                            mView.getCreateWorkResult(t)
-                        }
+                            mView.getCreateWorkResult()
                     }
 
                     override fun _onError(code: String?, message: String?) {

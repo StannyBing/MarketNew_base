@@ -134,10 +134,10 @@ object ApiParamUtil {
     /**
      * 创建工作计划
      */
-    fun createWorkPlanParam(title: String, data: String): Map<String, String> {
+    fun createWorkPlanParam(content: String, startDate: String): Map<String, String> {
         val map = hashMapOf<String, String>()
-        map["title"] = title
-        map["data"] = data
+        map["content"] = content
+        map["startDate"] = startDate
         return map;
     }
 
@@ -166,7 +166,7 @@ object ApiParamUtil {
      */
     fun getDocumentFieldParam(id: String): Map<String, String> {
         val map = hashMapOf<String, String>()
-            map["id"] = id
+        map["id"] = id
         return map;
     }
 

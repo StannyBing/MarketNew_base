@@ -22,7 +22,7 @@
     <string name="create_plan">新增计划</string>
     <string name="cancel">取消</string>
     <string name="save">保存</string>
-    <string name="add_plan_title">添加计划标题</string>
+    <string name="add_plan_title">添加计划</string>
     <string name="plan_out_time">截止时间：</string>
     <string name="work_achievements">工作成果</string>
     <string name="work_cumulative">您已累计完成</string>

@@ -79,16 +79,6 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
         }
         mPresenter.getDocumentList(ApiParamUtil.getDocumentParam(""))
         initData()
-        var c = arrayListOf<Children>()
-        c.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
-        c.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
-
-        var documentBean=DocumentBean(c,"0004","公用文书",null,null,"0","0",null)
-        adapterDatas.add(documentBean)
-        adapterDatas.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
-        adapterDatas.add(Children(null,"0002","案件来源登记表","0001",null,"0","1",null))
-        adapterDatas.add(documentBean)
-        documentAdapter.setNewData(adapterDatas)
     }
 
     /**
@@ -111,6 +101,7 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     }
 
     override fun getDocumentResult(documents: List<DocumentBean>) {
+        adapterDatas.clear()
         for (document in documents) {
             adapterDatas.add(document)
             for (child in document.children) {
