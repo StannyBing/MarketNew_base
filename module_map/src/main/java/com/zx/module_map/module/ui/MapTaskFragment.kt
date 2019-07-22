@@ -32,7 +32,7 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
         /**
          * 启动器
          */
-        fun newInstance(type : Int): MapTaskFragment {
+        fun newInstance(type: Int): MapTaskFragment {
             val fragment = MapTaskFragment()
             val bundle = Bundle()
             bundle.putInt("type", type)
@@ -56,9 +56,9 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
 
         type = arguments!!.getInt("type")
 
-        when(type){
-            1->{
-                taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+        when (type) {
+            1 -> {
+                taskBean = activity!!.intent.getSerializableExtra("taskBean") as MapTaskBean?
                 if (taskBean != null) {
                     rl_task.visibility = View.VISIBLE
                     tv_task_type.text = taskBean?.typeName
@@ -72,7 +72,7 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
                     tv_task_address.text = taskBean?.address
                 }
             }
-            2->{
+            2 -> {
 
             }
         }

@@ -1,11 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.zx.module_supervise">
 
-    <application android:theme="@style/MainAppTheme"
-                 android:networkSecurityConfig="@xml/network_security_config">
-
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:theme="@style/MainAppTheme">
         <meta-data
             android:name="com.zx.module_supervise.api.ApiConfigModule"
             android:value="ConfigModule"/>
+
+        <activity android:name=".module.supervise.ui.SuperviseQueryActivity"/>
+        <activity android:name=".module.daily.ui.DailyQueryActivity"/>
+        <activity android:name=".module.supervise.ui.SuperviseDetailActivity"/>
+        <activity android:name=".module.supervise.ui.SuperviseDisposeActivity"/>
     </application>
+
 </manifest>

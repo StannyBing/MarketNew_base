@@ -6,6 +6,8 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.res.TypedArray
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import cn.jpush.android.api.JPushInterface
@@ -41,7 +43,9 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        if (!isTranslucent()) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
 
         if (canSwipeBack) ZXSwipeBackHelper.onCreate(this)
                 .setSwipeBackEnable(true)
@@ -78,6 +82,21 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                 }
             }
         })
+    }
+
+    private fun isTranslucent(): Boolean {
+        var isTranslucent = false
+        try {
+            val styleable = Class.forName("com.android.internal.R" + "$" + "styleable").getField("Window").get(null) as IntArray
+            val ta = obtainStyledAttributes(styleable)
+            val m = ActivityInfo::class.java.getMethod("isTranslucentOrFloating", TypedArray::class.java)
+            m.isAccessible = true
+            isTranslucent = m.invoke(null, ta) as Boolean
+            m.isAccessible = false
+        } catch (e: java.lang.Exception) {
+
+        }
+        return isTranslucent && Build.VERSION.SDK_INT == Build.VERSION_CODES.O
     }
 
     /**
@@ -154,7 +173,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (permissionArray==null){
+        if (permissionArray == null) {
             return
         }
         if (ZXPermissionUtil.checkPermissionsByArray(permissionArray)) {

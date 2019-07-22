@@ -138,7 +138,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
             }))
             add(SearchFilterBean("是否逾期", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
                 add(SearchFilterBean.ValueBean("逾期", "逾期"))
-                add(SearchFilterBean.ValueBean("即将逾期", "即将逾期"))
+                add(SearchFilterBean.ValueBean("即将到期", "即将到期"))
             }))
         }
         search_view.setFuncListener(filterList) {

@@ -16,7 +16,7 @@ object UserActionTool {
 
     enum class ActionType(var type: String, var content: String) {
         Normal("签到", "签到"),
-        Supervise_Daily("事件", "日常检查"),
+        Supervise_Daily("事件", "现场检查"),
         Supervise_Task("事件", "监管任务"),
         Complain("事件", "投诉举报"),
         CaseLegal("事件", "综合执法");

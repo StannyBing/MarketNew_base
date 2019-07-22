@@ -1,5 +1,6 @@
 package com.zx.module_entity.module.entity.ui
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -10,9 +11,9 @@ import com.zx.module_entity.R
 import com.zx.module_entity.XAppEntity
 import com.zx.module_entity.api.ApiParamUtil
 import com.zx.module_entity.module.entity.bean.DicTypeBean
+import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.module_entity.module.entity.bean.EntityLevelBean
 import com.zx.module_entity.module.entity.bean.EntityStationBean
-import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.module_entity.module.entity.func.adapter.EntityListAdapter
 import com.zx.module_entity.module.entity.mvp.contract.QueryContract
 import com.zx.module_entity.module.entity.mvp.model.QueryModel
@@ -25,6 +26,7 @@ import com.zx.module_library.func.tool.animateToTop
 import com.zx.module_library.func.tool.getItem
 import com.zx.module_library.func.tool.getPosition
 import com.zx.module_library.func.tool.getSelect
+import com.zx.zxutils.util.ZXLocationUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_entity_query.*
 
@@ -46,6 +48,8 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     private var fCreditLevel = ""//主体等级
     private var fStatus = ""//主体状态
     private var areaCode = ""//片区
+    private var radius = ""//范围
+    private var positionList = ""//坐标
 
     companion object {
         /**
@@ -93,7 +97,8 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                     override fun onItemClick(item: EntityBean?, position: Int) {
-                        DetailActivity.startAction(this@QueryActivity, false, item!!.fEntityGuid!!, item.fTags?.contains("特殊主体") ?: false)
+                        DetailActivity.startAction(this@QueryActivity, false, item!!.fEntityGuid!!, item.fTags?.contains("特殊主体")
+                                ?: false)
                     }
 
                 })
@@ -110,7 +115,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             pageNo = 1
             sr_entity_list.clearStatus()
         }
-        mPresenter.getEntityList(ApiParamUtil.searchParam(pageNo, 15, searchText, fTags = fTags, fCreditLevel = fCreditLevel, fStatus = fStatus, areaCode = areaCode))
+        mPresenter.getEntityList(ApiParamUtil.searchParam(pageNo, 15, searchText, radius = radius, positionList = positionList, fTags = fTags, fCreditLevel = fCreditLevel, fStatus = fStatus, areaCode = areaCode))
     }
 
     /**
@@ -128,6 +133,16 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             fCreditLevel = filterList.getSelect(name = "信用等级")
             fStatus = filterList.getSelect(name = "主体状态")
             areaCode = filterList.getSelect(name = "监管所")
+            if (filterList.getSelect(name = "周边查询") == "1"&&filterList.getSelect(name = "查询范围").isNotEmpty()) {
+                getPermission(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    val location = ZXLocationUtil.getLocation(this)
+                    positionList = "[[${location.longitude},${location.latitude}]]"
+                }
+                radius = filterList.getSelect(name = "查询范围")
+            }else{
+                positionList = ""
+                radius = ""
+            }
             if (filterList.getSelect(name = "监管片区").isNotEmpty()) areaCode = filterList.getSelect(name = "监管片区")
         }
         //搜索事件
@@ -178,6 +193,19 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
         } else {
             filterList.getItem("监管片区")?.values?.clear()
         }
+
+        filterList.add(SearchFilterBean("周边查询", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
+            add(SearchFilterBean.ValueBean("否", "0", true))
+            add(SearchFilterBean.ValueBean("是", "1"))
+        }, addDefalut = false))
+        filterList.add(SearchFilterBean("查询范围", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
+            add(SearchFilterBean.ValueBean("0.5公里", "0.5"))
+            add(SearchFilterBean.ValueBean("1公里", "1"))
+            add(SearchFilterBean.ValueBean("2公里", "2"))
+            add(SearchFilterBean.ValueBean("3公里", "3"))
+            add(SearchFilterBean.ValueBean("5公里", "5"))
+            add(SearchFilterBean.ValueBean("10公里", "10"))
+        }, visibleBy = "周边查询" to "1", isEnable = false))
         search_view.notifyItemChanged(filterList.getPosition("监管片区"))
     }
 

@@ -42,16 +42,16 @@ object ApiParamUtil {
         val map = hashMapOf<String, String>()
         map["pageNo"] = pageNo.toString()
         map["pageSize"] = pageSize.toString()
-        if (positionList.isEmpty()) {
+//        if (positionList.isEmpty()) {
             if (fCondition.isNotEmpty()) map["fCondition"] = fCondition
             if (fTags.isNotEmpty()) map["fTags"] = fTags
             if (fCreditLevel.isNotEmpty()) map["fCreditLevelList"] = fCreditLevel
             if (fStatus.isNotEmpty()) map["fStatus"] = fStatus
             if (areaCode.isNotEmpty()) map["areaCode"] = areaCode
-        } else {
+//        } else {
             map["positionList"] = positionList
             map["radius"] = radius
-        }
+//        }
         return map
     }
 

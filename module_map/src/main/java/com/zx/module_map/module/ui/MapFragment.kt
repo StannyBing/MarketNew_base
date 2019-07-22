@@ -95,7 +95,7 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
 
         when (type) {
             1 -> {
-                taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+                taskBean = activity!!.intent.getSerializableExtra("taskBean") as MapTaskBean?
             }
             2 -> {
 

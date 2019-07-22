@@ -66,7 +66,7 @@ class MapBtnFragment : BaseFragment<MapBtnPresenter, MapBtnModel>(), MapBtnContr
 
         when (type) {
             1 -> {
-                taskBean = arguments?.getSerializable("taskBean") as MapTaskBean?
+                taskBean = activity!!.intent.getSerializableExtra("taskBean") as MapTaskBean?
             }
             2 -> {
 

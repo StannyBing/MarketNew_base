@@ -36,6 +36,9 @@ object RoutePath {
 
     //监管任务
     const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//监管任务查询
+    const val ROUTE_SUPERVISE_DETAIL = "/supervise/detail"//监管任务详情
+    const val ROUTE_SUPERVISE_DISPOSE = "/supervise/dispose"//监管任务处置
+    const val ROUTE_SUPERVISE_DAILY = "/supervise/daily"//监管任务-现场检查
 
     //统计分析
     const val ROUTE_STATISTICS_COMPLAIN = "/statistics/complain"//统计-投诉举报

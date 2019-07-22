@@ -91,12 +91,11 @@ android {
             buildConfigField "boolean", "RELEASE", "false"
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-//        release {
-//            minifyEnabled false
-//            signingConfig signingConfigs.release
-//            buildConfigField "boolean", "RELEASE", "true"
-//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-//        }
+        release {
+            minifyEnabled false
+            buildConfigField "boolean", "RELEASE", "true"
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 }
 

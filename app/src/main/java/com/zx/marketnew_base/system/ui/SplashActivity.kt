@@ -63,10 +63,8 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
                 LoginActivity.startAction(this, true)
             }, 1000)
         } else {
-            handler.postDelayed({
-                //自动登录
-                mPresenter.doLogin(ApiParamUtil.loginParam(UserManager.userName, UserManager.passWord))
-            }, 1000)
+            //自动登录
+            mPresenter.doLogin(ApiParamUtil.loginParam(UserManager.userName, UserManager.passWord))
         }
     }
 
@@ -83,9 +81,7 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
     override fun onLoginResult(userBean: UserBean) {
         UserManager.setUser(userBean)
         BaseConfigModule.TOKEN = userBean.jwt
-        handler.postDelayed({
-            MainActivity.startAction(this, true)
-        }, 500)
+        MainActivity.startAction(this, true)
     }
 
     override fun onLoginError() {

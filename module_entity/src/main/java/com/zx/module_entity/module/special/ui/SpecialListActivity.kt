@@ -18,6 +18,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_library.func.tool.UserManager
+import com.zx.module_library.func.tool.animateToTop
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_special_list.*
 
@@ -101,7 +102,8 @@ class SpecialListActivity : BaseActivity<SpecialListPresenter, SpecialListModel>
      * View事件设置
      */
     override fun onViewListener() {
-
+        //顶部点击滚动到开头
+        toolBar_view.setMidClickListener { sr_special_list.recyclerView.animateToTop(0) }
     }
 
     override fun onEntityListResult(entityList: NormalList<EntityBean>) {

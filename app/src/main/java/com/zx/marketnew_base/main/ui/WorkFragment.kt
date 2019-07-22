@@ -104,7 +104,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         if (officeBean == null) {
             dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
                     XAppMain.get("累计待办")!!.apply { num = 0 },
-                    XAppMain.get("即将逾期")!!.apply { num = 0 },
+                    XAppMain.get("即将到期")!!.apply { num = 0 },
                     XAppMain.get("已经逾期")!!.apply { num = 0 }
             )))
             dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "监管任务"))))
@@ -113,7 +113,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
             mSharedPrefUtil.putObject("officeBean", officeBean)
             dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
                     XAppMain.get("累计待办")!!.apply { num = officeBean.todo.allTask },
-                    XAppMain.get("即将逾期")!!.apply { num = officeBean.todo.willOverdue },
+                    XAppMain.get("即将到期")!!.apply { num = officeBean.todo.willOverdue },
                     XAppMain.get("已经逾期")!!.apply { num = officeBean.todo.overdue }
             )))
             if (officeBean.myXApp.isNotEmpty()) {
