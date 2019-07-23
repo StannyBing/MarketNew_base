@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_detail_check_info.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务-详情-检查指标
+ * 功能：专项检查-详情-检查指标
  */
 class DetailCheckInfoFragment : BaseFragment<DetailCheckInfoPresenter, DetailCheckInfoModel>(), DetailCheckInfoContract.View {
 
@@ -52,6 +52,7 @@ class DetailCheckInfoFragment : BaseFragment<DetailCheckInfoPresenter, DetailChe
 
         rv_supervise_check.apply {
             layoutManager = LinearLayoutManager(activity)
+            checkAdapter.isEdit = false
             adapter = checkAdapter
         }
 
@@ -63,6 +64,11 @@ class DetailCheckInfoFragment : BaseFragment<DetailCheckInfoPresenter, DetailChe
      */
     override fun onViewListener() {
 
+    }
+
+    fun setfStatus(status: String?) {
+        checkAdapter.isShow = status != "101"
+        checkAdapter.notifyDataSetChanged()
     }
 
     //检查结果

@@ -12,15 +12,11 @@ import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecyclerQuickAdapter
  * Created by Xiangb on 2019/6/20.
  * 功能：
  */
-class SuperviseListAdapter(dataList: List<SuperviseListBean.Entity.ItemBean>) : ZXRecyclerQuickAdapter<SuperviseListBean.Entity.ItemBean, ZXBaseHolder>(R.layout.item_supervise_normal, dataList) {
-    override fun quickConvert(helper: ZXBaseHolder?, item: SuperviseListBean.Entity.ItemBean?) {
+class SuperviseListAdapter(dataList: List<SuperviseListBean>) : ZXRecyclerQuickAdapter<SuperviseListBean, ZXBaseHolder>(R.layout.item_supervise_normal, dataList) {
+    override fun quickConvert(helper: ZXBaseHolder?, item: SuperviseListBean?) {
         if (helper != null && item != null) {
             helper.setText(R.id.tv_supervise_itemTitle, item.fName ?: "")
-            helper.setText(R.id.tv_supervise_itemInfo, if (item.fAddress.isNullOrEmpty()) {
-                "暂无地址"
-            } else {
-                item.fAddress
-            })
+            helper.setText(R.id.tv_supervise_itemInfo, item.fEntityName)
             helper.setText(R.id.tv_supervise_itemDate,
                     if (item.fStartDate == null) {
                         ""

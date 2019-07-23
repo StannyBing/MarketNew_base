@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ImageView
 import android.widget.TextView
 import com.zx.module_library.base.BaseFragment
-import com.zx.module_library.func.tool.toJson
 import com.zx.module_supervise.R
 import com.zx.module_supervise.XAppSupervise
 import com.zx.module_supervise.module.supervise.func.view.SignatureView
@@ -19,11 +17,10 @@ import com.zx.zxutils.entity.KeyValueEntity
 import com.zx.zxutils.util.ZXBitmapUtil
 import com.zx.zxutils.util.ZXDialogUtil
 import kotlinx.android.synthetic.main.fragment_dispose_base.*
-import okhttp3.RequestBody
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务-处置-基本信息
+ * 功能：专项检查-处置-基本信息
  */
 class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>(), DisposeBaseContract.View {
 
@@ -32,10 +29,10 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
     private lateinit var fEntityGuid: String
     private lateinit var status: String
 
-    private var enterpriseSign = ""//被检查企业负责人签名id
-    private var checkSign = ""//检察人员签字id
-    private var bitmapSign1: Bitmap? = null//被检查企业负责人签名bitmap
-    private var bitmapSign2: Bitmap? = null//检察人员签字bitmap
+    var disposeType = 0//0同意 1退回
+
+    var bitmapSign1: Bitmap? = null//被检查企业负责人签名bitmap
+    var bitmapSign2: Bitmap? = null//检察人员签字bitmap
 
     companion object {
         /**
@@ -81,12 +78,15 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (status == "101") {
-                    ll_dispose_hanlde.visibility = if (sp_dispose_type.selectedValue.toString() == "0") {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+                if (sp_dispose_type.selectedValue.toString() == "0") {
+                    tv_dispose_remark.text = "检查意见："
+                    disposeType = 0
+                    if (status == "101")
+                        if (status == "101") ll_dispose_hanlde.visibility = View.VISIBLE
+                } else {
+                    tv_dispose_remark.text = "退回说明："
+                    disposeType = 1
+                    if (status == "101") ll_dispose_hanlde.visibility = View.GONE
                 }
             }
         }
@@ -105,8 +105,8 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
         val signView = LayoutInflater.from(activity).inflate(R.layout.layout_supervise_sign, null, false)
         val signatureView = signView.findViewById<SignatureView>(R.id.sign_view)
         val tvClear = signView.findViewById<TextView>(R.id.tv_sign_clear)
-        val tvSubmit = signView.findViewById<ImageView>(R.id.tv_sign_submit)
-        val tvCancel = signView.findViewById<ImageView>(R.id.tv_sign_cancel)
+        val tvSubmit = signView.findViewById<TextView>(R.id.tv_sign_submit)
+        val tvCancel = signView.findViewById<TextView>(R.id.tv_sign_cancel)
         tvClear.setOnClickListener { signatureView.clear() }
         tvCancel.setOnClickListener { ZXDialogUtil.dismissDialog() }
         tvSubmit.setOnClickListener {
@@ -134,7 +134,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 })
                 setItemHeightDp(40)
                 setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.get("监管任务")!!.moduleColor)
+                showSelectedTextColor(true, XAppSupervise.get("专项检查")!!.moduleColor)
                 build()
             }
             //处理结果
@@ -147,7 +147,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 })
                 setItemHeightDp(40)
                 setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.get("监管任务")!!.moduleColor)
+                showSelectedTextColor(true, XAppSupervise.get("专项检查")!!.moduleColor)
                 build()
             }
         } else {
@@ -161,18 +161,18 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 })
                 setItemHeightDp(40)
                 setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.get("监管任务")!!.moduleColor)
+                showSelectedTextColor(true, XAppSupervise.get("专项检查")!!.moduleColor)
                 build()
             }
         }
     }
 
     fun checkItem(): Boolean {
-        if (status == "101") {
-            if (enterpriseSign.isEmpty()) {
+        if (status == "101" && disposeType == 0) {
+            if (bitmapSign1 == null) {
                 showToast("请被检查企业负责人签名")
                 return false
-            } else if (checkSign.isEmpty()) {
+            } else if (bitmapSign2 == null) {
                 showToast("请检查人员签名")
                 return false
             } else {
@@ -183,11 +183,15 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
         }
     }
 
-    fun getDisposeInfo(): RequestBody {
+    fun getDisposeInfo(): HashMap<String, Any> {
         if (status != "101") {
-            return hashMapOf("fId" to fId, "fStatus" to status, "fQualify" to sp_dispose_type.selectedKey, "fResult" to et_dispose_remark.text.toString()).toJson()
+            return hashMapOf("fId" to fId, "fStatus" to status, "fQualify" to sp_dispose_type.selectedKey, "fResult" to et_dispose_remark.text.toString())
         } else {
-            return hashMapOf("fId" to fId, "fStatus" to status, "fQualify" to "", "fResult" to "").toJson()
+            if (disposeType == 0) {//通过
+                return hashMapOf("fId" to fId, "fQualify" to sp_dispose_result.selectedKey, "fResult" to et_dispose_remark.text.toString())
+            } else {//退回
+                return hashMapOf("fTaskId" to fTaskId, "fEntityGuidList" to arrayListOf(fEntityGuid), "fResultList" to arrayListOf(et_dispose_remark.text.toString()))
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ import com.zx.module_library.bean.XAppBean
 object XAppSupervise : XApp() {
     override val map: Map<String, XAppBean>
         get() = mapOf(
-                "监管任务" to XAppBean("监管任务", R.color.supervise_color, R.drawable.icon_supervise, RoutePath.ROUTE_SUPERVISE_QUERY),
+                "专项检查" to XAppBean("专项检查", R.color.supervise_color, R.drawable.icon_supervise, RoutePath.ROUTE_SUPERVISE_QUERY),
                 "现场检查" to XAppBean("现场检查", R.color.daily_color, R.drawable.icon_daily, RoutePath.ROUTE_SUPERVISE_DAILY)
         )
 }

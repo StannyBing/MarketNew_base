@@ -15,11 +15,10 @@ class SuperviseQueryPresenter : SuperviseQueryContract.Presenter() {
     override fun getSuperviseList(map: Map<String, String>) {
         mModel.superviseListData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<SuperviseListBean>() {
-                    override fun _onNext(t: SuperviseListBean?) {
-                        if (t?.entity != null) {
-                            val normalList = NormalList(t.entity!!.total, t.entity!!.pageNo, t.entity!!.pageSize, t.entity!!.pages, t.entity!!.size, t.entity!!.list)
-                            mView.onSuperviseListResult(normalList)
+                .subscribe(object : RxSubscriber<NormalList<SuperviseListBean>>() {
+                    override fun _onNext(t: NormalList<SuperviseListBean>?) {
+                        if (t != null) {
+                            mView.onSuperviseListResult(t)
                         }
                     }
 

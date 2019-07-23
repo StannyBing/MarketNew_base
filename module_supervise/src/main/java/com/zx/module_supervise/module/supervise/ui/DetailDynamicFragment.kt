@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_detail_dynamic.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务-详情-处置动态
+ * 功能：专项检查-详情-处置动态
  */
 class DetailDynamicFragment : BaseFragment<DetailDynamicPresenter, DetailDynamicModel>(), DetailDynamicContract.View {
 
@@ -51,7 +51,7 @@ class DetailDynamicFragment : BaseFragment<DetailDynamicPresenter, DetailDynamic
         rv_supervise_dynamic.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = dynamicAdapter.apply {
-                setModuleColor(ContextCompat.getColor(activity!!, XAppSupervise.get("监管任务")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(activity!!, XAppSupervise.get("专项检查")!!.moduleColor))
             }
         }
     }

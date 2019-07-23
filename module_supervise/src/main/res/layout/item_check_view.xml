@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_check_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_normal"/>
+
+    <LinearLayout
+        android:id="@+id/ll_check_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:minHeight="40dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_check_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:text="请输入检查结果："
+            android:textColor="@color/text_color_noraml"
+            android:textSize="@dimen/text_size_small"/>
+
+        <EditText
+            android:id="@+id/et_check_value"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请输入..."
+            android:maxLength="256"
+            android:minHeight="50dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textCursorDrawable="@drawable/shape_search_cursor"
+            android:textSize="@dimen/text_size_normal"
+            android:visibility="gone"/>
+
+        <RadioGroup
+            android:id="@+id/rg_check_value"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_check_value0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/supervise_color"
+                android:text="是"
+                android:textColor="@color/supervise_color"
+                android:textSize="@dimen/text_size_small"/>
+
+            <RadioButton
+                android:id="@+id/rb_check_value1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/supervise_color"
+                android:text="是"
+                android:textColor="@color/supervise_color"
+                android:textSize="@dimen/text_size_small"/>
+
+            <RadioButton
+                android:id="@+id/rb_check_value2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/supervise_color"
+                android:text="不适用"
+                android:textColor="@color/supervise_color"
+                android:textSize="@dimen/text_size_small"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/divider_color"/>
+</LinearLayout>

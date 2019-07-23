@@ -10,7 +10,7 @@
         android:id="@+id/toolBar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="监管任务">
+        app:title_text="专项检查">
 
     </com.zx.module_library.view.ToolBarView>
 

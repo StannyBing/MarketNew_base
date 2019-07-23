@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_detail_entity_info.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务-详情-主体信息
+ * 功能：专项检查-详情-主体信息
  */
 class DetailEntityInfoFragment : BaseFragment<DetailEntityInfoPresenter, DetailEntityInfoModel>(), DetailEntityInfoContract.View {
 

@@ -34,11 +34,11 @@ object RoutePath {
     const val ROUTE_ENTITY_SPECIALADD = "/entity/specialAdd"//特殊主体-上报
     const val ROUTE_ENTITY_SPECIALLIST = "/entity/specialList"//特殊主体-上报记录
 
-    //监管任务
-    const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//监管任务查询
-    const val ROUTE_SUPERVISE_DETAIL = "/supervise/detail"//监管任务详情
-    const val ROUTE_SUPERVISE_DISPOSE = "/supervise/dispose"//监管任务处置
-    const val ROUTE_SUPERVISE_DAILY = "/supervise/daily"//监管任务-现场检查
+    //专项检查
+    const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//专项检查查询
+    const val ROUTE_SUPERVISE_DETAIL = "/supervise/detail"//专项检查详情
+    const val ROUTE_SUPERVISE_DISPOSE = "/supervise/dispose"//专项检查处置
+    const val ROUTE_SUPERVISE_DAILY = "/supervise/daily"//专项检查-现场检查
 
     //统计分析
     const val ROUTE_STATISTICS_COMPLAIN = "/statistics/complain"//统计-投诉举报

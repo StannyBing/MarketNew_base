@@ -7,8 +7,10 @@ import android.support.v4.content.ContextCompat
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.bean.NormalList
 import com.zx.module_supervise.R
 import com.zx.module_supervise.XAppSupervise
+import com.zx.module_supervise.module.daily.bean.DailyListBean
 import com.zx.module_supervise.module.daily.mvp.contract.DailyQueryContract
 import com.zx.module_supervise.module.daily.mvp.model.DailyQueryModel
 import com.zx.module_supervise.module.daily.mvp.presenter.DailyQueryPresenter
@@ -21,6 +23,8 @@ import kotlinx.android.synthetic.main.activity_daily_query.*
  */
 @Route(path = RoutePath.ROUTE_SUPERVISE_DAILY)
 class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(), DailyQueryContract.View {
+
+    private var pageNo = 1
 
     companion object {
         /**
@@ -48,6 +52,34 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
         toolBar_view.withXApp(XAppSupervise.get("现场检查"))
         search_view.withXApp(XAppSupervise.get("现场检查"))
         tv_daily_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.get("现场检查")!!.moduleColor))
+
+//        sr_daily_list.setLayoutManager(LinearLayoutManager(this))
+//                .setAdapter(mAdapter)
+//                .autoLoadMore()
+//                .setPageSize(15)
+//                .setSRListener(object : ZXSRListener<SuperviseListBean> {
+//                    override fun onItemLongClick(item: SuperviseListBean?, position: Int) {
+//                    }
+//
+//                    override fun onLoadMore() {
+//                        pageNo++
+//                        loadData()
+//                    }
+//
+//                    override fun onRefresh() {
+//                        loadData(true)
+//                    }
+//
+//                    override fun onItemClick(item: SuperviseListBean?, position: Int) {
+//                        SuperviseDetailActivity.startAction(this@DailyQueryActivity, false, item!!.fId, item.fTaskId, searchType == "0")
+//                    }
+//
+//                })
+        loadData(true)
+    }
+
+    private fun loadData(refresh : Boolean){
+
     }
 
     /**
@@ -57,4 +89,7 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
 
     }
 
+    override fun onDailyListResult(dailyList: NormalList<DailyListBean>) {
+
+    }
 }

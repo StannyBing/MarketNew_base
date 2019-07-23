@@ -107,7 +107,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
                     XAppMain.get("即将到期")!!.apply { num = 0 },
                     XAppMain.get("已经逾期")!!.apply { num = 0 }
             )))
-            dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "监管任务"))))
+            dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "专项检查"))))
             dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList()))
         } else {
             mSharedPrefUtil.putObject("officeBean", officeBean)

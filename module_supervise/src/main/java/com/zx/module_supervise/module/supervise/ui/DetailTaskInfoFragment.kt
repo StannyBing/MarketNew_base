@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_detail_task_info.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务-详情-任务信息
+ * 功能：专项检查-详情-任务信息
  */
 class DetailTaskInfoFragment : BaseFragment<DetailTaskInfoPresenter, DetailTaskInfoModel>(), DetailTaskInfoContract.View {
 

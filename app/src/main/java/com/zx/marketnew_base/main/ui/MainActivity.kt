@@ -80,7 +80,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
         JPushInterface.resumePush(this)
         JPushInterface.setAlias(this, 0, UserManager.getUser().id)
-        JPushInterface.setTags(this, 0, setOf(if (BaseConfigModule.ISRELEASE) "regular" else "test"))
+        JPushInterface.setTags(this, 0, setOf(BaseConfigModule.APP_HEAD + (if (BaseConfigModule.ISRELEASE) "_regular" else "_test")))
 
         mPresenter.getVerson()
     }

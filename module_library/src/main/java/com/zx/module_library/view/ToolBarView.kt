@@ -74,7 +74,7 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         toolbarMidPic.background = midPic
         toolbarRightImage.visibility = if (showRightPic) View.VISIBLE else View.GONE
         toolbarRightText.visibility = if (showRightText) View.VISIBLE else View.GONE
-        if (rightPic != null) toolbarRightImage.background = rightPic
+        if (rightPic != null) toolbarRightImage.setImageDrawable(rightPic)
         toolbarRightText.text = rightText
 
         toolbarBg.setBackgroundColor(bg_color)

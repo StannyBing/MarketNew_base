@@ -4,7 +4,7 @@ package com.zx.module_supervise.module.supervise.bean
  * Created by Xiangb on 2019/7/21.
  * 功能：
  */
-data class SuperviseCheckBean(var fId: String? = null,
+data class SuperviseCheckBean(var fId: String,
                               var fUpdateRemark: String? = null,
                               var fCheckResult: String? = null,
                               var fIsLeaf: String? = null,
@@ -18,5 +18,7 @@ data class SuperviseCheckBean(var fId: String? = null,
                               var fUpdateUser: String? = null,
                               var fValueMin: String? = null,
                               var children: List<SuperviseCheckBean>? = null) {
+
+    data class ResultBean(var fItemId : String, var fCheckResult : String)
 
 }

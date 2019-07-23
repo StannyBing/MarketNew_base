@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_supervise_detail.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务-详情
+ * 功能：专项检查-详情
  */
 @SuppressLint("NewApi")
 @Route(path = RoutePath.ROUTE_SUPERVISE_DETAIL)
@@ -32,6 +32,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
 
     private lateinit var id: String
     private lateinit var taskId: String
+    private var optable: Boolean = false
 
     private var taskInfoBean: TaskInfoBean? = null
     private var entityInfoBean: EntityInfoBean? = null
@@ -45,10 +46,11 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, id: String, taskId: String) {
+        fun startAction(activity: Activity, isFinish: Boolean, id: String, taskId: String, optable: Boolean = false) {
             val intent = Intent(activity, SuperviseDetailActivity::class.java)
             intent.putExtra("id", id)
             intent.putExtra("taskId", taskId)
+            intent.putExtra("optable", optable)
             activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
         }
@@ -67,8 +69,9 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppSupervise.get("监管任务"))
+        toolBar_view.withXApp(XAppSupervise.get("专项检查"))
 
+        optable = if (intent.hasExtra("optable")) intent.getBooleanExtra("optable", false) else false
         id = intent.getStringExtra("id")
         taskId = intent.getStringExtra("taskId")
 
@@ -77,7 +80,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.get("监管任务")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DetailTaskInfoFragment.newInstance().apply { taskInfoFragment = this }, "任务信息")
@@ -86,7 +89,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
                 .addTab(DetailDynamicFragment.newInstance().apply { dynamicFragment = this }, "处置动态")
                 .build()
 
-        btn_supervise_dispose.background.setTint(ContextCompat.getColor(this, XAppSupervise.get("监管任务")!!.moduleColor))
+        btn_supervise_dispose.background.setTint(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
 
         mPresenter.getDetailInfo(id, taskId)
     }
@@ -108,8 +111,8 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
             if (entityInfoBean != null && taskInfoBean != null) {
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["type"] = 1
-                    it["taskBean"] = MapTaskBean("监管任务",
-                            XAppSupervise.get("监管任务")!!.appIcon,
+                    it["taskBean"] = MapTaskBean("专项检查",
+                            XAppSupervise.get("专项检查")!!.appIcon,
                             taskInfoBean!!.fName ?: "",
                             "主体地址：" + (entityInfoBean!!.fAddress ?: ""),
                             "涉及主体：" + (entityInfoBean!!.fEntityName ?: ""),
@@ -136,17 +139,20 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
         entityInfoFragment.resetInfo(entityInfoBean)
         dynamicFragment.resetInfo(taskId, entityInfoBean.fEntityGuid)
 
-        btn_supervise_dispose.visibility = View.VISIBLE
-        btn_supervise_dispose.text = when (entityInfoBean.fStatus) {
-            "101" -> "开始执行"
-            "102" -> "初审"
-            "103" -> "核审"
-            "104" -> "终审"
-            else -> {
-                btn_supervise_dispose.visibility = View.GONE
-                ""
+        if (optable) {
+            btn_supervise_dispose.visibility = View.VISIBLE
+            btn_supervise_dispose.text = when (entityInfoBean.fStatus) {
+                "101" -> "开始执行"
+                "102" -> "初审"
+                "103" -> "核审"
+                "104" -> "终审"
+                else -> {
+                    btn_supervise_dispose.visibility = View.GONE
+                    ""
+                }
             }
         }
+        checkInfoFragment.setfStatus(entityInfoBean.fStatus)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

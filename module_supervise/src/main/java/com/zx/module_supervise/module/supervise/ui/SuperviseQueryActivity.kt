@@ -10,6 +10,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_library.bean.SearchFilterBean
+import com.zx.module_library.func.tool.UserManager
 import com.zx.module_library.func.tool.animateToTop
 import com.zx.module_library.func.tool.getSelect
 import com.zx.module_supervise.R
@@ -25,18 +26,18 @@ import kotlinx.android.synthetic.main.activity_supervise_query.*
 
 /**
  * Create By admin On 2017/7/11
- * 功能：监管任务
+ * 功能：专项检查
  */
 @Route(path = RoutePath.ROUTE_SUPERVISE_QUERY)
 class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQueryModel>(), SuperviseQueryContract.View {
 
     private var pageNo = 1
     private var searchText = ""
-    private var dataBeans = arrayListOf<SuperviseListBean.Entity.ItemBean>()
+    private var dataBeans = arrayListOf<SuperviseListBean>()
     private var mAdapter = SuperviseListAdapter(dataBeans)
 
     private var fStatus = ""//办理状态
-    private var overdue = ""//逾期状态
+    private var queryType = "todo"//搜索类型
     private var searchType = "0"//搜索类型 0我的任务  1全部任务
 
     private val filterList = arrayListOf<SearchFilterBean>()//过滤条件
@@ -64,16 +65,16 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppSupervise.get("监管任务"))
-        search_view.withXApp(XAppSupervise.get("监管任务"))
-        tv_supervise_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.get("监管任务")!!.moduleColor))
+        toolBar_view.withXApp(XAppSupervise.get("专项检查"))
+        search_view.withXApp(XAppSupervise.get("专项检查"))
+        tv_supervise_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
 
         sr_supervise_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
                 .autoLoadMore()
                 .setPageSize(15)
-                .setSRListener(object : ZXSRListener<SuperviseListBean.Entity.ItemBean> {
-                    override fun onItemLongClick(item: SuperviseListBean.Entity.ItemBean?, position: Int) {
+                .setSRListener(object : ZXSRListener<SuperviseListBean> {
+                    override fun onItemLongClick(item: SuperviseListBean?, position: Int) {
                     }
 
                     override fun onLoadMore() {
@@ -85,8 +86,8 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
                         loadData(true)
                     }
 
-                    override fun onItemClick(item: SuperviseListBean.Entity.ItemBean?, position: Int) {
-                        SuperviseDetailActivity.startAction(this@SuperviseQueryActivity, false, item!!.fId, item!!.fTaskId)
+                    override fun onItemClick(item: SuperviseListBean?, position: Int) {
+                        SuperviseDetailActivity.startAction(this@SuperviseQueryActivity, false, item!!.fId, item.fTaskId, searchType == "0")
                     }
 
                 })
@@ -101,7 +102,8 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
             pageNo = 1
             sr_supervise_list.clearStatus()
         }
-        mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fStatus" to fStatus, "fOverdue" to overdue, "text" to searchText))
+        mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fUserId" to UserManager.getUser().id,
+                "fStatus" to fStatus, "queryType" to queryType, "text" to searchText))
     }
 
     /**
@@ -120,15 +122,31 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
                 add(SearchFilterBean.ValueBean("待核审", "103"))
                 add(SearchFilterBean.ValueBean("待终审", "104"))
             }))
+            add(SearchFilterBean("待办已办", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
+                add(SearchFilterBean.ValueBean("待办", "0", true))
+                add(SearchFilterBean.ValueBean("已办", "1"))
+            }, false, visibleBy = "查询对象" to "0"))
             add(SearchFilterBean("是否逾期", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
                 add(SearchFilterBean.ValueBean("即将到期", "1"))
                 add(SearchFilterBean.ValueBean("逾期", "0"))
-            }))
+            }, visibleBy = "查询对象" to "0"))
         }
         search_view.setFuncListener(filterList) {
             searchType = filterList.getSelect(0)
             fStatus = filterList.getSelect(1)
-            overdue = filterList.getSelect(2)
+            queryType = if (searchType == "1") {//全部
+                "all"
+            } else {
+                if (filterList.getSelect(2) == "1") {//已办
+                    "finish"
+                } else if (filterList.getSelect(3) == "1") {//即将到期
+                    "soon"
+                } else if (filterList.getSelect(3) == "0") {//逾期
+                    "overdue"
+                } else {
+                    "todo"
+                }
+            }
         }
         //搜索事件
         search_view.setSearchListener {
@@ -139,7 +157,7 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
         toolBar_view.setMidClickListener { sr_supervise_list.recyclerView.animateToTop(0) }
     }
 
-    override fun onSuperviseListResult(superviseList: NormalList<SuperviseListBean.Entity.ItemBean>) {
+    override fun onSuperviseListResult(superviseList: NormalList<SuperviseListBean>) {
         val type = if (searchType == "0") {
             "我的任务"
         } else {
@@ -151,7 +169,7 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 0x01){
+        if (resultCode == 0x01) {
             loadData(true)
         }
     }
