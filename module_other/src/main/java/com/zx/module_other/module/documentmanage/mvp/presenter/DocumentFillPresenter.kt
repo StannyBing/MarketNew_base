@@ -6,15 +6,16 @@ import com.zx.module_other.module.documentmanage.bean.DocumentBean
 import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.workplan.mvp.contract.DocumentContract
 import com.zx.module_other.module.workplan.mvp.contract.DocumentFillContract
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 
 class DocumentFillPresenter : DocumentFillContract.Presenter() {
-    override fun getDocumentPrintHtml(map: Map<String, String>) {
-        mModel.getDocumentPrint(map)
+    override fun getDocumentPrintHtml(info : RequestBody) {
+        mModel.getDocumentPrint(info)
                 .compose(RxHelper.bindToLifecycle(mView))
                 .subscribe(object :RxSubscriber<ResponseBody>(mView){
                     override fun _onNext(t: ResponseBody?) {
-                        mView.getDocumentPrintResult(t.toString())
+                        mView.getDocumentPrintResult(t!!.string())
                     }
 
                     override fun _onError(code: String?, message: String?) {

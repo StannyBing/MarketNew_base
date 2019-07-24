@@ -11,5 +11,6 @@ class ApiConfigModule : BaseConfigModule(ApiService::class.java, "other"){
         const val URL_LAW = APP_HEAD + "law/"
         const val URL_WORKPLAN = APP_HEAD + "app/workPlan/"
         const val URL_DOCUMENT = APP_HEAD + "supervise/docTemplate/"
+        const val URL_PRINT = APP_HEAD + "supervise/docHandle/"
     }
 }

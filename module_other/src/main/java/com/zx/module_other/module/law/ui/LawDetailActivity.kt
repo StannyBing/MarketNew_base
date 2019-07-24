@@ -58,7 +58,7 @@ class LawDetailActivity : BaseActivity<LawDetailPresenter, LawDetailModel>(), La
         super.initView(savedInstanceState)
 
         toolbar_view.withXApp(XAppOther.get("法律法规"))
-        mPresenter.getCollectList(ApiParamUtil.lawMyCollectParam("oynkBwtUWJ2tFcS5s19RofvkfTs8"))
+        mPresenter.getCollectList(ApiParamUtil.lawMyCollectAllParam("oynkBwtUWJ2tFcS5s19RofvkfTs8"))
         wv_law_query.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true

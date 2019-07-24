@@ -8,6 +8,8 @@ import com.zx.module_other.module.law.bean.LawCollectResultBean
 import com.zx.module_other.module.law.bean.LawDetailBean
 
 import com.zx.module_other.module.law.mvp.contract.LawDetailContract
+import okhttp3.RequestBody
+import retrofit2.http.Body
 import rx.Observable
 
 /**
@@ -24,23 +26,23 @@ class LawDetailModel : BaseModel(), LawDetailContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun lawAllCollect(map: Map<String, String>): Observable<String> {
+    override fun lawAllCollect(info: RequestBody): Observable<String> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .addWeixinCollectLaw(map)
+                .addWeixinCollectLaw(info)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun lawDeleteCollect(map: Map<String, String>): Observable<Int> {
+    override fun lawDeleteCollect(info: RequestBody): Observable<Int> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .deleteWeixinCollectLaw(map)
+                .deleteWeixinCollectLaw(info)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
 
     override fun lawCollectData(map: Map<String, String>): Observable<LawCollectResultBean> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .getCollectLaw(map)
+                .getCollectLawAll(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }

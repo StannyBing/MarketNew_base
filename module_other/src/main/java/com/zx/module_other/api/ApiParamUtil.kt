@@ -79,28 +79,39 @@ object ApiParamUtil {
      * @param name
      * @param type
      */
-    fun lawAddCollectParam(lawMenuId: String, openId: String, name: String, type: String): Map<String, String> {
+    fun lawAddCollectParam(lawMenuId: String, openId: String, name: String, type: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["lawMenuId"] = lawMenuId
         map["openId"] = openId
         map["name"] = name
-        map[type] = type
-        return map
+        map["type"] = type
+        return toJson(map)
     }
 
     /**
      * 删除收藏
      */
-    fun lawDeleteCollectParam(id: String): Map<String, String> {
+    fun lawDeleteCollectParam(id: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["id"] = id
-        return map
+        return toJson(map)
     }
 
     /**
      * 我的收藏
      */
-    fun lawMyCollectParam(openId: String): Map<String, String> {
+    fun lawMyCollectParam(openId: String, pageNo: Int, pageSize: Int): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["pageNo"] = pageNo.toString()
+        map["pageSize"] = pageSize.toString()
+        map["openId"] = openId
+        return map
+    }
+
+    /**
+     * 收藏判断
+     */
+    fun lawMyCollectAllParam(openId: String): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["openId"] = openId
         return map
@@ -134,11 +145,11 @@ object ApiParamUtil {
     /**
      * 创建工作计划
      */
-    fun createWorkPlanParam(content: String, startDate: String): Map<String, String> {
+    fun createWorkPlanParam(content: String, startDate: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["content"] = content
         map["startDate"] = startDate
-        return map;
+        return toJson(map);
     }
 
     /**

@@ -6,19 +6,21 @@ import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.bean.NormalList
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
-import com.zx.module_other.module.law.bean.*
+import com.zx.module_other.module.law.bean.LawCollectBean
+import com.zx.module_other.module.law.bean.LawCollectResultBean
 import com.zx.module_other.module.law.func.adapter.LawCollectAdapter
-import com.zx.module_other.module.law.func.adapter.LawQueryListAdapter
 import com.zx.module_other.module.law.mvp.contract.LawCollectContract
 import com.zx.module_other.module.law.mvp.model.LawCollectModel
 import com.zx.module_other.module.law.mvp.presenter.LawCollectPresenter
+import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_law_collect.*
 
 class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(), LawCollectContract.View {
-
+    private var pageNo = 1
     private var collectDatas = arrayListOf<LawCollectBean>()
     private var lawCollectAdapter = LawCollectAdapter(collectDatas)
 
@@ -46,21 +48,45 @@ class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(),
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         toobar_view.withXApp(XAppOther.get("法律法规"))
-        rv_law_collect.apply {
-            layoutManager = GridLayoutManager(this@LawCollectActivity, 2)
-            adapter = lawCollectAdapter
-        }
+        sr_law_collect.setLayoutManager(GridLayoutManager(this@LawCollectActivity, 2))
+                .setAdapter(lawCollectAdapter)
+                .autoLoadMore()
+                .setPageSize(15)
+                .setSRListener(object : ZXSRListener<LawCollectBean> {
+                    override fun onItemLongClick(item: LawCollectBean?, position: Int) {
+                    }
+
+                    override fun onLoadMore() {
+                        pageNo++
+                        loadData()
+                    }
+
+                    override fun onRefresh() {
+                        loadData(true)
+                    }
+
+                    override fun onItemClick(item: LawCollectBean?, position: Int) {
+                        LawDetailActivity.startAction(this@LawCollectActivity, false, item!!.lawMenuId.toString())
+                    }
+
+                })
     }
 
-    override fun onLawCollectResult(lawCollectResultBean: LawCollectResultBean?) {
-        val list = lawCollectResultBean!!.list
-        collectDatas.clear()
-        collectDatas.addAll(list!!)
-        lawCollectAdapter.setNewData(collectDatas)
+
+    fun loadData(refresh: Boolean = false) {
+        if (refresh) {
+            pageNo = 1
+            sr_law_collect.clearStatus()
+        }
+        mPresenter.getCollectList(ApiParamUtil.lawMyCollectParam("oynkBwtUWJ2tFcS5s19RofvkfTs8", pageNo, 15))
+    }
+
+    override fun onLawCollectResult(lawCollectResultBean: NormalList<LawCollectBean>?) {
+        sr_law_collect.refreshData(lawCollectResultBean!!.list, lawCollectResultBean.total)
     }
 
     override fun onResume() {
         super.onResume()
-        mPresenter.getCollectList(ApiParamUtil.lawMyCollectParam("oynkBwtUWJ2tFcS5s19RofvkfTs8"))
+        loadData(true)
     }
 }

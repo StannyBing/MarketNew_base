@@ -1,16 +1,16 @@
 package com.zx.module_other.api
 
 import com.frame.zxmvp.basebean.BaseRespose
+import com.zx.module_library.bean.NormalList
 import com.zx.module_other.module.documentmanage.bean.DocumentBean
 import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.law.bean.*
 import com.zx.module_other.module.workplan.bean.WorkPlanBean
 import com.zx.module_other.module.workstatisics.bean.WorkOverAllBean
 import com.zx.module_other.module.workstatisics.bean.WorkStatisicsBean
+import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.QueryMap
+import retrofit2.http.*
 import rx.Observable
 
 /**
@@ -27,14 +27,19 @@ interface ApiService {
     @GET(ApiConfigModule.URL_LAW + "Law/selectLaw.do")
     fun getSearchLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawSearchResultBean>>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST(ApiConfigModule.URL_LAW + "Law/addWeixinCollect.do")
-    fun addWeixinCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<String>>;
+    fun addWeixinCollectLaw(@Body info: RequestBody): Observable<BaseRespose<String>>;
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST(ApiConfigModule.URL_LAW + "Law/deleteWeixinCollectLaw.do")
-    fun deleteWeixinCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<Int>>
+    fun deleteWeixinCollectLaw(@Body info: RequestBody): Observable<BaseRespose<Int>>
 
     @GET(ApiConfigModule.URL_LAW + "Law/selectWeixinCollectLaw.do")
-    fun getCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawCollectResultBean>>
+    fun getCollectLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<LawCollectBean>>>
+
+    @GET(ApiConfigModule.URL_LAW + "Law/selectWeixinCollectLaw.do")
+    fun getCollectLawAll(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawCollectResultBean>>
 
     @GET(ApiConfigModule.URL_LAW + "Law/selectDiscretionStandard.do")
     fun selectDiscretionStandard(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawStandardQueryResultBean>>
@@ -42,8 +47,9 @@ interface ApiService {
     @GET(ApiConfigModule.URL_WORKPLAN + "getWorkPlan.do")
     fun getWorkPlan(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<WorkPlanBean>>>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
     @POST(ApiConfigModule.URL_WORKPLAN + "addWorkPlan.do")
-    fun createWorkPlan(@QueryMap map: Map<String, String>): Observable<BaseRespose<String>>
+    fun createWorkPlan(@Body info: RequestBody): Observable<BaseRespose<String>>
 
     @GET(ApiConfigModule.URL_WORKPLAN + "getWorkResultRecently.do")
     fun getWorkSatistics(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<WorkStatisicsBean>>>
@@ -62,6 +68,7 @@ interface ApiService {
     @GET(ApiConfigModule.URL_DOCUMENT + "queryDetailHtml.do")
     fun getDocumentSee(@QueryMap map: Map<String, String>): Observable<okhttp3.ResponseBody>
 
-    @GET(ApiConfigModule.URL_DOCUMENT + "queryField.do")
-    fun getDocumentPrintHtml(@QueryMap map: Map<String, String>): Observable<okhttp3.ResponseBody>
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST(ApiConfigModule.URL_PRINT + "printingHtml.do")
+    fun getDocumentPrintHtml(@Body info: RequestBody): Observable<okhttp3.ResponseBody>
 }

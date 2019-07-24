@@ -31,7 +31,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_1"
-        android:background="@color/text_color_noraml"
+        android:background="@color/divider_color"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/dp_30"
         android:layout_marginRight="@dimen/dp_20"/>

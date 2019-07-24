@@ -53,7 +53,9 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
         }
 
         userfulAdapter.setOnItemClickListener { adapter, view, position ->
-            mPresenter.getDocumentList(ApiParamUtil.getDocumentParam(userfulData[position].name))
+            sv_document_search.setSearchText(userfulData[position].name)
+//            mPresenter.getDocumentList(ApiParamUtil.getDocumentParam(userfulData[position].name))
+
         }
     }
 

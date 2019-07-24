@@ -5,6 +5,7 @@ import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_other.module.law.bean.LawCollectResultBean
 import com.zx.module_other.module.law.bean.LawDetailBean
 import com.zx.module_other.module.law.mvp.contract.LawDetailContract
+import okhttp3.RequestBody
 
 
 /**
@@ -29,8 +30,8 @@ class LawDetailPresenter : LawDetailContract.Presenter() {
                 })
     }
 
-    override fun AddWeixinCollectLaw(map: Map<String, String>) {
-        mModel.lawAllCollect(map).compose(RxHelper.bindToLifecycle(mView))
+    override fun AddWeixinCollectLaw(info: RequestBody) {
+        mModel.lawAllCollect(info).compose(RxHelper.bindToLifecycle(mView))
                 .subscribe(object : RxSubscriber<String>(mView) {
                     override fun _onError(code: String?, message: String?) {
                         mView.handleError(code, message)
@@ -42,8 +43,8 @@ class LawDetailPresenter : LawDetailContract.Presenter() {
                 })
     }
 
-    override fun DeleteWeixinCollectLaw(map: Map<String, String>) {
-        mModel.lawDeleteCollect(map)
+    override fun DeleteWeixinCollectLaw(info: RequestBody) {
+        mModel.lawDeleteCollect(info)
                 .compose(RxHelper.bindToLifecycle(mView))
                 .subscribe(object : RxSubscriber<Int>(mView) {
                     override fun _onError(code: String?, message: String?) {

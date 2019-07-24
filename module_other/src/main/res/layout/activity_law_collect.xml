@@ -15,12 +15,12 @@
     </com.zx.module_library.view.ToolBarView>
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_law_collect"
+    <com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler
+        android:id="@+id/sr_law_collect"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_20">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler>
 
 </LinearLayout>

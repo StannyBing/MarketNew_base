@@ -49,7 +49,7 @@ class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillMod
     override fun onViewListener() {
         tv_fill_preview.setOnClickListener {
             map["id"] = (intent.getSerializableExtra("children") as Children).id
-            mPresenter.getDocumentPrintHtml(map)
+            mPresenter.getDocumentPrintHtml(ApiParamUtil.toJson(map))
         }
     }
 

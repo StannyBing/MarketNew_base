@@ -33,7 +33,7 @@ class DocumentFillAdapter<T>(dataBeans: List<T>, callBack: setDataCallBack) : ZX
                     }
 
                     override fun afterTextChanged(s: Editable?) {
-                        callBack!!.setData(item.id, helper.getView<EditText>(R.id.et_fill_content).text.toString())
+                        callBack!!.setData(item.valueCode, helper.getView<EditText>(R.id.et_fill_content).text.toString())
                     }
 
                 })

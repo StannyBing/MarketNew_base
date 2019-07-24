@@ -80,11 +80,14 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
         when (intent.getIntExtra("type", TYPE_FILL)) {
             TYPE_FILL -> {
-                toobar_view.setMidText(resources.getString(R.string.fill_document))
+                toobar_view.setMidText(resources.getString(R.string.see_document))
+                tv_fill_document.setText(resources.getString(R.string.fill_document))
                 mPresenter.getDocumentWeb(ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id))
             }
             TYPE_CHANGE -> {
-                toobar_view.setMidText(resources.getString(R.string.goon_fill))
+                tv_fill_document.setText(resources.getString(R.string.goon_fill))
+                toobar_view.setMidText(resources.getString(R.string.preview_document))
+                setHtml(intent.getStringExtra("printUrl"))
             }
         }
     }
