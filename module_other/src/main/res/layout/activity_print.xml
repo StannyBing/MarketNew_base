@@ -1,29 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.zx.module_library.view.ToolBarView
+        android:id="@+id/toolbar_view"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content"
+        app:title_text="@string/print_quick">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="蓝牙开关"
-            android:layout_marginLeft="10dp"/>
+    </com.zx.module_library.view.ToolBarView>
 
-        <Switch
-            android:id="@+id/print_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
-            android:textOn="关"
-            android:textOff="开"
-            android:switchMinWidth="40dp"/>
-    </RelativeLayout>
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_200"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dp_20"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/dp_2"
+        app:cardElevation="@dimen/dp_5">
+
+        <RelativeLayout
+            android:id="@+id/rl_printer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_print_pic"
+                android:layout_width="@dimen/dp_80"
+                android:layout_height="@dimen/dp_80"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_30" />
+
+            <TextView
+                android:id="@+id/iv_printer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_print_pic"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_20"
+                android:textSize="@dimen/text_size_normal"
+                 />
+
+            <TextView
+                android:id="@+id/iv_print_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_printer_name"
+                android:layout_centerHorizontal="true"
+                android:textSize="@dimen/text_size_small"
+                 />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@color/docment_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp_20"
+        android:text="@string/print_history"
+        android:textColor="@color/text_color_noraml"
+        android:textSize="@dimen/text_size_normal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

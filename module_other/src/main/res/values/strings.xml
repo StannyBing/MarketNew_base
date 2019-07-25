@@ -38,6 +38,9 @@
     <string name="goon_fill">继续填写</string>
     <string name="search">搜索</string>
     <string name="userful_document">常用文书：</string>
+    <string name="print_quick">便捷打印</string>
+    <string name="print_history">打印历史</string>
+    <string name="print_connect_history">连接历史</string>
     <string-array name="keywordName">
         <item>食品药品</item>
         <item>餐饮服务</item>
