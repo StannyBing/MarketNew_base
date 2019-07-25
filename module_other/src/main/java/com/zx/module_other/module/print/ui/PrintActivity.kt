@@ -27,8 +27,6 @@ import rx.functions.Action1
 import android.bluetooth.BluetoothProfile.GATT_SERVER
 
 
-
-
 /**
  * Create By admin On 2017/7/11
  * 功能：文件打印
@@ -86,13 +84,19 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         if (bluetoothAdapter!!.isEnabled()) {
             val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
             val connectedDevices = bluetoothManager.getConnectedDevices(GATT_SERVER)
+            if (connectedDevices.size > 0) {
+                for (device in connectedDevices){
+                    if (device.bondState == BluetoothDevice.BOND_BONDED){
+                        setOnline(device.name)
+                        break
+                    }
+                }
+            } else {
+                disOnline()
+            }
             bluetoothAdapter!!.startDiscovery()
         } else {
-            iv_print_pic.setImageResource(R.drawable.printer)
-            iv_printer_name.setText("暂无可用打印设备")
-            iv_printer_name.setTextColor(R.color.text_color_light)
-            iv_print_state.setText("点击设置")
-            iv_print_state.setTextColor(R.color.text_color_drak)
+            disOnline()
         }
 
     }
@@ -107,6 +111,15 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         iv_print_state.setText("在线")
         iv_print_state.setTextColor(R.color.text_color_light)
         iv_print_state.textSize = R.dimen.text_size_small.toFloat()
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun disOnline() {
+        iv_print_pic.setImageResource(R.drawable.printer)
+        iv_printer_name.setText("暂无可用打印设备")
+        iv_printer_name.setTextColor(R.color.text_color_light)
+        iv_print_state.setText("点击设置")
+        iv_print_state.setTextColor(R.color.text_color_drak)
     }
 
     fun getBluetoothData() {
