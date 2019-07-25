@@ -194,8 +194,8 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     //可修改
-    fun setModifiable(): AddFileView {
-        modifiable = true
+    fun setModifiable(modifiable : Boolean = true): AddFileView {
+        this.modifiable = modifiable
         fileAdapter.init(module_color, modifiable)
         if (!modifiable) {
             fileAdapter.removeAllFooterView()

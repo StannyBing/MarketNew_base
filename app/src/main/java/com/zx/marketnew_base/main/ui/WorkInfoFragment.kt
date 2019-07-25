@@ -46,9 +46,9 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
         super.initView(savedInstanceState)
 
         val images = arrayListOf<String>()
-        for (i in 0..5) {
-            images.add("http://jk.xxu.edu.cn/images/logo.jpg")
-        }
+        images.add("http://s9.rr.itc.cn/r/wapChange/20177_19_9/a4u5yq63080041288405.jpg")
+        images.add("http://img5.imgtn.bdimg.com/it/u=3320878617,274583552&fm=26&gp=0.jpg")
+        images.add("http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20180620/683a872088df41e2a1201092fcc4dec2.jpeg")
 
         //轮播控件
         banner_work_info

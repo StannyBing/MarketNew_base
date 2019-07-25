@@ -8,6 +8,7 @@ import com.zx.module_supervise.api.ApiService
 import com.zx.module_supervise.module.daily.bean.DailyListBean
 
 import com.zx.module_supervise.module.daily.mvp.contract.DailyQueryContract
+import okhttp3.RequestBody
 import rx.Observable
 
 /**
@@ -22,5 +23,11 @@ class DailyQueryModel : BaseModel(), DailyQueryContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
+    override fun dailyUpdate(body: RequestBody): Observable<String> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+                .updateDailyInfo(body)
+                .compose(RxHelper.handleResult())
+                .compose(RxSchedulers.io_main())
+    }
 
 }

@@ -12,7 +12,7 @@
         app:rightpic_bg="@drawable/daily_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="专项检查">
+        app:title_text="现场检查">
 
     </com.zx.module_library.view.ToolBarView>
 

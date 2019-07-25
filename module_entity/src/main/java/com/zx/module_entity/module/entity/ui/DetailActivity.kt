@@ -1,5 +1,6 @@
 package com.zx.module_entity.module.entity.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +17,7 @@ import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.MapTaskBean
+import com.zx.zxutils.util.ZXDialogUtil
 import kotlinx.android.synthetic.main.activity_entity_detail.*
 
 
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_entity_detail.*
  * Create By admin On 2017/7/11
  * 功能：主体查询-详情
  */
+@SuppressLint("NewApi")
 @Route(path = RoutePath.ROUTE_ENTITY_DETAIL)
 class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContract.View {
 
@@ -83,6 +86,8 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         fUniscid = if (intent.hasExtra("fUniscid")) intent.getStringExtra("fUniscid") else ""
         fBizlicNum = if (intent.hasExtra("fBizlicNum")) intent.getStringExtra("fBizlicNum") else ""
 
+        btn_entity_check.background.setTint(ContextCompat.getColor(this, XAppEntity.get("主体查询")!!.moduleColor))
+
         tvp_entity_detail.setManager(supportFragmentManager)
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
@@ -110,7 +115,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
      * View事件设置
      */
     override fun onViewListener() {
-//地图按钮
+        //地图按钮
         toolBar_view.setRightClickListener {
             if (detailBean != null) {
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
@@ -126,6 +131,18 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 }
             }
         }
+
+        btn_entity_check.setOnClickListener {
+            ZXDialogUtil.showYesNoDialog(this@DetailActivity, "提示", "是否对该主体进行现场检查？") { _, _ ->
+                XApp.startXApp(RoutePath.ROUTE_DAILY_ADD) {
+                    it["fEntityGuid"] = detailBean?.fEntityGuid ?: ""
+                    it["fEntityName"] = detailBean?.fEntityName ?: ""
+                    it["fLegalPerson"] = detailBean?.fLegalPerson ?: ""
+                    it["fContactInfo"] = detailBean?.fContactInfo ?: ""
+                    it["fAddress"] = detailBean?.fAddress ?: ""
+                }
+            }
+        }
     }
 
     override fun onEntityDetailResult(entityDetail: EntityDetailBean?) {
@@ -134,6 +151,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
             finish()
             return
         }
+        btn_entity_check.visibility = View.VISIBLE
         detailBean = entityDetail
         if (entityDetail.fCreditLevel == "Z") {
             tvp_entity_detail.tabLayout.visibility = View.GONE

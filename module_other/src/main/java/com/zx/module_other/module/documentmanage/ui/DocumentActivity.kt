@@ -1,4 +1,4 @@
-package com.zx.module_other.module.workplan.ui
+package com.zx.module_other.module.documentmanage.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -66,8 +66,8 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     @SuppressLint("ResourceAsColor")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("文书"))
-        sv_document_search.withXApp(XAppOther.get("文书"))
+        toobar_view.withXApp(XAppOther.get("文书管理"))
+        sv_document_search.withXApp(XAppOther.get("文书管理"))
         rv_document.apply {
             layoutManager = LinearLayoutManager(this@DocumentActivity)
             adapter = documentAdapter

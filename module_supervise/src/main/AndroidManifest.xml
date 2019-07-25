@@ -13,6 +13,9 @@
         <activity android:name=".module.daily.ui.DailyQueryActivity"/>
         <activity android:name=".module.supervise.ui.SuperviseDetailActivity"/>
         <activity android:name=".module.supervise.ui.SuperviseDisposeActivity"/>
+        <activity android:name=".module.daily.ui.DailyAddActivity"/>
+        <activity android:name=".module.daily.ui.TemplateActivity"/>
+        <activity android:name=".module.daily.ui.CheckListActivity"/>
     </application>
 
 </manifest>

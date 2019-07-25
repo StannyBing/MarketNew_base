@@ -2,7 +2,10 @@ package com.zx.module_supervise.api
 
 import com.frame.zxmvp.basebean.BaseRespose
 import com.zx.module_library.bean.NormalList
+import com.zx.module_supervise.module.daily.bean.DailyDetailBean
 import com.zx.module_supervise.module.daily.bean.DailyListBean
+import com.zx.module_supervise.module.daily.bean.EntityBean
+import com.zx.module_supervise.module.daily.bean.TemplateBean
 import com.zx.module_supervise.module.supervise.bean.*
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -47,4 +50,35 @@ interface ApiService {
     @GET(ApiConfigModule.URL_SUPERVISE + "inspect/queryList.do")
     fun getDailyList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<DailyListBean>>>
 
+    @GET(ApiConfigModule.URL_SUPERVISE + "taskDo/getEntityPage.do")
+    fun getEntityList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<EntityBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "taskTemplate/queryList.do")
+    fun getTempletList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<TemplateBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "taskTemplate/queryItemTree.do")
+    fun getTempletCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "check/queryPItem.do")
+    fun getCheckItemList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "check/queryAllItem.do")
+    fun queryCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST(ApiConfigModule.URL_SUPERVISE + "taskTemplate/save.do")
+    fun saveTemplet(@Body body: RequestBody): Observable<BaseRespose<String>>
+
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST(ApiConfigModule.URL_SUPERVISE + "inspect/saveCheckInfo.do")
+    fun saveDailyInfo(@Body body: RequestBody): Observable<BaseRespose<String>>
+
+    @POST(ApiConfigModule.URL_SUPERVISE + "inspect/updateCheckInfo.do")
+    fun updateDailyInfo(@Body body: RequestBody): Observable<BaseRespose<String>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "inspect/getCheckInfoDetail.do")
+    fun getSuperviseDailyDetail(@QueryMap map: Map<String, String>): Observable<BaseRespose<DailyDetailBean>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "inspect/queryItemResult.do")
+    fun dailyCheckResult(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
 }
