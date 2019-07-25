@@ -90,7 +90,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 }
             }
         }
-        //被检查负责人签名
+        //被检查企业负责人签名
         tv_dispose_sign1.setOnClickListener {
             showSignView(1)
         }

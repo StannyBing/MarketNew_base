@@ -20,6 +20,6 @@ data class DailyListBean(var id: String,
                          var insertPerson: String,
                          var status: Int,
                          var illegal: String,
-                         var result: String) {
+                         var result: String?) {
 
 }

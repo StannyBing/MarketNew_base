@@ -1,12 +1,12 @@
-package com.zx.module_other.module.workplan.ui
+package com.zx.module_other.module.documentmanage.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.EditText
-import android.widget.RelativeLayout
+import android.support.v7.widget.RecyclerView
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -15,11 +15,8 @@ import com.zx.module_other.module.documentmanage.bean.Children
 import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.documentmanage.func.adapter.DocumentFillAdapter
 import com.zx.module_other.module.workplan.mvp.contract.DocumentFillContract
-import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
 import com.zx.module_other.module.workplan.mvp.model.DocumentFillModel
-import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentFillPresenter
-import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import kotlinx.android.synthetic.main.activity_document_fill.*
 
 class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillModel>(), DocumentFillContract.View {
@@ -47,7 +44,7 @@ class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillMod
     }
 
     override fun onViewListener() {
-        tv_fill_preview.setOnClickListener {
+        btn_fill_preview.setOnClickListener {
             map["id"] = (intent.getSerializableExtra("children") as Children).id
             mPresenter.getDocumentPrintHtml(ApiParamUtil.toJson(map))
         }
@@ -57,12 +54,15 @@ class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillMod
         return R.layout.activity_document_fill
     }
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint("ResourceAsColor", "NewApi")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("文书"))
+        toobar_view.withXApp(XAppOther.get("文书管理"))
+
+        btn_fill_preview.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
+
         rv_document_fill.apply {
-            layoutManager = LinearLayoutManager(this@DocumentFillActivity)
+            layoutManager = LinearLayoutManager(this@DocumentFillActivity) as RecyclerView.LayoutManager?
             adapter = fillAdapter
         }
         mPresenter.getDocumentFieldList(ApiParamUtil.getDocumentFieldParam((intent.getSerializableExtra("children") as Children).id))

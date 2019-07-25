@@ -65,15 +65,15 @@ class SpecialAddActivity : BaseActivity<SpecialAddPresenter, SpecialAddModel>(),
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppEntity.get("特殊主体"))
-        file_view.withXApp(XAppEntity.get("特殊主体"))
+        toolBar_view.withXApp(XAppEntity.get("无证无照监管"))
+        file_view.withXApp(XAppEntity.get("无证无照监管"))
                 .setModifiable()
-        btn_special_submit.background.setTint(ContextCompat.getColor(this, XAppEntity.get("特殊主体")!!.moduleColor))
+        btn_special_submit.background.setTint(ContextCompat.getColor(this, XAppEntity.get("无证无照监管")!!.moduleColor))
 
         rv_special_info.apply {
             layoutManager = ZXInScrollRecylerManager(this@SpecialAddActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@SpecialAddActivity, XAppEntity.get("特殊主体")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@SpecialAddActivity, XAppEntity.get("无证无照监管")!!.moduleColor))
             }
         }
 

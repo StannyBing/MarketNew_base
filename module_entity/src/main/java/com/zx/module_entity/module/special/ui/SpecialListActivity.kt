@@ -58,9 +58,9 @@ class SpecialListActivity : BaseActivity<SpecialListPresenter, SpecialListModel>
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppEntity.get("特殊主体"))
+        toolBar_view.withXApp(XAppEntity.get("无证无照监管"))
 
-        tv_entity_tips.setTextColor(ContextCompat.getColor(this, XAppEntity.get("特殊主体")!!.moduleColor))
+        tv_entity_tips.setTextColor(ContextCompat.getColor(this, XAppEntity.get("无证无照监管")!!.moduleColor))
 
         sr_special_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
@@ -107,7 +107,7 @@ class SpecialListActivity : BaseActivity<SpecialListPresenter, SpecialListModel>
     }
 
     override fun onEntityListResult(entityList: NormalList<EntityBean>) {
-        tv_entity_tips.text = "检索到特殊主体共${entityList.total}条"
+        tv_entity_tips.text = "检索到主体共${entityList.total}条"
         sr_special_list.refreshData(entityList.list, entityList.total)
     }
 

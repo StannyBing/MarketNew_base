@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_60">
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
 
     <ImageView
         android:id="@+id/iv_document"
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_30"
         android:src="@drawable/docuementpic"/>
@@ -19,20 +19,23 @@
         android:layout_marginLeft="@dimen/dp_20"
         android:layout_toRightOf="@+id/iv_document"
         android:textColor="@color/text_color_noraml"
-        android:textSize="@dimen/text_size_big"
+        android:textSize="@dimen/text_size_normal"
         />
+
     <ImageView
-        android:layout_width="@dimen/dp_30"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dp_20"
-        android:src="@drawable/right_next"
-        android:layout_centerVertical="true"/>
+        android:src="@mipmap/arrow_close"/>
+
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_1"
-        android:background="@color/divider_color"
+        android:layout_height="1px"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/dp_30"
-        android:layout_marginRight="@dimen/dp_20"/>
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/divider_color"/>
+
 </RelativeLayout>

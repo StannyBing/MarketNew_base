@@ -98,7 +98,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:gravity="center"
-                        android:text="被检查负责人签名:"
+                        android:text="被检查企业负责人签名:"
                         android:textColor="@color/text_color_noraml"
                         android:textSize="@dimen/text_size_normal"/>
 

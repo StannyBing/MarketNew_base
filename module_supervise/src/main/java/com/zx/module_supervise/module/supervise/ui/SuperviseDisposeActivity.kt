@@ -103,15 +103,15 @@ class SuperviseDisposeActivity : BaseActivity<SuperviseDisposePresenter, Supervi
             when (status) {
                 "101" -> {
                     if (disposeBaseFragment!!.disposeType == 0) {
-                        if (disposeBaseFragment!!.checkItem()) {
-                            if (!disposeCheckFragment!!.checkItem()) {
-                                showToast("请先完成检查内容")
-                                tvp_supervise_dispose.setSelectOn(1)
-                            } else {
-                                ZXDialogUtil.showYesNoDialog(this, "提示", "是否提交处置结果？") { _, _ ->
-                                    getPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                                        onFileUploadResult("", "", 0)
-                                    }
+                        if (!disposeBaseFragment!!.checkItem()) {
+                            tvp_supervise_dispose.setSelectOn(0)
+                        } else if (!disposeCheckFragment!!.checkItem()) {
+                            showToast("请先完成检查内容")
+                            tvp_supervise_dispose.setSelectOn(1)
+                        } else {
+                            ZXDialogUtil.showYesNoDialog(this, "提示", "是否提交处置结果？") { _, _ ->
+                                getPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                                    onFileUploadResult("", "", 0)
                                 }
                             }
                         }

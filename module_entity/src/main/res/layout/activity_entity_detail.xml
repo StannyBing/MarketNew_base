@@ -23,8 +23,8 @@
     </com.zx.zxutils.views.TabViewPager.ZXTabViewPager>
 
     <Button
-        android:id="@+id/btn_entity_dispose"
+        android:id="@+id/btn_entity_check"
         style="@style/MySubmitButton"
-        android:text="任务处置"
+        android:text="新增现场检查"
         android:visibility="gone"/>
 </LinearLayout>

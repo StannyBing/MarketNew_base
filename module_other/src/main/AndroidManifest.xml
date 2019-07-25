@@ -25,9 +25,9 @@
         <activity android:name=".module.workplan.ui.WorkPlanActivity" />
         <activity android:name=".module.workplan.ui.CreatePlanActivity" />
         <activity android:name=".module.workplan.ui.WorkStatisicsActivity" />
-        <activity android:name=".module.workplan.ui.DocumentActivity" />
-        <activity android:name=".module.workplan.ui.DocumentFillActivity" />
-        <activity android:name=".module.workplan.ui.DocumentSeeActivity" />
+        <activity android:name=".module.documentmanage.ui.DocumentActivity" />
+        <activity android:name=".module.documentmanage.ui.DocumentFillActivity" />
+        <activity android:name=".module.documentmanage.ui.DocumentSeeActivity" />
     </application>
 
 </manifest>

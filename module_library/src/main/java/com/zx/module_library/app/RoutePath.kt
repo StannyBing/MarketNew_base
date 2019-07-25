@@ -31,14 +31,17 @@ object RoutePath {
     //主体查询
     const val ROUTE_ENTITY_QUERY = "/entity/query"//主体查询
     const val ROUTE_ENTITY_DETAIL = "/entity/detail"//主体查询-详情
-    const val ROUTE_ENTITY_SPECIALADD = "/entity/specialAdd"//特殊主体-上报
-    const val ROUTE_ENTITY_SPECIALLIST = "/entity/specialList"//特殊主体-上报记录
+    const val ROUTE_ENTITY_SPECIALADD = "/entity/specialAdd"//无证无照监管-上报
+    const val ROUTE_ENTITY_SPECIALLIST = "/entity/specialList"//无证无照监管-上报记录
 
     //专项检查
     const val ROUTE_SUPERVISE_QUERY = "/supervise/query"//专项检查查询
     const val ROUTE_SUPERVISE_DETAIL = "/supervise/detail"//专项检查详情
     const val ROUTE_SUPERVISE_DISPOSE = "/supervise/dispose"//专项检查处置
-    const val ROUTE_SUPERVISE_DAILY = "/supervise/daily"//专项检查-现场检查
+    const val ROUTE_DAILY_QUERY = "/daily/query"//现场检查
+    const val ROUTE_DAILY_ADD = "/daily/add"//现场检查-新增
+    const val ROUTE_DAILY_TEMPLATE = "/daily/template"//现场检查-模板
+    const val ROUTE_DAILY_CHECKLIST = "/daily/checklist"//现场检查-检查指标
 
     //统计分析
     const val ROUTE_STATISTICS_COMPLAIN = "/statistics/complain"//统计-投诉举报

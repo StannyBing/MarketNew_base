@@ -9,7 +9,7 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="android:configChanges">orientation</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowSoftInputMode">adjustPan</item>
+        <item name="android:windowSoftInputMode">adjustPan|stateAlwaysHidden</item>
         <item name="android:colorControlHighlight" tools:ignore="NewApi">#f2f2f2</item>
         <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
     </style>

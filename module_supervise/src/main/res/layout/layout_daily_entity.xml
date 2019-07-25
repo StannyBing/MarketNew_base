@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:orientation="vertical">
+
+        <com.zx.module_library.view.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+        </com.zx.module_library.view.SearchView>
+
+        <TextView
+            android:id="@+id/tv_entity_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:textSize="@dimen/text_size_small"/>
+
+        <com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler
+            android:id="@+id/sr_entity_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler>
+    </LinearLayout>
+</LinearLayout>

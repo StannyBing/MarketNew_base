@@ -5,6 +5,7 @@ import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_library.bean.NormalList
 import com.zx.module_supervise.module.daily.bean.DailyListBean
 import com.zx.module_supervise.module.daily.mvp.contract.DailyQueryContract
+import okhttp3.RequestBody
 
 
 /**
@@ -28,5 +29,18 @@ class DailyQueryPresenter : DailyQueryContract.Presenter() {
                 })
     }
 
+    override fun updateDaily(body: RequestBody) {
+        mModel.dailyUpdate(body)
+                .compose(RxHelper.bindToLifecycle(mView))
+                .subscribe(object : RxSubscriber<String>(mView) {
+                    override fun _onNext(s: String) {
+                        mView.onDailyUpdateResult()
+                    }
+
+                    override fun _onError(code: String?, message: String?) {
+                        mView.handleError(code, message)
+                    }
+                })
+    }
 
 }

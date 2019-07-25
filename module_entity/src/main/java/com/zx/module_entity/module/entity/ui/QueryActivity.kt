@@ -133,13 +133,13 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             fCreditLevel = filterList.getSelect(name = "信用等级")
             fStatus = filterList.getSelect(name = "主体状态")
             areaCode = filterList.getSelect(name = "监管所")
-            if (filterList.getSelect(name = "周边查询") == "1"&&filterList.getSelect(name = "查询范围").isNotEmpty()) {
+            if (filterList.getSelect(name = "周边查询") == "1" && filterList.getSelect(name = "查询范围").isNotEmpty()) {
                 getPermission(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     val location = ZXLocationUtil.getLocation(this)
                     positionList = "[[${location.longitude},${location.latitude}]]"
                 }
                 radius = filterList.getSelect(name = "查询范围")
-            }else{
+            } else {
                 positionList = ""
                 radius = ""
             }
