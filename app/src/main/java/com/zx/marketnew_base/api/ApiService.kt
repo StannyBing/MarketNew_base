@@ -38,8 +38,8 @@ interface ApiService {
     @GET(ApiConfigModule.URL_APP + "user/getUserDeptTree.do")
     fun getMailList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<MailListBean>>>
 
-    @POST(ApiConfigModule.URL_APP + "pushMsg/getPushMsgPage.do")
-    fun getTaskLsit(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<TaskBean>>>
+    @POST(ApiConfigModule.URL_APP + "office/getTodoList.do")
+    fun getTaskLsit(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TaskBean>>>
 
     @GET(ApiConfigModule.URL_APP + "office/getOfficeList.do")
     fun getOfficeInfo(): Observable<BaseRespose<OfficeBean>>

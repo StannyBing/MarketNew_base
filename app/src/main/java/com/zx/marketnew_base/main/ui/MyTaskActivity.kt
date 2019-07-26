@@ -6,18 +6,16 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.marketnew_base.R
-import com.zx.marketnew_base.api.ApiParamUtil
 import com.zx.marketnew_base.main.bean.TaskBean
 import com.zx.marketnew_base.main.func.adapter.TaskAdapter
 import com.zx.marketnew_base.main.mvp.contract.MyTaskContract
 import com.zx.marketnew_base.main.mvp.model.MyTaskModel
 import com.zx.marketnew_base.main.mvp.presenter.MyTaskPresenter
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
-import com.zx.module_library.bean.NormalList
-import com.zx.module_library.func.tool.UserManager
+import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_my_task.*
-import kotlinx.android.synthetic.main.fragment_message.*
 
 
 /**
@@ -27,10 +25,10 @@ import kotlinx.android.synthetic.main.fragment_message.*
 @Route(path = RoutePath.ROUTE_APP_MYTASK)
 class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContract.View {
 
-    var pageNo = 1
-    var isRefresh = false
-    var dataBeans = arrayListOf<TaskBean>()
-    var listAdapter: TaskAdapter = TaskAdapter(dataBeans)
+    private val dataBeans = arrayListOf<TaskBean>()
+    private val listAdapter = TaskAdapter(dataBeans)
+
+    private var searchText = ""
 
     companion object {
         /**
@@ -55,23 +53,60 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        rv_mytask_list.layoutManager = LinearLayoutManager(this)
-        rv_mytask_list.adapter = listAdapter
-        sr_mytask.setColorSchemeResources(R.color.colorPrimary)
-        loadData()
+
+        sr_my_task.setLayoutManager(LinearLayoutManager(this))
+                .setAdapter(listAdapter)
+                .setPageSize(999)
+                .setSRListener(object : ZXSRListener<TaskBean> {
+                    override fun onItemLongClick(item: TaskBean?, position: Int) {
+                    }
+
+                    override fun onLoadMore() {
+//                        loadData()
+                    }
+
+                    override fun onRefresh() {
+                        loadData(true)
+                    }
+
+                    override fun onItemClick(item: TaskBean?, position: Int) {
+                        when (item!!.businessType) {
+                            "case" -> {
+                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_DETAIL) {
+                                    it["id"] = item.id ?: ""
+                                    it["taskId"] = item.taskId ?: ""
+                                    it["optable"] = true
+                                    it["processType"] = item.processType ?: ""
+                                }
+                            }
+                            "complaint" -> {
+                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_DETAIL) {
+                                    it["fGuid"] = item.fGuid ?: ""
+                                }
+                            }
+                            "entityTask" -> {
+                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DETAIL) {
+                                    it["id"] = item.fId ?: ""
+                                    it["taskId"] = item.fTaskId ?: ""
+                                    it["optable"] = true
+                                }
+                            }
+                        }
+                    }
+                })
     }
 
     /**
      * 数据加载
      */
     fun loadData(refresh: Boolean = false) {
-        if (refresh) {
-            isRefresh = true
-            pageNo = 1
+        mPresenter.getTaskList(hashMapOf("queryType" to if (intent.getStringExtra("routeName") == "已经逾期") {
+            "overdue"
+        } else if (intent.getStringExtra("routeName") == "即将到期") {
+            "soon"
         } else {
-            pageNo++
-        }
-        mPresenter.getTaskList(ApiParamUtil.taskListParam(UserManager.getUser().id, pageNo))
+            "todo"
+        }, "searchText" to searchText))
     }
 
     /**
@@ -80,41 +115,18 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
     override fun onViewListener() {
         //搜索事件
         sv_mytask_search.setSearchListener {
-
-        }
-        //搜索功能键
-        sv_mytask_search.setFuncListener {
-
-        }
-        //刷新事件
-        sr_mytask.setOnRefreshListener {
-            isRefresh = true
+            searchText = it
             loadData()
-        }
-        //点击事件
-        listAdapter.setOnItemClickListener { adapter, view, position -> }
-        //加载更多事件
-        listAdapter.setOnLoadMoreListener({
-            loadData()
-        }, rv_message_list)
-    }
-
-    override fun onTaskListResult(taskList: NormalList<TaskBean>) {
-        if (isRefresh) {
-            isRefresh = false
-            sr_mytask.isRefreshing = false
-            dataBeans.clear()
-            dataBeans.addAll(taskList.list)
-            listAdapter.setNewData(dataBeans)
-        } else {
-            dataBeans.addAll(taskList.list)
-            listAdapter.notifyDataSetChanged()
-        }
-        if (pageNo < taskList.pages && taskList.pages > 0) {
-            listAdapter.loadMoreComplete()
-        } else {
-            listAdapter.loadMoreEnd()
         }
     }
 
+    override fun onTaskListResult(taskList: List<TaskBean>) {
+        sr_my_task.clearStatus()
+        sr_my_task.refreshData(taskList, 999)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData(true)
+    }
 }

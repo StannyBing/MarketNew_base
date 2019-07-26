@@ -5,7 +5,6 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSchedulers
 import com.zx.module_library.bean.NormalList
 import com.zx.module_supervise.api.ApiService
-import com.zx.module_supervise.module.daily.bean.DailyDetailBean
 import com.zx.module_supervise.module.daily.bean.EntityBean
 import com.zx.module_supervise.module.daily.mvp.contract.DailyAddContract
 import okhttp3.RequestBody
@@ -37,6 +36,11 @@ class DailyAddModel : BaseModel(), DailyAddContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
-
+    override fun getBizlicNumDetail(map: Map<String, String>): Observable<EntityBean> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+                .getEntityByBizlicNum(map)
+                .compose(RxHelper.handleResult())
+                .compose(RxSchedulers.io_main())
+    }
 
 }

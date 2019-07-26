@@ -10,17 +10,24 @@ import android.content.res.TypedArray
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
 import cn.jpush.android.api.JPushInterface
 import com.frame.zxmvp.base.BaseModel
 import com.frame.zxmvp.base.BasePresenter
 import com.frame.zxmvp.base.RxBaseActivity
+import com.frame.zxmvp.baserx.RxHelper
+import com.frame.zxmvp.baserx.RxSubscriber
 import com.tencent.bugly.crashreport.CrashReport
 import com.zx.module_library.BuildConfig
+import com.zx.module_library.R
 import com.zx.module_library.XApp
-import com.zx.module_library.app.BaseConfigModule
-import com.zx.module_library.app.MyApplication
-import com.zx.module_library.app.RoutePath
+import com.zx.module_library.app.*
+import com.zx.module_library.bean.UserBean
 import com.zx.module_library.func.tool.UserManager
+import com.zx.module_library.func.tool.toJson
 import com.zx.zxutils.util.*
 import com.zx.zxutils.views.SwipeBack.ZXSwipeBackHelper
 import com.zx.zxutils.views.ZXStatusBarCompat
@@ -116,9 +123,10 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
     override fun handleError(code: String?, message: String) {
         showToast(message)
         if (code == "10120") {//未登录或登录超时
-            JPushInterface.stopPush(this)
-            UserManager.loginOut()
-            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN)
+            showLoginDialog()
+//            JPushInterface.stopPush(this)
+//            UserManager.loginOut()
+//            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN)
         } else if (code == "10000") {//系统错误
             showToast("系统超时，即将重新登录")
             handler.postDelayed({
@@ -127,6 +135,58 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                     it["reLogin"] = true
                 }
             }, 1000)
+        }
+    }
+
+    private fun showLoginDialog() {
+        val loginView = LayoutInflater.from(this).inflate(R.layout.layout_re_login, null, false)
+        val etUserName = loginView.findViewById<EditText>(R.id.et_relogin_phone)
+        val etPassword = loginView.findViewById<EditText>(R.id.et_relogin_pwd)
+        val btnLogin = loginView.findViewById<Button>(R.id.btn_relogin_do)
+        val ivClose = loginView.findViewById<ImageView>(R.id.iv_relogin_cancel)
+        ivClose.setOnClickListener {
+            ZXDialogUtil.dismissDialog()
+            JPushInterface.stopPush(this)
+            UserManager.loginOut()
+            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN)
+        }
+        etUserName.setText(UserManager.userName)
+        etPassword.setText(UserManager.passWord)
+        btnLogin.setOnClickListener {
+            MyApplication.instance.component.repositoryManager()
+                    .obtainRetrofitService(ApiService::class.java)
+                    .doLogin(hashMapOf("username" to UserManager.userName, "password" to ApiParamUtil.getBase64(UserManager.passWord)).toJson())
+                    .compose(RxHelper.handleResult())
+                    .subscribe(object : RxSubscriber<UserBean>() {
+                        override fun onStart() {
+                            super.onStart()
+                            showLoading("正在登录...")
+                        }
+
+                        override fun _onNext(t: UserBean?) {
+                            showToast("登录成功")
+                            if (t != null) {
+                                BaseConfigModule.TOKEN = t.jwt
+                                UserManager.setUser(t)
+                                showToast("登录成功")
+                                ZXDialogUtil.dismissDialog()
+                                ZXDialogUtil.dismissDialog()
+                            }
+                        }
+
+                        override fun _onError(code: String?, message: String?) {
+                            showToast("登录失败")
+                            ZXDialogUtil.dismissDialog()
+                        }
+
+                    })
+            handler.postDelayed({
+                btnLogin.performClick()
+            }, 300)
+        }
+        ZXDialogUtil.showCustomViewDialog(this, "", loginView, null).apply {
+            window.setDimAmount(0.2f)
+            window.setBackgroundDrawableResource(R.color.transparent)
         }
     }
 

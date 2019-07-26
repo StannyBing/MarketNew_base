@@ -119,7 +119,7 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
         UserManager.passWord = et_login_pwd.text.toString()
         userBean.password = et_login_pwd.text.toString()
         UserManager.setUser(userBean)
-        showToast("登陆成功")
+        showToast("登录成功")
         et_login_pwd.setText("")
         MainActivity.startAction(this, false)
     }

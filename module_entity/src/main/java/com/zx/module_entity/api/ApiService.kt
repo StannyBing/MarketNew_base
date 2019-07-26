@@ -2,7 +2,6 @@ package com.zx.module_entity.api
 
 import com.frame.zxmvp.basebean.BaseRespose
 import com.zx.module_entity.module.entity.bean.*
-import com.zx.module_entity.module.entity.bean.EntityBean
 import com.zx.module_entity.module.special.bean.DeptBean
 import com.zx.module_library.bean.NormalList
 import okhttp3.RequestBody

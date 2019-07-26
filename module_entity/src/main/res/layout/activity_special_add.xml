@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         app:right_text="新增记录"
         app:show_righttext="true"
-        app:title_text="特殊主体新增">
+        app:title_text="无证无照监管">
 
     </com.zx.module_library.view.ToolBarView>
 

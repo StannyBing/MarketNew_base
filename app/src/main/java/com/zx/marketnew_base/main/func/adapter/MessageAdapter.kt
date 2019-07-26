@@ -16,12 +16,12 @@ import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
  * Created by Xiangb on 2019/3/14.
  * 功能：任务通用适配器
  */
-class MessageAdapter(databeans: List<MessageBean>) : ZXQuickAdapter<MessageBean, ZXBaseHolder>(R.layout.item_task_normal, databeans) {
+class MessageAdapter(databeans: List<MessageBean>) : ZXQuickAdapter<MessageBean, ZXBaseHolder>(R.layout.item_message, databeans) {
     override fun convert(helper: ZXBaseHolder?, item: MessageBean?) {
         if (helper != null && item != null) {
-            helper.setText(R.id.tv_task_itemTitle, item.title)
-            helper.setText(R.id.tv_task_itemInfo, item.text)
-            helper.setText(R.id.tv_task_itemDate, TaskTimeUtil.displayTime(item.inserDate))
+            helper.setText(R.id.tv_message_itemTitle, item.title)
+            helper.setText(R.id.tv_message_itemInfo, item.text)
+            helper.setText(R.id.tv_message_itemDate, TaskTimeUtil.displayTime(item.inserDate))
             Glide.with(ZXApp.getContext()).load(R.drawable.app_task_msg)
                     .apply(RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)

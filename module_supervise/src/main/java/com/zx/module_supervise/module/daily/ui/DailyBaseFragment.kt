@@ -19,7 +19,6 @@ import com.zx.module_supervise.module.daily.mvp.contract.DailyBaseContract
 import com.zx.module_supervise.module.daily.mvp.model.DailyBaseModel
 import com.zx.module_supervise.module.daily.mvp.presenter.DailyBasePresenter
 import com.zx.module_supervise.module.supervise.func.view.SignatureView
-import com.zx.zxutils.entity.KeyValueEntity
 import com.zx.zxutils.util.ZXBitmapUtil
 import com.zx.zxutils.util.ZXDialogUtil
 import kotlinx.android.synthetic.main.fragment_daily_base.*
@@ -78,21 +77,6 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
             et_daily_checkName.hint = entityBean?.fEntityName
         }
 
-        //处理结果
-        sp_daily_result.apply {
-            showUnderineColor(false)
-            setData(arrayListOf<KeyValueEntity>().apply {
-                add(KeyValueEntity("符合", "0"))
-                add(KeyValueEntity("不符合", "1"))
-                add(KeyValueEntity("基本符合", "2"))
-            })
-            setDefaultItem("请选择...")
-            setItemHeightDp(40)
-            setItemTextSizeSp(15)
-            showSelectedTextColor(true, XAppSupervise.get("现场检查")!!.moduleColor)
-            build()
-        }
-
         if (dailyId.isNotEmpty()) {
             mPresenter.getDailyDetail(hashMapOf("id" to dailyId))
         }
@@ -136,7 +120,7 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
     fun getDailyInfo(): HashMap<String, Any> {
         return hashMapOf("enterpriseId" to entityBean!!.fEntityGuid!!,
                 "name" to if (et_daily_checkName.text.toString().isEmpty()) entityBean!!.fEntityName!! else et_daily_checkName.text.toString(),
-                "result" to sp_daily_result.selectedValue.toString(),
+                "result" to if (rb_check_value0.isChecked) "0" else if (rb_check_value1.isChecked) "1" else if (rb_check_value2.isChecked) "2" else "",
                 "remark" to et_daily_remark.text.toString())
     }
 
@@ -182,13 +166,13 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
         et_daily_remark.isFocusableInTouchMode = false
         ll_daily_checkName.visibility = View.GONE
         divider_checkName.visibility = View.GONE
-        tv_daily_result.visibility = View.VISIBLE
-        sp_daily_result.visibility = View.GONE
-        tv_daily_result.text = when (dailyDetailBean.result) {
-            0 -> "符合"
-            1 -> "不符合"
-            2 -> "基本符合"
-            else -> ""
+        for (i in 0 until rg_check_value.childCount) {
+            rg_check_value.getChildAt(i).isEnabled = false
+        }
+        when (dailyDetailBean.result) {
+            0 -> rg_check_value.check(R.id.rb_check_value0)
+            1 -> rg_check_value.check(R.id.rb_check_value1)
+            2 -> rg_check_value.check(R.id.rb_check_value2)
         }
         //设置附件信息
         if (dailyDetailBean.enterpriseSign != null) {

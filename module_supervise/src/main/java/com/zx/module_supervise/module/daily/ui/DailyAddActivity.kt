@@ -29,6 +29,7 @@ import com.zx.zxutils.util.ZXDialogUtil
 import com.zx.zxutils.util.ZXFileUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler
+import io.github.xudaojie.qrcodelib.CaptureActivity
 import kotlinx.android.synthetic.main.activity_daily_add.*
 import kotlinx.android.synthetic.main.fragment_daily_base.*
 import java.io.File
@@ -127,6 +128,11 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
         svEntity.setSearchListener {
             entitySearchText = it
             loadEntityList(true)
+        }
+        svEntity.setOtherPicClick {
+            getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                startActivityForResult(Intent(this, CaptureActivity::class.java), 0x09)
+            }
         }
         srEntityList!!.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(entityAdapter)
@@ -248,5 +254,37 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
     override fun onEntityListResult(entityList: NormalList<EntityBean>) {
         tvEntityTips?.text = "检索到主体共${entityList.total}条"
         srEntityList?.refreshData(entityList.list, entityList.total)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 0x09) {
+            if (data == null || data.getStringExtra("result").isEmpty()) {
+                showToast("未获取到主体信息")
+            } else {
+                var result = data.getStringExtra("result")
+                if (result.contains("信用代码：") && result.contains("；注册号")) {
+                    result = result.substring(result.indexOf("信用代码：") + 5, result.indexOf("；注册号"))
+                    mPresenter.getEntityByBizlicNum(hashMapOf("fUniscid" to result))
+                } else if (result.contains("zch")) {
+                    result = result.substring(result.indexOf("zch=") + 4)
+                    mPresenter.getEntityByBizlicNum(hashMapOf("fBizlicNum" to result))
+                } else if (result.contains("uniscid")) {
+                    result = result.substring(result.indexOf("uniscid=") + 8)
+                    mPresenter.getEntityByBizlicNum(hashMapOf("fUniscid" to result))
+                } else {
+                    showToast("未获取到主体信息")
+                }
+            }
+        }
+    }
+
+    override fun onEntityDetailResult(entityBean: EntityBean?) {
+        if (entityBean != null) {
+            dailyBaseFragment.setEntityInfo(entityBean)
+            ZXDialogUtil.dismissDialog()
+        } else {
+            showToast("未获取到主体信息")
+        }
     }
 }

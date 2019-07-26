@@ -18,6 +18,7 @@
     <declare-styleable name="SearchView">
         <attr name="func_text" format="string"/>
         <attr name="show_func" format="boolean"/>
+        <attr name="show_otherpic" format="reference"/>
         <attr name="hint_text" format="string"/>
         <attr name="module_color"/>
     </declare-styleable>

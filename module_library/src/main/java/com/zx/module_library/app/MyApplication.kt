@@ -45,30 +45,32 @@ open class MyApplication : BaseApplication() {
             ARouter.openDebug()
         }
         ARouter.init(this)
-        //配置极光推送
-        JPushInterface.setDebugMode(!BuildConfig.isRelease)
-        JPushInterface.init(this)//初始化JPush
-        JPushInterface.setLatestNotificationNumber(this, 1)
-        //配置Bugly
-        if (BuildConfig.isRelease) {
-            CrashReport.initCrashReport(this, "cb2f1fd59d", false)
-        }
-        mSharedPrefUtil = ZXSharedPrefUtil()
-        instance = this
-        mContest = this
-        component = BaseApplication.baseApplication.appComponent
+        Thread {
+            mSharedPrefUtil = ZXSharedPrefUtil()
+            instance = this
+            mContest = this
+            component = BaseApplication.baseApplication.appComponent
+            //配置极光推送
+            JPushInterface.setDebugMode(!BuildConfig.isRelease)
+            JPushInterface.init(this)//初始化JPush
+            JPushInterface.setLatestNotificationNumber(this, 1)
+            //配置Bugly
+            if (BuildConfig.isRelease) {
+                CrashReport.initCrashReport(this, "cb2f1fd59d", false)
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val builder = StrictMode.VmPolicy.Builder()
-            StrictMode.setVmPolicy(builder.build())
-        }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val builder = StrictMode.VmPolicy.Builder()
+                StrictMode.setVmPolicy(builder.build())
+            }
 
-        //初始化
-        ConstStrings.LOCAL_PATH = ZXSystemUtil.getSDCardPath()
-        ConstStrings.INI_PATH = filesDir.path
+            //初始化
+            ConstStrings.LOCAL_PATH = ZXSystemUtil.getSDCardPath()
+            ConstStrings.INI_PATH = filesDir.path
+        }.start()
         //Bugly 热更新
         // 调试时，将第三个参数改为true
-       // Bugly.init(this, "cb2f1fd59d", true);
+        // Bugly.init(this, "cb2f1fd59d", true);
     }
 
     override fun attachBaseContext(base: Context?) {

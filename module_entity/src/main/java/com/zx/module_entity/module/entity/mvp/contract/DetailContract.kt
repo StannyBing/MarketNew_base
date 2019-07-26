@@ -23,6 +23,7 @@ interface DetailContract {
         fun entityDetailSpecialData(map: Map<String, String>) : Observable<EntityDetailBean>
 
         fun entityDetailBizlicData(map: Map<String, String>) : Observable<EntityDetailBean>
+
     }
 
     //方法

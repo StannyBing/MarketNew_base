@@ -6,10 +6,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.youth.banner.BannerConfig
 import com.zx.marketnew_base.R
+import com.zx.marketnew_base.main.bean.OfficeBean
 import com.zx.marketnew_base.main.func.util.GlideImageLoader
 import com.zx.marketnew_base.main.mvp.contract.WorkInfoContract
 import com.zx.marketnew_base.main.mvp.model.WorkInfoModel
 import com.zx.marketnew_base.main.mvp.presenter.WorkInfoPresenter
+import com.zx.module_library.XApp
+import com.zx.module_library.app.BaseConfigModule
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseFragment
 import com.zx.zxutils.util.ZXSystemUtil
 import kotlinx.android.synthetic.main.fragment_work_info.*
@@ -19,6 +23,10 @@ import kotlinx.android.synthetic.main.fragment_work_info.*
  * 功能：办公-信息
  */
 class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkInfoContract.View {
+
+    private var banners = arrayListOf<OfficeBean.Banner>()
+    private var notices = arrayListOf<OfficeBean.Notice>()
+
     companion object {
         /**
          * 启动器
@@ -45,38 +53,7 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        val images = arrayListOf<String>()
-        images.add("http://s9.rr.itc.cn/r/wapChange/20177_19_9/a4u5yq63080041288405.jpg")
-        images.add("http://img5.imgtn.bdimg.com/it/u=3320878617,274583552&fm=26&gp=0.jpg")
-        images.add("http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20180620/683a872088df41e2a1201092fcc4dec2.jpeg")
-
-        //轮播控件
-        banner_work_info
-                .setImageLoader(GlideImageLoader())
-                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
-                .isAutoPlay(true)
-                .setDelayTime(6000)
-                .setOnBannerListener {
-                    showToast(it.toString())
-                }
-                .setImages(images)
-                .start()
-
-        for (i in 0..5) {
-            val tv = TextView(activity)
-            tv.apply {
-                text = "关于移动监督管理APP的使用通知$i"
-                setSingleLine(true)
-                textSize = ZXSystemUtil.px2sp(resources.getDimension(R.dimen.text_size_small))
-                setTextColor(ContextCompat.getColor(activity!!, R.color.text_color_noraml))
-                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                        .apply {
-                            leftMargin = 10
-                        }
-                tag = i
-            }
-            vf_info_view.addView(tv)
-        }
+        initBanner()
     }
 
     /**
@@ -85,7 +62,61 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
     override fun onViewListener() {
         //消息滚动条点击事件
         vf_info_view.setOnClickListener {
-            showToast(vf_info_view.currentView.tag.toString())
+            XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
+                val index = vf_info_view.currentView.tag as Int
+                it["mTitle"] = notices[index].name
+                it["mUrl"] = notices[index].info
+            }
+        }
+    }
+
+    //设置信息
+    fun setInfo(officeBean: OfficeBean) {
+        banners.clear()
+        banners.addAll(officeBean.banner)
+        notices.clear()
+        notices.addAll(officeBean.notice)
+
+        initBanner()
+    }
+
+    private fun initBanner() {
+        if (banners.isNotEmpty() && banner_work_info != null) {
+            val images = arrayListOf<String>()
+            banners.forEach {
+                //轮播控件
+                images.add(BaseConfigModule.BASE_IP + it.image)
+            }
+            banner_work_info
+                    .setImageLoader(GlideImageLoader())
+                    .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
+                    .isAutoPlay(true)
+                    .setDelayTime(6000)
+                    .setOnBannerListener { index ->
+                        XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
+                            it["mTitle"] = banners[index].name
+                            it["mUrl"] = banners[index].info
+                        }
+                    }
+                    .setImages(images)
+                    .start()
+        }
+        if (notices.isNotEmpty() && vf_info_view != null) {
+            notices.forEachIndexed { index, it ->
+                val tv = TextView(activity)
+                tv.apply {
+                    text = it.name
+                    setSingleLine(true)
+                    textSize = ZXSystemUtil.px2sp(resources.getDimension(R.dimen.text_size_small))
+                    setTextColor(ContextCompat.getColor(activity!!, R.color.text_color_noraml))
+                    layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                            .apply {
+                                leftMargin = 10
+                            }
+                    tag = index
+                }
+                vf_info_view.addView(tv)
+            }
         }
     }
 }

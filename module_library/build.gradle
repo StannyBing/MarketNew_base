@@ -77,6 +77,7 @@ dependencies {
     api('com.github.StannyBing:ZXUtils:2.2.9') {
         exclude group: 'com.android.support'
     }
+    api 'com.github.XuDaojie:QRCode-Android:v0.4.2'
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     api 'com.alibaba:arouter-api:1.4.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

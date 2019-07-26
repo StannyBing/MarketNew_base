@@ -4,7 +4,6 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.frame.zxmvp.http.upload.UploadRequestBody
 import com.zx.module_library.bean.NormalList
-import com.zx.module_supervise.module.daily.bean.DailyDetailBean
 import com.zx.module_supervise.module.daily.bean.EntityBean
 import com.zx.module_supervise.module.daily.mvp.contract.DailyAddContract
 import okhttp3.MediaType
@@ -18,6 +17,19 @@ import java.io.File
  * 功能：
  */
 class DailyAddPresenter : DailyAddContract.Presenter() {
+    override fun getEntityByBizlicNum(map: Map<String, String>) {
+        mModel.getBizlicNumDetail(map)
+                .compose(RxHelper.bindToLifecycle(mView))
+                .subscribe(object  : RxSubscriber<EntityBean>(mView){
+                    override fun _onNext(t: EntityBean?) {
+                            mView.onEntityDetailResult(t)
+                    }
+
+                    override fun _onError(code: String?, message: String?) {
+                        mView.handleError(code, message)
+                    }
+                })
+    }
 
     override fun getEntityList(map: Map<String, String>) {
         mModel.entityListData(map)

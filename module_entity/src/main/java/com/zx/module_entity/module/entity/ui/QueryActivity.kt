@@ -28,6 +28,7 @@ import com.zx.module_library.func.tool.getPosition
 import com.zx.module_library.func.tool.getSelect
 import com.zx.zxutils.util.ZXLocationUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
+import io.github.xudaojie.qrcodelib.CaptureActivity
 import kotlinx.android.synthetic.main.activity_entity_query.*
 
 
@@ -145,6 +146,11 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             }
             if (filterList.getSelect(name = "监管片区").isNotEmpty()) areaCode = filterList.getSelect(name = "监管片区")
         }
+        search_view.setOtherPicClick {
+            getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                startActivityForResult(Intent(this, CaptureActivity::class.java), 0x09)
+            }
+        }
         //搜索事件
         search_view.setSearchListener {
             searchText = it
@@ -199,12 +205,11 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             add(SearchFilterBean.ValueBean("是", "1"))
         }, addDefalut = false))
         filterList.add(SearchFilterBean("查询范围", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
-            add(SearchFilterBean.ValueBean("0.5公里", "0.5"))
-            add(SearchFilterBean.ValueBean("1公里", "1"))
-            add(SearchFilterBean.ValueBean("2公里", "2"))
-            add(SearchFilterBean.ValueBean("3公里", "3"))
-            add(SearchFilterBean.ValueBean("5公里", "5"))
-            add(SearchFilterBean.ValueBean("10公里", "10"))
+            add(SearchFilterBean.ValueBean("500米", "0.5"))
+            add(SearchFilterBean.ValueBean("1000米", "1"))
+            add(SearchFilterBean.ValueBean("3000米", "3"))
+            add(SearchFilterBean.ValueBean("5000米", "5"))
+            add(SearchFilterBean.ValueBean("10000米", "10"))
         }, visibleBy = "周边查询" to "1", isEnable = false))
         search_view.notifyItemChanged(filterList.getPosition("监管片区"))
     }
@@ -229,7 +234,25 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 0x01) {
+        if (resultCode == Activity.RESULT_OK && requestCode == 0x09) {
+            if (data == null || data.getStringExtra("result").isEmpty()) {
+                showToast("未获取到主体信息")
+            } else {
+                var result = data.getStringExtra("result")
+                if (result.contains("信用代码：") && result.contains("；注册号")) {
+                    result = result.substring(result.indexOf("信用代码：") + 5, result.indexOf("；注册号"))
+                    DetailActivity.startAction(this, false, result, "")
+                } else if (result.contains("zch")) {
+                    result = result.substring(result.indexOf("zch=") + 4)
+                    DetailActivity.startAction(this, false, "", result)
+                } else if (result.contains("uniscid")) {
+                    result = result.substring(result.indexOf("uniscid=") + 8)
+                    DetailActivity.startAction(this, false, result, "")
+                } else {
+                    showToast("未获取到主体信息")
+                }
+            }
+        } else if (resultCode == 0x01) {
             loadData(true)
         }
     }

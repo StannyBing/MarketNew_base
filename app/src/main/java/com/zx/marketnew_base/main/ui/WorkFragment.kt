@@ -33,6 +33,9 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
 
     var dataBeans = arrayListOf<XAppListBean>()
     var listAdapter: WorkXAppListAdapter = WorkXAppListAdapter(dataBeans)
+    private lateinit var workInfoFragment: WorkInfoFragment
+
+    private var isLoadedXapp = false
 
     companion object {
         /**
@@ -61,7 +64,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         super.initView(savedInstanceState)
 
         //添加信息界面
-        ZXFragmentUtil.addFragment(childFragmentManager, WorkInfoFragment.newInstance(), R.id.fm_work_info)
+        ZXFragmentUtil.addFragment(childFragmentManager, WorkInfoFragment.newInstance().apply { workInfoFragment = this }, R.id.fm_work_info)
 
         rv_work_xApp.apply {
             layoutManager = ZXInScrollRecylerManager(activity)
@@ -74,7 +77,6 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         } else {
             onOfficeResult(null)
         }
-        mPresenter.getOfficeInfo()
     }
 
     /**
@@ -88,10 +90,15 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         //xapp点击事件
         listAdapter.setXAppClickLiistener { title, xapp ->
             mPresenter.sendXappOpt(ApiParamUtil.xappOptParam("APP", "办公", title, xapp.name))
-            XApp.startXApp(xapp.appRoutePath)
+            XApp.startXApp(xapp.appRoutePath) {
+                it["routePath"] = xapp.appRoutePath
+                it["routeName"] = xapp.name
+            }
         }
         //公司详情按钮点击事件
         iv_work_compannyInfo.setOnClickListener {
+            handleError("10120", "登录超时")
+            return@setOnClickListener
             XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
                 it["mTitle"] = "重庆知行宏图科技有限公司"
                 it["mUrl"] = "http://www.zxgeo.com"
@@ -100,8 +107,8 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
     }
 
     override fun onOfficeResult(officeBean: OfficeBean?) {
-        dataBeans.clear()
         if (officeBean == null) {
+            dataBeans.clear()
             dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
                     XAppMain.get("累计待办")!!.apply { num = 0 },
                     XAppMain.get("即将到期")!!.apply { num = 0 },
@@ -110,21 +117,33 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
             dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "专项检查"))))
             dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList()))
         } else {
-            mSharedPrefUtil.putObject("officeBean", officeBean)
-            dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
-                    XAppMain.get("累计待办")!!.apply { num = officeBean.todo.allTask },
-                    XAppMain.get("即将到期")!!.apply { num = officeBean.todo.willOverdue },
-                    XAppMain.get("已经逾期")!!.apply { num = officeBean.todo.overdue }
-            )))
-            if (officeBean.myXApp.isNotEmpty()) {
-                dataBeans.add(XAppListBean("最近使用", XAppListBean.XTYPE.MY_XAPP, getXAppList(officeBean.myXApp)))
+            if (isLoadedXapp) {//更新待办已办及信息
+                dataBeans[0].xAppList.apply {
+                    get(0).num = officeBean.todo.allTask
+                    get(1).num = officeBean.todo.willOverdue
+                    get(2).num = officeBean.todo.overdue
+                    listAdapter.notifyDataSetChanged()
+                }
+            } else {
+                isLoadedXapp = true
+                dataBeans.clear()
+                mSharedPrefUtil.putObject("officeBean", officeBean)
+                dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
+                        XAppMain.get("累计待办")!!.apply { num = officeBean.todo.allTask },
+                        XAppMain.get("即将到期")!!.apply { num = officeBean.todo.willOverdue },
+                        XAppMain.get("已经逾期")!!.apply { num = officeBean.todo.overdue }
+                )))
+                if (officeBean.myXApp.isNotEmpty()) {
+                    dataBeans.add(XAppListBean("最近使用", XAppListBean.XTYPE.MY_XAPP, getXAppList(officeBean.myXApp)))
+                }
+                if (officeBean.normalXApp.isNotEmpty()) {
+                    dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(officeBean.normalXApp)))
+                }
+                if (officeBean.allXApp.isNotEmpty()) {
+                    dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList(officeBean.allXApp)))
+                }
             }
-            if (officeBean.normalXApp.isNotEmpty()) {
-                dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(officeBean.normalXApp)))
-            }
-            if (officeBean.allXApp.isNotEmpty()) {
-                dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList(officeBean.allXApp)))
-            }
+            workInfoFragment.setInfo(officeBean)
         }
         listAdapter.notifyDataSetChanged()
     }
@@ -168,6 +187,11 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
             xAppBeans.addAll(XAppOther.all())
         }
         return xAppBeans
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter.getOfficeInfo()
     }
 
 }

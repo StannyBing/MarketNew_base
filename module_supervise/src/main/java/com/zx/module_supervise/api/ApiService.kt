@@ -81,4 +81,7 @@ interface ApiService {
 
     @GET(ApiConfigModule.URL_SUPERVISE + "inspect/queryItemResult.do")
     fun dailyCheckResult(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "entity/getEntityDetailInfo.do")
+    fun getEntityByBizlicNum(@QueryMap map: Map<String, String>): Observable<BaseRespose<EntityBean>>
 }

@@ -3,6 +3,7 @@ package com.zx.module_library.view
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -35,13 +36,16 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private var searchText: EditText//输入框
     private var searchBtn: ImageView//搜索按钮
     private var searchFunc: TextView//搜索功能键
+    private var searchFuncPic: ImageView//搜索功能键-图片
 
+    private var otherPic: Drawable? = null
     private var module_color: Int//主题色
     private var filterBubble: ZXBubbleView? = null
 
     private var justSearchButton = false
     private var doSearch: (String) -> Unit = {}
     private var doFunc: () -> Unit = {}
+    private var doOtherPic: () -> Unit = {}
     private var filterValues: List<SearchFilterBean>? = null
     private var filterAdater: SearchFilterAdapter? = null
 
@@ -51,6 +55,7 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         searchText = findViewById(R.id.et_search_text)
         searchBtn = findViewById(R.id.iv_search_btn)
         searchFunc = findViewById(R.id.tv_search_func)
+        searchFuncPic = findViewById(R.id.iv_search_func)
         searchContent = findViewById(R.id.ll_search_content)
         searchBtn.setOnClickListener { doSearch() }
         searchFunc.setOnClickListener {
@@ -60,6 +65,7 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 doFunc()
             }
         }
+        searchFuncPic.setOnClickListener { doOtherPic() }
         searchText.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 doSearch()
@@ -82,17 +88,22 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         })
         val funcText = if (typedArray.hasValue(R.styleable.SearchView_func_text)) typedArray.getString(R.styleable.SearchView_func_text) else ""
         val showFunc = typedArray.getBoolean(R.styleable.SearchView_show_func, false)
+        otherPic = if (typedArray.hasValue(R.styleable.SearchView_show_otherpic)) typedArray.getDrawable(R.styleable.SearchView_show_otherpic) else null
         searchText.hint = if (typedArray.hasValue(R.styleable.SearchView_hint_text)) typedArray.getString(R.styleable.SearchView_hint_text) else "搜索";
         module_color = typedArray.getColor(R.styleable.SearchView_module_color, ContextCompat.getColor(context, R.color.colorPrimary))
 
         resetColor()
 
+        searchFuncPic.visibility = View.GONE
+        searchFunc.visibility = View.GONE
+        if (otherPic != null) {
+            searchFuncPic.visibility = View.VISIBLE
+        }
         if (showFunc) {
             searchFunc.visibility = View.VISIBLE
             if (funcText.isNotEmpty()) searchFunc.text = funcText
-        } else {
-            searchFunc.visibility = View.GONE
         }
+
         typedArray.recycle()
     }
 
@@ -112,7 +123,7 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
                 adapter = SearchFilterAdapter(filterValues!!, module_color).apply {
                     filterAdater = this
                     setSelectCall { index, value ->
-                        if (filterValues!![index].singleFunc){
+                        if (filterValues!![index].singleFunc) {
                             doFunc()
                         }
                         if (!rvList.isComputingLayout) {
@@ -199,6 +210,10 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         this@SearchView.filterValues = filterValues
     }
 
+    fun setOtherPicClick(otherPic: () -> Unit) {
+        this.doOtherPic = otherPic
+    }
+
     //获取筛选结果
     fun getFilterResult(): List<SearchFilterBean>? {
         return null
@@ -214,9 +229,10 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private fun resetColor() {
         searchText.setTextColor(module_color)
         searchFunc.setTextColor(module_color)
-        val searchDrawable = searchBtn.drawable.mutate()
-        searchDrawable.setTint(module_color)
-        searchBtn.setImageDrawable(searchDrawable)
+        searchBtn.setImageDrawable(searchBtn.drawable.mutate().apply { setTint(module_color) })
+        if (otherPic != null) {
+            searchFuncPic.setImageDrawable(otherPic!!.mutate().apply { setTint(module_color) })
+        }
         setCursorDrawable()
     }
 
@@ -228,7 +244,7 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         searchFunc.text = text
     }
 
-    fun notifyItemChanged(position : Int){
+    fun notifyItemChanged(position: Int) {
         filterAdater?.notifyItemChanged(position)
     }
 

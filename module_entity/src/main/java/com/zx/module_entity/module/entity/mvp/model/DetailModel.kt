@@ -5,7 +5,6 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSchedulers
 import com.zx.module_entity.api.ApiService
 import com.zx.module_entity.module.entity.bean.EntityDetailBean
-
 import com.zx.module_entity.module.entity.mvp.contract.DetailContract
 import rx.Observable
 
@@ -34,6 +33,5 @@ class DetailModel : BaseModel(), DetailContract.Model {
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
-
 
 }
