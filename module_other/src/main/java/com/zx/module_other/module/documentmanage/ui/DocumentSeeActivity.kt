@@ -12,6 +12,8 @@ import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -22,6 +24,7 @@ import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import kotlinx.android.synthetic.main.activity_document_see.*
 
+@Route(path = RoutePath.ROUTE_OTHER_DOCUMENT_SEE)
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
 
     companion object {
@@ -43,7 +46,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewListener() {
         btn_fill_document.setOnClickListener {
-            DocumentFillActivity.startAction(this, false, intent.getSerializableExtra("children") as Children)
+            DocumentFillActivity.startAction(this, true, intent.getSerializableExtra("children") as Children)
         }
         btn_print_document.setOnClickListener {
             //            getSystemService(Context.PRINT_SERVICE).apply {

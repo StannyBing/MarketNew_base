@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.zx.module_library.view.ToolBarView
@@ -28,46 +29,68 @@
 
         <Switch
             android:id="@+id/print_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_20"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:switchMinWidth="40dp"
+            android:switchMinWidth="@dimen/dp_40"
             android:textOff="开"
             android:textOn="关" />
+
+        <View
+            android:id="@+id/print_view"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/print_connect_history" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white">
-
-    </android.support.v7.widget.RecyclerView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_20"
-        android:text="@string/print_connect_history" />
-
-
-    <android.support.v7.widget.RecyclerView
+    <LinearLayout
+        android:id="@+id/ll_bluetooth_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white">
+        android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:background="@color/docment_color"
+            android:gravity="bottom"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="@string/print_connect_history"
+            android:textColor="@color/text_color_light"
+            android:textSize="@dimen/text_size_small" />
 
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_40"
+            android:background="@color/docment_color"
+            android:gravity="bottom"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="搜索到的设备"
+            android:textColor="@color/text_color_light"
+            android:textSize="@dimen/text_size_small" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_bluetooth_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 </LinearLayout>

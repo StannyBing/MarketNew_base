@@ -5,15 +5,19 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.os.Bundle
-import com.frame.zxmvp.baserx.RxManager
+import android.os.Handler
+import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import com.tbruyelle.rxpermissions.RxPermissions
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.module.print.bean.PrintBean
+import com.zx.module_other.module.print.func.adapter.BluetoothDeviceAdapter
 
 import com.zx.module_other.module.print.mvp.contract.BluetoothContract
 import com.zx.module_other.module.print.mvp.model.BluetoothModel
 import com.zx.module_other.module.print.mvp.presenter.BluetoothPresenter
-import com.zx.zxutils.util.ZXToastUtil
+import com.zx.zxutils.util.ZXPermissionUtil
 import kotlinx.android.synthetic.main.activity_bluetooth.*
 import rx.functions.Action1
 
@@ -24,8 +28,16 @@ import rx.functions.Action1
  */
 class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), BluetoothContract.View {
     var bluetoothAdapter: BluetoothAdapter? = null
-    val bluetoothDevicesDatas: ArrayList<PrintBean>? = null
+    val bluetoothDevicesDatas: ArrayList<PrintBean> = arrayListOf()
     val REQUEST_ENABLE_BT = 1
+    val deviceAdapter = BluetoothDeviceAdapter(bluetoothDevicesDatas)
+    val mHandler = Handler()
+    var runnable: Runnable = object : Runnable {
+        override fun run() {
+            searchBluetooth()
+            mHandler.postDelayed(this, 5000)
+        }
+    }
 
     companion object {
         /**
@@ -50,6 +62,10 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        rv_bluetooth_search.apply {
+            adapter = deviceAdapter
+            layoutManager = LinearLayoutManager(this@BluetoothActivity)
+        }
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         getBluetoothData()
         chechBluetooth()
@@ -59,51 +75,90 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
      * View事件设置
      */
     override fun onViewListener() {
-        print_switch.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
+        print_view.setOnClickListener {
+            if (!print_switch.isChecked) {
                 bluetoothAdapter!!.enable()
-//                    openBluetooth()
-                bluetoothAdapter!!.startDiscovery()
             } else {
                 bluetoothAdapter!!.disable()
             }
+        }
+
+        deviceAdapter.setOnItemClickListener { adapter, view, position ->
+            setConnect(bluetoothAdapter!!.getRemoteDevice(bluetoothDevicesDatas[position].address), position)
         }
     }
 
     fun chechBluetooth() {
         if (!bluetoothAdapter!!.isEnabled()) {
-            print_switch.isChecked = false
+            closeBluetooth()
         } else {
-            print_switch.isChecked = true
+            openBluetooth()
         }
     }
 
-
     fun openBluetooth() {
-        var intent: Intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        intent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 20)
-        startActivityForResult(intent, REQUEST_ENABLE_BT)
+        print_switch.isChecked = true
+        ll_bluetooth_list.visibility = View.VISIBLE
+        bluetoothAdapter!!.enable()
+        mHandler.postDelayed(runnable, 1)
+    }
+
+    fun closeBluetooth() {
+        print_switch.isChecked = false
+        ll_bluetooth_list.visibility = View.INVISIBLE
+        if (bluetoothAdapter!!.isDiscovering()) {
+            bluetoothAdapter!!.cancelDiscovery();
+        }
+        mHandler.removeCallbacks(runnable)
+    }
+
+    fun searchBluetooth() {
+        if (bluetoothAdapter!!.isDiscovering()) {
+            bluetoothAdapter!!.cancelDiscovery();
+        }
+        bluetoothAdapter!!.startDiscovery()
     }
 
     fun getBluetoothData() {
-        RxManager().on("Bluetooth", Action1<BluetoothDevice> {
-            for (i in 0 until bluetoothDevicesDatas!!.size) {
+        mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
+            for (i in 0 until bluetoothDevicesDatas.size) {
                 if (it.address == bluetoothDevicesDatas.get(i).address) {
                     bluetoothDevicesDatas.removeAt(i)
                 }
             }
-            if (it.bondState == BluetoothDevice.BOND_BONDED && it.bluetoothClass.deviceClass == PrintBean.PRINT_TYPE) {
+            if (it.bondState == BluetoothDevice.BOND_BONDED) {
+                bluetoothDevicesDatas.add(0, PrintBean(it))
+                deviceAdapter.setNewData(bluetoothDevicesDatas)
+            } else {
                 bluetoothDevicesDatas.add(PrintBean(it))
+                deviceAdapter.setNewData(bluetoothDevicesDatas)
+            }
+        })
+        mRxManager.on("bluetoothOpen", Action1<Int> {
+            when (it) {
+                BluetoothAdapter.STATE_ON -> {
+                    openBluetooth()
+                }
+                BluetoothAdapter.STATE_OFF -> {
+                    closeBluetooth()
+                }
             }
         })
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_ENABLE_BT) {
-            print_switch.isChecked = true
-        } else if (resultCode == RESULT_CANCELED && requestCode == REQUEST_ENABLE_BT) {
-            print_switch.isChecked = false
+    private fun setConnect(device: BluetoothDevice, position: Int) {
+        try {
+            val createBondMethod = BluetoothDevice::class.java.getMethod("createBond")
+            createBondMethod.invoke(device)
+            bluetoothDevicesDatas.get(position).isConnect = true
+            deviceAdapter.notifyDataSetChanged()
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mHandler.removeCallbacks(runnable)
     }
 }

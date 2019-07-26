@@ -28,6 +28,7 @@
         <activity android:name=".module.documentmanage.ui.DocumentActivity" />
         <activity android:name=".module.documentmanage.ui.DocumentFillActivity" />
         <activity android:name=".module.documentmanage.ui.DocumentSeeActivity" />
+        <activity android:name=".module.print.ui.BluetoothActivity" />
     </application>
 
 </manifest>

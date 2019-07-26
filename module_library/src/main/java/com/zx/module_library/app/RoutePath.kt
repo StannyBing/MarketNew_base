@@ -58,5 +58,7 @@ object RoutePath {
     const val ROUTE_OTHER_PLAN = "/other/workplan"//其他-个人工作计划
     const val ROUTE_OTHER_STATISICSACTIVITY = "/other/workstatisics"//其他-工作成果
     const val ROUTE_OTHER_DOCUMENT = "/other/documentmanage"//其他-文书管理
+    const val ROUTE_OTHER_DOCUMENT_SEE = "/other/documentmanage/documentsee"//其他-文书管理
+
 
 }

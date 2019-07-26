@@ -5,7 +5,6 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -16,9 +15,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
-import com.zx.module_other.module.print.bean.PrintBean
-import com.zx.module_other.module.print.bean.PrintBean.Companion.PRINT_TYPE
-import com.zx.module_other.module.print.func.Receiver.BluetoothReceive
+import com.zx.module_other.module.print.func.receiver.BluetoothReceive
 import com.zx.module_other.module.print.mvp.contract.PrintContract
 import com.zx.module_other.module.print.mvp.model.PrintModel
 import com.zx.module_other.module.print.mvp.presenter.PrintPresenter
@@ -64,6 +61,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         toolbar_view.withXApp(XAppOther.get("文件打印"))
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
         registerReceiver(mReceiver, filter)
         getBluetoothData()
         searchDevices()
@@ -94,7 +92,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
             } else {
                 disOnline()
             }
-            bluetoothAdapter!!.startDiscovery()
+           // bluetoothAdapter!!.startDiscovery()
         } else {
             disOnline()
         }
@@ -123,7 +121,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     }
 
     fun getBluetoothData() {
-        RxManager().on("Bluetooth", Action1<BluetoothDevice> {
+       mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
             if (it.bondState == BluetoothDevice.BOND_BONDED) {
                 setOnline(it.name)
             }
