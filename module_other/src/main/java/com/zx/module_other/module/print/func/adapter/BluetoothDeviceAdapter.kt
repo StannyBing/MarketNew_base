@@ -11,12 +11,11 @@ class BluetoothDeviceAdapter<T>(dataBeans: List<T>) : ZXQuickAdapter<T, ZXBaseHo
         if (item is PrintBean) {
             if (helper != null) {
                 helper.setText(R.id.tv_bluetooth_name, item.name)
-                if (item.isConnect) {
-                    helper.setText(R.id.tv_bluetooth_connect, "已连接")
-                } else {
-                    helper.setText(R.id.tv_bluetooth_connect, "")
+                when (item.state) {
+                    0 -> helper.setText(R.id.tv_bluetooth_connect, "")
+                    1 -> helper.setText(R.id.tv_bluetooth_connect, "已配对")
+                    2 -> helper.setText(R.id.tv_bluetooth_connect, "正在配对...")
                 }
-
             }
         }
     }
