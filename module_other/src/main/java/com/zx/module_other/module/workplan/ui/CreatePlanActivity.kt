@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -14,6 +16,7 @@ import com.zx.module_other.module.workplan.mvp.model.CreatePlanModel
 import com.zx.module_other.module.workplan.mvp.presenter.CreatePlanPresenter
 import kotlinx.android.synthetic.main.activity_create_plan.*
 
+@Route(path = RoutePath.ROUTE_OTHER_CREATEPLAN)
 class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(), CreatePlanContract.View {
 
     companion object {
@@ -47,6 +50,7 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
 
     override fun getCreateWorkResult() {
         showToast("创建成功")
+        finish()
     }
 
     override fun initView(savedInstanceState: Bundle?) {

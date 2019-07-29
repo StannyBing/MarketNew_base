@@ -12,6 +12,7 @@ object XAppOther : XApp() {
     override val map: Map<String, XAppBean>
         get() = mapOf(
                 "法律法规" to XAppBean("法律法规", R.color.law_color, R.drawable.icon_law, RoutePath.ROUTE_OTHER_LAW),
-                "文件打印" to XAppBean("文件打印", R.color.print_color, R.drawable.icon_print, RoutePath.ROUTE_OTHER_DOCUMENT)
+                "文件打印" to XAppBean("文件打印", R.color.print_color, R.drawable.icon_print, RoutePath.ROUTE_OTHER_PRINT),
+                "文书管理" to XAppBean("文书管理", R.color.document_color, R.drawable.icon_docment, RoutePath.ROUTE_OTHER_DOCUMENT)
         )
 }

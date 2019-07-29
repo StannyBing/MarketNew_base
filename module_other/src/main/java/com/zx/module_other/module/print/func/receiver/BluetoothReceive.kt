@@ -14,7 +14,7 @@ class BluetoothReceive : BroadcastReceiver() {
         // 把搜索的设置添加到集合中
         if (BluetoothDevice.ACTION_FOUND == action) {
             val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            RxManager().post("Bluetooth", device)
+                RxManager().post("Bluetooth", device)
             //搜索完成
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
 

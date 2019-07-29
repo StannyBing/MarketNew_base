@@ -4,13 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothManager
-import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.frame.zxmvp.baserx.RxManager
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
@@ -21,7 +18,6 @@ import com.zx.module_other.module.print.mvp.model.PrintModel
 import com.zx.module_other.module.print.mvp.presenter.PrintPresenter
 import kotlinx.android.synthetic.main.activity_print.*
 import rx.functions.Action1
-import android.bluetooth.BluetoothProfile.GATT_SERVER
 
 
 /**
@@ -40,7 +36,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean) {
+        fun startAction(activity: Activity, isFinish: Boolean, docName: String, data: String?) {
             val intent = Intent(activity, PrintActivity::class.java)
             activity.startActivity(intent)
             if (isFinish) activity.finish()

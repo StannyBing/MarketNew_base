@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -19,6 +21,7 @@ import com.zx.module_other.module.workplan.mvp.model.DocumentFillModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentFillPresenter
 import kotlinx.android.synthetic.main.activity_document_fill.*
 
+@Route(path = RoutePath.ROUTE_OTHER_DOCUMENTFIll)
 class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillModel>(), DocumentFillContract.View {
 
     val map = hashMapOf<String, String>()
