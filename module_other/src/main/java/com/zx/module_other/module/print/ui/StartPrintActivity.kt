@@ -4,10 +4,15 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.support.annotation.RequiresApi
+import android.support.v4.content.ContextCompat
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -22,6 +27,8 @@ import rx.functions.Action1
  * Create By admin On 2017/7/11
  * 功能：
  */
+
+@Route(path = RoutePath.ROUTE_OTHER__STRATPRINT)
 class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(), StartPrintContract.View {
 
     var bluetoothAdapter: BluetoothAdapter? = null
@@ -61,10 +68,12 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     /**
      * 初始化
      */
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         tv_print_name.setText(intent.getStringExtra("docName"))
         toolbar_view.withXApp(XAppOther.get("文件打印"))
+        btn_print.background.setTint(ContextCompat.getColor(this, XAppOther.get("文件打印")!!.moduleColor))
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         devices = intent.getParcelableArrayListExtra("devices")
         s_printer.adapter = sAdpter

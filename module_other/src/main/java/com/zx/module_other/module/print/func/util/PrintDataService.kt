@@ -1,4 +1,4 @@
-package com.zx.module_other.module.print.func
+package com.zx.module_other.module.print.func.util
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.widget.Toast
 import com.zx.zxutils.util.ZXToastUtil
+import rx.functions.Action1
 import java.io.IOException
 import java.io.OutputStream
 import java.util.*
@@ -70,7 +71,6 @@ class PrintDataService(vcontext: Context) {
             return true
         }
     }
-
 
     /**
      * 发送数据

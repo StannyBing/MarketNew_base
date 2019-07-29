@@ -43,6 +43,7 @@ class BluetoothReceive : BroadcastReceiver() {
                 BluetoothDevice.BOND_BONDED -> RxManager().post("bluetoothState", device)
             }
         }
+
     }
 
 }

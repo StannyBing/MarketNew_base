@@ -19,12 +19,13 @@ import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.print.ui.StartPrintActivity
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
 import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import kotlinx.android.synthetic.main.activity_document_see.*
 
-@Route(path = RoutePath.ROUTE_OTHER_DOCUMENT_SEE)
+@Route(path = RoutePath.ROUTE_OTHER_DOCUMENTSEE)
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
 
     companion object {
@@ -49,10 +50,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             DocumentFillActivity.startAction(this, true, intent.getSerializableExtra("children") as Children)
         }
         btn_print_document.setOnClickListener {
-            //            getSystemService(Context.PRINT_SERVICE).apply {
-//                print("",wv_documentsee.createPrintDocumentAdapter(""),null)
-//            }
-
+            //StartPrintActivity.startAction(this,true,(intent.getSerializableExtra("children") as Children).name,null,)
         }
     }
 

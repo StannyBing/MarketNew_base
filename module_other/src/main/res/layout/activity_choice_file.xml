@@ -22,13 +22,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_fill_document"
+            android:id="@+id/btn_local_file"
             style="@style/MySubmitButton"
             android:layout_weight="1"
             android:text="@string/loacl_document" />
 
         <Button
-            android:id="@+id/btn_print_document"
+            android:id="@+id/btn_system_file"
             style="@style/MySubmitButton"
             android:layout_weight="1"
             android:text="@string/system_document" />
