@@ -92,7 +92,7 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
         }
 
         deviceAdapter.setOnItemClickListener { adapter, view, position ->
-            var viewGroup  = view as RelativeLayout
+            var viewGroup = view as RelativeLayout
             setConnect(bluetoothAdapter!!.getRemoteDevice(bluetoothDevicesDatas[position].address), position)
         }
     }
@@ -183,7 +183,6 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
 
     private fun setConnect(device: BluetoothDevice, position: Int) {
         try {
-            disSearchBluetooth()
             val createBondMethod = BluetoothDevice::class.java.getMethod("createBond")
             createBondMethod.invoke(device)
         } catch (e: Exception) {

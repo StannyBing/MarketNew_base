@@ -64,8 +64,6 @@ class PrintDataService(vcontext: Context) {
             }
 
             ZXToastUtil.showToast(device!!.name + "连接成功！")
-            Toast.makeText(this.context, device!!.name + "连接成功！",
-                    Toast.LENGTH_SHORT).show()
             return true
         } else {
             return true

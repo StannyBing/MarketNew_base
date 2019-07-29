@@ -16,6 +16,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.module.print.func.util.PrintDataService
 import com.zx.module_other.module.print.mvp.contract.StartPrintContract
 import com.zx.module_other.module.print.mvp.model.StartPrintModel
 import com.zx.module_other.module.print.mvp.presenter.StartPrintPresenter
@@ -49,7 +50,7 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, docName: String, devices: ArrayList<BluetoothDevice>) {
+        fun startAction(activity: Activity, isFinish: Boolean, docName: String, devices: ArrayList<BluetoothDevice>,data:String?) {
             val intent = Intent(activity, StartPrintActivity::class.java)
             intent.putExtra("docName", docName)
             intent.putExtra("devices", devices)
@@ -87,7 +88,11 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
      * View事件设置
      */
     override fun onViewListener() {
+        btn_print.setOnClickListener {
+            if (PrintDataService(this).connect(devices.get(s_printer.selectedItemPosition))){
 
+            }
+        }
     }
 
 

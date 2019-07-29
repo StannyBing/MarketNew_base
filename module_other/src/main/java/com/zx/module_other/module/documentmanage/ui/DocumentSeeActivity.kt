@@ -2,7 +2,10 @@ package com.zx.module_other.module.documentmanage.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -19,14 +22,22 @@ import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.print.func.receiver.BluetoothReceive
+import com.zx.module_other.module.print.ui.PrintActivity
 import com.zx.module_other.module.print.ui.StartPrintActivity
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
 import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import kotlinx.android.synthetic.main.activity_document_see.*
+import rx.functions.Action1
 
 @Route(path = RoutePath.ROUTE_OTHER_DOCUMENTSEE)
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
+
+    var bluetoothAdapter: BluetoothAdapter? = null
+    val mReceiver = BluetoothReceive()
+    val devices = arrayListOf<BluetoothDevice>()
+    var data: String? = null;
 
     companion object {
         val TYPE_FILL = 0
@@ -50,7 +61,11 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             DocumentFillActivity.startAction(this, true, intent.getSerializableExtra("children") as Children)
         }
         btn_print_document.setOnClickListener {
-            //StartPrintActivity.startAction(this,true,(intent.getSerializableExtra("children") as Children).name,null,)
+            if (devices.size == 0) {
+                PrintActivity.startAction(this,true,(intent.getSerializableExtra("children") as Children).name,data)
+            } else {
+                StartPrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, devices, data)
+            }
         }
     }
 
@@ -62,7 +77,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         toobar_view.withXApp(XAppOther.get("文书管理"))
-
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         btn_fill_document.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
         btn_print_document.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
 
@@ -97,9 +112,18 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
                 setHtml(intent.getStringExtra("printUrl"))
             }
         }
+
+        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
+        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+        registerReceiver(mReceiver, filter)
+        searchDevices()
+        getBluetoothData()
     }
 
     override fun getDocumentWebSeeResult(weburl: String) {
+        data = weburl;
         setHtml(weburl)
     }
 
@@ -111,5 +135,35 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             wv_documentsee.getSettings().setDefaultTextEncodingName("utf-8")
             wv_documentsee.loadDataWithBaseURL("", protocol, "text/html; charset=UTF-8", "UTF-8", null)
         }
+    }
+
+    @SuppressLint("ResourceAsColor")
+    fun searchDevices() {
+        if (bluetoothAdapter!!.isEnabled()) {
+            bluetoothAdapter!!.startDiscovery()
+        }
+    }
+
+    fun getBluetoothData() {
+        mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
+            for (device in devices) {
+                if (device.address == it.address) {
+                    devices.remove(device)
+                }
+            }
+            if (it.bondState == BluetoothDevice.BOND_BONDED) {
+                devices.add(it)
+            }
+        })
+        mRxManager.on("bluetoothState", Action1<BluetoothDevice> {
+            for (device in devices) {
+                if (device.address == it.address) {
+                    devices.remove(it)
+                }
+                if (it.bondState != BluetoothDevice.BOND_BONDED) {
+                    devices.add(it)
+                }
+            }
+        })
     }
 }
