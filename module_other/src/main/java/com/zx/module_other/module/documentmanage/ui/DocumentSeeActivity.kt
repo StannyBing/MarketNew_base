@@ -23,6 +23,7 @@ import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
 import com.zx.module_other.module.print.func.receiver.BluetoothReceive
+import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.ui.PrintActivity
 import com.zx.module_other.module.print.ui.StartPrintActivity
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
@@ -35,7 +36,7 @@ import rx.functions.Action1
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
 
     var bluetoothAdapter: BluetoothAdapter? = null
-    val mReceiver = BluetoothReceive()
+    //    val mReceiver = BluetoothReceive()
     val devices = arrayListOf<BluetoothDevice>()
     var data: String? = null;
 
@@ -62,7 +63,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
         btn_print_document.setOnClickListener {
             if (devices.size == 0) {
-                PrintActivity.startAction(this,true,(intent.getSerializableExtra("children") as Children).name,data)
+                PrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, data)
             } else {
                 StartPrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, devices, data)
             }
@@ -112,18 +113,23 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
                 setHtml(intent.getStringExtra("printUrl"))
             }
         }
+        if (bluetoothAdapter!!.isEnabled()) {
+            for (device in bluetoothAdapter!!.bondedDevices) {
+                devices.add(device)
+            }
+        }
 
-        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
-        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
-        filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
-        registerReceiver(mReceiver, filter)
-        searchDevices()
-        getBluetoothData()
+//        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+//        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
+//        filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+//        filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
+//        registerReceiver(mReceiver, filter)
+//        searchDevices()
+//        getBluetoothData()
     }
 
     override fun getDocumentWebSeeResult(weburl: String) {
-        data = weburl;
+        data = weburl
         setHtml(weburl)
     }
 
@@ -137,33 +143,33 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
     }
 
-    @SuppressLint("ResourceAsColor")
-    fun searchDevices() {
-        if (bluetoothAdapter!!.isEnabled()) {
-            bluetoothAdapter!!.startDiscovery()
-        }
-    }
-
-    fun getBluetoothData() {
-        mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
-            for (device in devices) {
-                if (device.address == it.address) {
-                    devices.remove(device)
-                }
-            }
-            if (it.bondState == BluetoothDevice.BOND_BONDED) {
-                devices.add(it)
-            }
-        })
-        mRxManager.on("bluetoothState", Action1<BluetoothDevice> {
-            for (device in devices) {
-                if (device.address == it.address) {
-                    devices.remove(it)
-                }
-                if (it.bondState != BluetoothDevice.BOND_BONDED) {
-                    devices.add(it)
-                }
-            }
-        })
-    }
+//    @SuppressLint("ResourceAsColor")
+//    fun searchDevices() {
+//        if (bluetoothAdapter!!.isEnabled()) {
+//            bluetoothAdapter!!.startDiscovery()
+//        }
+//    }
+//
+//    fun getBluetoothData() {
+//        mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
+//            for (device in devices) {
+//                if (device.address == it.address) {
+//                    devices.remove(device)
+//                }
+//            }
+//            if (it.bondState == BluetoothDevice.BOND_BONDED) {
+//                devices.add(it)
+//            }
+//        })
+//        mRxManager.on("bluetoothState", Action1<BluetoothDevice> {
+//            for (device in devices) {
+//                if (device.address == it.address) {
+//                    devices.remove(it)
+//                }
+//                if (it.bondState != BluetoothDevice.BOND_BONDED) {
+//                    devices.add(it)
+//                }
+//            }
+//        })
+//    }
 }

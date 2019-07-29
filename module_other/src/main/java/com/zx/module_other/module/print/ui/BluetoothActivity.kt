@@ -103,6 +103,13 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
             closeBluetooth()
         } else {
             openBluetooth()
+            for (device in bluetoothAdapter!!.bondedDevices) {
+                bluetoothConnectDatas.add(0,PrintBean(device))
+            }
+            if (bluetoothConnectDatas.size > 0) {
+                rv_bluetooth_connected.visibility = View.VISIBLE
+                tv_bluetooth_connected.visibility = View.VISIBLE
+            }
         }
     }
 

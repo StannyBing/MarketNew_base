@@ -38,6 +38,8 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
          */
         fun startAction(activity: Activity, isFinish: Boolean, docName: String, data: String?) {
             val intent = Intent(activity, PrintActivity::class.java)
+            intent.putExtra("docName", docName)
+            intent.putExtra("data", data)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
@@ -84,6 +86,12 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     @SuppressLint("ResourceAsColor")
     fun searchDevices() {
         if (bluetoothAdapter!!.isEnabled()) {
+            for (device in bluetoothAdapter!!.bondedDevices) {
+                devices.add(device)
+            }
+            if (devices.size > 0) {
+                setOnline(devices[0].name)
+            }
             bluetoothAdapter!!.startDiscovery()
         } else {
             disOnline()
