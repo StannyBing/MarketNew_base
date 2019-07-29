@@ -33,6 +33,8 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     var bluetoothAdapter: BluetoothAdapter? = null
     val mReceiver = BluetoothReceive()
     var isOnline = false
+    val devices = arrayListOf<BluetoothDevice>()
+
 
     companion object {
         /**
@@ -59,9 +61,11 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         super.initView(savedInstanceState)
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         toolbar_view.withXApp(XAppOther.get("文件打印"))
+        disOnline()
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
         filter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED)
+        filter.addAction(BluetoothDevice.ACTION_BOND_STATE_CHANGED)
         registerReceiver(mReceiver, filter)
         getBluetoothData()
         searchDevices()
@@ -72,7 +76,11 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
      */
     override fun onViewListener() {
         rl_printer.setOnClickListener {
-            BluetoothActivity.startAction(this, false)
+            if (devices.size == 0) {
+                BluetoothActivity.startAction(this, false)
+            } else {
+                ChoiceFileActivity.startAction(this, false)
+            }
         }
     }
 
@@ -80,19 +88,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     @SuppressLint("ResourceAsColor")
     fun searchDevices() {
         if (bluetoothAdapter!!.isEnabled()) {
-            val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-            val connectedDevices = bluetoothManager.getConnectedDevices(GATT_SERVER)
-            if (connectedDevices.size > 0) {
-                for (device in connectedDevices){
-                    if (device.bondState == BluetoothDevice.BOND_BONDED){
-                        setOnline(device.name)
-                        break
-                    }
-                }
-            } else {
-                disOnline()
-            }
-           // bluetoothAdapter!!.startDiscovery()
+            bluetoothAdapter!!.startDiscovery()
         } else {
             disOnline()
         }
@@ -121,9 +117,39 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     }
 
     fun getBluetoothData() {
-       mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
+        mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
+            for (device in devices) {
+                if (device.address == it.address) {
+                    devices.remove(device)
+                }
+            }
             if (it.bondState == BluetoothDevice.BOND_BONDED) {
+                devices.add(it)
                 setOnline(it.name)
+            } else {
+                if (devices.size == 0) {
+                    disOnline()
+                }
+            }
+        })
+        mRxManager.on("bluetoothState", Action1<BluetoothDevice> {
+            for (device in devices) {
+                if (device.address == it.address) {
+                    devices.remove(it)
+                }
+                if (it.bondState != BluetoothDevice.BOND_BONDED) {
+                    devices.add(it)
+                }
+                if (devices.size == 0) {
+                    disOnline()
+                }
+            }
+        })
+        mRxManager.on("bluetoothOpen", Action1<Int> {
+            when (it) {
+                BluetoothAdapter.STATE_OFF -> {
+                    disOnline()
+                }
             }
         })
     }

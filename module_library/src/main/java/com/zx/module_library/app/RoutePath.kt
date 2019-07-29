@@ -52,13 +52,14 @@ object RoutePath {
     //其他模块
     const val ROUTE_OTHER_LAW = "/other/law"//其他-法律法规
     const val ROUTE_OTHER_PRINT = "/other/print"//其他-文件打印
+    const val ROUTE_OTHER__BLUETOOTH = "/other/bluetooth"//其他-文件打印
     const val ROUTE_OTHER_WEB = "/other/web"//其他-网页
     const val ROUTE_OTHER_CAMERA = "/other/camera"//其他-图片
     const val ROUTE_OTHER_PREVIEW = "/other/filepreview"//其他-文件预览
     const val ROUTE_OTHER_PLAN = "/other/workplan"//其他-个人工作计划
     const val ROUTE_OTHER_STATISICSACTIVITY = "/other/workstatisics"//其他-工作成果
     const val ROUTE_OTHER_DOCUMENT = "/other/documentmanage"//其他-文书管理
-    const val ROUTE_OTHER_DOCUMENT_SEE = "/other/documentmanage/documentsee"//其他-文书管理
+    const val ROUTE_OTHER_DOCUMENT_SEE = "/other/documentsee"//其他-文书管理
 
 
 }

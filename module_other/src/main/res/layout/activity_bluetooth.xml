@@ -54,21 +54,25 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_bluetooth_connected"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_40"
             android:background="@color/docment_color"
             android:gravity="bottom"
             android:paddingLeft="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_10"
-            android:text="@string/print_connect_history"
+            android:text="@string/print_connected"
             android:textColor="@color/text_color_light"
-            android:textSize="@dimen/text_size_small" />
+            android:textSize="@dimen/text_size_small"
+            android:visibility="gone" />
 
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_bluetooth_connected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:visibility="gone">
 
         </android.support.v7.widget.RecyclerView>
 

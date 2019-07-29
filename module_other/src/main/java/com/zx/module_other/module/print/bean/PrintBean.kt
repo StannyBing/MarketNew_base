@@ -20,7 +20,7 @@ class PrintBean
     //蓝牙-设备类型
     var type: Int = 0
     //蓝牙-是否已经匹配
-    var isConnect: Boolean = false
+    var state: Int = 0 // 0 :未配对 1：配对：2 正在配对
 
 
     /**
@@ -35,7 +35,11 @@ class PrintBean
     init {
         this.name = if (TextUtils.isEmpty(devicee.name)) "未知" else devicee.name
         this.address = devicee.address
-        this.isConnect = devicee.bondState == BluetoothDevice.BOND_BONDED
+        if (devicee.bondState == BluetoothDevice.BOND_BONDED) {
+            this.state = 1
+        } else if (devicee.bondState == BluetoothDevice.BOND_BONDING) {
+            this.state = 2
+        }
         this.type = devicee.bluetoothClass.deviceClass
     }
 

@@ -35,12 +35,21 @@
     <string name="fill_document">文书填写</string>
     <string name="print_document">文书打印</string>
     <string name="preview_document">文书预览</string>
+    <string name="loacl_document">本地文书</string>
+    <string name="system_document">系统文书</string>
+
     <string name="goon_fill">继续填写</string>
     <string name="search">搜索</string>
     <string name="userful_document">常用文书：</string>
     <string name="print_quick">便捷打印</string>
     <string name="print_history">打印历史</string>
     <string name="print_connect_history">连接历史</string>
+    <string name="print_connected">已配对设备</string>
+    <string name="print_choice_content">选择打印内容</string>
+    <string name="print_content">打印内容：</string>
+    <string name="printer_choice">选择打印机：</string>
+    <string name="printer_print">打印</string>
+
     <string-array name="keywordName">
         <item>食品药品</item>
         <item>餐饮服务</item>
