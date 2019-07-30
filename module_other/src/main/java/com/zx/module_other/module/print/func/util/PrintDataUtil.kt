@@ -11,13 +11,11 @@ import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
 import android.widget.Toast
 import com.android.dx.stock.ProxyBuilder
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.IOException
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import android.os.*
-import java.io.FileOutputStream
+import java.io.*
+import java.lang.Exception
 
 
 class PrintDataUtil {
@@ -25,6 +23,9 @@ class PrintDataUtil {
         val SUC = 0
         val DEF = -1
         val IMAGE_PATH = Environment.getExternalStorageDirectory().absolutePath + "/webview.jpg"
+
+
+
         fun getWebViewImgData(webView: WebView): Int {
             webView.setDrawingCacheEnabled(true)
             webView.buildDrawingCache()
@@ -32,7 +33,6 @@ class PrintDataUtil {
             return saveImageToGallery(bmp)
             webView.destroyDrawingCache()
         }
-
 
 
         fun saveImageToGallery(bmp: Bitmap): Int {
@@ -66,6 +66,7 @@ class PrintDataUtil {
             }
             return DEF
         }
+
 
         var descriptor: ParcelFileDescriptor? = null
         var ranges: Array<PageRange>? = null

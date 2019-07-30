@@ -4,6 +4,7 @@ import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -15,14 +16,16 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.module.print.func.util.GPrinterCommand
 import com.zx.module_other.module.print.func.util.PrintDataService
-import com.zx.module_other.module.print.func.util.PrintDataUtil
+import com.zx.module_other.module.print.func.util.PrintPic
 import com.zx.module_other.module.print.mvp.contract.StartPrintContract
 import com.zx.module_other.module.print.mvp.model.StartPrintModel
 import com.zx.module_other.module.print.mvp.presenter.StartPrintPresenter
 import kotlinx.android.synthetic.main.activity_start_print.*
+import java.io.BufferedInputStream
 import java.io.File
-import java.nio.ByteBuffer
+import java.io.FileInputStream
 
 
 /**
@@ -96,10 +99,19 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     override fun onViewListener() {
         btn_print.setOnClickListener {
             if (printDataService!!.connect(devices.get(s_printer.selectedItemPosition))) {
-                    val file = File(intent.getStringExtra("filePath"))
-                    if (file.exists()){
-                        printDataService!!.send(file.readBytes())
-                    }
+//                val photoPrinter = PrintHelper(this)
+//                photoPrinter.scaleMode = PrintHelper.SCALE_MODE_FIT
+//                val imageBitmap = BitmapFactory.decodeFile(intent.getStringExtra("filePath"))
+//                photoPrinter.printBitmap("droids.jpg - test print", imageBitmap)
+                val fs = FileInputStream(intent.getStringExtra("filePath"))
+
+                val bitmap = BitmapFactory.decodeStream(fs)
+                printBitmapTest(bitmap)
+//                val file = File(intent.getStringExtra("filePath"))
+//                if (file.exists()) {
+////                        printDataService!!.send(file.readText().toByteArray(charset("gbk")))
+//                    printDataService!!.send(file.readText(charset("gbk")).toByteArray())
+//                }
 //                webView!!.getSettings().setDefaultTextEncodingName("utf-8")
 //                webView!!.loadDataWithBaseURL("", intent.getStringExtra("data"), "text/html; charset=UTF-8", "UTF-8", null)
 //                PrintDataUtil.webViewToPdf(webView!!, Environment.getExternalStorageDirectory().getPath()+"/webview.pdf", this@StartPrintActivity)
@@ -171,5 +183,26 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
 //        }
 //        setSprinner()
 //    }
+
+    fun printBitmapTest(bitmap: Bitmap? = null) {
+        val bis: BufferedInputStream
+        try {
+            bis = BufferedInputStream(assets.open(
+                    "icon_empty_bg.bmp"))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return
+        }
+
+        val printPic = PrintPic.instance
+        printPic.init(bitmap)
+        val bytes = printPic.printDraw()
+        val printBytes = ArrayList<ByteArray>()
+        printBytes.add(GPrinterCommand.reset)
+        printBytes.add(GPrinterCommand.print)
+        printBytes.add(bytes)
+        printBytes.add(GPrinterCommand.print)
+        printDataService!!.send(bytes)
+    }
 
 }

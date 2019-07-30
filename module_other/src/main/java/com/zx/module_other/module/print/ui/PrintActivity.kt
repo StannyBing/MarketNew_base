@@ -139,6 +139,14 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
                 BluetoothAdapter.STATE_OFF -> {
                     disOnline()
                 }
+                BluetoothAdapter.STATE_ON -> {
+                    for (device in bluetoothAdapter!!.bondedDevices) {
+                        devices.add(device)
+                    }
+                    if (devices.size > 0) {
+                        setOnline(devices[0].name)
+                    }
+                }
             }
         })
     }
