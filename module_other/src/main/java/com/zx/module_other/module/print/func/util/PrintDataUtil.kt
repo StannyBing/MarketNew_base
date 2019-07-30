@@ -5,10 +5,7 @@ import android.graphics.Picture
 import android.webkit.WebView
 import android.R.array
 import android.content.Context
-import android.os.Build
-import android.os.Bundle
-import android.os.CancellationSignal
-import android.os.ParcelFileDescriptor
+import android.content.Intent
 import android.print.PageRange
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
@@ -19,20 +16,55 @@ import java.io.FileNotFoundException
 import java.io.IOException
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
-import java.nio.ByteBuffer
+import android.os.*
+import java.io.FileOutputStream
 
 
 class PrintDataUtil {
     companion object {
-        fun getWebViewImgData(webView: WebView): String {
-            val snapShot: Picture = webView.capturePicture()
-            val bmp: Bitmap = Bitmap.createBitmap(snapShot.getWidth(), snapShot.getHeight(), Bitmap.Config.ARGB_8888)
-            val bytes = bmp.byteCount
+        val SUC = 0
+        val DEF = -1
+        val IMAGE_PATH = Environment.getExternalStorageDirectory().absolutePath + "/webview.jpg"
+        fun getWebViewImgData(webView: WebView): Int {
+            webView.setDrawingCacheEnabled(true)
+            webView.buildDrawingCache()
+            val bmp = webView.getDrawingCache()
+            return saveImageToGallery(bmp)
+            webView.destroyDrawingCache()
+        }
 
-            val buf = ByteBuffer.allocate(bytes)
-            bmp.copyPixelsToBuffer(buf)
 
-            return String(buf.array())
+
+        fun saveImageToGallery(bmp: Bitmap): Int {
+
+            //获取文件
+            val file = File(IMAGE_PATH)
+            if (file.exists()) {
+                file.delete()
+            }
+            file.createNewFile()
+            var fos: FileOutputStream? = null
+            try {
+                fos = FileOutputStream(file)
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+                fos!!.flush()
+                fos.close()
+                return SUC
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                try {
+                    if (fos != null) {
+                        fos!!.close()
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+            }
+            return DEF
         }
 
         var descriptor: ParcelFileDescriptor? = null

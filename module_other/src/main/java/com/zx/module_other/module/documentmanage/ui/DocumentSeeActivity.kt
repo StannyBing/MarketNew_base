@@ -1,25 +1,30 @@
 package com.zx.module_other.module.documentmanage.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.BaseConfigModule.Companion.BASE_IP
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
 import com.zx.module_other.module.print.func.receiver.BluetoothReceive
@@ -29,6 +34,8 @@ import com.zx.module_other.module.print.ui.StartPrintActivity
 import com.zx.module_other.module.workplan.mvp.contract.DocumentSeeContract
 import com.zx.module_other.module.workplan.mvp.model.DocumentSeeModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
+import com.zx.zxutils.util.ZXPermissionUtil
+import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_document_see.*
 import rx.functions.Action1
 
@@ -38,7 +45,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     var bluetoothAdapter: BluetoothAdapter? = null
     //    val mReceiver = BluetoothReceive()
     val devices = arrayListOf<BluetoothDevice>()
-    var data: String? = null;
+    var data: Bitmap? = null;
 
     companion object {
         val TYPE_FILL = 0
@@ -62,10 +69,15 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             DocumentFillActivity.startAction(this, true, intent.getSerializableExtra("children") as Children)
         }
         btn_print_document.setOnClickListener {
-            if (devices.size == 0) {
-                PrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, data)
+
+            if (PrintDataUtil.getWebViewImgData(wv_documentsee) == PrintDataUtil.SUC) {
+                if (devices.size == 0) {
+                    PrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, PrintDataUtil.IMAGE_PATH)
+                } else {
+                    StartPrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, devices, PrintDataUtil.IMAGE_PATH)
+                }
             } else {
-                StartPrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, devices, data)
+                ZXToastUtil.showToast("获取打印数据失败请重试！")
             }
         }
     }
@@ -79,6 +91,9 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         super.initView(savedInstanceState)
         toobar_view.withXApp(XAppOther.get("文书管理"))
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (!ZXPermissionUtil.checkPermissionsByArray(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
+            ZXPermissionUtil.requestPermissionsByArray(this)
+        }
         btn_fill_document.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
         btn_print_document.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
 
@@ -105,7 +120,13 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             TYPE_FILL -> {
                 toobar_view.setMidText(resources.getString(R.string.see_document))
                 btn_fill_document.setText(resources.getString(R.string.fill_document))
-                mPresenter.getDocumentWeb(ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id))
+                var url = BASE_IP + ApiConfigModule.URL_DOCUMENT + "queryDetailHtml.do?"
+                for ((key, value) in ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id)) {
+                    url += key + "=" + value + "&"
+                }
+                url = url.substring(0, url.length - 1)
+                wv_documentsee.loadUrl(url)
+//                mPresenter.getDocumentWeb(ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id))
             }
             TYPE_CHANGE -> {
                 btn_fill_document.setText(resources.getString(R.string.goon_fill))
@@ -129,7 +150,6 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     }
 
     override fun getDocumentWebSeeResult(weburl: String) {
-        data = weburl
         setHtml(weburl)
     }
 

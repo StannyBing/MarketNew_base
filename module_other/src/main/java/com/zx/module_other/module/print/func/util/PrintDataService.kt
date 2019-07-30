@@ -4,11 +4,13 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
+import android.graphics.Bitmap
 import android.widget.Toast
 import com.zx.zxutils.util.ZXToastUtil
 import rx.functions.Action1
 import java.io.IOException
 import java.io.OutputStream
+import java.nio.ByteBuffer
 import java.util.*
 
 
@@ -73,11 +75,10 @@ class PrintDataService(vcontext: Context) {
     /**
      * 发送数据
      */
-    fun send(sendData: String) {
+    fun send(data: ByteArray) {
         if (this.isConnection) {
             println("开始打印！！")
             try {
-                val data = sendData.toByteArray(charset("gbk"))
                 outputStream!!.write(data, 0, data.size)
                 outputStream!!.flush()
             } catch (e: IOException) {

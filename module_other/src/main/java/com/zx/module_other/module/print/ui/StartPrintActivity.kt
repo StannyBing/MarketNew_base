@@ -1,17 +1,15 @@
 package com.zx.module_other.module.print.ui
 
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.webkit.WebView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -22,9 +20,9 @@ import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.mvp.contract.StartPrintContract
 import com.zx.module_other.module.print.mvp.model.StartPrintModel
 import com.zx.module_other.module.print.mvp.presenter.StartPrintPresenter
-import kotlinx.android.synthetic.main.activity_document_see.*
 import kotlinx.android.synthetic.main.activity_start_print.*
-import rx.functions.Action1
+import java.io.File
+import java.nio.ByteBuffer
 
 
 /**
@@ -34,7 +32,6 @@ import rx.functions.Action1
 
 @Route(path = RoutePath.ROUTE_OTHER__STRATPRINT)
 class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(), StartPrintContract.View {
-
     //  var bluetoothAdapter: BluetoothAdapter? = null
     var devices = arrayListOf<BluetoothDevice>()
     var printerNames = arrayListOf<String>()
@@ -54,11 +51,12 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, docName: String, devices: ArrayList<BluetoothDevice>, data: String?) {
+
+        fun startAction(activity: Activity, isFinish: Boolean, docName: String, devices: ArrayList<BluetoothDevice>, filePath: String) {
             val intent = Intent(activity, StartPrintActivity::class.java)
             intent.putExtra("docName", docName)
             intent.putExtra("devices", devices)
-            intent.putExtra("data", data)
+            intent.putExtra("filePath", filePath)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
@@ -98,10 +96,13 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     override fun onViewListener() {
         btn_print.setOnClickListener {
             if (printDataService!!.connect(devices.get(s_printer.selectedItemPosition))) {
-                printDataService!!.send(intent.getStringExtra("data"))
+                    val file = File(intent.getStringExtra("filePath"))
+                    if (file.exists()){
+                        printDataService!!.send(file.readBytes())
+                    }
 //                webView!!.getSettings().setDefaultTextEncodingName("utf-8")
 //                webView!!.loadDataWithBaseURL("", intent.getStringExtra("data"), "text/html; charset=UTF-8", "UTF-8", null)
-//                PrintDataUtil.webViewToPdf(webView!!, "doc.pdf", this@StartPrintActivity)
+//                PrintDataUtil.webViewToPdf(webView!!, Environment.getExternalStorageDirectory().getPath()+"/webview.pdf", this@StartPrintActivity)
             }
         }
     }

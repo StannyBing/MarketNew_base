@@ -8,13 +8,20 @@ import android.content.Intent
 import com.frame.zxmvp.baserx.RxManager
 
 class BluetoothReceive : BroadcastReceiver() {
+    val devices = arrayListOf<BluetoothDevice>()
 
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         // 把搜索的设置添加到集合中
         if (BluetoothDevice.ACTION_FOUND == action) {
             val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-                RxManager().post("Bluetooth", device)
+            for (d in devices) {
+                if (d.address == device.address) {
+                    return
+                }
+            }
+            RxManager().post("Bluetooth", device)
+            devices.add(device)
             //搜索完成
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
 

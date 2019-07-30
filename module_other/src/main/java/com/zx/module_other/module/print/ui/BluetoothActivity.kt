@@ -8,10 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.RelativeLayout
-import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.tencent.bugly.crashreport.common.info.PlugInBean
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
@@ -20,6 +17,7 @@ import com.zx.module_other.module.print.func.adapter.BluetoothDeviceAdapter
 import com.zx.module_other.module.print.mvp.contract.BluetoothContract
 import com.zx.module_other.module.print.mvp.model.BluetoothModel
 import com.zx.module_other.module.print.mvp.presenter.BluetoothPresenter
+import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_bluetooth.*
 import rx.functions.Action1
 
@@ -33,15 +31,10 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
     var bluetoothAdapter: BluetoothAdapter? = null
     val bluetoothDevicesDatas: ArrayList<PrintBean> = arrayListOf()
     val deviceAdapter = BluetoothDeviceAdapter(bluetoothDevicesDatas)
-    val bluetoothConnectDatas: ArrayList<PrintBean> = arrayListOf()
+    val bluetoothConnectDatas: ArrayList<PrintBean> = ArrayList(5)
     val deviceConnectAdapter = BluetoothDeviceAdapter(bluetoothConnectDatas)
     val mHandler = Handler()
-    var runnable: Runnable = object : Runnable {
-        override fun run() {
-            searchBluetooth()
-            mHandler.postDelayed(this, 5000)
-        }
-    }
+
 
     companion object {
         /**
@@ -92,7 +85,6 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
         }
 
         deviceAdapter.setOnItemClickListener { adapter, view, position ->
-            var viewGroup = view as RelativeLayout
             setConnect(bluetoothAdapter!!.getRemoteDevice(bluetoothDevicesDatas[position].address), position)
         }
     }
@@ -104,7 +96,7 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
         } else {
             openBluetooth()
             for (device in bluetoothAdapter!!.bondedDevices) {
-                bluetoothConnectDatas.add(0,PrintBean(device))
+                bluetoothConnectDatas.add(0, PrintBean(device))
             }
             if (bluetoothConnectDatas.size > 0) {
                 rv_bluetooth_connected.visibility = View.VISIBLE
@@ -117,7 +109,7 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
         print_switch.isChecked = true
         ll_bluetooth_list.visibility = View.VISIBLE
         bluetoothAdapter!!.enable()
-        mHandler.postDelayed(runnable, 1)
+        searchBluetooth()
     }
 
     fun closeBluetooth() {
@@ -126,7 +118,6 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
         if (bluetoothAdapter!!.isDiscovering()) {
             bluetoothAdapter!!.cancelDiscovery();
         }
-        mHandler.removeCallbacks(runnable)
     }
 
     fun searchBluetooth() {
@@ -161,20 +152,24 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
     }
 
     fun handleData(it: BluetoothDevice) {
-        for (i in 0 until bluetoothDevicesDatas.size) {
-            if (it.address == bluetoothDevicesDatas.get(i).address) {
-                bluetoothDevicesDatas.removeAt(i)
+        for (device in bluetoothDevicesDatas) {
+            if (it.address == device.address) {
+                bluetoothDevicesDatas.remove(device)
+                deviceAdapter.setNewData(bluetoothDevicesDatas)
             }
         }
-        for (i in 0 until bluetoothConnectDatas.size) {
-            if (it.address == bluetoothConnectDatas.get(i).address) {
-                bluetoothConnectDatas.removeAt(i)
+        for (device in bluetoothConnectDatas) {
+            if (it.address == device.address) {
+                bluetoothConnectDatas.remove(device)
+                deviceConnectAdapter.setNewData(bluetoothConnectDatas)
             }
         }
         if (it.bondState == BluetoothDevice.BOND_BONDED) {
             bluetoothConnectDatas.add(0, PrintBean(it))
+            deviceConnectAdapter.setNewData(bluetoothConnectDatas)
         } else {
             bluetoothDevicesDatas.add(PrintBean(it))
+            deviceAdapter.setNewData(bluetoothDevicesDatas)
         }
         if (bluetoothConnectDatas.size > 0) {
             rv_bluetooth_connected.visibility = View.VISIBLE
@@ -183,8 +178,6 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
             rv_bluetooth_connected.visibility = View.GONE
             tv_bluetooth_connected.visibility = View.GONE
         }
-        deviceAdapter.setNewData(bluetoothDevicesDatas)
-        deviceConnectAdapter.setNewData(bluetoothConnectDatas)
     }
 
 
@@ -200,6 +193,5 @@ class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), Bl
     override fun onDestroy() {
         super.onDestroy()
         disSearchBluetooth()
-        mHandler.removeCallbacks(runnable)
     }
 }

@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.os.Binder
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
@@ -31,15 +33,14 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     var isOnline = false
     val devices = arrayListOf<BluetoothDevice>()
 
-
     companion object {
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, docName: String, data: String?) {
+        fun startAction(activity: Activity, isFinish: Boolean, docName: String, filePath: String) {
             val intent = Intent(activity, PrintActivity::class.java)
             intent.putExtra("docName", docName)
-            intent.putExtra("data", data)
+            intent.putExtra("filePath", filePath)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
@@ -92,7 +93,6 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
             if (devices.size > 0) {
                 setOnline(devices[0].name)
             }
-            bluetoothAdapter!!.startDiscovery()
         } else {
             disOnline()
         }
@@ -121,21 +121,6 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     }
 
     fun getBluetoothData() {
-        mRxManager.on("Bluetooth", Action1<BluetoothDevice> {
-            for (device in devices) {
-                if (device.address == it.address) {
-                    devices.remove(device)
-                }
-            }
-            if (it.bondState == BluetoothDevice.BOND_BONDED) {
-                devices.add(it)
-                setOnline(it.name)
-            } else {
-                if (devices.size == 0) {
-                    disOnline()
-                }
-            }
-        })
         mRxManager.on("bluetoothState", Action1<BluetoothDevice> {
             for (device in devices) {
                 if (device.address == it.address) {
