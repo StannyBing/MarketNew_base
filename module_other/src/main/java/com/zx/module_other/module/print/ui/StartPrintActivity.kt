@@ -13,7 +13,9 @@ import android.support.v4.content.ContextCompat
 import android.webkit.WebView
 import android.widget.ArrayAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.lvrenyang.io.BTPrinting
 import com.lvrenyang.io.Canvas
+import com.lvrenyang.io.IOCallBack
 import com.lvrenyang.io.Pos
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -25,13 +27,10 @@ import com.zx.module_other.module.print.func.util.PrintPic
 import com.zx.module_other.module.print.mvp.contract.StartPrintContract
 import com.zx.module_other.module.print.mvp.model.StartPrintModel
 import com.zx.module_other.module.print.mvp.presenter.StartPrintPresenter
+import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_start_print.*
 import java.io.BufferedInputStream
-import java.io.File
 import java.io.FileInputStream
-import com.lvrenyang.io.BTPrinting
-import com.lvrenyang.io.IOCallBack
-import com.zx.zxutils.util.ZXToastUtil
 import java.util.concurrent.Executors
 
 
@@ -243,18 +242,18 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
             bt!!.Open(address, context)
             val fs = FileInputStream(intent.getStringExtra("filePath"))
             val bitmap = BitmapFactory.decodeStream(fs)
-            pos.POS_PrintPicture(bitmap, 576, 0, 0)
+       //     pos.POS_PrintPicture(bitmap, 576, 0, 0)
             var suc = false
-            suc = pos.GetIO().IsOpened()
-//            mCanvas.CanvasBegin(576, 600);
-//            mCanvas.SetPrintDirection(0);
-//
-//            mCanvas.DrawBox(0f, 0f, 575f, 599f);
-//
-//            mCanvas.DrawBitmap(bitmap, 1f, 10f, 0f);
-//            mCanvas.CanvasEnd();
-//            mCanvas.CanvasPrint(1, 1);
-//            suc = mCanvas.IO.IsOpened()
+     //       suc = pos.GetIO().IsOpened()
+            mCanvas.CanvasBegin(576, 600);
+            mCanvas.SetPrintDirection(0);
+
+            mCanvas.DrawBox(0f, 0f, 575f, 599f);
+
+            mCanvas.DrawBitmap(bitmap, 1f, 10f, 0f);
+            mCanvas.CanvasEnd();
+            mCanvas.CanvasPrint(1, 1);
+            suc = mCanvas.IO.IsOpened()
             runOnUiThread {
                 if (suc) {
                     ZXToastUtil.showToast("成功")

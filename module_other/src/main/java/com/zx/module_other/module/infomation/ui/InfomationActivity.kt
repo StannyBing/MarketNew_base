@@ -15,7 +15,8 @@ import com.zx.module_other.R
 import com.zx.module_other.module.infomation.mvp.contract.InfomationContract
 import com.zx.module_other.module.infomation.mvp.model.InfomationModel
 import com.zx.module_other.module.infomation.mvp.presenter.InfomationPresenter
-import kotlinx.android.synthetic.main.activity_news.*
+import kotlinx.android.synthetic.main.activity_infomation.*
+
 
 
 /**
