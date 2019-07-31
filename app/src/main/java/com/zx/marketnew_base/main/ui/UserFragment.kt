@@ -85,22 +85,25 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
         iv_user_modify.setOnClickListener { activity?.let { it1 -> UserDetailActivity.startAction(it1, false, UserManager.getUser()) } }
         //菜单点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
-            when(dataBeans[position].title){
-                "个人工作计划"->{
+            when (dataBeans[position].title) {
+                "个人工作计划" -> {
                     XApp.startXApp(RoutePath.ROUTE_OTHER_PLAN)
                 }//个人工作计划
-                "工作成果"->{
+                "工作成果" -> {
                     XApp.startXApp(RoutePath.ROUTE_OTHER_STATISICSACTIVITY)
                 }//工作成果
-                "政务资讯"->{}//政务资讯
-                "三会一课"->{}//三会一课
-                "法律法规"->{
+                "政务资讯" -> {
+                    XApp.startXApp(RoutePath.ROUTE_OTHER_INFOMATION)
+                }//政务资讯
+                "三会一课" -> {
+                }//三会一课
+                "法律法规" -> {
                     XApp.startXApp(RoutePath.ROUTE_OTHER_LAW)
                 }//法律法规
-                "设置"->{
+                "设置" -> {
                     SettingActivity.startAction(activity!!, false)
                 }//设置
-                else->{
+                else -> {
                     showToast("正在开发中")
                 }
             }

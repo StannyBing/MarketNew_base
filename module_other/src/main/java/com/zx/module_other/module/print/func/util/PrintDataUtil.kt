@@ -1,11 +1,8 @@
 package com.zx.module_other.module.print.func.util
 
 import android.graphics.Bitmap
-import android.graphics.Picture
 import android.webkit.WebView
-import android.R.array
 import android.content.Context
-import android.content.Intent
 import android.print.PageRange
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
@@ -15,7 +12,6 @@ import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import android.os.*
 import java.io.*
-import java.lang.Exception
 
 
 class PrintDataUtil {

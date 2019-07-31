@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.widget.Toast
 import com.zx.zxutils.util.ZXToastUtil
 import rx.functions.Action1
@@ -12,6 +13,8 @@ import java.io.IOException
 import java.io.OutputStream
 import java.nio.ByteBuffer
 import java.util.*
+
+
 
 
 class PrintDataService(vcontext: Context) {

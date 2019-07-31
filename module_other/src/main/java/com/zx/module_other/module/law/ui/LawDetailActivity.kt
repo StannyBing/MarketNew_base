@@ -9,9 +9,11 @@ import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.webkit.*
 import com.zx.module_library.app.BaseConfigModule
+import com.zx.module_library.app.BaseConfigModule.Companion.BASE_IP
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.law.bean.LawCollectBean
 import com.zx.module_other.module.law.bean.LawCollectResultBean
@@ -64,8 +66,8 @@ class LawDetailActivity : BaseActivity<LawDetailPresenter, LawDetailModel>(), La
             settings.domStorageEnabled = true
 //            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
             scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
-            //settings.loadWithOverviewMode = true
-            //settings.useWideViewPort = true
+            settings.loadWithOverviewMode = true
+            settings.useWideViewPort = true
             webViewClient = WebViewClient()
             webChromeClient = object : WebChromeClient() {
                 override fun onShowFileChooser(webView: WebView?, filePathCallback: ValueCallback<Array<Uri>>?, fileChooserParams: FileChooserParams?): Boolean {
