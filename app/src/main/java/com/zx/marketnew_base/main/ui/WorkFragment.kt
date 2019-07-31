@@ -23,6 +23,7 @@ import com.zx.module_statistics.XAppStatistics
 import com.zx.module_supervise.XAppSupervise
 import com.zx.zxutils.other.ZXInScrollRecylerManager
 import com.zx.zxutils.util.ZXFragmentUtil
+import com.zx.zxutils.util.ZXLogUtil
 import kotlinx.android.synthetic.main.fragment_work.*
 
 /**
@@ -74,6 +75,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         if (mSharedPrefUtil.contains("officeBean")) {
             val officeBean = mSharedPrefUtil.getObject<OfficeBean>("officeBean")
             onOfficeResult(officeBean)
+            isLoadedXapp = false
         } else {
             onOfficeResult(null)
         }
@@ -115,14 +117,16 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
             dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "专项检查"))))
             dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList()))
         } else {
-            if (isLoadedXapp) {//更新待办已办及信息
+            //更新待办已办及信息
+            if (dataBeans.isNotEmpty()) {
                 dataBeans[0].xAppList.apply {
                     get(0).num = officeBean.todo.allTask
                     get(1).num = officeBean.todo.willOverdue
                     get(2).num = officeBean.todo.overdue
                     listAdapter.notifyDataSetChanged()
                 }
-            } else {
+            }
+            if (!isLoadedXapp) {
                 isLoadedXapp = true
                 dataBeans.clear()
                 mSharedPrefUtil.putObject("officeBean", officeBean)
@@ -138,6 +142,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
                     dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(officeBean.normalXApp)))
                 }
                 if (officeBean.allXApp.isNotEmpty()) {
+                    ZXLogUtil.loge(officeBean.allXApp.toString())
                     dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList(officeBean.allXApp)))
                 }
             }
