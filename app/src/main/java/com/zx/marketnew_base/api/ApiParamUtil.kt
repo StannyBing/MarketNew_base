@@ -48,6 +48,7 @@ object ApiParamUtil {
     //登录
     fun loginParam(userName: String, password: String): RequestBody {
         val map = hashMapOf<String, String>()
+        map["remark"] = "app"
         map["userName"] = userName
         map["password"] = ApiParamUtil.getBase64(password)
         return ApiParamUtil.toJson(map)

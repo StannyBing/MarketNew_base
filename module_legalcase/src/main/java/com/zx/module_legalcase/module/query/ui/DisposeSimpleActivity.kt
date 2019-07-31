@@ -66,13 +66,13 @@ class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimple
 
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
-        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
-        btn_submit_simple.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.HANDLE)
+        btn_submit_simple.background.setTint(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
         rv_dispose_simple.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeSimpleActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeSimpleActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeSimpleActivity, XAppLegalcase.HANDLE.moduleColor))
             }
         }
 

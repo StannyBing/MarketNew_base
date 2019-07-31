@@ -24,6 +24,13 @@
                 android:id="@+id/iv_task_type"
                 android:layout_width="20dp"
                 android:layout_height="20dp"/>
+
+            <TextView
+                android:id="@+id/tv_task_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="7sp"/>
         </LinearLayout>
 
         <RelativeLayout

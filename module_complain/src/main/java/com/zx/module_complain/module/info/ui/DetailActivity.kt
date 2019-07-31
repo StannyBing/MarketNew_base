@@ -65,7 +65,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppComplain.get("投诉举报"))
+        toolBar_view.withXApp(XAppComplain.LIST)
         toolBar_view.setMidText("详情")
 
         fGuid = intent.getStringExtra("fGuid")
@@ -75,7 +75,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setTablayoutHeight(40)
                 .setTabScrollable(true)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppComplain.get("投诉举报")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DetailInfoFragment.newInstance(0).apply { regInfoFragment = this }, "登记信息")
@@ -86,7 +86,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .addTab(DynamicFragment.newInstance().apply { dynamicFragment = this }, "处置动态")
                 .build()
 
-        btn_complain_dispose.background.setTint(ContextCompat.getColor(this, XAppComplain.get("投诉举报")!!.moduleColor))
+        btn_complain_dispose.background.setTint(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
 
         mPresenter.getDetailInfo(ApiParamUtil.detailParam(fGuid))
     }
@@ -104,8 +104,8 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
             if (detailBean != null) {
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["type"] = 1
-                    it["taskBean"] = MapTaskBean("投诉举报",
-                            XAppComplain.get("投诉举报")!!.appIcon,
+                    it["taskBean"] = MapTaskBean(XAppComplain.LIST.name,
+                            XAppComplain.LIST.appIcon,
                             (detailBean!!.baseInfo.fName ?: "") + (detailBean!!.baseInfo.fType ?: "") + (detailBean!!.baseInfo.fEntityName ?: ""),
                             "主体地址：" + (detailBean!!.baseInfo.fEntityAddress ?: ""),
                             "涉及主体：" + (detailBean!!.baseInfo.fEntityName ?: ""),

@@ -62,13 +62,13 @@ class DisposeTransActivity : BaseActivity<DisposeTransPresenter, DisposeTransMod
         super.initView(savedInstanceState)
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
-        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
-        btn_submit_trans.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.HANDLE)
+        btn_submit_trans.background.setTint(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
         rv_dispose_trans.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeTransActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeTransActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeTransActivity, XAppLegalcase.HANDLE.moduleColor))
             }
         }
 

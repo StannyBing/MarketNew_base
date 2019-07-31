@@ -52,7 +52,7 @@ class DynamicFragment : BaseFragment<DynamicPresenter, DynamicModel>(), DynamicC
         rv_complain_dynamic.apply {
             layoutManager = LinearLayoutManager(activity!!)
             adapter = dynamicAdapter.apply {
-                setModuleColor(ContextCompat.getColor(activity!!, XAppComplain.get("投诉举报")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(activity!!, XAppComplain.LIST.moduleColor))
             }
         }
     }

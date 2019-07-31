@@ -151,11 +151,11 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
             XApp.startXApp(RoutePath.ROUTE_APP_LOGIN)
         }
         etUserName.setText(UserManager.userName)
-        etPassword.setText(UserManager.passWord)
+//        etPassword.setText(UserManager.passWord)
         btnLogin.setOnClickListener {
             MyApplication.instance.component.repositoryManager()
                     .obtainRetrofitService(ApiService::class.java)
-                    .doLogin(hashMapOf("username" to UserManager.userName, "password" to ApiParamUtil.getBase64(UserManager.passWord)).toJson())
+                    .doLogin(hashMapOf("userName" to etUserName.text.toString(), "password" to ApiParamUtil.getBase64(etPassword.text.toString()), "remark" to "app").toJson())
                     .compose(RxHelper.handleResult())
                     .subscribe(object : RxSubscriber<UserBean>() {
                         override fun onStart() {
@@ -170,19 +170,16 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                                 UserManager.setUser(t)
                                 showToast("登录成功")
                                 ZXDialogUtil.dismissDialog()
-                                ZXDialogUtil.dismissDialog()
+                                ZXDialogUtil.dismissLoadingDialog()
                             }
                         }
 
                         override fun _onError(code: String?, message: String?) {
                             showToast("登录失败")
-                            ZXDialogUtil.dismissDialog()
+                            ZXDialogUtil.dismissLoadingDialog()
                         }
 
                     })
-            handler.postDelayed({
-                btnLogin.performClick()
-            }, 300)
         }
         ZXDialogUtil.showCustomViewDialog(this, "", loginView, null).apply {
             window.setDimAmount(0.2f)

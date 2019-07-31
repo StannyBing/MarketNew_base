@@ -47,7 +47,7 @@ class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(),
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("法律法规"))
+        toobar_view.withXApp(XAppOther.LAW)
         sr_law_collect.setLayoutManager(GridLayoutManager(this@LawCollectActivity, 2))
                 .setAdapter(lawCollectAdapter)
                 .autoLoadMore()

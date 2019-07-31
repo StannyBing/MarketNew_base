@@ -10,7 +10,6 @@ import com.necer.painter.InnerPainter
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
-import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.workplan.bean.WorkPlanBean
 import com.zx.module_other.module.workplan.func.adapter.WorkPlanAdpater
@@ -73,7 +72,7 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("个人工作计划"))
+//        toobar_view.withXApp(XAppOther.get("个人工作计划"))
         innerPainter = work_plan_calendar.calendarPainter as InnerPainter?
         rv_work_plan.apply {
             adapter = workPlanAdapter

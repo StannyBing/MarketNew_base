@@ -65,9 +65,9 @@ class SuperviseQueryActivity : BaseActivity<SuperviseQueryPresenter, SuperviseQu
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppSupervise.get("专项检查"))
-        search_view.withXApp(XAppSupervise.get("专项检查"))
-        tv_supervise_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
+        toolBar_view.withXApp(XAppSupervise.SUPERVISE)
+        search_view.withXApp(XAppSupervise.SUPERVISE)
+        tv_supervise_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.SUPERVISE.moduleColor))
 
         sr_supervise_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)

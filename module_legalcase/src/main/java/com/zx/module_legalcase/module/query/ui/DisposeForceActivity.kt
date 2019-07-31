@@ -67,13 +67,13 @@ class DisposeForceActivity : BaseActivity<DisposeForcePresenter, DisposeForceMod
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
         toolBar_view.setMidText("任务处理-${detailBean.info.compelStatusName}")
-        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
-        btn_submit_force.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.HANDLE)
+        btn_submit_force.background.setTint(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
         rv_dispose_force.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeForceActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeForceActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeForceActivity, XAppLegalcase.HANDLE.moduleColor))
             }
         }
 

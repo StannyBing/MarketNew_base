@@ -85,8 +85,8 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppSupervise.get("现场检查"))
-        btn_daily_submit.background.setTint(ContextCompat.getColor(this, XAppSupervise.get("现场检查")!!.moduleColor))
+        toolBar_view.withXApp(XAppSupervise.DAILY)
+        btn_daily_submit.background.setTint(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
 
         dailyId = if (intent.hasExtra("dailyId")) intent.getStringExtra("dailyId") else ""
 
@@ -95,7 +95,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.get("现场检查")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DailyBaseFragment.newInstance(dailyId).apply { dailyBaseFragment = this }, "基本信息")
@@ -122,8 +122,8 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
         val svEntity = entityView.findViewById<SearchView>(R.id.search_view)
         tvEntityTips = entityView.findViewById<TextView>(R.id.tv_entity_tips)
         srEntityList = entityView.findViewById<ZXSwipeRecyler>(R.id.sr_entity_list)
-        svEntity.withXApp(XAppSupervise.get("现场检查"))
-        tvEntityTips?.setTextColor(ContextCompat.getColor(this, XAppSupervise.get("现场检查")!!.moduleColor))
+        svEntity.withXApp(XAppSupervise.DAILY)
+        tvEntityTips?.setTextColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
         //搜索事件
         svEntity.setSearchListener {
             entitySearchText = it

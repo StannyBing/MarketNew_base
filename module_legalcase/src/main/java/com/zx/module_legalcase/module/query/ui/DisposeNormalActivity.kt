@@ -67,13 +67,13 @@ class DisposeNormalActivity : BaseActivity<DisposeNormalPresenter, DisposeNormal
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
         toolBar_view.setMidText("任务处理-${detailBean.info.statusName}")
-        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
-        btn_submit_normal.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.HANDLE)
+        btn_submit_normal.background.setTint(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
         rv_dispose_normal.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeNormalActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeNormalActivity, XAppLegalcase.get("综合执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeNormalActivity, XAppLegalcase.HANDLE.moduleColor))
             }
         }
 

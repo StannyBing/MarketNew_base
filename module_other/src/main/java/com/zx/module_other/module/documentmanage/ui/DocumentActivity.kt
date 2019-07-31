@@ -66,8 +66,8 @@ class DocumentActivity : BaseActivity<DocumentPresenter, DocumentModel>(), Docum
     @SuppressLint("ResourceAsColor")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("文书管理"))
-        sv_document_search.withXApp(XAppOther.get("文书管理"))
+        toobar_view.withXApp(XAppOther.DOCUMENT)
+        sv_document_search.withXApp(XAppOther.DOCUMENT)
         rv_document.apply {
             layoutManager = LinearLayoutManager(this@DocumentActivity)
             adapter = documentAdapter

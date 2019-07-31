@@ -58,9 +58,9 @@ class SpecialListActivity : BaseActivity<SpecialListPresenter, SpecialListModel>
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppEntity.get("无证无照监管"))
+        toolBar_view.withXApp(XAppEntity.SPECIAL)
 
-        tv_entity_tips.setTextColor(ContextCompat.getColor(this, XAppEntity.get("无证无照监管")!!.moduleColor))
+        tv_entity_tips.setTextColor(ContextCompat.getColor(this, XAppEntity.SPECIAL.moduleColor))
 
         sr_special_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)

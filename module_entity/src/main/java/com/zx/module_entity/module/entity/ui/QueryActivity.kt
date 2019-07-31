@@ -76,9 +76,9 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppEntity.get("主体查询"))
-        search_view.withXApp(XAppEntity.get("主体查询"))
-        tv_entity_tips.setTextColor(ContextCompat.getColor(this, XAppEntity.get("主体查询")!!.moduleColor))
+        toolBar_view.withXApp(XAppEntity.ENTITY)
+        search_view.withXApp(XAppEntity.ENTITY)
+        tv_entity_tips.setTextColor(ContextCompat.getColor(this, XAppEntity.ENTITY.moduleColor))
 
         sr_entity_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)

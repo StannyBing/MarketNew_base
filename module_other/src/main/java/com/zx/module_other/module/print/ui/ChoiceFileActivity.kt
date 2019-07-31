@@ -51,9 +51,9 @@ class ChoiceFileActivity : BaseActivity<ChoiceFilePresenter, ChoiceFileModel>(),
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolbar_view.withXApp(XAppOther.get("文件打印"))
-        btn_local_file.background.setTint(ContextCompat.getColor(this, XAppOther.get("文件打印")!!.moduleColor))
-        btn_system_file.background.setTint(ContextCompat.getColor(this, XAppOther.get("文件打印")!!.moduleColor))
+        toolbar_view.withXApp(XAppOther.PRINT)
+        btn_local_file.background.setTint(ContextCompat.getColor(this, XAppOther.PRINT.moduleColor))
+        btn_system_file.background.setTint(ContextCompat.getColor(this, XAppOther.PRINT.moduleColor))
     }
 
     /**

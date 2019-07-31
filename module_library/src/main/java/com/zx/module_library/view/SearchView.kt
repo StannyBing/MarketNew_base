@@ -219,10 +219,8 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         return null
     }
 
-    fun withXApp(xappBean: XAppBean?) {
-        if (xappBean != null) {
-            module_color = ContextCompat.getColor(context, xappBean.moduleColor)
-        }
+    fun withXApp(xappBean: XAppBean) {
+        module_color = ContextCompat.getColor(context, xappBean.moduleColor)
         resetColor()
     }
 

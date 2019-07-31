@@ -91,7 +91,7 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         toolbarRightText.setOnClickListener { onClick() }
     }
 
-    fun setMidClickListener(onClick : () -> Unit){
+    fun setMidClickListener(onClick: () -> Unit) {
         toolbarTitle.setOnClickListener { onClick() }
     }
 
@@ -125,10 +125,8 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         toolbarRightText.setText(text)
     }
 
-    fun withXApp(xappBean: XAppBean?) {
-        if (xappBean != null) {
-            module_color = ContextCompat.getColor(context, xappBean.moduleColor)
-        }
+    fun withXApp(xappBean: XAppBean) {
+        module_color = ContextCompat.getColor(context, xappBean.moduleColor)
         resetColor()
     }
 

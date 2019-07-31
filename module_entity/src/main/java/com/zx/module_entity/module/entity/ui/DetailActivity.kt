@@ -78,7 +78,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppEntity.get("主体查询"))
+        toolBar_view.withXApp(XAppEntity.ENTITY)
         toolBar_view.setMidText("详情")
 
         fEntityGuid = if (intent.hasExtra("fEntityGuid")) intent.getStringExtra("fEntityGuid") else ""
@@ -86,14 +86,14 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         fUniscid = if (intent.hasExtra("fUniscid")) intent.getStringExtra("fUniscid") else ""
         fBizlicNum = if (intent.hasExtra("fBizlicNum")) intent.getStringExtra("fBizlicNum") else ""
 
-        btn_entity_check.background.setTint(ContextCompat.getColor(this, XAppEntity.get("主体查询")!!.moduleColor))
+        btn_entity_check.background.setTint(ContextCompat.getColor(this, XAppEntity.ENTITY.moduleColor))
 
         tvp_entity_detail.setManager(supportFragmentManager)
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppEntity.get("主体查询")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppEntity.ENTITY.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DetailInfoFragment.newInstance().apply { infoFragment = this }, "基本信息")
@@ -121,7 +121,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["type"] = 1
                     it["taskBean"] = MapTaskBean("主体查询",
-                            XAppEntity.get("主体查询")!!.appIcon,
+                            XAppEntity.ENTITY.appIcon,
                             detailBean!!.fEntityName ?: "",
                             "主体地址：" + (detailBean!!.fAddress ?: ""),
                             "所属片区：" + (detailBean!!.fStation ?: "") + "-" + (detailBean!!.fGrid ?: ""),

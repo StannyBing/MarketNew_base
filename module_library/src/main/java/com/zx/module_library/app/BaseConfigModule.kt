@@ -16,7 +16,7 @@ import okhttp3.Response
  * Created by Xiangb on 2019/2/26.
  * 功能：
  */
-open class BaseConfigModule(val apiService: Class<*>, var moduleName: String) : ConfigModule {
+open class BaseConfigModule(val apiService: Class<*> = ApiService::class.java, var moduleName: String = "library") : ConfigModule {
 
     enum class APP_TYPE(val versionCode: Int, val versionName: String, val realseUrl: String, val debugUrl: String, val areaParentId : String) {
         BASE(1, "1.0.0", "http://rc.jx968969.com/", "http://scjg.zxgeo.com/", "360481"),

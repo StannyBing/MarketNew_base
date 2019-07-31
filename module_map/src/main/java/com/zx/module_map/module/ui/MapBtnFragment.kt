@@ -73,7 +73,7 @@ class MapBtnFragment : BaseFragment<MapBtnPresenter, MapBtnModel>(), MapBtnContr
             }
         }
 
-        btnAdapter.setColor(ContextCompat.getColor(activity!!, XAppMap.get("地图")!!.moduleColor))
+        btnAdapter.setColor(ContextCompat.getColor(activity!!, XAppMap.MAP.moduleColor))
         rv_map_btn.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = btnAdapter

@@ -63,7 +63,7 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        file_view.withXApp(XAppSupervise.get("现场检查"))
+        file_view.withXApp(XAppSupervise.DAILY)
         file_view.setModifiable(dailyId.isEmpty())
 
         dailyId = arguments!!.getString("dailyId")

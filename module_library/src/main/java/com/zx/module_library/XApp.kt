@@ -9,7 +9,7 @@ import java.io.Serializable
  * Created by Xiangb on 2019/3/13.
  * 功能：
  */
-open class XApp {
+abstract class XApp {
 
 
     companion object {
@@ -74,18 +74,22 @@ open class XApp {
         }
     }
 
-    open val map: Map<String, XAppBean> = mapOf(
-
-    )
-
     /**
      * 获取单个
      */
-    fun get(name: String): XAppBean? = if (map.containsKey(name)) map[name] else null
+    fun get(name: String): XAppBean? {
+        if (all().isNotEmpty()) {
+            all().forEach {
+                if (it.name == name) {
+                    return it
+                }
+            }
+        }
+        return null
+    }
 
     /**
      * 获取全部
      */
-    fun all(): List<XAppBean> = map.values.toList()
-
+    abstract fun all(): ArrayList<XAppBean>
 }

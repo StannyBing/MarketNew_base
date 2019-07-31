@@ -60,9 +60,9 @@ class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillMod
     @SuppressLint("ResourceAsColor", "NewApi")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("文书管理"))
+        toobar_view.withXApp(XAppOther.DOCUMENT)
 
-        btn_fill_preview.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
+        btn_fill_preview.background.setTint(ContextCompat.getColor(this, XAppOther.DOCUMENT.moduleColor))
 
         rv_document_fill.apply {
             layoutManager = LinearLayoutManager(this@DocumentFillActivity) as RecyclerView.LayoutManager?

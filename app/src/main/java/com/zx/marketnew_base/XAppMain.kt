@@ -9,10 +9,10 @@ import com.zx.module_library.bean.XAppBean
  * 功能：
  */
 object XAppMain : XApp() {
-    override val map: Map<String, XAppBean>
-        get() = mapOf(
-                "累计待办" to XAppBean("累计待办", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 5),
-                "即将到期" to XAppBean("即将到期", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 2),
-                "已经逾期" to XAppBean("已经逾期", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 0)
-        )
+
+    val MYTASK_ALL = XAppBean("累计待办", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 0)
+    val MYTASK_SOON = XAppBean("即将到期", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 0)
+    val MYTASK_OVERDUE = XAppBean("已经逾期", R.color.light_gray, 0,  RoutePath.ROUTE_APP_MYTASK, 0)
+
+    override fun all() = arrayListOf(MYTASK_ALL, MYTASK_SOON, MYTASK_OVERDUE)
 }

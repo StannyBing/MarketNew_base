@@ -43,8 +43,8 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toobar_view.withXApp(XAppOther.get("法律法规"))
-        sv_law_search.withXApp(XAppOther.get("法律法规"))
+        toobar_view.withXApp(XAppOther.LAW)
+        sv_law_search.withXApp(XAppOther.LAW)
 
         if (intent != null) {
             lawMainBean = intent.getSerializableExtra("lawBean") as LawMainBean

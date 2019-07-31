@@ -176,7 +176,7 @@ class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(),
             val cursorFiled = TextView::class.java.getDeclaredField("mCursorDrawableRes")
             cursorFiled.isAccessible = true
             val drawable = ContextCompat.getDrawable(mContext, R.drawable.shape_search_cursor)
-            drawable!!.setTint(ContextCompat.getColor(activity!!, XAppEntity.get("主体查询")!!.moduleColor))
+            drawable!!.setTint(ContextCompat.getColor(activity!!, XAppEntity.ENTITY.moduleColor))
             cursorFiled.set(modifyValue, drawable)
         } catch (e: Exception) {
             e.printStackTrace()

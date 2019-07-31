@@ -9,10 +9,11 @@ import com.zx.module_library.bean.XAppBean
  * 功能：
  */
 object XAppOther : XApp() {
-    override val map: Map<String, XAppBean>
-        get() = mapOf(
-                "法律法规" to XAppBean("法律法规", R.color.law_color, R.drawable.icon_law, RoutePath.ROUTE_OTHER_LAW),
-                "文件打印" to XAppBean("文件打印", R.color.print_color, R.drawable.icon_print, RoutePath.ROUTE_OTHER_PRINT),
-                "文书管理" to XAppBean("文书管理", R.color.document_color, R.drawable.icon_docment, RoutePath.ROUTE_OTHER_DOCUMENT)
-        )
+
+    val LAW = XAppBean("法律法规", R.color.law_color, R.drawable.icon_law, RoutePath.ROUTE_OTHER_LAW)
+    val PRINT = XAppBean("文件打印", R.color.print_color, R.drawable.icon_print, RoutePath.ROUTE_OTHER_PRINT)
+    val DOCUMENT = XAppBean("文书管理", R.color.document_color, R.drawable.icon_docment, RoutePath.ROUTE_OTHER_DOCUMENT)
+    val INFOMATION = XAppBean("政务资讯", R.color.infomation_color, R.drawable.icon_infomation, RoutePath.ROUTE_OTHER_INFOMATION)
+
+    override fun all() = arrayListOf(LAW, PRINT, DOCUMENT, INFOMATION)
 }

@@ -9,9 +9,7 @@ import com.zx.module_library.bean.XAppBean
  * 功能：小应用 投诉举报
  */
 object XAppComplain : XApp() {
+    val LIST = XAppBean("投诉举报", R.color.complain_color, R.drawable.icon_complain, RoutePath.ROUTE_COMPLAIN_QUERY)
 
-    override val map: Map<String, XAppBean>
-        get() = mapOf(
-                "投诉举报" to XAppBean("投诉举报", R.color.complain_color, R.drawable.icon_complain, RoutePath.ROUTE_COMPLAIN_QUERY)
-        )
+    override fun all() = arrayListOf(LIST)
 }

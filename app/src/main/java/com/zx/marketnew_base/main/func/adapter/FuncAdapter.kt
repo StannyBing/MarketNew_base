@@ -14,6 +14,7 @@ class FuncAdapter(dataBeans: List<FuncBean>) : ZXQuickAdapter<FuncBean, ZXBaseHo
     override fun convert(helper: ZXBaseHolder?, item: FuncBean?) {
         if (helper != null && item != null) {
             helper.setText(R.id.tv_func_text, item.title)
+            helper.setText(R.id.tv_func_value, item.value)
             item.icon?.let { helper.setBackgroundRes(R.id.iv_func_icon, it) }
             if (item.showBottomDivider) {
                 helper.getView<View>(R.id.view_func_maxDivider).visibility = View.VISIBLE

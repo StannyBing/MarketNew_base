@@ -65,9 +65,12 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
      * View事件设置
      */
     override fun onViewListener() {
-//菜单点击事件
+        //菜单点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
             when (dataBeans[position].title) {
+                "录像设置"->{
+                    VideoSettingActivity.startAction(this, false)
+                }
                 "修改密码" -> {
                     ForgetPwdActivity.startAction(this, false, UserManager.getUser().telephone!!)
                 }

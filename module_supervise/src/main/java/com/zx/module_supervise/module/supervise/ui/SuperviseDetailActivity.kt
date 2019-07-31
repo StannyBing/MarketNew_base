@@ -69,7 +69,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppSupervise.get("专项检查"))
+        toolBar_view.withXApp(XAppSupervise.SUPERVISE)
 
         optable = if (intent.hasExtra("optable")) intent.getBooleanExtra("optable", false) else false
         id = intent.getStringExtra("id")
@@ -80,7 +80,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.SUPERVISE.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DetailTaskInfoFragment.newInstance().apply { taskInfoFragment = this }, "任务信息")
@@ -89,7 +89,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
                 .addTab(DetailDynamicFragment.newInstance().apply { dynamicFragment = this }, "处置动态")
                 .build()
 
-        btn_supervise_dispose.background.setTint(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
+        btn_supervise_dispose.background.setTint(ContextCompat.getColor(this, XAppSupervise.SUPERVISE.moduleColor))
 
         mPresenter.getDetailInfo(id, taskId)
     }
@@ -112,7 +112,7 @@ class SuperviseDetailActivity : BaseActivity<SuperviseDetailPresenter, Supervise
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["type"] = 1
                     it["taskBean"] = MapTaskBean("专项检查",
-                            XAppSupervise.get("专项检查")!!.appIcon,
+                            XAppSupervise.SUPERVISE.appIcon,
                             taskInfoBean!!.fName ?: "",
                             "主体地址：" + (entityInfoBean!!.fAddress ?: ""),
                             "涉及主体：" + (entityInfoBean!!.fEntityName ?: ""),

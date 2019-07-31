@@ -13,6 +13,7 @@ object RoutePath {
     const val ROUTE_APP_CHANGEPWD = "/app/changepwd"//修改密码
     const val ROUTE_APP_MAIN = "/app/main"//主页
     const val ROUTE_APP_SETTING = "/app/setting"//设置
+    const val ROUTE_APP_SETTINGVIDEO = "/app/settingvideo"//设置-录像
     const val ROUTE_APP_MYTASK = "/app/mytask"//我的任务
 
     //投诉举报
@@ -64,6 +65,7 @@ object RoutePath {
     const val ROUTE_OTHER_DOCUMENT = "/other/documentmanage"//其他-文书管理
     const val ROUTE_OTHER_DOCUMENTFIll = "/other/documentfill"//其他-文书填写
     const val ROUTE_OTHER_DOCUMENTSEE = "/other/documentsee"//其他-文书预览
+    const val ROUTE_OTHER_INFOMATION = "/other/infomation"//其他-政务资讯
 
 
 }

@@ -59,7 +59,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        toolbar_view.withXApp(XAppOther.get("文件打印"))
+        toolbar_view.withXApp(XAppOther.PRINT)
         disOnline()
         val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)

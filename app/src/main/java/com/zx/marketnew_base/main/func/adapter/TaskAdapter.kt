@@ -20,6 +20,12 @@ import com.zx.zxutils.other.ZXRecyclerAdapter.ZXRecyclerQuickAdapter
 class TaskAdapter(databeans: List<TaskBean>) : ZXRecyclerQuickAdapter<TaskBean, ZXBaseHolder>(R.layout.item_task_normal, databeans) {
     override fun quickConvert(helper: ZXBaseHolder?, item: TaskBean?) {
         if (helper != null && item != null) {
+            helper.setText(R.id.tv_task_type, when (item.businessType) {
+                "case" -> XAppLegalcase.HANDLE.name
+                "complaint" -> XAppComplain.LIST.name
+                "entityTask" -> XAppSupervise.SUPERVISE.name
+                else -> ""
+            })
             helper.setText(R.id.tv_task_title, when (item.businessType) {
                 "case" -> item.caseName ?: ""
                 "complaint" -> (item.fName ?: "") + (item.fType ?: "") + (item.fEntityName ?: "")
@@ -33,15 +39,15 @@ class TaskAdapter(databeans: List<TaskBean>) : ZXRecyclerQuickAdapter<TaskBean, 
                 else -> ""
             })
             helper.getView<LinearLayout>(R.id.ll_task_typebg).background.setTint(ContextCompat.getColor(mContext, when (item.businessType) {
-                "case" -> XAppLegalcase.get("综合执法")!!.moduleColor
-                "complaint" -> XAppComplain.get("投诉举报")!!.moduleColor
-                "entityTask" -> XAppSupervise.get("专项检查")!!.moduleColor
+                "case" -> XAppLegalcase.HANDLE.moduleColor
+                "complaint" -> XAppComplain.LIST.moduleColor
+                "entityTask" -> XAppSupervise.SUPERVISE.moduleColor
                 else -> R.color.colorPrimary
             }))
             helper.setBackgroundRes(R.id.iv_task_type, when (item.businessType) {
-                "case" -> XAppLegalcase.get("综合执法")!!.appIcon
-                "complaint" -> XAppComplain.get("投诉举报")!!.appIcon
-                "entityTask" -> XAppSupervise.get("专项检查")!!.appIcon
+                "case" -> XAppLegalcase.HANDLE.appIcon
+                "complaint" -> XAppComplain.LIST.appIcon
+                "entityTask" -> XAppSupervise.SUPERVISE.appIcon
                 else -> R.drawable.logo
             })
             helper.setText(R.id.tv_task_date, when (item.businessType) {

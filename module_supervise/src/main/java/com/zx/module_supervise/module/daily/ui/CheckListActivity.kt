@@ -71,8 +71,8 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppSupervise.get("现场检查"))
-        search_view.withXApp(XAppSupervise.get("现场检查"))
+        toolBar_view.withXApp(XAppSupervise.DAILY)
+        search_view.withXApp(XAppSupervise.DAILY)
 
         checkRecyclerHelper = CheckRecyclerHelper.getInstance(this)
         checkRecyclerHelper.apply {
@@ -144,7 +144,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
                     setSelection(0)
                     setItemHeightDp(40)
                     setItemTextSizeSp(15)
-                    showSelectedTextColor(true, XAppSupervise.get("现场检查")!!.moduleColor)
+                    showSelectedTextColor(true, XAppSupervise.DAILY.moduleColor)
                     build()
                 }
             }

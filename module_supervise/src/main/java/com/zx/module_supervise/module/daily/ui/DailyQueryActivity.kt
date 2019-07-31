@@ -58,9 +58,9 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppSupervise.get("现场检查"))
-        search_view.withXApp(XAppSupervise.get("现场检查"))
-        tv_daily_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.get("现场检查")!!.moduleColor))
+        toolBar_view.withXApp(XAppSupervise.DAILY)
+        search_view.withXApp(XAppSupervise.DAILY)
+        tv_daily_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
 
         sr_daily_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)

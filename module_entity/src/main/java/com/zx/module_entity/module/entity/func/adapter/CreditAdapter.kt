@@ -21,13 +21,13 @@ class CreditAdapter(dataList: List<CreditBean>) : ZXQuickAdapter<CreditBean, ZXB
                 ContextCompat.getColor(mContext, R.color.text_color_noraml)
             } else {
                 helper.addOnClickListener(R.id.tv_credit_year)
-                ContextCompat.getColor(mContext, XAppEntity.get("主体查询")!!.moduleColor)
+                ContextCompat.getColor(mContext, XAppEntity.ENTITY.moduleColor)
             })
             helper.setTextColor(R.id.tv_credit_all, if (item.allCount == 0) {
                 ContextCompat.getColor(mContext, R.color.text_color_noraml)
             } else {
                 helper.addOnClickListener(R.id.tv_credit_all)
-                ContextCompat.getColor(mContext, XAppEntity.get("主体查询")!!.moduleColor)
+                ContextCompat.getColor(mContext, XAppEntity.ENTITY.moduleColor)
             })
         }
     }

@@ -44,7 +44,7 @@ class FileInfoFragment : BaseFragment<FileInfoPresenter, FileInfoModel>(), FileI
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        file_view.withXApp(XAppComplain.get("投诉举报"))
+        file_view.withXApp(XAppComplain.LIST)
                 .setAddType(AddFileView.AddType.NORMAL)
 
     }

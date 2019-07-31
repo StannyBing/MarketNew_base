@@ -53,7 +53,7 @@ class DynamicFragment : BaseFragment<DynamicPresenter, DynamicModel>(), DynamicC
         rv_legalcase_dynamic.apply {
             layoutManager = LinearLayoutManager(activity!!)
             adapter = dynamicAdapter.apply {
-                setModuleColor(ContextCompat.getColor(activity!!, XAppLegalcase.get("综合执法")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(activity!!, XAppLegalcase.HANDLE.moduleColor))
             }
         }
 

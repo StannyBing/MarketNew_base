@@ -59,7 +59,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolbar_view.withXApp(XAppMap.get("地图"))
+        toolbar_view.withXApp(XAppMap.MAP)
 
         type = if (intent.hasExtra("type")) intent.getIntExtra("type", 0) else 0
 

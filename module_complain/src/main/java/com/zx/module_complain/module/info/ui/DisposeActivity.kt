@@ -70,13 +70,13 @@ class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeC
         detailBean = intent.getSerializableExtra("detailBean") as DetailBean
 
         toolBar_view.setMidText("任务处理-${ComplainStatusTool.getStatusString(detailBean.baseInfo.fStatus)}")
-        toolBar_view.withXApp(XAppComplain.get("投诉举报"))
-        btn_complain_submit.background.setTint(ContextCompat.getColor(this, XAppComplain.get("投诉举报")!!.moduleColor))
+        toolBar_view.withXApp(XAppComplain.LIST)
+        btn_complain_submit.background.setTint(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
 
         rv_complain_dispose.apply {
             layoutManager = ZXInScrollRecylerManager(this@DisposeActivity) as RecyclerView.LayoutManager?
             adapter = disposeAdapter.apply {
-                setModuleColor(ContextCompat.getColor(this@DisposeActivity, XAppComplain.get("投诉举报")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(this@DisposeActivity, XAppComplain.LIST.moduleColor))
             }
         }
 
@@ -259,7 +259,7 @@ class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeC
             }
             50 -> {//处置
                 addfile_view.visibility = View.VISIBLE
-                addfile_view.withXApp(XAppComplain.get("投诉举报"))
+                addfile_view.withXApp(XAppComplain.LIST)
                         .setModifiable()
                 disposeList.apply {
                     add(DisposeBean(DisposeBean.DisposeType.Spinner, "操作", arrayListOf<DisposeBean.ValueBean>().apply {

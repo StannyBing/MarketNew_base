@@ -59,8 +59,8 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolbar_view.withXApp(XAppOther.get("法律法规"))
-        searchView.withXApp(XAppOther.get("法律法规"))
+        toolbar_view.withXApp(XAppOther.LAW)
+        searchView.withXApp(XAppOther.LAW)
 
 
         rv_law_keyword.apply {

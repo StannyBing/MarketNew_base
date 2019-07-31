@@ -66,9 +66,9 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppComplain.get("投诉举报"))
-        search_view.withXApp(XAppComplain.get("投诉举报"))
-        tv_complain_tips.setTextColor(ContextCompat.getColor(this, XAppComplain.get("投诉举报")!!.moduleColor))
+        toolBar_view.withXApp(XAppComplain.LIST)
+        search_view.withXApp(XAppComplain.LIST)
+        tv_complain_tips.setTextColor(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
 
         sr_complain_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)

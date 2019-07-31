@@ -67,7 +67,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
+        toolBar_view.withXApp(XAppLegalcase.HANDLE)
         toolBar_view.setMidText("详情")
 
         id = intent.getStringExtra("id")
@@ -77,7 +77,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DetailInfoFragment.newInstance(0).apply { caseInfoFragment = this }, "案件信息")
@@ -86,7 +86,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .addTab(DynamicFragment.newInstance(id).apply { dynamicFragment = this }, "流程轨迹")
                 .build()
 
-        btn_legalcase_dispose.background.setTint(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+        btn_legalcase_dispose.background.setTint(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
         mPresenter.getDetail(ApiParamUtil.detailParam(id))
     }
@@ -123,7 +123,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 XApp.startXApp(RoutePath.ROUTE_MAP_MAP) {
                     it["type"] = 1
                     it["taskBean"] = MapTaskBean("案件执法",
-                            XAppLegalcase.get("综合执法")!!.appIcon,
+                            XAppLegalcase.HANDLE.appIcon,
                             detailBean!!.info.caseName,
                             "主体地址：" + (detailBean!!.info.enterpriseAddress?:""),
                             "涉及主体：" + detailBean!!.info.enterpriseName,

@@ -9,9 +9,9 @@ import com.zx.module_library.bean.XAppBean
  * 功能：
  */
 object XAppEntity : XApp() {
-    override val map: Map<String, XAppBean>
-        get() = mapOf(
-                "主体查询" to XAppBean("主体查询", R.color.entity_color, R.drawable.icon_entity, RoutePath.ROUTE_ENTITY_QUERY),
-                "无证无照监管" to XAppBean("无证无照监管", R.color.special_color, R.drawable.icon_special, RoutePath.ROUTE_ENTITY_SPECIALADD)
-        )
+
+    val ENTITY = XAppBean("主体查询", R.color.entity_color, R.drawable.icon_entity, RoutePath.ROUTE_ENTITY_QUERY)
+    val SPECIAL = XAppBean("无证无照监管", R.color.special_color, R.drawable.icon_special, RoutePath.ROUTE_ENTITY_SPECIALADD)
+
+    override fun all() = arrayListOf(ENTITY, SPECIAL)
 }

@@ -50,7 +50,7 @@ class LawStandardQueryActivity : BaseActivity<LawStandardPresenter, LawStandardM
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("法律法规"))
+        toobar_view.withXApp(XAppOther.LAW)
         rv_law_standard_query.apply {
             layoutManager = LinearLayoutManager(this@LawStandardQueryActivity)
             adapter = standardAdapter

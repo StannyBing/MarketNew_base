@@ -6,14 +6,12 @@ import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
@@ -27,7 +25,6 @@ import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
-import com.zx.module_other.module.print.func.receiver.BluetoothReceive
 import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.ui.PrintActivity
 import com.zx.module_other.module.print.ui.StartPrintActivity
@@ -37,7 +34,6 @@ import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import com.zx.zxutils.util.ZXPermissionUtil
 import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_document_see.*
-import rx.functions.Action1
 
 @Route(path = RoutePath.ROUTE_OTHER_DOCUMENTSEE)
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
@@ -89,7 +85,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     @SuppressLint("ResourceAsColor", "NewApi")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("文书管理"))
+        toobar_view.withXApp(XAppOther.DOCUMENT)
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         if (!ZXPermissionUtil.checkPermissionsByArray(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))) {
             ZXPermissionUtil.requestPermissionsByArray(this)

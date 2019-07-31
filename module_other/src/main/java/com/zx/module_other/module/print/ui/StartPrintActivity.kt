@@ -79,10 +79,10 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         tv_print_name.setText(intent.getStringExtra("docName"))
-        toolbar_view.withXApp(XAppOther.get("文件打印"))
+        toolbar_view.withXApp(XAppOther.PRINT)
         sAdpter = ArrayAdapter(this, com.zx.module_other.R.layout.item_start_print, R.id.text, printerNames)
         printDataService = PrintDataService(this)
-        btn_print.background.setTint(ContextCompat.getColor(this, XAppOther.get("文件打印")!!.moduleColor))
+        btn_print.background.setTint(ContextCompat.getColor(this, XAppOther.PRINT.moduleColor))
         //     bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
         devices = intent.getParcelableArrayListExtra("devices")
         s_printer.adapter = sAdpter

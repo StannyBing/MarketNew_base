@@ -65,9 +65,9 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toolBar_view.withXApp(XAppLegalcase.get("综合执法"))
-        search_view.withXApp(XAppLegalcase.get("综合执法"))
-        tv_legalcase_tips.setTextColor(ContextCompat.getColor(this, XAppLegalcase.get("综合执法")!!.moduleColor))
+        toolBar_view.withXApp(XAppLegalcase.HANDLE)
+        search_view.withXApp(XAppLegalcase.HANDLE)
+        tv_legalcase_tips.setTextColor(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
         sr_legalcase_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)

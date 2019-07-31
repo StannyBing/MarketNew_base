@@ -58,7 +58,7 @@ class TemplateActivity : BaseActivity<TemplatePresenter, TemplateModel>(), Templ
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
-        toolBar_view.withXApp(XAppSupervise.get("现场检查"))
+        toolBar_view.withXApp(XAppSupervise.DAILY)
 
         rv_template_list.apply {
             layoutManager = LinearLayoutManager(this@TemplateActivity)

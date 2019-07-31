@@ -51,7 +51,7 @@ class DetailImageFragment : BaseFragment<DetailImagePresenter, DetailImageModel>
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        file_view.withXApp(XAppEntity.get("主体查询"))
+        file_view.withXApp(XAppEntity.ENTITY)
                 .setModifiable()
                 .showSaveView()
                 .setAddType(AddFileView.AddType.NORMAL)

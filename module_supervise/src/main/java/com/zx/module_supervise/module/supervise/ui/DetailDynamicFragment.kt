@@ -51,7 +51,7 @@ class DetailDynamicFragment : BaseFragment<DetailDynamicPresenter, DetailDynamic
         rv_supervise_dynamic.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = dynamicAdapter.apply {
-                setModuleColor(ContextCompat.getColor(activity!!, XAppSupervise.get("专项检查")!!.moduleColor))
+                setModuleColor(ContextCompat.getColor(activity!!, XAppSupervise.SUPERVISE.moduleColor))
             }
         }
     }

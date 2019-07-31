@@ -75,15 +75,15 @@ class SuperviseDisposeActivity : BaseActivity<SuperviseDisposePresenter, Supervi
         fEntityGuid = intent.getStringExtra("fEntityGuid")
         status = intent.getStringExtra("status")
 
-        toolBar_view.withXApp(XAppSupervise.get("专项检查"))
-        btn_supervise_submit.background.setTint(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
+        toolBar_view.withXApp(XAppSupervise.SUPERVISE)
+        btn_supervise_submit.background.setTint(ContextCompat.getColor(this, XAppSupervise.SUPERVISE.moduleColor))
 
         tvp_supervise_dispose.setManager(supportFragmentManager)
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
                 .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
-                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.get("专项检查")!!.moduleColor))
+                .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.SUPERVISE.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
                 .addTab(DisposeBaseFragment.newInstance().apply { disposeBaseFragment = this }, "基本信息")

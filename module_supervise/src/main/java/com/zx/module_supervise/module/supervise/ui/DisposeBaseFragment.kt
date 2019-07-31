@@ -134,7 +134,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 })
                 setItemHeightDp(40)
                 setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.get("专项检查")!!.moduleColor)
+                showSelectedTextColor(true, XAppSupervise.SUPERVISE.moduleColor)
                 build()
             }
             //处理结果
@@ -147,7 +147,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 })
                 setItemHeightDp(40)
                 setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.get("专项检查")!!.moduleColor)
+                showSelectedTextColor(true, XAppSupervise.SUPERVISE.moduleColor)
                 build()
             }
         } else {
@@ -161,7 +161,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 })
                 setItemHeightDp(40)
                 setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.get("专项检查")!!.moduleColor)
+                showSelectedTextColor(true, XAppSupervise.SUPERVISE.moduleColor)
                 build()
             }
         }

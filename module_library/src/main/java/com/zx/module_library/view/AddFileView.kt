@@ -194,7 +194,7 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     //可修改
-    fun setModifiable(modifiable : Boolean = true): AddFileView {
+    fun setModifiable(modifiable: Boolean = true): AddFileView {
         this.modifiable = modifiable
         fileAdapter.init(module_color, modifiable)
         if (!modifiable) {
@@ -248,13 +248,11 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     }
 
     //初始化主题
-    fun withXApp(xappBean: XAppBean?): AddFileView {
-        if (xappBean != null) {
-            module_color = ContextCompat.getColor(context, xappBean.moduleColor)
-            fileAdapter.init(module_color, modifiable)
+    fun withXApp(xappBean: XAppBean): AddFileView {
+        module_color = ContextCompat.getColor(context, xappBean.moduleColor)
+        fileAdapter.init(module_color, modifiable)
 
-            tvAddInfo.setTextColor(module_color)
-        }
+        tvAddInfo.setTextColor(module_color)
         return this
     }
 

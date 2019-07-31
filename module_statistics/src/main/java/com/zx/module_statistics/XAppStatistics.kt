@@ -8,8 +8,6 @@ import com.zx.module_library.bean.XAppBean
  * 功能：
  */
 object XAppStatistics : XApp() {
-    override val map: Map<String, XAppBean>
-        get() = mapOf(
-//                "统计-投诉举报" to XAppBean("统计-投诉举报", R.color.colorPrimary, R.drawable.ic_camera,  RoutePath.ROUTE_STATISTICS_COMPLAIN)
-        )
+    override fun all() = arrayListOf<XAppBean>()
+
 }

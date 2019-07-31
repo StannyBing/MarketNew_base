@@ -97,8 +97,6 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         }
         //公司详情按钮点击事件
         iv_work_compannyInfo.setOnClickListener {
-            handleError("10120", "登录超时")
-            return@setOnClickListener
             XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
                 it["mTitle"] = "重庆知行宏图科技有限公司"
                 it["mUrl"] = "http://www.zxgeo.com"
@@ -110,9 +108,9 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         if (officeBean == null) {
             dataBeans.clear()
             dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
-                    XAppMain.get("累计待办")!!.apply { num = 0 },
-                    XAppMain.get("即将到期")!!.apply { num = 0 },
-                    XAppMain.get("已经逾期")!!.apply { num = 0 }
+                    XAppMain.MYTASK_ALL.apply { num = 0 },
+                    XAppMain.MYTASK_SOON.apply { num = 0 },
+                    XAppMain.MYTASK_OVERDUE.apply { num = 0 }
             )))
             dataBeans.add(XAppListBean("常用应用", XAppListBean.XTYPE.NORMAL_XAPP, getXAppList(listOf("主体查询", "投诉举报", "综合执法", "专项检查"))))
             dataBeans.add(XAppListBean("全部应用", XAppListBean.XTYPE.ALL_XAPP, getXAppList()))
@@ -129,9 +127,9 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
                 dataBeans.clear()
                 mSharedPrefUtil.putObject("officeBean", officeBean)
                 dataBeans.add(XAppListBean("待办统计", XAppListBean.XTYPE.TASK_STATISTICS, arrayListOf(
-                        XAppMain.get("累计待办")!!.apply { num = officeBean.todo.allTask },
-                        XAppMain.get("即将到期")!!.apply { num = officeBean.todo.willOverdue },
-                        XAppMain.get("已经逾期")!!.apply { num = officeBean.todo.overdue }
+                        XAppMain.MYTASK_ALL.apply { num = officeBean.todo.allTask },
+                        XAppMain.MYTASK_SOON.apply { num = officeBean.todo.willOverdue },
+                        XAppMain.MYTASK_OVERDUE.apply { num = officeBean.todo.overdue }
                 )))
                 if (officeBean.myXApp.isNotEmpty()) {
                     dataBeans.add(XAppListBean("最近使用", XAppListBean.XTYPE.MY_XAPP, getXAppList(officeBean.myXApp)))
