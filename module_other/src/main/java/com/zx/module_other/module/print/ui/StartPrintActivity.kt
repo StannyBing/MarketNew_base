@@ -10,13 +10,11 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.webkit.WebView
 import android.widget.ArrayAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.lvrenyang.io.BTPrinting
-import com.lvrenyang.io.Canvas
-import com.lvrenyang.io.IOCallBack
-import com.lvrenyang.io.Pos
+import com.lvrenyang.io.*
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
@@ -32,6 +30,8 @@ import kotlinx.android.synthetic.main.activity_start_print.*
 import java.io.BufferedInputStream
 import java.io.FileInputStream
 import java.util.concurrent.Executors
+import com.zx.module_other.module.print.func.util.Prints
+import com.lvrenyang.io.Pos
 
 
 /**
@@ -49,7 +49,7 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     var printDataService: PrintDataService? = null
     var webView: WebView? = null
     var es = Executors.newScheduledThreadPool(30)
-    var mCanvas = Canvas()
+    //    var mCanvas = Canvas()
     var pos = Pos()
     var mBt = BTPrinting()
 
@@ -98,7 +98,7 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
         devices = intent.getParcelableArrayListExtra("devices")
         s_printer.adapter = sAdpter
         setSprinner()
-        mCanvas.Set(mBt);
+//        mCanvas.Set(mBt);
         pos.Set(mBt)
         mBt.SetCallBack(this);
         webView = WebView(this)
@@ -112,7 +112,12 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
      */
     override fun onViewListener() {
         btn_print.setOnClickListener {
-             es.submit(TaskOpen(mBt,devices.get(s_printer.selectedItemPosition).address,this));
+            if (mBt.IsOpened()) {
+                es.submit(TaskPrint(pos))
+            } else {
+                es.submit(TaskOpen(devices.get(s_printer.selectedItemPosition).address, this))
+            }
+
 
 //            if (printDataService!!.connect(devices.get(s_printer.selectedItemPosition))) {
 //                val photoPrinter = PrintHelper(this)
@@ -226,75 +231,71 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
         printDataService!!.send(bytes)
     }
 
-    inner class TaskOpen(bt: BTPrinting, address: String, context: Context) : Runnable {
-        internal var bt: BTPrinting? = null
+    inner class TaskOpen(address: String, context: Context) : Runnable {
         internal var address: String? = null
         internal var context: Context? = null
 
         init {
-            this.bt = bt
             this.address = address
             this.context = context
         }
 
         override fun run() {
             // TODO Auto-generated method stub
-            bt!!.Open(address, context)
-            val fs = FileInputStream(intent.getStringExtra("filePath"))
-            val bitmap = BitmapFactory.decodeStream(fs)
-       //     pos.POS_PrintPicture(bitmap, 576, 0, 0)
-            var suc = false
-     //       suc = pos.GetIO().IsOpened()
-            mCanvas.CanvasBegin(576, 600);
-            mCanvas.SetPrintDirection(0);
+            mBt!!.Open(address, context)
+        }
+    }
 
-            mCanvas.DrawBox(0f, 0f, 575f, 599f);
+//    inner class TaskPrint() : Runnable {
+//
+//       override fun run() {
+//            val fs = FileInputStream(intent.getStringExtra("filePath"))
+//            val bitmap = BitmapFactory.decodeStream(fs)
+//            pos.POS_PrintPicture(bitmap, 380, 0, 0)
+//            var suc = false
+//            suc = pos.GetIO().IsOpened()
+////            canvas!!.CanvasBegin(576, 600);
+////            canvas!!.SetPrintDirection(0);
+////
+////            canvas!!.DrawBox(0f, 0f, 575f, 599f);
+////
+////            canvas!!.DrawBitmap(bitmap, 1f, 10f, 0f);
+////            canvas!!.CanvasEnd();
+////            canvas!!.CanvasPrint(1, 1);
+////            suc = canvas!!.IO.IsOpened()
+//            runOnUiThread {
+//                if (suc) {
+//                    ZXToastUtil.showToast("成功")
+//                } else {
+//                    ZXToastUtil.showToast("失败")
+//                }
+//
+//            }
+//        }
+//    }
 
-            mCanvas.DrawBitmap(bitmap, 1f, 10f, 0f);
-            mCanvas.CanvasEnd();
-            mCanvas.CanvasPrint(1, 1);
-            suc = mCanvas.IO.IsOpened()
+    inner class TaskPrint(pos: Pos) : Runnable {
+        internal var pos: Pos? = null
+
+        init {
+            this.pos = pos
+        }
+
+        override fun run() {
+            // TODO Auto-generated method stub
+
+            val bPrintResult = Prints.PrintTicket(applicationContext, pos, Prints.nPrintWidth, Prints.bCutter, Prints.bDrawer, Prints.bBeeper, Prints.nPrintCount, Prints.nPrintContent, Prints.nCompressMethod, Prints.bCheckReturn)
+            val bIsOpened = pos!!.GetIO().IsOpened()
             runOnUiThread {
-                if (suc) {
+                if (bPrintResult) {
                     ZXToastUtil.showToast("成功")
                 } else {
                     ZXToastUtil.showToast("失败")
                 }
-
             }
+
         }
     }
-
-//    inner class TaskPrint(canvas: Canvas) : Runnable {
-//        internal var canvas: Canvas? = null
-//
-//        init {
-//            this.canvas = canvas
-//        }
-//
-//        override fun run() {
-//            // TODO Auto-generated method stub
-//            //final boolean bPrintResult = Prints.PrintTicket(getApplicationContext(), canvas, AppStart.nPrintWidth, AppStart.nPrintHeight);
-//            //final boolean bPrintResult = Prints.PrintTicketForMemoryTest(getApplicationContext(), canvas, AppStart.nPrintWidth, AppStart.nPrintHeight, 6);
-//            val bPrintResult = Prints.PrintTicketAutoNewLine(applicationContext, canvas, AppStart.nPrintWidth, AppStart.nPrintHeight)
-//            val bIsOpened = canvas!!.GetIO().IsOpened()
-//
-//            mActivity.runOnUiThread(Runnable {
-//                // TODO Auto-generated method stub
-//                Toast.makeText(
-//                        mActivity.getApplicationContext(),
-//                        if (bPrintResult)
-//                            resources.getString(
-//                                    R.string.printsuccess)
-//                        else
-//                            resources
-//                                    .getString(R.string.printfailed),
-//                        Toast.LENGTH_SHORT).show()
-//                mActivity.btnPrint.setEnabled(bIsOpened)
-//            })
-//
-//        }
-//    }
 
     override fun OnClose() {
     }
@@ -306,5 +307,6 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
 
     override fun OnOpen() {
         ZXToastUtil.showToast("连接成功")
+        es.submit(TaskPrint(pos))
     }
 }
