@@ -47,7 +47,6 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     var printerNames = arrayListOf<String>()
     var sAdpter: ArrayAdapter<String>? = null
     var printDataService: PrintDataService? = null
-    var webView: WebView? = null
     var es = Executors.newScheduledThreadPool(30)
     //    var mCanvas = Canvas()
     var pos = Pos()
@@ -101,7 +100,6 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
 //        mCanvas.Set(mBt);
         pos.Set(mBt)
         mBt.SetCallBack(this);
-        webView = WebView(this)
 //        if (bluetoothAdapter!!.isEnabled()) {
 //            openBluetooth()
 //        }
@@ -210,26 +208,26 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
 //        setSprinner()
 //    }
 
-    fun printBitmapTest(bitmap: Bitmap? = null) {
-        val bis: BufferedInputStream
-        try {
-            bis = BufferedInputStream(assets.open(
-                    "icon_empty_bg.bmp"))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return
-        }
-
-        val printPic = PrintPic.instance
-        printPic.init(bitmap)
-        val bytes = printPic.printDraw()
-        val printBytes = ArrayList<ByteArray>()
-        printBytes.add(GPrinterCommand.reset)
-        printBytes.add(GPrinterCommand.print)
-        printBytes.add(bytes)
-        printBytes.add(GPrinterCommand.print)
-        printDataService!!.send(bytes)
-    }
+//    fun printBitmapTest(bitmap: Bitmap? = null) {
+//        val bis: BufferedInputStream
+//        try {
+//            bis = BufferedInputStream(assets.open(
+//                    "icon_empty_bg.bmp"))
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            return
+//        }
+//
+//        val printPic = PrintPic.instance
+//        printPic.init(bitmap)
+//        val bytes = printPic.printDraw()
+//        val printBytes = ArrayList<ByteArray>()
+//        printBytes.add(GPrinterCommand.reset)
+//        printBytes.add(GPrinterCommand.print)
+//        printBytes.add(bytes)
+//        printBytes.add(GPrinterCommand.print)
+//        printDataService!!.send(bytes)
+//    }
 
     inner class TaskOpen(address: String, context: Context) : Runnable {
         internal var address: String? = null
@@ -246,34 +244,6 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
         }
     }
 
-//    inner class TaskPrint() : Runnable {
-//
-//       override fun run() {
-//            val fs = FileInputStream(intent.getStringExtra("filePath"))
-//            val bitmap = BitmapFactory.decodeStream(fs)
-//            pos.POS_PrintPicture(bitmap, 380, 0, 0)
-//            var suc = false
-//            suc = pos.GetIO().IsOpened()
-////            canvas!!.CanvasBegin(576, 600);
-////            canvas!!.SetPrintDirection(0);
-////
-////            canvas!!.DrawBox(0f, 0f, 575f, 599f);
-////
-////            canvas!!.DrawBitmap(bitmap, 1f, 10f, 0f);
-////            canvas!!.CanvasEnd();
-////            canvas!!.CanvasPrint(1, 1);
-////            suc = canvas!!.IO.IsOpened()
-//            runOnUiThread {
-//                if (suc) {
-//                    ZXToastUtil.showToast("成功")
-//                } else {
-//                    ZXToastUtil.showToast("失败")
-//                }
-//
-//            }
-//        }
-//    }
-
     inner class TaskPrint(pos: Pos) : Runnable {
         internal var pos: Pos? = null
 
@@ -282,31 +252,68 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
         }
 
         override fun run() {
-            // TODO Auto-generated method stub
-
-            val bPrintResult = Prints.PrintTicket(applicationContext, pos, Prints.nPrintWidth, Prints.bCutter, Prints.bDrawer, Prints.bBeeper, Prints.nPrintCount, Prints.nPrintContent, Prints.nCompressMethod, Prints.bCheckReturn)
-            val bIsOpened = pos!!.GetIO().IsOpened()
+            val fs = FileInputStream(intent.getStringExtra("filePath"))
+            val bitmap = BitmapFactory.decodeStream(fs)
+            pos!!.POS_PrintPicture(bitmap, 576, 1, 0)
+            var suc = false
+            suc = pos!!.GetIO().IsOpened()
+//            canvas!!.CanvasBegin(576, 600);
+//            canvas!!.SetPrintDirection(0);
+//
+//            canvas!!.DrawBox(0f, 0f, 575f, 599f);
+//
+//            canvas!!.DrawBitmap(bitmap, 1f, 10f, 0f);
+//            canvas!!.CanvasEnd();
+//            canvas!!.CanvasPrint(1, 1);
+//            suc = canvas!!.IO.IsOpened()
             runOnUiThread {
-                if (bPrintResult) {
+                if (suc) {
                     ZXToastUtil.showToast("成功")
                 } else {
                     ZXToastUtil.showToast("失败")
                 }
-            }
 
+            }
         }
     }
+
+//    inner class TaskPrint(pos: Pos) : Runnable {
+//        internal var pos: Pos? = null
+//
+//        init {
+//            this.pos = pos
+//        }
+//
+//        override fun run() {
+//            // TODO Auto-generated method stub
+//
+//            val bPrintResult = Prints.PrintTicket(applicationContext, pos, Prints.nPrintWidth, Prints.bCutter, Prints.bDrawer, Prints.bBeeper, Prints.nPrintCount, Prints.nPrintContent, Prints.nCompressMethod, Prints.bCheckReturn)
+//            val bIsOpened = pos!!.GetIO().IsOpened()
+//            runOnUiThread {
+//                if (bPrintResult) {
+//                    ZXToastUtil.showToast("成功")
+//                } else {
+//                    ZXToastUtil.showToast("失败")
+//                }
+//            }
+//
+//        }
+//    }
 
     override fun OnClose() {
     }
 
     override fun OnOpenFailed() {
-        ZXToastUtil.showToast("连接失败")
+        runOnUiThread {
+            ZXToastUtil.showToast("连接失败")
 
+        }
     }
 
     override fun OnOpen() {
-        ZXToastUtil.showToast("连接成功")
-        es.submit(TaskPrint(pos))
+        runOnUiThread {
+            ZXToastUtil.showToast("连接成功")
+            es.submit(TaskPrint(pos))
+        }
     }
 }

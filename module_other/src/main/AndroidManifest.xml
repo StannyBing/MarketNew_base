@@ -35,6 +35,7 @@
         <activity android:name=".module.print.ui.ChoiceFileActivity"/>
         <activity android:name=".module.print.ui.StartPrintActivity"/>
         <activity android:name=".module.infomation.ui.InfomationActivity"/>
+
     </application>
 
 </manifest>

@@ -24,7 +24,7 @@ public class Prints {
 	public static int nPrintCount = 1;
 	public static int nCompressMethod = 0;
 	public static boolean bAutoPrint = false;
-	public static int nPrintContent = 3;
+	public static int nPrintContent = 1;
 	public static boolean bCheckReturn = false;
 
 	public static boolean PrintTicket(Context ctx, Pos pos, int nPrintWidth, boolean bCutter, boolean bDrawer, boolean bBeeper, int nCount, int nPrintContent, int nCompressMethod, boolean bCheckReturn)
