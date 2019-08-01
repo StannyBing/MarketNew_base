@@ -66,7 +66,7 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
                 adapter = keywordListAdapter
             }
             mPresenter.getSearchLaw(ApiParamUtil.lawSearchParam(lawMainBean!!.name))
-            sv_law_search.setSearchText(lawMainBean!!.name)
+//            sv_law_search.setSearchText(lawMainBean!!.name)
         } else if (lawMainBean!!.type == 1) {
             rv_law_query.apply {
                 layoutManager = LinearLayoutManager(this@LawQueryActivity)

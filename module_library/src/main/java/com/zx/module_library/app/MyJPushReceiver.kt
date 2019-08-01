@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import cn.jpush.android.api.JPushInterface
-import com.alibaba.android.arouter.launcher.ARouter
 import com.frame.zxmvp.baserx.RxManager
 import com.zx.zxutils.util.ZXAppUtil
 import com.zx.zxutils.util.ZXLogUtil
@@ -57,10 +56,6 @@ class MyJPushReceiver : BroadcastReceiver() {
                 map[JPushInterface.EXTRA_EXTRA] = bundle.getString(JPushInterface.EXTRA_EXTRA)
                 ZXSharedPrefUtil().putMap("jPushBundle", map)
                 RxManager().post("jPush", bundle)
-
-
-                //打开自定义的Activity
-                ARouter.getInstance().build(RoutePath.ROUTE_APP_MAIN).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP).with(bundle).navigation()
             } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK == intent.action) {
                 ZXLogUtil.loge("[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA)!!)
                 //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
