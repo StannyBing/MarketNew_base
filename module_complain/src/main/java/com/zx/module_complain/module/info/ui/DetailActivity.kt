@@ -133,9 +133,9 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
             btn_complain_dispose.text = "任务处置(分流)"
         } else if (fStatus == 30 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
             btn_complain_dispose.text = "任务处置(指派)"
-        } else if (fStatus == 40 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+        } else if (fStatus == 40 && detailBean.baseInfo.fDisposeUser.equals(UserManager.getUser().id)) {
             btn_complain_dispose.text = "任务处置(联系)"
-        } else if (fStatus == 50 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+        } else if (fStatus == 50 && detailBean.baseInfo.fDisposeUser.equals(UserManager.getUser().id)) {
             btn_complain_dispose.text = "任务处置(处置)"
         } else if (fStatus == 60 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
             btn_complain_dispose.text = "任务处置(初审)"

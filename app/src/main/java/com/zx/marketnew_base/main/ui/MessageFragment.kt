@@ -58,12 +58,15 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
         }
         sr_message.setColorSchemeResources(R.color.colorPrimary)
         ZXRecyclerDeleteHelper(activity, rv_message_list)
-                .setClickable { showToast("点击$it") }
+                .setClickable {
+
+                }
                 .setSwipeOptionViews(R.id.tv_delete)
                 .setSwipeable(R.id.rl_content, R.id.ll_menu) { viewID, position ->
                     showToast("删除$position")
                 }
-        loadData()
+        loadData(true)
+
     }
 
     /**
@@ -73,8 +76,6 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
         if (refresh) {
             isRefresh = true
             pageNo = 1
-        } else {
-            pageNo++
         }
         mPresenter.getMessageList(ApiParamUtil.messageListParam(UserManager.getUser().id, pageNo, searchText))
     }
@@ -92,6 +93,7 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
         sr_message.setOnRefreshListener { loadData(true) }
         //加载更多事件
         listAdapter.setOnLoadMoreListener({
+            pageNo++
             loadData()
         }, rv_message_list)
     }
@@ -100,6 +102,16 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
      * 消息列表
      */
     override fun onMessageListResult(messageList: NormalList<MessageBean>) {
+//        if (justLoadNew && dataBeans.isNotEmpty()) {//只加载最新的
+//            justLoadNew = false
+//            if (messageList.list.isNotEmpty()) {
+//                messageList.list.asReversed().forEach {
+//                    if (it.inserDate > dataBeans[0].inserDate) {
+//                        listAdapter.addData(it)
+//                    }
+//                }
+//            }
+//        } else
         if (isRefresh) {
             isRefresh = false
             sr_message.isRefreshing = false
@@ -116,5 +128,10 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
         } else {
             listAdapter.loadMoreEnd()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData(true)
     }
 }

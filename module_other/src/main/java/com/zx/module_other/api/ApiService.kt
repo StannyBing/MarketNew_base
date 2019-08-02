@@ -6,10 +6,9 @@ import com.zx.module_other.module.documentmanage.bean.DocumentBean
 import com.zx.module_other.module.documentmanage.bean.TemplateFieldBean
 import com.zx.module_other.module.law.bean.*
 import com.zx.module_other.module.workplan.bean.WorkPlanBean
-import com.zx.module_other.module.workstatisics.bean.WorkOverAllBean
-import com.zx.module_other.module.workstatisics.bean.WorkStatisicsBean
+import com.zx.module_other.module.workresults.bean.WorkOverAllBean
+import com.zx.module_other.module.workresults.bean.WorkStatisicsBean
 import okhttp3.RequestBody
-import retrofit2.Response
 import retrofit2.http.*
 import rx.Observable
 

@@ -15,17 +15,16 @@
 
         <activity android:name=".module.law.ui.LawActivity"/>
         <activity android:name=".module.print.ui.PrintActivity"/>
-        <activity android:name=".module.web.ui.WebNormalActivity"/>
+        <activity android:name="com.zx.module_library.module.web.ui.WebNormalActivity"/>
         <activity android:name=".module.law.ui.LawQueryActivity"/>
-        <activity android:name=".module.camera.ui.CameraVideoActivity"/>
-        <activity android:name=".module.filepreview.ui.FilePreviewActivity"/>
+        <activity android:name="com.zx.module_library.module.filepreview.ui.FilePreviewActivity"/>
         <activity android:name=".module.law.ui.LawDetailActivity"/>
         <activity android:name=".module.law.ui.LawCollectActivity"/>
         <activity android:name=".module.law.ui.LawStandardQueryActivity"/>
         <activity android:name=".module.law.ui.StandardDetailActivity"/>
         <activity android:name=".module.workplan.ui.WorkPlanActivity"/>
         <activity android:name=".module.workplan.ui.CreatePlanActivity"/>
-        <activity android:name=".module.workplan.ui.WorkStatisicsActivity"/>
+        <activity android:name=".module.workresults.ui.WorkResultsActivity"/>
         <activity android:name=".module.documentmanage.ui.DocumentActivity"/>
         <activity
             android:name=".module.documentmanage.ui.DocumentFillActivity"

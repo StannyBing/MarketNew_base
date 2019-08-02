@@ -6,12 +6,12 @@ import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.module.web.ui.WebFragment
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.module.infomation.mvp.contract.InfomationContract
 import com.zx.module_other.module.infomation.mvp.model.InfomationModel
 import com.zx.module_other.module.infomation.mvp.presenter.InfomationPresenter
-import com.zx.module_other.module.web.ui.WebFragment
 import com.zx.zxutils.util.ZXFragmentUtil
 import kotlinx.android.synthetic.main.activity_infomation.*
 

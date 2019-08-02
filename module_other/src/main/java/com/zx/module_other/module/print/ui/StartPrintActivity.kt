@@ -5,12 +5,10 @@ import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.webkit.WebView
 import android.widget.ArrayAdapter
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -28,7 +26,6 @@ import com.zx.module_other.module.print.mvp.presenter.StartPrintPresenter
 import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_start_print.*
 import java.io.BufferedInputStream
-import java.io.FileInputStream
 import java.util.concurrent.Executors
 import com.zx.module_other.module.print.func.util.Prints
 import com.lvrenyang.io.Pos
@@ -39,7 +36,7 @@ import com.lvrenyang.io.Pos
  * 功能：
  */
 
-@Route(path = RoutePath.ROUTE_OTHER__STRATPRINT)
+@Route(path = RoutePath.ROUTE_OTHER_STRATPRINT)
 class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(), StartPrintContract.View, IOCallBack {
 
     //  var bluetoothAdapter: BluetoothAdapter? = null

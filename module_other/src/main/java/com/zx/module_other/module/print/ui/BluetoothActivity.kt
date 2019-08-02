@@ -17,7 +17,6 @@ import com.zx.module_other.module.print.func.adapter.BluetoothDeviceAdapter
 import com.zx.module_other.module.print.mvp.contract.BluetoothContract
 import com.zx.module_other.module.print.mvp.model.BluetoothModel
 import com.zx.module_other.module.print.mvp.presenter.BluetoothPresenter
-import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_bluetooth.*
 import rx.functions.Action1
 
@@ -26,7 +25,7 @@ import rx.functions.Action1
  * Create By admin On 2017/7/11
  * 功能：
  */
-@Route(path = RoutePath.ROUTE_OTHER__BLUETOOTH)
+@Route(path = RoutePath.ROUTE_OTHER_BLUETOOTH)
 class BluetoothActivity : BaseActivity<BluetoothPresenter, BluetoothModel>(), BluetoothContract.View {
     var bluetoothAdapter: BluetoothAdapter? = null
     val bluetoothDevicesDatas: ArrayList<PrintBean> = arrayListOf()

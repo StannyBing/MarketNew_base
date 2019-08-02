@@ -90,7 +90,7 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
                     XApp.startXApp(RoutePath.ROUTE_OTHER_PLAN)
                 }//个人工作计划
                 "工作成果" -> {
-                    XApp.startXApp(RoutePath.ROUTE_OTHER_STATISICSACTIVITY)
+                    XApp.startXApp(RoutePath.ROUTE_OTHER_RESULTS)
                 }//工作成果
                 "政务资讯" -> {
                     XApp.startXApp(RoutePath.ROUTE_OTHER_INFOMATION)

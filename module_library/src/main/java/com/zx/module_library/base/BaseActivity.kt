@@ -103,6 +103,11 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                             }, null)
                             return@Action1
                         }
+                        "版本更新" -> {
+                            XApp.startXApp(RoutePath.ROUTE_APP_SETTING){
+                                it["checkVerson"] = true
+                            }
+                        }
                     }
                 }
                 if (it.getString(JPushInterface.EXTRA_MESSAGE) != null && !it.getString(JPushInterface.EXTRA_MESSAGE).isEmpty()) {

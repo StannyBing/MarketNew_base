@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
-import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -24,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_choice_file.*
  * 功能：
  */
 
-@Route(path = RoutePath.ROUTE_OTHER__CHOICEFILE)
+@Route(path = RoutePath.ROUTE_OTHER_CHOICEFILE)
 class ChoiceFileActivity : BaseActivity<ChoiceFilePresenter, ChoiceFileModel>(), ChoiceFileContract.View {
 
     companion object {

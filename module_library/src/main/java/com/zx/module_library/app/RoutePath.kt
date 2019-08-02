@@ -43,6 +43,9 @@ object RoutePath {
     const val ROUTE_DAILY_ADD = "/daily/add"//现场检查-新增
     const val ROUTE_DAILY_TEMPLATE = "/daily/template"//现场检查-模板
     const val ROUTE_DAILY_CHECKLIST = "/daily/checklist"//现场检查-检查指标
+    const val ROUTE_SUPERVISE_EQUIPMENTQUERY = "/supervise/equipmentquery"//特种设备监管
+    const val ROUTE_SUPERVISE_DRUGSQUERY = "/supervise/drugsquery"//药品安全监管
+    const val ROUTE_SUPERVISE_FOODSQUERY = "/supervise/foodsquery"//食品安全监管
 
     //统计分析
     const val ROUTE_STATISTICS_COMPLAIN = "/statistics/complain"//统计-投诉举报
@@ -53,19 +56,23 @@ object RoutePath {
     //其他模块
     const val ROUTE_OTHER_LAW = "/other/law"//其他-法律法规
     const val ROUTE_OTHER_PRINT = "/other/print"//其他-文件打印
-    const val ROUTE_OTHER__BLUETOOTH = "/other/bluetooth"//其他-蓝牙管理
-    const val ROUTE_OTHER__CHOICEFILE = "/other/choiceFile"//其他-打印文件选择
-    const val ROUTE_OTHER__STRATPRINT = "/other/startPrint"//其他-打印页面
-    const val ROUTE_OTHER_WEB = "/other/web"//其他-网页
-    const val ROUTE_OTHER_CAMERA = "/other/camera"//其他-图片
-    const val ROUTE_OTHER_PREVIEW = "/other/filepreview"//其他-文件预览
+    const val ROUTE_OTHER_BLUETOOTH = "/other/bluetooth"//其他-蓝牙管理
+    const val ROUTE_OTHER_CHOICEFILE = "/other/choiceFile"//其他-打印文件选择
+    const val ROUTE_OTHER_STRATPRINT = "/other/startPrint"//其他-打印页面
     const val ROUTE_OTHER_PLAN = "/other/workplan"//其他-个人工作计划
     const val ROUTE_OTHER_CREATEPLAN = "/other/createPlan"//其他-个人工作计划
-    const val ROUTE_OTHER_STATISICSACTIVITY = "/other/workstatisics"//其他-工作成果
+    const val ROUTE_OTHER_RESULTS = "/other/results"//其他-工作成果
     const val ROUTE_OTHER_DOCUMENT = "/other/documentmanage"//其他-文书管理
     const val ROUTE_OTHER_DOCUMENTFIll = "/other/documentfill"//其他-文书填写
     const val ROUTE_OTHER_DOCUMENTSEE = "/other/documentsee"//其他-文书预览
     const val ROUTE_OTHER_INFOMATION = "/other/infomation"//其他-政务资讯
+    const val ROUTE_OTHER_APPROVAL = "/other/approval"//其他-审批
+    const val ROUTE_OTHER_CHECKIN = "/other/checkin"//其他-考勤打卡
+    const val ROUTE_OTHER_PAPERS = "/other/papers"//其他-公文流转
 
+    //基础功能
+    const val ROUTE_LIBRARY_WEB = "/library/web"//其他-网页
+    const val ROUTE_LIBRARY_CAMERA = "/library/camera"//其他-图片
+    const val ROUTE_LIBRARY_PREVIEW = "/library/filepreview"//其他-文件预览
 
 }
