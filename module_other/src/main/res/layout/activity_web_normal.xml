@@ -12,26 +12,13 @@
 
     </com.zx.module_library.view.ToolBarView>
 
-    <RelativeLayout
+
+    <FrameLayout
+        android:id="@+id/fm_web"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    </FrameLayout>
 
-        <WebView
-            android:id="@+id/web_app_normal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </WebView>
-
-        <ProgressBar
-            android:id="@+id/pb_app_loading"
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white"
-            android:indeterminateTint="@color/colorPrimary"
-            android:progress="50"/>
-    </RelativeLayout>
 
 </LinearLayout>
