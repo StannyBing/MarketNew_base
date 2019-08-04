@@ -11,7 +11,8 @@ class LawBean(wordUrl: String = "",
               id: Int = -1,
               type: String = "",
               userId: String = "",
-              parentId: Int = -1, var itemTypeDef: Int = -1,
+              parentId: Int = -1,
+              var itemTypeDef: Int = -1,
               var itemName: String = "",
               var children: List<LawBean>?=null): LawBaseBean(wordUrl, isFile, departmentId, name, htmlUrl, orders, id, type, userId, parentId), MultiItemEntity {
 

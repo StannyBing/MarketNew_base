@@ -11,7 +11,7 @@
         android:id="@+id/toolbar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title_text="地图">
+        app:title_text="监管地图">
 
     </com.zx.module_library.view.ToolBarView>
 

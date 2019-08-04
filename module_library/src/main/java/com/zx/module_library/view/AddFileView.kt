@@ -104,7 +104,7 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                     if (fileFuncListener != null) {
                         fileFuncListener!!.onFileClick(fileList[position], position)
                     }
-                    XApp.startXApp(RoutePath.ROUTE_OTHER_PREVIEW) {
+                    XApp.startXApp(RoutePath.ROUTE_LIBRARY_PREVIEW) {
                         it["name"] = fileList[position].fileName ?: ""
                         it["path"] = fileList[position].filePath ?: ""
                     }
@@ -138,11 +138,11 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         footerView.setOnClickListener {
             (context as BaseActivity<*, *>).getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
                 if (addType == AddType.IMAGE) {
-                    XApp.startXApp(RoutePath.ROUTE_OTHER_CAMERA, context as Activity, 0x02) {
+                    XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, context as Activity, 0x02) {
                         it["cameraType"] = 1
                     }
                 } else if (addType == AddType.VIDEO) {
-                    XApp.startXApp(RoutePath.ROUTE_OTHER_CAMERA, context as Activity, 0x02) {
+                    XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, context as Activity, 0x02) {
                         it["cameraType"] = 2
                     }
                 } else if (addType == AddType.FILE) {
@@ -168,13 +168,13 @@ class AddFileView @JvmOverloads constructor(context: Context, attrs: AttributeSe
                     }
 
                     llAddImage.setOnClickListener {
-                        XApp.startXApp(RoutePath.ROUTE_OTHER_CAMERA, context as Activity, 0x02) {
+                        XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, context as Activity, 0x02) {
                             it["cameraType"] = 1
                         }
                         ZXDialogUtil.dismissDialog()
                     }
                     llAddVideo.setOnClickListener {
-                        XApp.startXApp(RoutePath.ROUTE_OTHER_CAMERA, context as Activity, 0x02) {
+                        XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, context as Activity, 0x02) {
                             it["cameraType"] = 2
                         }
                         ZXDialogUtil.dismissDialog()

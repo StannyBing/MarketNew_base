@@ -2,4 +2,7 @@
 <resources>
     <color name="supervise_color">#df604d</color>
     <color name="daily_color">#a4579d</color>
+    <color name="equipment_color">#07698c</color>
+    <color name="foods_color">#ca860a</color>
+    <color name="drugs_color">#c3c080</color>
 </resources>

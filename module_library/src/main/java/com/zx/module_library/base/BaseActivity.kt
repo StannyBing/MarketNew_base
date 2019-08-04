@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.TypedArray
@@ -70,10 +71,43 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                     return@Action1
                 }
                 mSharedPrefUtil.putBool("isGetPush", false)
-                if (it.getString(JPushInterface.EXTRA_EXTRA).isNotEmpty() && JSONObject(it.getString(JPushInterface.EXTRA_EXTRA)).has("type")) {
+                if (it.getString(JPushInterface.EXTRA_EXTRA).isNotEmpty() && JSONObject(it.getString(JPushInterface.EXTRA_EXTRA)).has("business")) {
                     val jsonObj = JSONObject(it.getString(JPushInterface.EXTRA_EXTRA))
-                    when (jsonObj.getInt("type")) {
-
+                    when (jsonObj.getInfo("business")) {
+                        "专项检查" -> {
+                            ZXDialogUtil.showYesNoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT), "前往处理", "关闭", DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
+                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DETAIL) {
+                                    it["id"] = jsonObj.getString("businessId")
+                                    it["taskId"] = jsonObj.getString("taskId")
+                                    it["optable"] = true
+                                }
+                            }, null)
+                            return@Action1
+                        }
+                        "投诉举报" -> {
+                            ZXDialogUtil.showYesNoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT), "前往处理", "关闭", DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
+                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_DETAIL) {
+                                    it["fGuid"] = jsonObj.getInfo("businessId")
+                                }
+                            }, null)
+                            return@Action1
+                        }
+                        "综合执法" -> {
+                            ZXDialogUtil.showYesNoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT), "前往处理", "关闭", DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
+                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_DETAIL) {
+                                    it["id"] = jsonObj.getInfo("businessId")
+                                    it["taskId"] = jsonObj.getInfo("taskId")
+                                    it["optable"] = true
+                                    it["processType"] = jsonObj.getInfo("processType")
+                                }
+                            }, null)
+                            return@Action1
+                        }
+                        "版本更新" -> {
+                            XApp.startXApp(RoutePath.ROUTE_APP_SETTING){
+                                it["checkVerson"] = true
+                            }
+                        }
                     }
                 }
                 if (it.getString(JPushInterface.EXTRA_MESSAGE) != null && !it.getString(JPushInterface.EXTRA_MESSAGE).isEmpty()) {
@@ -89,6 +123,14 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                 }
             }
         })
+    }
+
+    private fun JSONObject.getInfo(key: String): String {
+        if (has(key)) {
+            return getString(key)
+        } else {
+            return ""
+        }
     }
 
     private fun isTranslucent(): Boolean {

@@ -99,7 +99,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         }
         //公司详情按钮点击事件
         iv_work_compannyInfo.setOnClickListener {
-            XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
+            XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
                 it["mTitle"] = "重庆知行宏图科技有限公司"
                 it["mUrl"] = "http://www.zxgeo.com"
             }

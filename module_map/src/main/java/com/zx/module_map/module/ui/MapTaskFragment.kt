@@ -63,8 +63,8 @@ class MapTaskFragment : BaseFragment<MapTaskPresenter, MapTaskModel>(), MapTaskC
                     rl_task.visibility = View.VISIBLE
                     tv_task_type.text = taskBean?.typeName
                     val typeDrawable = ContextCompat.getDrawable(activity!!, taskBean!!.typeIcon)
-                    typeDrawable?.setTint(ContextCompat.getColor(activity!!, XAppMap.MAP.moduleColor))
                     typeDrawable?.mutate()
+                    typeDrawable?.setTint(ContextCompat.getColor(activity!!, XAppMap.MAP.moduleColor))
                     iv_task_type.setImageDrawable(typeDrawable)
                     tv_task_name.text = taskBean?.name
                     tv_task_name.setTextColor(ContextCompat.getColor(activity!!, XAppMap.MAP.moduleColor))

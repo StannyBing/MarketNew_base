@@ -27,9 +27,15 @@ object TaskTimeUtil {
 
         var dateString = ""
         if (day.toInt() == 0) {//今天
-            dateString = if (hourDate < 12) "上午$hourDate:$minuteDate" else "下午${hourDate - 12}:$minuteDate"
+            dateString = if (hourDate < 12) {
+                "上午$hourDate:${minuteDate.toString().padStart(2, '0')}"
+            } else if (hourDate > 12) {
+                "下午${hourDate - 12}:${minuteDate.toString().padStart(2, '0')}"
+            } else {
+                "下午12:${minuteDate.toString().padStart(2, '0')}"
+            }
         } else if (day.toInt() == 1) {//昨天
-            dateString = "昨天$hourDate:$minuteDate"
+            dateString = "昨天$hourDate:${minuteDate.toString().padStart(2, '0')}"
         } else if (yearDate == yearNow) {
             dateString = "${monthDate}月${dayDate}日"
         } else {

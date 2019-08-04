@@ -49,6 +49,7 @@
     <string name="print_content">打印内容：</string>
     <string name="printer_choice">选择打印机：</string>
     <string name="printer_print">打印</string>
+    <string name="infomation">政务资讯</string>
 
     <string-array name="keywordName">
         <item>食品药品</item>

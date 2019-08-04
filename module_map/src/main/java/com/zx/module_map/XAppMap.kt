@@ -11,7 +11,7 @@ import com.zx.module_library.bean.XAppBean
  */
 object XAppMap : XApp() {
 
-    val MAP = XAppBean("地图", R.color.map_color, R.drawable.icon_map, RoutePath.ROUTE_MAP_MAP)
+    val MAP = XAppBean("监管地图", R.color.map_color, R.drawable.icon_map, RoutePath.ROUTE_MAP_MAP)
 
     override fun all() = arrayListOf(MAP)
 }

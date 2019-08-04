@@ -33,19 +33,45 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/iv_task_itemPic"
+            <LinearLayout
+                android:id="@+id/ll_message_typebg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_task_bg"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_message_type"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+
+                <TextView
+                    android:id="@+id/tv_message_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="7sp"
+                    android:visibility="gone"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
 
+                <ImageView
+                    android:id="@+id/iv_msg_read"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="18dp"
+                    android:visibility="gone"
+                    android:background="@drawable/shape_xapp_num"/>
+
                 <TextView
+                    android:layout_toRightOf="@id/iv_msg_read"
                     android:id="@+id/tv_message_itemTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

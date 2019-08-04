@@ -38,6 +38,8 @@
             android:name="io.github.xudaojie.qrcodelib.CaptureActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".module.camera.ui.CameraVideoActivity"/>
+
     </application>
 
 </manifest>

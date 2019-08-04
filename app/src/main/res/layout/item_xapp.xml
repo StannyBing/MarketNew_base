@@ -19,7 +19,6 @@
             android:layout_height="30dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:background="@mipmap/ic_launcher"
             android:textColor="@color/text_color_noraml"
             android:textSize="@dimen/text_size_biger"/>
     </RelativeLayout>

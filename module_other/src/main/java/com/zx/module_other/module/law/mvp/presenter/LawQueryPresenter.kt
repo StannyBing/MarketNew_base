@@ -3,7 +3,6 @@ package com.zx.module_other.module.law.mvp.presenter
 import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_other.module.law.bean.LawBean
-import com.zx.module_other.module.law.bean.LawDetailBean
 import com.zx.module_other.module.law.bean.LawSearchResultBean
 import com.zx.module_other.module.law.mvp.contract.LawQueryContract
 
@@ -16,7 +15,7 @@ class LawQueryPresenter : LawQueryContract.Presenter() {
     override fun getSearchLaw(map: Map<String, String>) {
         mModel.lawSearchData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<LawSearchResultBean>(mView) {
+                .subscribe(object : RxSubscriber<LawSearchResultBean>() {
                     override fun _onNext(t: LawSearchResultBean?) {
                         if (t != null) {
                            mView.onSearchLawResult(t)
@@ -32,7 +31,7 @@ class LawQueryPresenter : LawQueryContract.Presenter() {
     override fun getLawList(map: Map<String, String>) {
         mModel.lawListData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<List<LawBean>>(mView) {
+                .subscribe(object : RxSubscriber<List<LawBean>>() {
                     override fun _onNext(t: List<LawBean>?) {
                         if (t != null) {
                             mView.onLawListResult(t)

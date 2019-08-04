@@ -62,7 +62,7 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
     override fun onViewListener() {
         //消息滚动条点击事件
         vf_info_view.setOnClickListener {
-            XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
+            XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
                 val index = vf_info_view.currentView.tag as Int
                 it["mTitle"] = notices[index].name
                 it["mUrl"] = notices[index].info
@@ -93,7 +93,7 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
                     .isAutoPlay(true)
                     .setDelayTime(6000)
                     .setOnBannerListener { index ->
-                        XApp.startXApp(RoutePath.ROUTE_OTHER_WEB) {
+                        XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
                             it["mTitle"] = banners[index].name
                             it["mUrl"] = banners[index].info
                         }

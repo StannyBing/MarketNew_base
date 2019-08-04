@@ -2,9 +2,11 @@
 <resources>
     <color name="backgroundBlue">#0655C3</color>
     <color name="law_color">#0655C3</color>
-    <color name="print_color">#50b0a5</color>
+    <color name="print_color">#aad08f</color>
     <color name="document_color">#d3cd2d</color>
     <color name="infomation_color">#5a9ddf</color>
+    <color name="plan_color">#5588f4</color>
+    <color name="results_color">#f3ca7e</color>
     <color name="law_collect_color">#3a87f3</color>
     <color name="work_satisics_bg">#5066d9</color>
     <color name="work_satisics_info">#f6f8fc</color>
@@ -12,5 +14,8 @@
     <color name="work_satisics_infobg">#586cd9</color>
     <color name="line_color">#f9f9f9</color>
     <color name="docment_color">#f3f3f3</color>
+    <color name="approval_color">#d156c6</color>
+    <color name="checkin_color">#e8989a</color>
+    <color name="papers_color">#43d2e7</color>
 
 </resources>
