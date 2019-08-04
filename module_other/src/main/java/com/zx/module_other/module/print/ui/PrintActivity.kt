@@ -14,6 +14,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.receiver.BluetoothReceive
 import com.zx.module_other.module.print.mvp.contract.PrintContract
 import com.zx.module_other.module.print.mvp.model.PrintModel
@@ -88,7 +89,9 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     fun searchDevices() {
         if (bluetoothAdapter!!.isEnabled()) {
             for (device in bluetoothAdapter!!.bondedDevices) {
-                devices.add(device)
+                if (device.type == PrintBean.PRINT_TYPE) {
+                    devices.add(device)
+                }
             }
             if (devices.size > 0) {
                 setOnline(devices[0].name)

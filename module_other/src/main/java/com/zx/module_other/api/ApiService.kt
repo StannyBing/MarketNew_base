@@ -18,13 +18,13 @@ import rx.Observable
  */
 interface ApiService {
     @GET(ApiConfigModule.URL_LAW + "Law/select.do")
-    fun getLawList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<LawBean>>>
+    fun getLawList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<LawBean>>>
 
     @GET(ApiConfigModule.URL_LAW + "Law/getLawInfo.do")
     fun getLawDetail(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawDetailBean>>
 
     @GET(ApiConfigModule.URL_LAW + "Law/selectLaw.do")
-    fun getSearchLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawSearchResultBean>>
+    fun getSearchLaw(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<LawSearchBean>>>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST(ApiConfigModule.URL_LAW + "Law/addWeixinCollect.do")

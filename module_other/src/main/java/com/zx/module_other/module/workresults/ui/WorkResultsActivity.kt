@@ -4,11 +4,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.api.ApiParamUtil
+import com.zx.module_other.module.law.func.adapter.WorkResultAllAdapter
 import com.zx.module_other.module.workresults.bean.WorkOverAllBean
 import com.zx.module_other.module.workresults.bean.WorkStatisicsBean
 import com.zx.module_other.module.workresults.mvp.contract.WorkResultsContract
@@ -19,6 +23,9 @@ import kotlinx.android.synthetic.main.activity_work_results.*
 
 @Route(path = RoutePath.ROUTE_OTHER_RESULTS)
 class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>(), WorkResultsContract.View {
+
+    private var workAllData = listOf<WorkOverAllBean>()
+    private var workResultAllAdapter = WorkResultAllAdapter(workAllData)
 
 
     companion object {
@@ -33,6 +40,16 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
     }
 
     override fun onViewListener() {
+        workResultAllAdapter.setOnItemClickListener { adapter, view, position ->
+            when (workAllData[position].business) {
+                "投诉举报" -> XApp.startXApp(RoutePath.ROUTE_COMPLAIN_QUERY)
+                "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_QUERY)
+                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_DAILY_QUERY)
+                "专项检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_QUERY)
+                "监管任务" -> {}
+
+            }
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -44,7 +61,10 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
         super.initView(savedInstanceState)
         ZXStatusBarCompat.translucent(this, R.color.work_satisics_bg)
         ZXStatusBarCompat.setStatusBarLightMode(this)
-
+        rv_workresult.apply {
+            layoutManager = GridLayoutManager(this@WorkResultsActivity, 2)
+            adapter = workResultAllAdapter
+        }
         mPresenter.getWorkStatisicsList(ApiParamUtil.workStatisicsPlanParam("4"))
         mPresenter.getWorkOverallList(mapOf())
     }
@@ -60,13 +80,7 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
     }
 
     override fun getWorkOverallResult(workOverAlls: List<WorkOverAllBean>) {
-        tv_report.setText(workOverAlls[0].business)
-        tv_report_num.setText(workOverAlls[0].num.toString())
-        tv_law.setText(workOverAlls[1].business)
-        tv_law_num.setText(workOverAlls[1].num.toString())
-        tv_inspection.setText(workOverAlls[2].business)
-        tv_inspection_num.setText(workOverAlls[2].num.toString())
-        tv_tasks.setText(workOverAlls[3].business)
-        tv_tasks_num.setText(workOverAlls[3].num.toString())
+        workAllData = workOverAlls
+        workResultAllAdapter.setNewData(workAllData)
     }
 }

@@ -10,8 +10,10 @@ class WorkPlanAdpater<T>(dataBeans: List<T>) : ZXQuickAdapter<T, ZXBaseHolder>(R
     override fun convert(helper: ZXBaseHolder?, item: T) {
         if (item is WorkPlanBean) {
             helper!!.setText(R.id.tv_work_title, item.business)
-            helper!!.setText(R.id.tv_work_time, DateUtil.stampToTime(item.endDate))
-
+            helper!!.setText(R.id.tv_work_content, item.content)
+            val time = DateUtil.stampToTime(item.endDate);
+            helper!!.setText(R.id.tv_day, time.substring(time.length-2,time.length))
+            helper!!.setText(R.id.tv_week, DateUtil.dateToWeek(DateUtil.stampToTime(item.endDate)))
         }
     }
 

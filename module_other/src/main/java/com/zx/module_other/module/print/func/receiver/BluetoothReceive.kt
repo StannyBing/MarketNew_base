@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.frame.zxmvp.baserx.RxManager
+import com.zx.module_other.module.print.bean.PrintBean
 
 class BluetoothReceive : BroadcastReceiver() {
     val devices = arrayListOf<BluetoothDevice>()
@@ -15,13 +16,15 @@ class BluetoothReceive : BroadcastReceiver() {
         // 把搜索的设置添加到集合中
         if (BluetoothDevice.ACTION_FOUND == action) {
             val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            for (d in devices) {
-                if (d.address == device.address) {
-                    return
+            if (device.type == PrintBean.PRINT_TYPE) {
+                for (d in devices) {
+                    if (d.address == device.address) {
+                        return
+                    }
                 }
+                RxManager().post("Bluetooth", device)
+                devices.add(device)
             }
-            RxManager().post("Bluetooth", device)
-            devices.add(device)
             //搜索完成
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED == action) {
 
@@ -42,10 +45,12 @@ class BluetoothReceive : BroadcastReceiver() {
         } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED == action) {
             val state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1)
             val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            when (state) {
-                BluetoothDevice.BOND_NONE -> RxManager().post("bluetoothState", device)
-                BluetoothDevice.BOND_BONDING -> RxManager().post("bluetoothState", device)
-                BluetoothDevice.BOND_BONDED -> RxManager().post("bluetoothState", device)
+            if (device.type == PrintBean.PRINT_TYPE) {
+                when (state) {
+                    BluetoothDevice.BOND_NONE -> RxManager().post("bluetoothState", device)
+                    BluetoothDevice.BOND_BONDING -> RxManager().post("bluetoothState", device)
+                    BluetoothDevice.BOND_BONDED -> RxManager().post("bluetoothState", device)
+                }
             }
         }
 

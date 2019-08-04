@@ -24,7 +24,7 @@ class MailListAdapter(dataBeans: List<UserBean>) : ZXQuickAdapter<UserBean, ZXBa
     override fun convert(helper: ZXBaseHolder?, item: UserBean?) {
         if (item != null && helper != null) {
             if (item.listType == 0) {
-                helper.getView<ImageView>(R.id.iv_maillist_head).visibility = View.GONE
+                helper.getView<TextView>(R.id.tv_maillist_head).visibility = View.GONE
                 helper.getView<ImageView>(R.id.iv_maillist_star).visibility = View.GONE
                 helper.getView<TextView>(R.id.tv_maillist_duty).visibility = View.GONE
                 helper.getView<View>(R.id.view_maillist_divider).visibility = View.GONE
@@ -34,7 +34,7 @@ class MailListAdapter(dataBeans: List<UserBean>) : ZXQuickAdapter<UserBean, ZXBa
                     width = LinearLayout.LayoutParams.MATCH_PARENT
                 }
             } else {
-                helper.getView<ImageView>(R.id.iv_maillist_head).visibility = View.VISIBLE
+                helper.getView<TextView>(R.id.tv_maillist_head).visibility = View.VISIBLE
                 helper.getView<ImageView>(R.id.iv_maillist_star).visibility = View.VISIBLE
                 helper.getView<TextView>(R.id.tv_maillist_duty).visibility = View.VISIBLE
                 helper.getView<View>(R.id.view_maillist_divider).visibility = View.VISIBLE
@@ -54,16 +54,7 @@ class MailListAdapter(dataBeans: List<UserBean>) : ZXQuickAdapter<UserBean, ZXBa
             } else {
                 helper.setVisible(R.id.iv_maillist_star, false)
             }
-            Glide.with(mContext)
-                    .load(item.imgurl)
-                    .apply(RequestOptions()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .error(R.mipmap.ic_launcher)
-                            .placeholder(R.mipmap.ic_launcher)
-                            .transform(GlideRoundTransformation(mContext))
-                    )
-                    .transition(DrawableTransitionOptions().crossFade())
-                    .into(helper.getView(R.id.iv_maillist_head))
+            helper.setText(R.id.tv_maillist_head,item.realName.substring(item.realName.length-2,item.realName.length))
         }
     }
 }

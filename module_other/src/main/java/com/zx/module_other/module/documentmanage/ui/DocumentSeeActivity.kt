@@ -25,6 +25,7 @@ import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.ui.PrintActivity
 import com.zx.module_other.module.print.ui.StartPrintActivity
@@ -96,6 +97,10 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         wv_documentsee.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
+            settings.supportZoom()
+//            settings.displayZoomControls = false
+//            settings.builtInZoomControls = true
+            settings.textZoom = 150
             // settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
             scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
             settings.loadWithOverviewMode = true
@@ -132,7 +137,9 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
         if (bluetoothAdapter!!.isEnabled()) {
             for (device in bluetoothAdapter!!.bondedDevices) {
-                devices.add(device)
+                if (device.type == PrintBean.PRINT_TYPE) {
+                    devices.add(device)
+                }
             }
         }
 

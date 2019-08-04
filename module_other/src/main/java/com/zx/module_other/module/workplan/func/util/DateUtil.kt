@@ -19,25 +19,25 @@ class DateUtil {
         }
 
         //日期转星期
-        fun  dateToWeek(datetime:String):String{
+        fun dateToWeek(datetime: String): String {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
-            val weekDays = arrayListOf<String>("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六")
+            val weekDays = arrayListOf<String>("周日", "周一", "周二", "周三", "周四", "周五", "周六")
             var cal: Calendar = Calendar.getInstance(); // 获得一个日历
-            var datet:Date  ?= null;
+            var datet: Date? = null;
             try {
                 datet = simpleDateFormat.parse(datetime);
                 cal.setTime(datet);
             } catch (e: ParseException) {
                 e.printStackTrace();
             }
-            var w:Int = cal.get(Calendar.DAY_OF_WEEK) - 1; // 指示一个星期中的某天。
+            var w: Int = cal.get(Calendar.DAY_OF_WEEK) - 1; // 指示一个星期中的某天。
             if (w < 0)
                 w = 0;
             return weekDays[w];
         }
 
         //时间戳转
-        fun stampToTime(stamp:Long):String{
+        fun stampToTime(stamp: Long): String {
             val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
             return simpleDateFormat.format(Date(stamp))
         }

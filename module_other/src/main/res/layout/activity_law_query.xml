@@ -24,12 +24,12 @@
 
     </com.zx.module_library.view.SearchView>
 
-    <android.support.v7.widget.RecyclerView
+    <com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler
         android:id="@+id/rv_law_query"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp_20">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.zx.zxutils.views.SwipeRecylerView.ZXSwipeRecyler>
 
 </LinearLayout>

@@ -3,28 +3,31 @@ package com.zx.module_other.module.law.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.bean.NormalList
 import com.zx.module_library.func.tool.UserManager
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
-import com.zx.module_other.module.law.bean.LawBean
-import com.zx.module_other.module.law.bean.LawMainBean
-import com.zx.module_other.module.law.bean.LawSearchBean
-import com.zx.module_other.module.law.bean.LawSearchResultBean
+import com.zx.module_other.module.law.bean.*
 import com.zx.module_other.module.law.func.adapter.LawQueryListAdapter
+import com.zx.module_other.module.law.func.adapter.LawQuerySortAdapter
 import com.zx.module_other.module.law.mvp.contract.LawQueryContract
 import com.zx.module_other.module.law.mvp.model.LawQueryModel
 import com.zx.module_other.module.law.mvp.presenter.LawQueryPresenter
+import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
+import kotlinx.android.synthetic.main.activity_law_collect.*
 import kotlinx.android.synthetic.main.activity_law_query.*
+import kotlinx.android.synthetic.main.activity_law_query.toobar_view
 
 class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQueryContract.View {
 
-
+    private var pageNo = 1
     private var lawMainBean: LawMainBean? = null
     private var sortDatas = arrayListOf<LawBean>()
-    private var sortListAdapter = LawQueryListAdapter(sortDatas)
+    private var sortListAdapter = LawQuerySortAdapter(sortDatas)
     private var keywordDatas = arrayListOf<LawSearchBean>()
     private var keywordListAdapter = LawQueryListAdapter(keywordDatas)
 
@@ -46,11 +49,13 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
         toobar_view.withXApp(XAppOther.LAW)
         sv_law_search.withXApp(XAppOther.LAW)
 
+
         if (intent != null) {
             lawMainBean = intent.getSerializableExtra("lawBean") as LawMainBean
         }
         queryPostMethod()
         sv_law_search.setSearchListener {
+            pageNo = 1
             lawMainBean = LawMainBean(it, 4, 0)
             queryPostMethod()
         }
@@ -61,18 +66,64 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
      */
     private fun queryPostMethod() {
         if (lawMainBean!!.type == 0) {
-            rv_law_query.apply {
-                layoutManager = LinearLayoutManager(this@LawQueryActivity)
-                adapter = keywordListAdapter
-            }
-            mPresenter.getSearchLaw(ApiParamUtil.lawSearchParam(lawMainBean!!.name))
-//            sv_law_search.setSearchText(lawMainBean!!.name)
+            rv_law_query.setLayoutManager(LinearLayoutManager(this@LawQueryActivity))
+                    .setAdapter(keywordListAdapter)
+                    .autoLoadMore()
+                    .setPageSize(15)
+                    .setSRListener(object : ZXSRListener<LawSearchBean> {
+                        override fun onItemLongClick(item: LawSearchBean?, position: Int) {
+                        }
+
+                        override fun onLoadMore() {
+                            pageNo++
+                            loadData(false, 0)
+                        }
+
+                        override fun onRefresh() {
+                            loadData(true, 0)
+                        }
+
+                        override fun onItemClick(item: LawSearchBean?, position: Int) {
+                            LawDetailActivity.startAction(this@LawQueryActivity, false, item!!.id.toString())
+                        }
+
+                    })
+            loadData(true, 0)
         } else if (lawMainBean!!.type == 1) {
-            rv_law_query.apply {
-                layoutManager = LinearLayoutManager(this@LawQueryActivity)
-                adapter = sortListAdapter
-            }
-            mPresenter.getLawList(ApiParamUtil.lawSelectParam(UserManager.getUser().departmentCode, UserManager.getUser().id))
+            rv_law_query.setLayoutManager(LinearLayoutManager(this@LawQueryActivity))
+                    .setAdapter(sortListAdapter)
+                    .autoLoadMore()
+                    .setPageSize(25)
+                    .setSRListener(object : ZXSRListener<LawCollectBean> {
+                        override fun onItemLongClick(item: LawCollectBean?, position: Int) {
+                        }
+
+                        override fun onLoadMore() {
+                            pageNo++
+                            loadData(false, 1)
+                        }
+
+                        override fun onRefresh() {
+                            loadData(true, 1)
+                        }
+
+                        override fun onItemClick(item: LawCollectBean?, position: Int) {
+                            LawDetailActivity.startAction(this@LawQueryActivity, false, item!!.id.toString())
+                        }
+
+                    })
+            loadData(true, 1)
+        }
+    }
+
+    fun loadData(refresh: Boolean = false, type: Int) {
+        if (refresh) {
+            pageNo = 1
+            rv_law_query.clearStatus()
+        }
+        when (type) {
+            0 -> mPresenter.getSearchLaw(ApiParamUtil.lawSearchParam(lawMainBean!!.name))
+            1 -> mPresenter.getLawList(ApiParamUtil.lawSelectParam(UserManager.getUser().departmentCode, UserManager.getUser().id))
         }
     }
 
@@ -80,19 +131,12 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
      * View事件设置
      */
     override fun onViewListener() {
-        keywordListAdapter.setOnItemClickListener { adapter, view, position ->
-            if (position != 0) {
-                val keywordData = keywordDatas.get(position)
-                lawMainBean = LawMainBean(keywordData.name, keywordData.id, 2)
-                LawDetailActivity.startAction(this, false, lawMainBean!!.id.toString())
-            }
-        }
+
 
         sortListAdapter.setOnItemClickListener { adapter, view, position ->
             if (position != 0) {
                 val sortData = sortDatas.get(position)
                 lawMainBean = LawMainBean(sortData.name, sortData.id, 2)
-                LawDetailActivity.startAction(this, false, lawMainBean!!.id.toString())
             }
         }
     }
@@ -105,33 +149,12 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
     }
 
 
-    override fun onLawListResult(complainList: List<LawBean>) {
-        val childBean = complainList.get(lawMainBean!!.id)
-        val lawBean = childBean.children
-        if (lawBean != null && lawBean.isNotEmpty()) {
-            val bean = LawBean(itemTypeDef = 1, itemName = String.format("共%d条", lawBean.size))
-            sortDatas.add(bean)
-            lawBean.forEach {
-                it.itemTypeDef = 2
-                it.itemName = String.format("所属：%s", childBean.name)
-                sortDatas.add(it)
-            }
-        }
-        sortListAdapter.setNewData(sortDatas)
+    override fun onLawListResult(complainList: NormalList<LawBean>) {
+        rv_law_query.refreshData(complainList!!.list, complainList.total)
     }
 
-    override fun onSearchLawResult(lawSearchLawResult: LawSearchResultBean) {
-        val list = lawSearchLawResult.list
-        removeKeywordData()
-        if (list != null && list.size > 0) {
-            val bean = LawSearchBean(itemTypeDef = 1, itemName = String.format("共%d条", lawSearchLawResult.size))
-            keywordDatas.add(bean)
-            list.forEach {
-                it.itemTypeDef = 2
-                keywordDatas.add(it)
-            }
-        }
-        keywordListAdapter.setNewData(keywordDatas)
+    override fun onSearchLawResult(lawSearchLawResult: NormalList<LawSearchBean>) {
+        rv_law_query.refreshData(lawSearchLawResult!!.list, lawSearchLawResult.total)
     }
 
     /**
