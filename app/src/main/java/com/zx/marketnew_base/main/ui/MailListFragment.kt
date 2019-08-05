@@ -49,7 +49,7 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        rv_maillist_list.layoutManager = LinearLayoutManager(activity) as RecyclerView.LayoutManager?
+        rv_maillist_list.layoutManager = LinearLayoutManager(activity)
         rv_maillist_list.adapter = listAdapter
 
         mPresenter.getMailList(hashMapOf())
@@ -72,9 +72,11 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
         sv_mailList_search.setSearchListener {
             for (index in 0..dataBeans.size-1) {
                 if (dataBeans.get(index).realName.contains(it)) {
-                    var topSmoothScroller: TopSmoothScroller = TopSmoothScroller(mActivity)
-                    topSmoothScroller.setTargetPosition(index);
-                    rv_maillist_list.layoutManager?.startSmoothScroll(topSmoothScroller);
+//                    var topSmoothScroller: TopSmoothScroller = TopSmoothScroller(mActivity)
+//                    topSmoothScroller.setTargetPosition(index);
+//                    rv_maillist_list.layoutManager?.startSmoothScroll(topSmoothScroller);
+                    (rv_maillist_list.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(index, 0);
+                    (rv_maillist_list.layoutManager as LinearLayoutManager).setStackFromEnd(true)
                     return@setSearchListener
                 }
             }

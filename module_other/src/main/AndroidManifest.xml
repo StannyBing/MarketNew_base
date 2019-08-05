@@ -1,40 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.zx.module_other">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.zx.module_other">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <application
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/MainAppTheme">
-        <meta-data
-            android:name="com.zx.module_other.api.ApiConfigModule"
-            android:value="ConfigModule"/>
+<application
+    android:networkSecurityConfig="@xml/network_security_config"
+    android:theme="@style/MainAppTheme">
+    <meta-data
+        android:name="com.zx.module_other.api.ApiConfigModule"
+        android:value="ConfigModule" />
 
-        <activity android:name=".module.law.ui.LawActivity"/>
-        <activity android:name=".module.print.ui.PrintActivity"/>
-        <activity android:name="com.zx.module_library.module.web.ui.WebNormalActivity"/>
-        <activity android:name=".module.law.ui.LawQueryActivity"/>
-        <activity android:name="com.zx.module_library.module.filepreview.ui.FilePreviewActivity"/>
-        <activity android:name=".module.law.ui.LawDetailActivity"/>
-        <activity android:name=".module.law.ui.LawCollectActivity"/>
-        <activity android:name=".module.law.ui.LawStandardQueryActivity"/>
-        <activity android:name=".module.law.ui.StandardDetailActivity"/>
-        <activity android:name=".module.workplan.ui.WorkPlanActivity"/>
-        <activity android:name=".module.workplan.ui.CreatePlanActivity"/>
-        <activity android:name=".module.workresults.ui.WorkResultsActivity"/>
-        <activity android:name=".module.documentmanage.ui.DocumentActivity"/>
-        <activity
-            android:name=".module.documentmanage.ui.DocumentFillActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".module.documentmanage.ui.DocumentSeeActivity"/>
-        <activity android:name=".module.print.ui.BluetoothActivity"/>
-        <activity android:name=".module.print.ui.ChoiceFileActivity"/>
-        <activity android:name=".module.print.ui.StartPrintActivity"/>
-        <activity android:name=".module.infomation.ui.InfomationActivity"/>
+    <activity android:name=".module.law.ui.LawActivity" />
+    <activity android:name=".module.print.ui.PrintActivity" />
+    <activity android:name="com.zx.module_library.module.web.ui.WebNormalActivity" />
+    <activity android:name=".module.law.ui.LawQueryActivity" />
+    <activity android:name="com.zx.module_library.module.filepreview.ui.FilePreviewActivity" />
+    <activity android:name=".module.law.ui.LawDetailActivity" />
+    <activity android:name=".module.law.ui.LawCollectActivity" />
+    <activity android:name=".module.law.ui.LawStandardQueryActivity" />
+    <activity android:name=".module.law.ui.StandardDetailActivity" />
+    <activity android:name=".module.workplan.ui.WorkPlanActivity" />
+    <activity android:name=".module.workplan.ui.CreatePlanActivity" />
+    <activity android:name=".module.workresults.ui.WorkResultsActivity" />
+    <activity android:name=".module.documentmanage.ui.DocumentActivity" />
+    <activity
+        android:name=".module.documentmanage.ui.DocumentFillActivity"
+        android:launchMode="singleTask" />
+    <activity android:name=".module.documentmanage.ui.DocumentSeeActivity" />
+    <activity android:name=".module.print.ui.BluetoothActivity" />
+    <activity android:name=".module.print.ui.ChoiceFileActivity" />
+    <activity android:name=".module.print.ui.StartPrintActivity" />
+    <activity android:name=".module.infomation.ui.InfomationActivity" />
+    <activity android:name=".module.workplan.ui.WorkListActivity" />
 
-    </application>
+</application>
 
 </manifest>

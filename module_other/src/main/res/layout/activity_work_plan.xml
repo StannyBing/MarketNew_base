@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:title_text="@string/work_plan" />
+        app:title_text="@string/work_plan"
+        app:show_rightpic="true"
+        />
 
     <LinearLayout
         android:id="@+id/ll_week"

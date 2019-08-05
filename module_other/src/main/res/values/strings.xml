@@ -10,6 +10,7 @@
     <string name="sort">分类：</string>
     <string name="description">市场监管处罚裁量标准</string>
     <string name="hint_law_name">请输入法律法规名称</string>
+    <string name="hint_law_keyword">请输入关键字</string>
     <string name="law_rgl_query">法律法规查询</string>
     <string name="hint_law_standard">请输入违法行为</string>
     <string name="law_standard_query">裁量标准查询</string>

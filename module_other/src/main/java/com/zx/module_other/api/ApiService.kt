@@ -18,7 +18,7 @@ import rx.Observable
  */
 interface ApiService {
     @GET(ApiConfigModule.URL_LAW + "Law/select.do")
-    fun getLawList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<LawBean>>>
+    fun getLawList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<LawBean>>>
 
     @GET(ApiConfigModule.URL_LAW + "Law/getLawInfo.do")
     fun getLawDetail(@QueryMap map: Map<String, String>): Observable<BaseRespose<LawDetailBean>>

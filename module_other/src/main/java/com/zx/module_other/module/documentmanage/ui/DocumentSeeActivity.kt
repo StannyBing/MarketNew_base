@@ -121,13 +121,13 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             TYPE_FILL -> {
                 toobar_view.setMidText(resources.getString(R.string.see_document))
                 btn_fill_document.setText(resources.getString(R.string.fill_document))
-                var url = BASE_IP + ApiConfigModule.URL_DOCUMENT + "queryDetailHtml.do?"
-                for ((key, value) in ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id)) {
-                    url += key + "=" + value + "&"
-                }
-                url = url.substring(0, url.length - 1)
-                wv_documentsee.loadUrl(url)
-//                mPresenter.getDocumentWeb(ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id))
+//                var url = BASE_IP + ApiConfigModule.URL_DOCUMENT + "queryDetailHtml.do?"
+//                for ((key, value) in ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id)) {
+//                    url += key + "=" + value + "&"
+//                }
+//                url = url.substring(0, url.length - 1)
+//                wv_documentsee.loadUrl(url)
+                mPresenter.getDocumentWeb(ApiParamUtil.getDocumentMoldeParam((intent.getSerializableExtra("children") as Children).id))
             }
             TYPE_CHANGE -> {
                 btn_fill_document.setText(resources.getString(R.string.goon_fill))

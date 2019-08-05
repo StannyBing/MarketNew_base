@@ -33,8 +33,8 @@ class LawQueryPresenter : LawQueryContract.Presenter() {
     override fun getLawList(map: Map<String, String>) {
         mModel.lawListData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<NormalList<LawBean>>(mView) {
-                    override fun _onNext(t: NormalList<LawBean>?) {
+                .subscribe(object : RxSubscriber<List<LawBean>>(mView) {
+                    override fun _onNext(t: List<LawBean>?) {
                         if (t != null) {
                             mView.onLawListResult(t)
                         }

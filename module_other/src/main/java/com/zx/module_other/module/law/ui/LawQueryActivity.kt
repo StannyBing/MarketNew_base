@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_library.func.tool.UserManager
@@ -17,6 +18,7 @@ import com.zx.module_other.module.law.func.adapter.LawQuerySortAdapter
 import com.zx.module_other.module.law.mvp.contract.LawQueryContract
 import com.zx.module_other.module.law.mvp.model.LawQueryModel
 import com.zx.module_other.module.law.mvp.presenter.LawQueryPresenter
+import com.zx.zxutils.util.ZXToastUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_law_collect.*
 import kotlinx.android.synthetic.main.activity_law_query.*
@@ -55,9 +57,11 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
         }
         queryPostMethod()
         sv_law_search.setSearchListener {
-            pageNo = 1
-            lawMainBean = LawMainBean(it, 4, 0)
-            queryPostMethod()
+            if (!TextUtils.isEmpty(it)) {
+                pageNo = 1
+                lawMainBean = LawMainBean(it, 4, 0)
+                queryPostMethod()
+            }
         }
     }
 
@@ -92,10 +96,9 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
         } else if (lawMainBean!!.type == 1) {
             rv_law_query.setLayoutManager(LinearLayoutManager(this@LawQueryActivity))
                     .setAdapter(sortListAdapter)
-                    .autoLoadMore()
-                    .setPageSize(25)
-                    .setSRListener(object : ZXSRListener<LawCollectBean> {
-                        override fun onItemLongClick(item: LawCollectBean?, position: Int) {
+                    .setPageSize(1000)
+                    .setSRListener(object : ZXSRListener<LawBean> {
+                        override fun onItemLongClick(item: LawBean?, position: Int) {
                         }
 
                         override fun onLoadMore() {
@@ -107,7 +110,7 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
                             loadData(true, 1)
                         }
 
-                        override fun onItemClick(item: LawCollectBean?, position: Int) {
+                        override fun onItemClick(item: LawBean?, position: Int) {
                             LawDetailActivity.startAction(this@LawQueryActivity, false, item!!.id.toString())
                         }
 
@@ -149,8 +152,13 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
     }
 
 
-    override fun onLawListResult(complainList: NormalList<LawBean>) {
-        rv_law_query.refreshData(complainList!!.list, complainList.total)
+    override fun onLawListResult(complainList: List<LawBean>) {
+        for (lawBean in complainList){
+            if (lawBean.name.equals(lawMainBean!!.name)){
+                val list:List<LawBean> = lawBean.children!!
+                rv_law_query.refreshData(list, list.size)
+            }
+        }
     }
 
     override fun onSearchLawResult(lawSearchLawResult: NormalList<LawSearchBean>) {

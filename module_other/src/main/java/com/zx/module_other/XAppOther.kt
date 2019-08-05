@@ -20,5 +20,5 @@ object XAppOther : XApp() {
 
     val RESULTS = XAppBean("工作成果", R.color.results_color, R.drawable.icon_results, RoutePath.ROUTE_OTHER_RESULTS)
     val PLAN = XAppBean("个人工作计划", R.color.plan_color, R.drawable.icon_plan, RoutePath.ROUTE_OTHER_PLAN)
-    override fun all() = arrayListOf(LAW, PRINT, DOCUMENT, INFOMATION, APPROVAL, CHECKIN, PAPERS)
+    override fun all() = arrayListOf(LAW, PRINT, DOCUMENT, INFOMATION, APPROVAL, CHECKIN, PAPERS,RESULTS,PLAN)
 }

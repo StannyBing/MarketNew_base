@@ -25,7 +25,7 @@ class LawQueryModel : BaseModel(), LawQueryContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun lawListData(map: Map<String, String>): Observable<NormalList<LawBean>> {
+    override fun lawListData(map: Map<String, String>): Observable<List<LawBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getLawList(map)
                 .compose(RxHelper.handleResult())

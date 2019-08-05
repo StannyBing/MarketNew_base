@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        app:hint_text="@string/hint_law_name">
+        app:hint_text="@string/hint_law_keyword">
 
     </com.zx.module_library.view.SearchView>
 
