@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/supervise_color"
-                android:text="是"
+                android:text="否"
                 android:textColor="@color/supervise_color"
                 android:textSize="@dimen/text_size_small"/>
 

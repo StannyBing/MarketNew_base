@@ -9,8 +9,8 @@ import com.zx.module_supervise.R
 import com.zx.module_supervise.module.daily.mvp.contract.DailyCheckContract
 import com.zx.module_supervise.module.daily.mvp.model.DailyCheckModel
 import com.zx.module_supervise.module.daily.mvp.presenter.DailyCheckPresenter
-import com.zx.module_supervise.module.supervise.bean.SuperviseCheckBean
-import com.zx.module_supervise.module.supervise.func.adapter.SuperviseCheckAdapter
+import com.zx.module_supervise.module.task.bean.TaskCheckBean
+import com.zx.module_supervise.module.task.func.adapter.TaskCheckAdapter
 import kotlinx.android.synthetic.main.fragment_daily_check.*
 
 /**
@@ -19,8 +19,8 @@ import kotlinx.android.synthetic.main.fragment_daily_check.*
  */
 class DailyCheckFragment : BaseFragment<DailyCheckPresenter, DailyCheckModel>(), DailyCheckContract.View {
 
-    private val checkList = arrayListOf<SuperviseCheckBean>()
-    private val checkAdapter = SuperviseCheckAdapter(checkList)
+    val checkList = arrayListOf<TaskCheckBean>()
+    private val checkAdapter = TaskCheckAdapter(checkList)
 
     companion object {
         /**
@@ -84,22 +84,22 @@ class DailyCheckFragment : BaseFragment<DailyCheckPresenter, DailyCheckModel>(),
 
     //获取检查结果
     fun getDailyInfo(): HashMap<String, Any> {
-        return hashMapOf("list" to arrayListOf<SuperviseCheckBean.ResultBean>().apply {
+        return hashMapOf("list" to arrayListOf<TaskCheckBean.ResultBean>().apply {
             if (checkList.isNotEmpty()) {
                 checkList.forEach {
-                    add(SuperviseCheckBean.ResultBean(it.fId, it.fCheckResult ?: ""))
+                    add(TaskCheckBean.ResultBean(it.fId, it.fCheckResult ?: ""))
                 }
             }
         })
     }
 
-    override fun onCheckListResult(checkList: List<SuperviseCheckBean>) {
+    override fun onCheckListResult(checkList: List<TaskCheckBean>) {
         this.checkList.clear()
         addCheckList(checkList)
         checkAdapter.notifyDataSetChanged()
     }
 
-    private fun addCheckList(checkList: List<SuperviseCheckBean>) {
+    private fun addCheckList(checkList: List<TaskCheckBean>) {
         if (checkList.isNotEmpty()) {
             checkList.forEach {
                 if (it.fIsLeaf == "0") {

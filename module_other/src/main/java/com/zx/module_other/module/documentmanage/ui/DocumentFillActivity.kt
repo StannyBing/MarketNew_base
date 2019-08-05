@@ -21,7 +21,7 @@ import com.zx.module_other.module.workplan.mvp.model.DocumentFillModel
 import com.zx.module_other.module.workplan.mvp.presenter.DocumentFillPresenter
 import kotlinx.android.synthetic.main.activity_document_fill.*
 
-@Route(path = RoutePath.ROUTE_OTHER_DOCUMENTFIll)
+@Route(path = RoutePath.ROUTE_OTHER_DOCUMENT_FIll)
 class DocumentFillActivity : BaseActivity<DocumentFillPresenter, DocumentFillModel>(), DocumentFillContract.View {
 
     val map = hashMapOf<String, String>()

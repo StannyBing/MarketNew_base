@@ -6,7 +6,7 @@ import com.zx.module_library.bean.XAppBean
  * Created by Xiangb on 2019/3/13.
  * 功能：
  */
-data class XAppListBean(var title: String, var type: XTYPE, var xAppList: List<XAppBean>) {
+data class XAppListBean(var title: String, var type: XTYPE, var xAppList: List<XAppBean>, var isOpen : Boolean = false) {
 
     enum class XTYPE {
         TASK_STATISTICS,

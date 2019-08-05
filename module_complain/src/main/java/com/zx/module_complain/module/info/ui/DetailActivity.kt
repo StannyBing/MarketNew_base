@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_complain_detail.*
  * 功能：投诉举报详情
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_COMPLAIN_DETAIL)
+@Route(path = RoutePath.ROUTE_COMPLAIN_TASK_DETAIL)
 class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContract.View {
 
     private lateinit var regInfoFragment: DetailInfoFragment
@@ -74,7 +74,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(true)
-                .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
+                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())

@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_legalcase_query.*
  * Create By admin On 2017/7/11
  * 功能：综合执法-主页
  */
-@Route(path = RoutePath.ROUTE_LEGALCASE_QUERY)
+@Route(path = RoutePath.ROUTE_LEGALCASE_TASK)
 class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.View {
 
     private var pageNo = 1

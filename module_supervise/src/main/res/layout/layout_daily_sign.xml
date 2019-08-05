@@ -11,7 +11,7 @@
         android:padding="5dp"
         android:background="@drawable/shape_daily_sign">
 
-        <com.zx.module_supervise.module.supervise.func.view.SignatureView
+        <com.zx.module_supervise.module.task.func.view.SignatureView
             android:id="@+id/sign_view"
             android:layout_width="300dp"
             android:layout_height="300dp"/>

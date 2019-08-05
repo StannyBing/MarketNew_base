@@ -3,7 +3,9 @@ package com.zx.module_other.module.law.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.frame.zxmvp.base.BaseModel
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
@@ -12,6 +14,7 @@ import com.zx.module_other.module.law.func.util.util
 import com.zx.module_other.module.law.mvp.presenter.LawStandardPresenter
 import kotlinx.android.synthetic.main.activity_standard_detail.*
 
+@Route(path = RoutePath.ROUTE_OTHER_LAW_STANDARDDETAIL)
 class StandardDetailActivity : BaseActivity<LawStandardPresenter, BaseModel>() {
 
     companion object {

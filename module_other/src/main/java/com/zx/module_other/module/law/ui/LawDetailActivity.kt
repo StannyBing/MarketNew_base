@@ -3,19 +3,18 @@ package com.zx.module_other.module.law.ui
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
-import android.webkit.*
-import com.zx.module_library.app.BaseConfigModule
-import com.zx.module_library.app.BaseConfigModule.Companion.BASE_IP
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
-import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
-import com.zx.module_other.module.law.bean.LawCollectBean
 import com.zx.module_other.module.law.bean.LawCollectResultBean
 import com.zx.module_other.module.law.bean.LawDetailBean
 import com.zx.module_other.module.law.mvp.contract.LawDetailContract
@@ -28,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_law_detail.*
  * Create By admin On 2017/7/11
  * 功能：详情
  */
+@Route(path = RoutePath.ROUTE_OTHER_LAW_DETAIL)
 class LawDetailActivity : BaseActivity<LawDetailPresenter, LawDetailModel>(), LawDetailContract.View {
 
     private var lawDetail: LawDetailBean? = null

@@ -4,14 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.law.bean.LawCollectBean
-import com.zx.module_other.module.law.bean.LawCollectResultBean
 import com.zx.module_other.module.law.func.adapter.LawCollectAdapter
 import com.zx.module_other.module.law.mvp.contract.LawCollectContract
 import com.zx.module_other.module.law.mvp.model.LawCollectModel
@@ -19,6 +19,7 @@ import com.zx.module_other.module.law.mvp.presenter.LawCollectPresenter
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_law_collect.*
 
+@Route(path = RoutePath.ROUTE_OTHER_LAW_COLLECT)
 class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(), LawCollectContract.View {
     private var pageNo = 1
     private var collectDatas = arrayListOf<LawCollectBean>()

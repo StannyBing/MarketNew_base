@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_template.*
  * Create By admin On 2017/7/11
  * 功能：检查模板
  */
-@Route(path = RoutePath.ROUTE_DAILY_TEMPLATE)
+@Route(path = RoutePath.ROUTE_SUPERVISE_DAILY_TEMPLATE)
 class TemplateActivity : BaseActivity<TemplatePresenter, TemplateModel>(), TemplateContract.View {
 
     private val templateList = arrayListOf<TemplateBean>()

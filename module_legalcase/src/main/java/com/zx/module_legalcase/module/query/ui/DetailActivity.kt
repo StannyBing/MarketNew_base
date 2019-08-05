@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_detail.*
  * 功能：综合执法-详情
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_LEGALCASE_DETAIL)
+@Route(path = RoutePath.ROUTE_LEGALCASE_TASK_DETAIL)
 class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContract.View {
 
     private var id: String = ""
@@ -76,7 +76,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
-                .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
+                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())

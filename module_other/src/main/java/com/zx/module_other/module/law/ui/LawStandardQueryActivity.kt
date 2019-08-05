@@ -4,21 +4,21 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
-import com.zx.module_other.module.law.bean.LawBean
-import com.zx.module_other.module.law.bean.LawMainBean
 import com.zx.module_other.module.law.bean.LawStandardQueryBean
 import com.zx.module_other.module.law.bean.LawStandardQueryResultBean
-import com.zx.module_other.module.law.func.adapter.LawQueryListAdapter
 import com.zx.module_other.module.law.func.adapter.LawStandardQueryAdapter
 import com.zx.module_other.module.law.mvp.contract.LawStandardQueryContract
 import com.zx.module_other.module.law.mvp.model.LawStandardModel
 import com.zx.module_other.module.law.mvp.presenter.LawStandardPresenter
 import kotlinx.android.synthetic.main.activity_law_standard_query.*
 
+@Route(path = RoutePath.ROUTE_OTHER_LAW_STANDARDQUERY)
 class LawStandardQueryActivity : BaseActivity<LawStandardPresenter, LawStandardModel>(), LawStandardQueryContract.View {
 
     private var standardDatas = arrayListOf<LawStandardQueryBean>()

@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_special_list.*
  * Create By admin On 2017/7/11
  * 功能：特殊主体-记录
  */
-@Route(path = RoutePath.ROUTE_ENTITY_SPECIALLIST)
+@Route(path = RoutePath.ROUTE_ENTITY_SPECIAL_LIST)
 class SpecialListActivity : BaseActivity<SpecialListPresenter, SpecialListModel>(), SpecialListContract.View {
 
     private var pageNo = 1

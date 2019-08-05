@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_video_setting.*
  * Create By admin On 2017/7/11
  * 功能：设置-；录像设置
  */
-@Route(path = RoutePath.ROUTE_APP_SETTINGVIDEO)
+@Route(path = RoutePath.ROUTE_APP_SETTING_VIDEO)
 class VideoSettingActivity : BaseActivity<VideoSettingPresenter, VideoSettingModel>(), VideoSettingContract.View {
 
 

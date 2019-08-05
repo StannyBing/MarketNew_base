@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
@@ -42,10 +41,10 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
     override fun onViewListener() {
         workResultAllAdapter.setOnItemClickListener { adapter, view, position ->
             when (workAllData[position].business) {
-                "投诉举报" -> XApp.startXApp(RoutePath.ROUTE_COMPLAIN_QUERY)
-                "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_QUERY)
-                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_DAILY_QUERY)
-                "专项检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_QUERY)
+                "投诉举报" -> XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK)
+                "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK)
+                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY)
+                "专项检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK)
                 "监管任务" -> {}
 
             }

@@ -76,7 +76,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                     when (jsonObj.getInfo("business")) {
                         "专项检查" -> {
                             ZXDialogUtil.showYesNoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT), "前往处理", "关闭", DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
-                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DETAIL) {
+                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
                                     it["id"] = jsonObj.getString("businessId")
                                     it["taskId"] = jsonObj.getString("taskId")
                                     it["optable"] = true
@@ -86,7 +86,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                         }
                         "投诉举报" -> {
                             ZXDialogUtil.showYesNoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT), "前往处理", "关闭", DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
-                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_DETAIL) {
+                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK_DETAIL) {
                                     it["fGuid"] = jsonObj.getInfo("businessId")
                                 }
                             }, null)
@@ -94,7 +94,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                         }
                         "综合执法" -> {
                             ZXDialogUtil.showYesNoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT), "前往处理", "关闭", DialogInterface.OnClickListener { dialog: DialogInterface?, _: Int ->
-                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_DETAIL) {
+                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
                                     it["id"] = jsonObj.getInfo("businessId")
                                     it["taskId"] = jsonObj.getInfo("taskId")
                                     it["optable"] = true

@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
+import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.workplan.func.util.DateUtil
 import com.zx.module_other.module.workplan.mvp.contract.CreatePlanContract
@@ -15,7 +16,7 @@ import com.zx.module_other.module.workplan.mvp.model.CreatePlanModel
 import com.zx.module_other.module.workplan.mvp.presenter.CreatePlanPresenter
 import kotlinx.android.synthetic.main.activity_create_plan.*
 
-@Route(path = RoutePath.ROUTE_OTHER_CREATEPLAN)
+@Route(path = RoutePath.ROUTE_OTHER_PLAN_CREATE)
 class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(), CreatePlanContract.View {
 
     companion object {
@@ -54,7 +55,7 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-//        toobar_view.withXApp(XAppOther.get("个人工作计划"))
+        toobar_view.withXApp(XAppOther.PLAN)
     }
 
 }

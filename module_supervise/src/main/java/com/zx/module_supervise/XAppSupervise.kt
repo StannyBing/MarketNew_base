@@ -10,11 +10,11 @@ import com.zx.module_library.bean.XAppBean
  */
 object XAppSupervise : XApp() {
 
-    val SUPERVISE = XAppBean("专项检查", R.color.supervise_color, R.drawable.icon_supervise, RoutePath.ROUTE_SUPERVISE_QUERY)
-    val DAILY = XAppBean("现场检查", R.color.daily_color, R.drawable.icon_daily, RoutePath.ROUTE_DAILY_QUERY)
-    val EQUIPMENT = XAppBean("特种设备监管", R.color.equipment_color, R.drawable.icon_equipment, RoutePath.ROUTE_SUPERVISE_EQUIPMENTQUERY)
-    val DRUGS = XAppBean("药品安全监管", R.color.drugs_color, R.drawable.icon_drugs, RoutePath.ROUTE_SUPERVISE_DRUGSQUERY)
-    val FOODS = XAppBean("食品安全监管", R.color.foods_color, R.drawable.icon_foods, RoutePath.ROUTE_SUPERVISE_FOODSQUERY)
+    val SUPERVISE = XAppBean("专项检查", R.color.supervise_color, R.drawable.icon_supervise, RoutePath.ROUTE_SUPERVISE_TASK)
+    val DAILY = XAppBean("现场检查", R.color.daily_color, R.drawable.icon_daily, RoutePath.ROUTE_SUPERVISE_DAILY)
+    val EQUIPMENT = XAppBean("特种设备监管", R.color.equipment_color, R.drawable.icon_equipment, RoutePath.ROUTE_SUPERVISE_MANAGE_EQUIPMENT)
+    val DRUGS = XAppBean("药品安全监管", R.color.drugs_color, R.drawable.icon_drugs, RoutePath.ROUTE_SUPERVISE_MANAGE_DRUGS)
+    val FOODS = XAppBean("食品安全监管", R.color.foods_color, R.drawable.icon_foods, RoutePath.ROUTE_SUPERVISE_MANAGE_FOODS)
 
     override fun all() = arrayListOf(SUPERVISE, DAILY, EQUIPMENT, DRUGS, FOODS)
 }

@@ -72,6 +72,7 @@ abstract class XApp {
                 return postcard.navigation(activity, requestCode)
             }
         }
+
     }
 
     /**

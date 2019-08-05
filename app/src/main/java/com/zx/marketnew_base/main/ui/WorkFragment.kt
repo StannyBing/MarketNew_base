@@ -70,6 +70,7 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         rv_work_xApp.apply {
             layoutManager = ZXInScrollRecylerManager(activity)
             adapter = listAdapter
+            listAdapter.bindToRecyclerView(rv_work_xApp)
         }
 
         if (mSharedPrefUtil.contains("officeBean")) {
@@ -85,10 +86,6 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
      * View事件设置
      */
     override fun onViewListener() {
-        //xapp编辑按钮点击事件
-        listAdapter.setManagerClickListener {
-
-        }
         //xapp点击事件
         listAdapter.setXAppClickLiistener { title, xapp ->
             mPresenter.sendXappOpt(ApiParamUtil.xappOptParam("APP", "办公", title, xapp.name))

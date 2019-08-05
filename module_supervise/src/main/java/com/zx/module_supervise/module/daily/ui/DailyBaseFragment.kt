@@ -18,7 +18,7 @@ import com.zx.module_supervise.module.daily.bean.EntityBean
 import com.zx.module_supervise.module.daily.mvp.contract.DailyBaseContract
 import com.zx.module_supervise.module.daily.mvp.model.DailyBaseModel
 import com.zx.module_supervise.module.daily.mvp.presenter.DailyBasePresenter
-import com.zx.module_supervise.module.supervise.func.view.SignatureView
+import com.zx.module_supervise.module.task.func.view.SignatureView
 import com.zx.zxutils.util.ZXBitmapUtil
 import com.zx.zxutils.util.ZXDialogUtil
 import kotlinx.android.synthetic.main.fragment_daily_base.*

@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_dispose_force.*
  * 功能：综合执法处置-强制措施
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSEFORCE)
+@Route(path = RoutePath.ROUTE_LEGALCASE_TASK_DISPOSEFORCE)
 class DisposeForceActivity : BaseActivity<DisposeForcePresenter, DisposeForceModel>(), DisposeForceContract.View {
     private lateinit var detailBean: DetailBean
 

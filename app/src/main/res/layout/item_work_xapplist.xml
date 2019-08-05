@@ -24,8 +24,9 @@
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:text="编辑"
+        android:visibility="gone"
         android:textColor="@color/colorPrimary"
-        android:textSize="@dimen/text_size_normal"/>
+        android:textSize="@dimen/text_size_small"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_xapplist"

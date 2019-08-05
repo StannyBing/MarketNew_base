@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_dispose_normal.*
  * 功能：案件-流程处置-普通流程
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSENORMAL)
+@Route(path = RoutePath.ROUTE_LEGALCASE_TASK_DISPOSENORMAL)
 class DisposeNormalActivity : BaseActivity<DisposeNormalPresenter, DisposeNormalModel>(), DisposeNormalContract.View {
 
     private lateinit var detailBean: DetailBean

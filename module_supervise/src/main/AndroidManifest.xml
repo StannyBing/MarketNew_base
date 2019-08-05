@@ -9,13 +9,16 @@
             android:name="com.zx.module_supervise.api.ApiConfigModule"
             android:value="ConfigModule"/>
 
-        <activity android:name=".module.supervise.ui.SuperviseQueryActivity"/>
+        <activity android:name=".module.task.ui.TaskQueryActivity"/>
         <activity android:name=".module.daily.ui.DailyQueryActivity"/>
-        <activity android:name=".module.supervise.ui.SuperviseDetailActivity"/>
-        <activity android:name=".module.supervise.ui.SuperviseDisposeActivity"/>
+        <activity android:name=".module.task.ui.TaskDetailActivity"/>
+        <activity android:name=".module.task.ui.TaskDisposeActivity"/>
         <activity android:name=".module.daily.ui.DailyAddActivity"/>
         <activity android:name=".module.daily.ui.TemplateActivity"/>
         <activity android:name=".module.daily.ui.CheckListActivity"/>
+        <activity android:name=".module.manage.ui.ManageEquipmentActivity"/>
+        <activity android:name=".module.manage.ui.ManageDrugsActivity"/>
+        <activity android:name=".module.manage.ui.ManageFoodsActivity"/>
     </application>
 
 </manifest>

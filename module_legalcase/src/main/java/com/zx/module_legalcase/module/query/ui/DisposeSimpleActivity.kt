@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.activity_dispose_simple.*
  * 功能：综合执法处置-简易流程
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSESIMPLE)
+@Route(path = RoutePath.ROUTE_LEGALCASE_TASK_DISPOSESIMPLE)
 class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimpleModel>(), DisposeSimpleContract.View {
     private lateinit var detailBean: DetailBean
 
@@ -46,7 +46,7 @@ class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimple
         fun startAction(activity: Activity, isFinish: Boolean, detailBean: DetailBean) {
             val intent = Intent(activity, DisposeSimpleActivity::class.java)
             intent.putExtra("detailBean", detailBean)
-            activity.startActivityForResult(intent,0x01)
+            activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
         }
     }
@@ -136,7 +136,7 @@ class DisposeSimpleActivity : BaseActivity<DisposeSimplePresenter, DisposeSimple
                 addDept = false
             }
         }
-        mPresenter.getDeptList(ApiParamUtil.deptListParam(BaseConfigModule.appInfo.areaParentId))
+        if (addDept) mPresenter.getDeptList(ApiParamUtil.deptListParam(BaseConfigModule.appInfo.areaParentId))
         disposeList.apply {
             if (isAgree) add(DisposeBean(DisposeBean.DisposeType.Spinner, "处理结果", arrayListOf<DisposeBean.ValueBean>().apply {
                 add(DisposeBean.ValueBean("同意", "0", true))

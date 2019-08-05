@@ -10,7 +10,7 @@ import com.zx.module_library.bean.XAppBean
  */
 object XAppLegalcase : XApp() {
 
-    val HANDLE = XAppBean("综合执法", R.color.legalcase_color, R.drawable.icon_legalcase_handle, RoutePath.ROUTE_LEGALCASE_QUERY)
+    val HANDLE = XAppBean("综合执法", R.color.legalcase_color, R.drawable.icon_legalcase_handle, RoutePath.ROUTE_LEGALCASE_TASK)
 
     override fun all() = arrayListOf(HANDLE)
 

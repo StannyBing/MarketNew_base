@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_choice_file.*
  * 功能：
  */
 
-@Route(path = RoutePath.ROUTE_OTHER_CHOICEFILE)
+@Route(path = RoutePath.ROUTE_OTHER_PRINT_CHOICEFILE)
 class ChoiceFileActivity : BaseActivity<ChoiceFilePresenter, ChoiceFileModel>(), ChoiceFileContract.View {
 
     companion object {

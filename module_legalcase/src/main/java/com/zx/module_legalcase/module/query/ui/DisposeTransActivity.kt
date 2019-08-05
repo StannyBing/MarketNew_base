@@ -29,7 +29,7 @@ import kotlinx.android.synthetic.main.activity_dispose_trans.*
  * 功能：综合执法-案源移交
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_LEGALCASE_DISPOSETRANS)
+@Route(path = RoutePath.ROUTE_LEGALCASE_TASK_DISPOSETRANS)
 class DisposeTransActivity : BaseActivity<DisposeTransPresenter, DisposeTransModel>(), DisposeTransContract.View {
     private lateinit var detailBean: DetailBean
 

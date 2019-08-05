@@ -40,7 +40,7 @@ import java.io.File
  * 功能：现场检查-新增
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_DAILY_ADD)
+@Route(path = RoutePath.ROUTE_SUPERVISE_DAILY_ADD)
 class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), DailyAddContract.View {
 
     override var canSwipeBack: Boolean = false
@@ -94,7 +94,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
-                .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
+                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
@@ -179,7 +179,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
             } else {
                 if (dailyBaseFragment.entityBean != null) {
                     ZXDialogUtil.showYesNoDialog(this, "提示", "是否重新检查") { _, _ ->
-                        XApp.startXApp(RoutePath.ROUTE_DAILY_ADD) {
+                        XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY_ADD) {
                             it["fEntityGuid"] = dailyBaseFragment.entityBean!!.fEntityGuid ?: ""
                             it["fEntityName"] = dailyBaseFragment.entityBean!!.fEntityName ?: ""
                             it["fLegalPerson"] = dailyBaseFragment.entityBean!!.fLegalPerson ?: ""
@@ -202,6 +202,22 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
         } else if (!dailyCheckFragment.checkItem()) {
             showToast("请先完成检查内容")
             tvp_daily_add.setSelectOn(1)
+        } else if (dailyCheckFragment.checkList.isEmpty()) {
+            ZXDialogUtil.showYesNoDialog(this, "提示", "未选择检查内容，是否继续提交？", "确定", "取消", { _, _ ->
+                getPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    if (file_view.fileList.isNotEmpty()) {
+                        val files = arrayListOf<File>()
+                        file_view.fileList.forEach {
+                            files.add(File(it.filePath))
+                        }
+                        mPresenter.uploadFile(0, files)
+                    } else {
+                        onFileUploadResult("", "", 0)
+                    }
+                }
+            }, { _, _ ->
+                tvp_daily_add.setSelectOn(1)
+            })
         } else {
             ZXDialogUtil.showYesNoDialog(this, "提示", "是否提交处置结果？") { _, _ ->
                 getPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {

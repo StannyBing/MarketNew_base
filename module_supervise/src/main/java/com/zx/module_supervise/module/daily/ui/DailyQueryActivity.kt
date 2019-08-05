@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_daily_query.*
  * Create By admin On 2017/7/11
  * 功能：现场检查
  */
-@Route(path = RoutePath.ROUTE_DAILY_QUERY)
+@Route(path = RoutePath.ROUTE_SUPERVISE_DAILY)
 class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(), DailyQueryContract.View {
 
     private var pageNo = 1

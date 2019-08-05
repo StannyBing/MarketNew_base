@@ -23,7 +23,7 @@ import com.zx.module_supervise.module.daily.func.view.ExpandableView.CheckRecycl
 import com.zx.module_supervise.module.daily.mvp.contract.CheckListContract
 import com.zx.module_supervise.module.daily.mvp.model.CheckListModel
 import com.zx.module_supervise.module.daily.mvp.presenter.CheckListPresenter
-import com.zx.module_supervise.module.supervise.bean.SuperviseCheckBean
+import com.zx.module_supervise.module.task.bean.TaskCheckBean
 import com.zx.zxutils.entity.KeyValueEntity
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
 import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
@@ -37,7 +37,7 @@ import java.util.*
  * Create By admin On 2017/7/11
  * 功能：检查模板-检查项
  */
-@Route(path = RoutePath.ROUTE_DAILY_CHECKLIST)
+@Route(path = RoutePath.ROUTE_SUPERVISE_DAILY_CHECKLIST)
 class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), CheckListContract.View {
 
     private val checkList = ArrayList<CheckExpandBean>()
@@ -82,7 +82,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
             setItemClickListener(object : CheckExpandItemListener {
                 override fun onItemClick(checkExpandBean: CheckExpandBean, position: Int) {
                     checkRecyclerHelper.changeOpenStatus(position)
-                    val item = checkExpandBean.getCustomData() as SuperviseCheckBean
+                    val item = checkExpandBean.getCustomData() as TaskCheckBean
                     if (checkExpandBean.childList != null && checkExpandBean.childList.isEmpty() && checkExpandBean.isShowChild) {
                         mPresenter.getCheckList(hashMapOf("pId" to item.fId), item.fId)
                     }
@@ -193,7 +193,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
     }
 
     //普通检查列表查询
-    override fun onCheckListResult(checkDetailBeans: List<SuperviseCheckBean>, pid: String) {
+    override fun onCheckListResult(checkDetailBeans: List<TaskCheckBean>, pid: String) {
         if (pid.isEmpty() || checkList.isEmpty()) {
             checkList.clear()
             checkList.addAll(getExpandBean(checkDetailBeans, false))
@@ -205,7 +205,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
     }
 
     //模板的检查列表
-    override fun onTempletCheckListResult(checkDetailBeans: List<SuperviseCheckBean>) {
+    override fun onTempletCheckListResult(checkDetailBeans: List<TaskCheckBean>) {
         reSetTempletCheckList(checkDetailBeans, "")
         checkRecyclerHelper.setData(checkList).notifyDataSetChanged()
     }
@@ -227,7 +227,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
         return ids
     }
 
-    private fun reSetTempletCheckList(checkDetailBeans: List<SuperviseCheckBean>, id: String) {
+    private fun reSetTempletCheckList(checkDetailBeans: List<TaskCheckBean>, id: String) {
         if (id.isEmpty()) {
             checkList.addAll(getExpandBean(checkDetailBeans, true))
         } else {
@@ -247,7 +247,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
      * @param selected
      * @return </CheckExpandBean></SuperviseCheckDetailBean>
      */
-    private fun getExpandBean(putList: List<SuperviseCheckBean>, selected: Boolean): List<CheckExpandBean> {
+    private fun getExpandBean(putList: List<TaskCheckBean>, selected: Boolean): List<CheckExpandBean> {
         val checkList = ArrayList<CheckExpandBean>()
         putList.forEach {
             val checkExpandBean = CheckExpandBean(it, it.fName)
@@ -271,9 +271,9 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
      */
     private fun getSelectItemMap(checkExpandBean: CheckExpandBean) {
         if (checkExpandBean.isSelected) {
-            selectCheckMap.put((checkExpandBean.customData as SuperviseCheckBean).fId, checkExpandBean.itemText)
-        } else if (selectCheckMap.containsKey((checkExpandBean.customData as SuperviseCheckBean).fId)) {
-            selectCheckMap.remove((checkExpandBean.customData as SuperviseCheckBean).fId)
+            selectCheckMap.put((checkExpandBean.customData as TaskCheckBean).fId, checkExpandBean.itemText)
+        } else if (selectCheckMap.containsKey((checkExpandBean.customData as TaskCheckBean).fId)) {
+            selectCheckMap.remove((checkExpandBean.customData as TaskCheckBean).fId)
         }
     }
 
@@ -284,14 +284,14 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
      * @param putList
      * @param pid
      */
-    private fun putChildData(checkList: List<CheckExpandBean>, putList: List<SuperviseCheckBean>, pid: String) {
+    private fun putChildData(checkList: List<CheckExpandBean>, putList: List<TaskCheckBean>, pid: String) {
         checkList.forEach {
             if (it.childList == null) {
 
             } else if (it.childList.isNotEmpty()) {
                 putChildData(it.childList, putList, pid)
             } else {
-                val item = it.customData as SuperviseCheckBean
+                val item = it.customData as TaskCheckBean
                 if (pid == item.fId) {
                     val tempList = getExpandBean(putList, it.isSelected)
                     it.childList = tempList
@@ -305,7 +305,7 @@ class CheckListActivity : BaseActivity<CheckListPresenter, CheckListModel>(), Ch
         if (checkList.isNotEmpty()) {
             checkList.forEach {
                 if (it.childList == null) {
-                    it.isSelected = selectCheckMap.containsKey((it.customData as SuperviseCheckBean).fId)
+                    it.isSelected = selectCheckMap.containsKey((it.customData as TaskCheckBean).fId)
                 } else {
                     setSelect(it.childList)
                 }

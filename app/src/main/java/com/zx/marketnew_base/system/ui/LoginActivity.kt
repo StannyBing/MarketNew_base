@@ -126,7 +126,6 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
 
     override fun onLoginError() {
         UserManager.loginOut()
-        et_login_pwd.setText("")
     }
 
     override fun onBackPressed() {

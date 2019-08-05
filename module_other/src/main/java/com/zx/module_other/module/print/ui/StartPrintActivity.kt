@@ -33,7 +33,7 @@ import java.util.concurrent.Executors
  * 功能：
  */
 
-@Route(path = RoutePath.ROUTE_OTHER_STRATPRINT)
+@Route(path = RoutePath.ROUTE_OTHER_PRINT_STRATPRINT)
 class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(), StartPrintContract.View, IOCallBack {
     var devices = arrayListOf<BluetoothDevice>()
     var printerNames = arrayListOf<String>()

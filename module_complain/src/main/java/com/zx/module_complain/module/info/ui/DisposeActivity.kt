@@ -35,7 +35,7 @@ import java.io.File
  * 功能：投诉举报-处置
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_COMPLAIN_DISPOSE)
+@Route(path = RoutePath.ROUTE_COMPLAIN_TASK_DISPOSE)
 class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeContract.View {
 
     private lateinit var detailBean: DetailBean

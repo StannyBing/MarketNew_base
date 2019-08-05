@@ -36,7 +36,7 @@ import com.zx.zxutils.util.ZXPermissionUtil
 import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_document_see.*
 
-@Route(path = RoutePath.ROUTE_OTHER_DOCUMENTSEE)
+@Route(path = RoutePath.ROUTE_OTHER_DOCUMENT_PREVIEW)
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
 
     var bluetoothAdapter: BluetoothAdapter? = null

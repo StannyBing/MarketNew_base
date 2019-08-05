@@ -509,7 +509,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -561,7 +562,8 @@
             <LinearLayout
                 android:id="@+id/ll_daily_checkName"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 

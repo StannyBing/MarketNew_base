@@ -93,7 +93,7 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
 
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("个人工作计划")!!)
+        toobar_view.withXApp(XAppOther.PLAN)
         innerPainter = work_plan_calendar.calendarPainter as InnerPainter?
         rv_work_plan.apply {
             adapter = workPlanAdapter

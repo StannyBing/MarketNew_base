@@ -1,5 +1,7 @@
 package com.zx.module_supervise.module.daily.func.adapter
 
+import android.support.v4.content.ContextCompat
+import android.widget.TextView
 import com.zx.module_library.func.tool.TaskTimeUtil
 import com.zx.module_supervise.R
 import com.zx.module_supervise.module.daily.bean.DailyListBean
@@ -27,10 +29,15 @@ class DailyListAdapter(dataList: List<DailyListBean>) : ZXRecyclerQuickAdapter<D
                 "1" -> "不符合"
                 "2" -> "基本\n符合"
                 else -> {
-                    "添加结\n论补录"
+                    ""
                 }
             })
-            helper.addOnClickListener(R.id.tv_daily_status)
+            if (item.result.isNullOrEmpty()) {
+                helper.getView<TextView>(R.id.tv_daily_status).background = ContextCompat.getDrawable(mContext, R.drawable.supervise_fill)
+                helper.addOnClickListener(R.id.tv_daily_status)
+            } else {
+                helper.getView<TextView>(R.id.tv_daily_status).background = null
+            }
         }
     }
 }

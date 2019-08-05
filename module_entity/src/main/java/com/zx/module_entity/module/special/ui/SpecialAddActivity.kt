@@ -34,7 +34,7 @@ import java.io.File
  * 功能：特殊主体-上报
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_ENTITY_SPECIALADD)
+@Route(path = RoutePath.ROUTE_ENTITY_SPECIAL_ADD)
 class SpecialAddActivity : BaseActivity<SpecialAddPresenter, SpecialAddModel>(), SpecialAddContract.View {
 
     private val disposeList = arrayListOf<DisposeBean>()

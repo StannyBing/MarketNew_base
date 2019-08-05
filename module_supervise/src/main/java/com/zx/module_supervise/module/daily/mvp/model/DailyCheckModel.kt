@@ -5,7 +5,7 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSchedulers
 import com.zx.module_supervise.api.ApiService
 import com.zx.module_supervise.module.daily.mvp.contract.DailyCheckContract
-import com.zx.module_supervise.module.supervise.bean.SuperviseCheckBean
+import com.zx.module_supervise.module.task.bean.TaskCheckBean
 import rx.Observable
 
 /**
@@ -13,14 +13,14 @@ import rx.Observable
  * 功能：
  */
 class DailyCheckModel : BaseModel(), DailyCheckContract.Model {
-    override fun checkListData(map: Map<String, String>): Observable<List<SuperviseCheckBean>> {
+    override fun checkListData(map: Map<String, String>): Observable<List<TaskCheckBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getTempletCheckList(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun dailyCheckData(map: Map<String, String>): Observable<List<SuperviseCheckBean>> {
+    override fun dailyCheckData(map: Map<String, String>): Observable<List<TaskCheckBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .dailyCheckResult(map)
                 .compose(RxHelper.handleResult())

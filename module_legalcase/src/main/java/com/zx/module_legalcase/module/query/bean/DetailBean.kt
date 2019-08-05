@@ -64,7 +64,7 @@ data class DetailBean(var info: InfoBean, var files: List<FileBean>?) : Serializ
                         var assignee: String,
                         var isCompel: String,
                         var compelStatusName: String?,
-                        var compelStatus: String,
+                        var compelStatus: String?,
                         var processType: String?) : Serializable
 
     data class FileBean(var id: String,

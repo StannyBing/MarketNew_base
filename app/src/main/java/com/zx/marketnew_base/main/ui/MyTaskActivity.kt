@@ -72,7 +72,7 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
                     override fun onItemClick(item: TaskBean?, position: Int) {
                         when (item!!.businessType) {
                             "case" -> {
-                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_DETAIL) {
+                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
                                     it["id"] = item.id ?: ""
                                     it["taskId"] = item.taskId ?: ""
                                     it["optable"] = true
@@ -80,12 +80,12 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
                                 }
                             }
                             "complaint" -> {
-                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_DETAIL) {
+                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK_DETAIL) {
                                     it["fGuid"] = item.fGuid ?: ""
                                 }
                             }
                             "entityTask" -> {
-                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DETAIL) {
+                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
                                     it["id"] = item.fId ?: ""
                                     it["taskId"] = item.fTaskId ?: ""
                                     it["optable"] = true
@@ -106,7 +106,7 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
             "soon"
         } else {
             "todo"
-        }, "searchText" to searchText))
+        }, "condition" to searchText))
     }
 
     /**

@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.activity_entity_detail.*
  * 功能：主体查询-详情
  */
 @SuppressLint("NewApi")
-@Route(path = RoutePath.ROUTE_ENTITY_DETAIL)
+@Route(path = RoutePath.ROUTE_ENTITY_QUERY_DETAIL)
 class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContract.View {
 
     private lateinit var infoFragment: DetailInfoFragment
@@ -92,7 +92,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
-                .setTitleColor(R.color.text_color_noraml, R.color.text_color_noraml)
+                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppEntity.ENTITY.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
@@ -134,7 +134,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
 
         btn_entity_check.setOnClickListener {
             ZXDialogUtil.showYesNoDialog(this@DetailActivity, "提示", "是否对该主体进行现场检查？") { _, _ ->
-                XApp.startXApp(RoutePath.ROUTE_DAILY_ADD) {
+                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY_ADD) {
                     it["fEntityGuid"] = detailBean?.fEntityGuid ?: ""
                     it["fEntityName"] = detailBean?.fEntityName ?: ""
                     it["fLegalPerson"] = detailBean?.fLegalPerson ?: ""

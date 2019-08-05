@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:text="收不到短信验证码？请先确认手机是否安装短信截图软件或是否停机欠费，若均不是，请联系我们。"
+            android:text="收不到短信验证码？请先确认手机是否停机欠费，若有问题请联系我们。"
             android:textColor="@color/text_color_light"
             android:textSize="@dimen/text_size_normal"/>
 
@@ -166,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="666666"
+                android:text="@string/contact_info"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>

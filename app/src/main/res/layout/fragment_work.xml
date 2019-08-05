@@ -29,6 +29,7 @@
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/sv_xapp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

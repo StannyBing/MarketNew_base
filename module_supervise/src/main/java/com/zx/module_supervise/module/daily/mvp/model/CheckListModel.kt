@@ -6,7 +6,7 @@ import com.frame.zxmvp.baserx.RxSchedulers
 import com.zx.module_supervise.api.ApiService
 
 import com.zx.module_supervise.module.daily.mvp.contract.CheckListContract
-import com.zx.module_supervise.module.supervise.bean.SuperviseCheckBean
+import com.zx.module_supervise.module.task.bean.TaskCheckBean
 import okhttp3.RequestBody
 import rx.Observable
 
@@ -15,21 +15,21 @@ import rx.Observable
  * 功能：
  */
 class CheckListModel : BaseModel(), CheckListContract.Model {
-    override fun queryItemData(map: Map<String, String>): Observable<List<SuperviseCheckBean>> {
+    override fun queryItemData(map: Map<String, String>): Observable<List<TaskCheckBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .queryCheckList(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun checkListData(map: Map<String, String>): Observable<List<SuperviseCheckBean>> {
+    override fun checkListData(map: Map<String, String>): Observable<List<TaskCheckBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getCheckItemList(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun templetCheckListData(map: Map<String, String>): Observable<List<SuperviseCheckBean>> {
+    override fun templetCheckListData(map: Map<String, String>): Observable<List<TaskCheckBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getTempletCheckList(map)
                 .compose(RxHelper.handleResult())

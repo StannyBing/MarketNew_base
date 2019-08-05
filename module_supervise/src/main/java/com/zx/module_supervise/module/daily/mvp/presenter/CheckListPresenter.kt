@@ -3,7 +3,7 @@ package com.zx.module_supervise.module.daily.mvp.presenter
 import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_supervise.module.daily.mvp.contract.CheckListContract
-import com.zx.module_supervise.module.supervise.bean.SuperviseCheckBean
+import com.zx.module_supervise.module.task.bean.TaskCheckBean
 import okhttp3.RequestBody
 
 
@@ -16,8 +16,8 @@ class CheckListPresenter : CheckListContract.Presenter() {
     override fun getCheckList(map: Map<String, String>, pid: String) {
         mModel.checkListData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<List<SuperviseCheckBean>>() {
-                    override fun _onNext(t: List<SuperviseCheckBean>) {
+                .subscribe(object : RxSubscriber<List<TaskCheckBean>>() {
+                    override fun _onNext(t: List<TaskCheckBean>) {
                         mView.onCheckListResult(t, pid)
                     }
 
@@ -30,8 +30,8 @@ class CheckListPresenter : CheckListContract.Presenter() {
     override fun queryItemList(map: Map<String, String>) {
         mModel.queryItemData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<List<SuperviseCheckBean>>() {
-                    override fun _onNext(t: List<SuperviseCheckBean>) {
+                .subscribe(object : RxSubscriber<List<TaskCheckBean>>() {
+                    override fun _onNext(t: List<TaskCheckBean>) {
                         mView.onCheckListResult(t, "")
                     }
 
@@ -44,8 +44,8 @@ class CheckListPresenter : CheckListContract.Presenter() {
     override fun getTempletCheckList(map: Map<String, String>) {
         mModel.templetCheckListData(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<List<SuperviseCheckBean>>() {
-                    override fun _onNext(checkDetailBeans: List<SuperviseCheckBean>) {
+                .subscribe(object : RxSubscriber<List<TaskCheckBean>>() {
+                    override fun _onNext(checkDetailBeans: List<TaskCheckBean>) {
                         mView.onTempletCheckListResult(checkDetailBeans)
                     }
 

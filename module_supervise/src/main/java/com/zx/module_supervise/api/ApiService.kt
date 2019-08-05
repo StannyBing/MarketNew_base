@@ -6,7 +6,7 @@ import com.zx.module_supervise.module.daily.bean.DailyDetailBean
 import com.zx.module_supervise.module.daily.bean.DailyListBean
 import com.zx.module_supervise.module.daily.bean.EntityBean
 import com.zx.module_supervise.module.daily.bean.TemplateBean
-import com.zx.module_supervise.module.supervise.bean.*
+import com.zx.module_supervise.module.task.bean.*
 import okhttp3.RequestBody
 import retrofit2.http.*
 import rx.Observable
@@ -18,7 +18,7 @@ import rx.Observable
 interface ApiService {
 
     @GET(ApiConfigModule.URL_SUPERVISE + "taskPlan/getTaskEntityPage.do")
-    fun getSuperviseList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<SuperviseListBean>>>
+    fun getSuperviseList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<TaskListBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "taskPlan/queryDetails.do")
     fun getSuperviseDetailTaskInfo(@QueryMap map: Map<String, String>): Observable<BaseRespose<TaskInfoBean>>
@@ -27,7 +27,7 @@ interface ApiService {
     fun getSuperviseDetailEntityInfo(@QueryMap map: Map<String, String>): Observable<BaseRespose<EntityInfoBean>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "taskDo/queryItemById.do")
-    fun getSuperviseCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+    fun getSuperviseCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TaskCheckBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "taskDo/queryLog.do")
     fun getDetailDynamicList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<DetailDynamicBean>>>
@@ -57,13 +57,13 @@ interface ApiService {
     fun getTempletList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<TemplateBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "taskTemplate/queryItemTree.do")
-    fun getTempletCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+    fun getTempletCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TaskCheckBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "check/queryPItem.do")
-    fun getCheckItemList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+    fun getCheckItemList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TaskCheckBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "check/queryAllItem.do")
-    fun queryCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+    fun queryCheckList(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TaskCheckBean>>>
 
     @Headers("Content-Type: application/json", "Accept: application/json")
     @POST(ApiConfigModule.URL_SUPERVISE + "taskTemplate/save.do")
@@ -80,7 +80,7 @@ interface ApiService {
     fun getSuperviseDailyDetail(@QueryMap map: Map<String, String>): Observable<BaseRespose<DailyDetailBean>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "inspect/queryItemResult.do")
-    fun dailyCheckResult(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<SuperviseCheckBean>>>
+    fun dailyCheckResult(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<TaskCheckBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "entity/getEntityDetailInfo.do")
     fun getEntityByBizlicNum(@QueryMap map: Map<String, String>): Observable<BaseRespose<EntityBean>>
