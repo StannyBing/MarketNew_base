@@ -25,6 +25,7 @@ import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.documentmanage.func.util.DBService
 import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.ui.PrintActivity
@@ -66,7 +67,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             DocumentFillActivity.startAction(this, true, intent.getSerializableExtra("children") as Children)
         }
         btn_print_document.setOnClickListener {
-
+            DBService.getDBService().insert(intent.getSerializableExtra("children") as Children)
             if (PrintDataUtil.getWebViewImgData(wv_documentsee) == PrintDataUtil.SUC) {
                 if (devices.size == 0) {
                     PrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, PrintDataUtil.IMAGE_PATH)

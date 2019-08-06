@@ -9,16 +9,23 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.os.Binder
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.documentmanage.func.adapter.DocumentAdpater
+import com.zx.module_other.module.documentmanage.func.util.DBService
+import com.zx.module_other.module.documentmanage.ui.DocumentSeeActivity
 import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.receiver.BluetoothReceive
 import com.zx.module_other.module.print.mvp.contract.PrintContract
 import com.zx.module_other.module.print.mvp.model.PrintModel
 import com.zx.module_other.module.print.mvp.presenter.PrintPresenter
+import com.zx.zxutils.other.QuickAdapter.entity.MultiItemEntity
+import kotlinx.android.synthetic.main.activity_document.*
 import kotlinx.android.synthetic.main.activity_print.*
 import rx.functions.Action1
 
@@ -33,6 +40,9 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     val mReceiver = BluetoothReceive()
     var isOnline = false
     val devices = arrayListOf<BluetoothDevice>()
+
+    private var adapterDatas = arrayListOf<MultiItemEntity>()
+    private var documentAdapter = DocumentAdpater(adapterDatas)
 
     companion object {
         /**
@@ -69,6 +79,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         registerReceiver(mReceiver, filter)
         getBluetoothData()
         searchDevices()
+        getHistory()
     }
 
     /**
@@ -80,6 +91,12 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
                 BluetoothActivity.startAction(this, false)
             } else {
                 ChoiceFileActivity.startAction(this, false)
+            }
+        }
+
+        documentAdapter.setOnItemClickListener { adapter, view, position ->
+            if (adapterDatas[position].itemType == DocumentAdpater.TYPE_LEVEL_1) {
+                DocumentSeeActivity.startAction(this, false, adapterDatas[position] as Children, DocumentSeeActivity.TYPE_FILL, "")
             }
         }
     }
@@ -152,6 +169,19 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
                 }
             }
         })
+    }
+
+    fun getHistory() {
+        rv_print_history.apply {
+            layoutManager = LinearLayoutManager(this@PrintActivity)
+            adapter = documentAdapter
+        }
+        val children = DBService.getDBService().getMessage()
+        adapterDatas.clear()
+        for (child in children) {
+            adapterDatas.add(child)
+        }
+        documentAdapter.setNewData(adapterDatas)
     }
 
     override fun onDestroy() {
