@@ -29,6 +29,12 @@ interface ApiService {
     @POST(ApiConfigModule.URL_APP + "pushMsg/getPushMsgPage.do")
     fun getMessageList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<MessageBean>>>
 
+    @POST(ApiConfigModule.URL_APP + "pushMsg/getPushMsgInfo.do")
+    fun getMessageDetail(@QueryMap map: Map<String, String>): Observable<BaseRespose<MessageBean>>
+
+    @POST(ApiConfigModule.URL_APP + "pushMsg/deletePushMsg.do")
+    fun deleteMessage(@Body info: RequestBody): Observable<BaseRespose<String>>
+
     @GET(ApiConfigModule.URL_BACK + "mobile/queryNewVersion.do")
     fun getVersion(): Observable<BaseRespose<VersionBean>>
 

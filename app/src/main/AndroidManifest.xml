@@ -50,15 +50,14 @@
         </activity>
         <activity android:name=".main.ui.MainActivity"/>
         <!-- <activity android:name=".system.ui.SplashActivity"/> -->
-        <activity
-            android:name=".system.ui.LoginActivity"
-            android:launchMode="singleTask"/>
+        <activity android:name=".system.ui.LoginActivity"/>
         <activity android:name=".system.ui.ForgetPwdActivity"/>
         <activity android:name=".system.ui.ChangePwdActivity"/>
         <activity android:name=".system.ui.SettingActivity"/>
         <activity android:name=".main.ui.UserDetailActivity"/>
         <activity android:name=".main.ui.MyTaskActivity"/>
         <activity android:name=".system.ui.VideoSettingActivity"/>
+        <activity android:name=".system.ui.FeedBackActivity"/>
     </application>
 
 </manifest>

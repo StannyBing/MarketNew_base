@@ -12,13 +12,14 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.main.func.adapter.UserInfoAdapter
-import com.zx.module_library.func.tool.GlideRoundTransformation
 import com.zx.marketnew_base.main.mvp.contract.UserDetailContract
 import com.zx.marketnew_base.main.mvp.model.UserDetailModel
 import com.zx.marketnew_base.main.mvp.presenter.UserDetailPresenter
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.KeyValueBean
 import com.zx.module_library.bean.UserBean
+import com.zx.module_library.bean.XAppBean
+import com.zx.module_library.func.tool.GlideRoundTransformation
 import com.zx.module_library.func.tool.UserManager
 import com.zx.zxutils.ZXApp
 import com.zx.zxutils.util.ZXDialogUtil
@@ -70,9 +71,14 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         super.initView(savedInstanceState)
         ZXStatusBarCompat.translucent(this)
 
+        toolbar_view.withXApp(XAppBean("", R.color.white, 0, ""))
+
         userBean = intent.getSerializableExtra("userBean") as UserBean
 
-        isUserModify = userBean.equals(UserManager.getUser())
+        isUserModify = userBean.id == UserManager.getUser().id
+        if (isUserModify){
+            toolbar_view.showRightText("保存")
+        }
 
         Glide.with(ZXApp.getContext()).load(userBean.imgurl)
                 .apply(RequestOptions()
@@ -83,12 +89,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
                 .transition(DrawableTransitionOptions().crossFade())
                 .into(iv_userDetail_head)
 
-        listAdapter = UserInfoAdapter(dataBeans, isUserModify) {
-            toolbar_view.showRightText("保存")
-            toolbar_view.setRightClickListener {
-                showToast("保存操作")
-            }
-        }
+        listAdapter = UserInfoAdapter(dataBeans, isUserModify)
         ll_userDetail_call.visibility = if (isUserModify) View.GONE else View.VISIBLE
         rv_userDetail_info.layoutManager = LinearLayoutManager(this)
         rv_userDetail_info.adapter = listAdapter
@@ -109,6 +110,10 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
      * View事件设置
      */
     override fun onViewListener() {
+        toolbar_view.setRightClickListener {
+            showToast("保存操作")
+        }
+
         ll_userDetail_call.setOnClickListener {
             ZXDialogUtil.showListDialog(this, "请选择拨打对象", "取消", arrayListOf("电话", "座机")) { dialog: DialogInterface?, which: Int ->
                 ZXDialogUtil.dismissDialog()

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import cn.jpush.android.api.JPushInterface
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.bumptech.glide.Glide
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.main.bean.FuncBean
 import com.zx.marketnew_base.main.bean.VersionBean
@@ -15,11 +16,13 @@ import com.zx.marketnew_base.system.mvp.contract.SettingContract
 import com.zx.marketnew_base.system.mvp.model.SettingModel
 import com.zx.marketnew_base.system.mvp.presenter.SettingPresenter
 import com.zx.module_library.app.BaseConfigModule
+import com.zx.module_library.app.ConstStrings
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.func.tool.UserManager
 import com.zx.zxutils.util.ZXAppUtil
 import com.zx.zxutils.util.ZXDialogUtil
+import com.zx.zxutils.util.ZXFileUtil
 import kotlinx.android.synthetic.main.activity_setting.*
 import java.io.File
 
@@ -33,6 +36,13 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
 
     var dataBeans = arrayListOf<FuncBean>()
     var listAdapter = FuncAdapter(dataBeans)
+
+    private var clearFileList: ArrayList<String> = arrayListOf(ConstStrings.getCachePath(),
+            ConstStrings.getApkPath(),
+            ConstStrings.getOnlinePath(),
+            ConstStrings.getZipPath(),
+            ConstStrings.getLocalPath(),
+            ConstStrings.getCachePath())
 
     companion object {
         /**
@@ -62,14 +72,19 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             layoutManager = LinearLayoutManager(this@SettingActivity)
             adapter = listAdapter
         }
-        dataBeans.add(FuncBean("录像设置", R.drawable.app_func_video, true))
+
+        dataBeans.add(FuncBean("录像设置", R.drawable.app_func_video))
+        dataBeans.add(FuncBean("清理缓存", R.drawable.app_func_clear, true))
         dataBeans.add(FuncBean("检查更新", R.drawable.app_func_version))
+        dataBeans.add(FuncBean("意见反馈", R.drawable.app_func_feedback))
         dataBeans.add(FuncBean("修改密码", R.drawable.app_func_law, true))
-        dataBeans.add(FuncBean("退出登录", R.drawable.app_func_setting))
+        dataBeans.add(FuncBean("退出登录", R.drawable.app_func_logout))
 
         if (intent.hasExtra("checkVerson") && intent.getBooleanExtra("checkVerson", false)) {
             mPresenter.getVerson()
         }
+
+        listAdapter.notifyValue("清理缓存", getFileSize().toString() + "M")
     }
 
     /**
@@ -82,11 +97,27 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                 "录像设置" -> {
                     VideoSettingActivity.startAction(this, false)
                 }
+                "清理缓存" -> {
+                    showLoading("正在清理中...")
+                    clearFile()
+                    Thread {
+                        Glide.get(this).clearDiskCache()
+                    }.start()
+                    Glide.get(this).clearMemory()
+                    handler.postDelayed({
+                        listAdapter.notifyValue("清理缓存", getFileSize().toString() + "M")
+                        dismissLoading()
+                        showToast("清理完成")
+                    }, 1000)
+                }
                 "检查更新" -> {
                     mPresenter.getVerson()
                 }
+                "意见反馈" -> {
+                    FeedBackActivity.startAction(this,false)
+                }
                 "修改密码" -> {
-                    ForgetPwdActivity.startAction(this, false, UserManager.getUser().telephone!!)
+                    ForgetPwdActivity.startAction(this, false, UserManager.getUser().telephone)
                 }
                 "退出登录" -> {
                     ZXDialogUtil.showYesNoDialog(this, "提示", "是否退出登录？") { dialog, which ->
@@ -101,7 +132,6 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             }
         }
     }
-
 
     /**
      * 版本检测
@@ -122,5 +152,32 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
      */
     override fun onApkDownloadResult(file: File) {
         ZXAppUtil.installApp(this, file.path)
+    }
+
+    private fun getFileSize(): Double {
+        var size = 0.0
+        clearFileList.forEach {
+            size += ZXFileUtil.getFileOrFilesSize(it, ZXFileUtil.SIZETYPE_MB)
+        }
+        return size
+    }
+
+    private fun clearFile() {
+        clearFileList.forEach {
+            ZXFileUtil.deleteFiles(it)
+        }
+    }
+
+
+    private fun FuncAdapter.notifyValue(name: String, value: String) {
+        if (dataBeans.isNotEmpty()) {
+            dataBeans.forEachIndexed { index, funcBean ->
+                if (funcBean.title == name) {
+                    funcBean.value = value
+                    notifyItemChanged(index)
+                    return@forEachIndexed
+                }
+            }
+        }
     }
 }

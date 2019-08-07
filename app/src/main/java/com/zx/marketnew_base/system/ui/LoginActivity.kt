@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import cn.jpush.android.api.JPushInterface
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.api.ApiParamUtil
@@ -70,22 +71,6 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
         btn_login_do.background.setTint(ContextCompat.getColor(this, R.color.colorPrimary))
 
         reLogin = if (intent.hasExtra("reLogin")) intent.getBooleanExtra("reLogin", false) else false
-        if (reLogin && UserManager.userName.isNotEmpty() && UserManager.passWord.isNotEmpty()) {
-            et_login_pwd.setText(UserManager.passWord)
-            btn_login_do.performClick()
-        }
-
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        if (intent != null) {
-            reLogin = if (intent.hasExtra("reLogin")) intent.getBooleanExtra("reLogin", false) else false
-            if (reLogin && UserManager.userName.isNotEmpty() && UserManager.passWord.isNotEmpty()) {
-                et_login_pwd.setText(UserManager.passWord)
-                btn_login_do.performClick()
-            }
-        }
     }
 
     /**
@@ -120,8 +105,11 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
         userBean.password = et_login_pwd.text.toString()
         UserManager.setUser(userBean)
         showToast("登录成功")
-        et_login_pwd.setText("")
-        MainActivity.startAction(this, false)
+        if (reLogin) {
+            finish()
+        } else {
+            MainActivity.startAction(this, true)
+        }
     }
 
     override fun onLoginError() {
@@ -129,7 +117,14 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
     }
 
     override fun onBackPressed() {
-        MyApplication.instance.exit()
+        if (reLogin) {
+            JPushInterface.stopPush(this)
+            showToast("请先登录后使用")
+            handler.postDelayed({
+                MyApplication.instance.exit()
+            }, 1000)
+        } else {
+            super.onBackPressed()
+        }
     }
-
 }

@@ -165,10 +165,12 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
     override fun handleError(code: String?, message: String) {
         showToast(message)
         if (code == "10120") {//未登录或登录超时
-            showLoginDialog()
+            UserManager.loginOut()
 //            JPushInterface.stopPush(this)
-//            UserManager.loginOut()
-//            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN)
+            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN){
+                it["reLogin"] = true
+            }
+//            showLoginDialog()
         } else if (code == "10000") {//系统错误
             showToast("系统超时，即将重新登录")
             handler.postDelayed({

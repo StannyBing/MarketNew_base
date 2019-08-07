@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.LinearSmoothScroller
-import android.support.v7.widget.RecyclerView
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.main.bean.MailListBean
 import com.zx.marketnew_base.main.func.adapter.MailListAdapter
@@ -80,7 +79,7 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
                     return@setSearchListener
                 }
             }
-            showToast("没有搜索到" + it)
+            showToast("没有搜索到$it")
         }
         //列表点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->

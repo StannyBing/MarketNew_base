@@ -13,7 +13,7 @@ object ConstStrings {
     var INI_PATH = ""
     var APP_NAME = "ZHSQ"
     var DEVICE_TYPE = "android_pad"
-    val APPNAME = "MarketMobile"
+    val APPNAME = "MarketNew"
     val RESPONSE_SUCCESS = "1" // 请求成功
     val arcgisKey = "5SKIXc21JlankElJ"
     var LOCAL_PATH: String? = null

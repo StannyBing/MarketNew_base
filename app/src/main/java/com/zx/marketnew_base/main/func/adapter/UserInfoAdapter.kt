@@ -16,7 +16,7 @@ import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
  * Created by Xiangb on 2019/3/11.
  * 功能：
  */
-class UserInfoAdapter(dataBeans: List<KeyValueBean>, val editable: Boolean, val isChange: () -> Unit) : ZXQuickAdapter<KeyValueBean, ZXBaseHolder>(R.layout.item_userdetail, dataBeans) {
+class UserInfoAdapter(dataBeans: List<KeyValueBean>, val editable: Boolean) : ZXQuickAdapter<KeyValueBean, ZXBaseHolder>(R.layout.item_userdetail, dataBeans) {
     override fun convert(helper: ZXBaseHolder?, item: KeyValueBean?) {
         if (helper != null && item != null) {
             if (editable && "电话".equals(item.key)) {
@@ -42,7 +42,6 @@ class UserInfoAdapter(dataBeans: List<KeyValueBean>, val editable: Boolean, val 
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         item.value = text.toString()
-                        isChange()
                     }
                 })
             }

@@ -68,7 +68,7 @@ object ApiParamUtil {
         map["userId"] = userId
         map["pageNo"] = pageNo.toString()
         map["pageSize"] = pageSize.toString()
-        if (searchText.isNotEmpty()) map["entityName"] = searchText
+        if (searchText.isNotEmpty()) map["condition"] = searchText
         return map
     }
 

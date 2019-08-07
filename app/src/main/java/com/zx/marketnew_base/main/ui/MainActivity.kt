@@ -34,6 +34,8 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
     override var canSwipeBack: Boolean = false
 
+    private lateinit var messageFragment: MessageFragment
+
     companion object {
         /**
          * 启动器
@@ -61,7 +63,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
                 .setTabScrollable(false)
                 .setViewpagerCanScroll(false)
                 .setTabLayoutGravity(ZXTabViewPager.TabGravity.GRAVITY_BOTTOM)
-                .addTab(MessageFragment.newInstance(), "消息", R.drawable.selector_tab_message)
+                .addTab(MessageFragment.newInstance().apply { messageFragment = this }, "消息", R.drawable.selector_tab_message)
                 .addTab(WorkFragment.newInstance(), "办公", R.drawable.selector_tab_work)
                 .addTab(MailListFragment.newInstance(), "通讯录", R.drawable.selector_tab_maillist)
                 .addTab(UserFragment.newInstance(), "我的", R.drawable.selector_tab_user)

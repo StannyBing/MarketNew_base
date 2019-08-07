@@ -15,5 +15,11 @@ data class MessageBean(var ticker: String,
                        var inserDate: Long,
                        var guid: String,
                        var entityGuid: String,
-                       var text: String,
-                       var taskId: String)
+                       var text: String?,
+                       var taskId: String){
+    data class TextBean(var taskId : String,
+                        var entityGuid: String,
+                        var business : String,
+                        var businessId : String,
+                        var processType : String)
+}
