@@ -94,11 +94,11 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
         if (mailListBeans.isNotEmpty()) {
             mailListBeans.forEach {
                 dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark
-                        ?: "", imgurl = it.imgUrl ?: "", listType = 0))
+                        ?: "", imgUrl = it.imgUrl ?: "", listType = 0))
                 if (it.children.isNotEmpty()) {
                     it.children.forEach {
                         dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark
-                                ?: "", imgurl = it.imgUrl ?: "", listType = 1))
+                                ?: "", imgUrl = it.imgUrl ?: "", listType = 1))
                     }
                 }
             }

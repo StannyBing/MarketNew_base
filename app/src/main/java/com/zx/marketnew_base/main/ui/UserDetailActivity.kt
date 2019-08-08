@@ -98,7 +98,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             toolbar_view.showRightText("保存")
         }
 
-        Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP+userBean.imgurl)
+        Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP+userBean.imgUrl)
                 .apply(RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .error(R.drawable.app_default_headicon)
@@ -194,7 +194,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             }
         }
         userBean.telephone = telephone
-        userBean.imgurl = url
+        userBean.imgUrl = url
         mPresenter.changeUserInfo(ApiParamUtil.changeUserInfoParam(userBean.id, telephone, url))
     }
 

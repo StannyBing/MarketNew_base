@@ -42,7 +42,7 @@ class MailListAdapter(dataBeans: List<UserBean>) : ZXQuickAdapter<UserBean, ZXBa
                 }
             } else {
                 Glide.with(mContext)
-                        .load(item.imgurl)
+                        .load(item.imgUrl)
                         .apply(RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .error(R.mipmap.ic_launcher)
