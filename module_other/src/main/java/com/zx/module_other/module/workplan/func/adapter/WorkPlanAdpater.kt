@@ -14,10 +14,10 @@ class WorkPlanAdpater<T>(dataBeans: List<T>) : ZXQuickAdapter<T, ZXBaseHolder>(R
         if (item is WorkPlanBean) {
             helper!!.setText(R.id.tv_work_title, item.business)
             helper!!.setText(R.id.tv_work_content, item.content)
-            val time = DateUtil.stampToTime(item.endDate);
+            val time = DateUtil.stampToTime(item.startDate);
             val dayTime = DateUtil.stampToTime(System.currentTimeMillis())
             helper!!.setText(R.id.tv_day, time.substring(time.length-2,time.length))
-            helper!!.setText(R.id.tv_week, DateUtil.dateToWeek(DateUtil.stampToTime(item.endDate)))
+            helper!!.setText(R.id.tv_week, DateUtil.dateToWeek(DateUtil.stampToTime(item.startDate)))
             if (DateUtil.timeStringToStamp2(time)<DateUtil.timeStringToStamp2(dayTime)){
                 helper!!.getView<TextView>(R.id.tv_day).setTextColor(R.color.gray_cc)
                 helper!!.getView<TextView>(R.id.tv_week).setTextColor(R.color.gray_cc)

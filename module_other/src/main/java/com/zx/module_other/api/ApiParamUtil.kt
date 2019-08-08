@@ -133,12 +133,12 @@ object ApiParamUtil {
      */
     fun workPlanParam(startDateMin: String, startDateMax: String): Map<String, String> {
         val map = hashMapOf<String, String>()
-//        if (!TextUtils.isEmpty(startDateMin)) {
-//            map["startDateMin"] = startDateMin
-//        }
-//        if (!TextUtils.isEmpty(startDateMax)) {
-//            map["startDateMax"] = startDateMax
-//        }
+        if (!TextUtils.isEmpty(startDateMin)) {
+            map["startDateMin"] = startDateMin
+        }
+        if (!TextUtils.isEmpty(startDateMax)) {
+            map["startDateMax"] = startDateMax
+        }
         return map;
     }
 

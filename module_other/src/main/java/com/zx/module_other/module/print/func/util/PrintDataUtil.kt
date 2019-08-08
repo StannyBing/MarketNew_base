@@ -11,6 +11,7 @@ import com.android.dx.stock.ProxyBuilder
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import android.os.*
+import android.support.annotation.RequiresApi
 import java.io.*
 
 
@@ -21,8 +22,9 @@ class PrintDataUtil {
         val IMAGE_PATH = Environment.getExternalStorageDirectory().absolutePath + "/webview.jpg"
 
 
-
+        @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun getWebViewImgData(webView: WebView): Int {
+            webView.zoomBy(1/webView.scale)
             webView.setDrawingCacheEnabled(true)
             webView.buildDrawingCache()
             val bmp = webView.getDrawingCache()

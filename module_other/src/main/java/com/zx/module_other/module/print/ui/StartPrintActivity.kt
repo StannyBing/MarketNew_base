@@ -18,7 +18,8 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
-import com.zx.module_other.module.print.func.util.PrintDataService
+import com.zx.module_other.module.documentmanage.bean.Children
+import com.zx.module_other.module.documentmanage.func.util.DBService
 import com.zx.module_other.module.print.mvp.contract.StartPrintContract
 import com.zx.module_other.module.print.mvp.model.StartPrintModel
 import com.zx.module_other.module.print.mvp.presenter.StartPrintPresenter
@@ -38,7 +39,6 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     var devices = arrayListOf<BluetoothDevice>()
     var printerNames = arrayListOf<String>()
     var sAdpter: ArrayAdapter<String>? = null
-    var printDataService: PrintDataService? = null
     var es = Executors.newScheduledThreadPool(30)
     var pos = Pos()
     var mBt = BTPrinting()
@@ -49,9 +49,9 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
          * 启动器
          */
 
-        fun startAction(activity: Activity, isFinish: Boolean, docName: String, devices: ArrayList<BluetoothDevice>, filePath: String) {
+        fun startAction(activity: Activity, isFinish: Boolean, child: Children, devices: ArrayList<BluetoothDevice>, filePath: String) {
             val intent = Intent(activity, StartPrintActivity::class.java)
-            intent.putExtra("docName", docName)
+            intent.putExtra("child", child)
             intent.putExtra("devices", devices)
             intent.putExtra("filePath", filePath)
             activity.startActivity(intent)
@@ -72,10 +72,9 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        tv_print_name.setText(intent.getStringExtra("docName"))
+        tv_print_name.setText((intent.getSerializableExtra("child") as Children).name)
         toolbar_view.withXApp(XAppOther.PRINT)
         sAdpter = ArrayAdapter(this, com.zx.module_other.R.layout.item_start_print, R.id.text, printerNames)
-        printDataService = PrintDataService(this)
         btn_print.background.setTint(ContextCompat.getColor(this, XAppOther.PRINT.moduleColor))
         devices = intent.getParcelableArrayListExtra("devices")
         s_printer.adapter = sAdpter
@@ -136,9 +135,9 @@ class StartPrintActivity : BaseActivity<StartPrintPresenter, StartPrintModel>(),
             suc = pos!!.GetIO().IsOpened()
             runOnUiThread {
                 if (suc) {
-                    ZXToastUtil.showToast("成功")
+                    DBService.getDBService().insert(intent.getSerializableExtra("child") as Children)
                 } else {
-                    ZXToastUtil.showToast("失败")
+                    ZXToastUtil.showToast("打印失败")
                 }
 
             }

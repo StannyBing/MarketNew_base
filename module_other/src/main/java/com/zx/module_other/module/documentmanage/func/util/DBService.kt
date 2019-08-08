@@ -36,7 +36,7 @@ class DBService {
     fun getMessage(): List<Children> {
         val children = ArrayList<Children>()
         var cursor: Cursor? = null
-        cursor = zxDataBaseUtil!!.rawQuery("SELECT * FROM printhistory", arrayOf())
+        cursor = zxDataBaseUtil!!.rawQuery("SELECT * FROM printhistory order by id desc limit 0,30", arrayOf())
         while (cursor!!.moveToNext()) {
             children.add(Children(null,
                     cursor!!.getString(cursor!!.getColumnIndex("doc_id")),

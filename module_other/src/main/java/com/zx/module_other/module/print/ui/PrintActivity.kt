@@ -21,6 +21,7 @@ import com.zx.module_other.module.documentmanage.func.util.DBService
 import com.zx.module_other.module.documentmanage.ui.DocumentSeeActivity
 import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.receiver.BluetoothReceive
+import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.mvp.contract.PrintContract
 import com.zx.module_other.module.print.mvp.model.PrintModel
 import com.zx.module_other.module.print.mvp.presenter.PrintPresenter
@@ -48,9 +49,9 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, docName: String, filePath: String) {
+        fun startAction(activity: Activity, isFinish: Boolean, child: Children?, filePath: String) {
             val intent = Intent(activity, PrintActivity::class.java)
-            intent.putExtra("docName", docName)
+            intent.putExtra("child", child)
             intent.putExtra("filePath", filePath)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
@@ -90,7 +91,11 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
             if (devices.size == 0) {
                 BluetoothActivity.startAction(this, false)
             } else {
-                ChoiceFileActivity.startAction(this, false)
+                if (intent.getSerializableExtra("child") != null) {
+                    PrintActivity.startAction(this, true, intent.getSerializableExtra("child") as Children, PrintDataUtil.IMAGE_PATH)
+                } else {
+                    ChoiceFileActivity.startAction(this, true)
+                }
             }
         }
 

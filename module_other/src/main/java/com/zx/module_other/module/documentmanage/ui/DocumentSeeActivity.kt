@@ -43,7 +43,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
     var bluetoothAdapter: BluetoothAdapter? = null
     //    val mReceiver = BluetoothReceive()
     val devices = arrayListOf<BluetoothDevice>()
-    var data: Bitmap? = null;
+    var data: Bitmap? = null
 
     companion object {
         val TYPE_FILL = 0
@@ -67,12 +67,11 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             DocumentFillActivity.startAction(this, true, intent.getSerializableExtra("children") as Children)
         }
         btn_print_document.setOnClickListener {
-            DBService.getDBService().insert(intent.getSerializableExtra("children") as Children)
             if (PrintDataUtil.getWebViewImgData(wv_documentsee) == PrintDataUtil.SUC) {
                 if (devices.size == 0) {
-                    PrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, PrintDataUtil.IMAGE_PATH)
+                    PrintActivity.startAction(this, true, intent.getSerializableExtra("children") as Children, PrintDataUtil.IMAGE_PATH)
                 } else {
-                    StartPrintActivity.startAction(this, true, (intent.getSerializableExtra("children") as Children).name, devices, PrintDataUtil.IMAGE_PATH)
+                    StartPrintActivity.startAction(this, true, intent.getSerializableExtra("children") as Children, devices, PrintDataUtil.IMAGE_PATH)
                 }
             } else {
                 ZXToastUtil.showToast("获取打印数据失败请重试！")
@@ -99,8 +98,8 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.supportZoom()
-//            settings.displayZoomControls = false
-//            settings.builtInZoomControls = true
+            settings.displayZoomControls = false
+            settings.builtInZoomControls = true
             settings.textZoom = 150
             // settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
             scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY

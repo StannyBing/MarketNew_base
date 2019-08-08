@@ -1,5 +1,6 @@
 package com.zx.marketnew_base.api
 
+import android.text.TextUtils
 import android.util.Base64
 import com.google.gson.Gson
 import com.zx.module_library.app.ApiParamUtil
@@ -91,4 +92,16 @@ object ApiParamUtil {
         return toJson(map)
     }
 
+    //修改密码
+    fun changeUserInfoParam(id: String, telephone: String, imgUrl: String): RequestBody {
+        val map = hashMapOf<String, String>()
+        map["id"] = id
+        if (!TextUtils.isEmpty(telephone)) {
+            map["telephone"] = telephone
+        }
+        if (!TextUtils.isEmpty(imgUrl)) {
+            map["imgUrl"] = imgUrl
+        }
+        return toJson(map)
+    }
 }

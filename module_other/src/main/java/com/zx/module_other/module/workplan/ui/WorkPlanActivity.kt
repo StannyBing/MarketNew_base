@@ -72,11 +72,12 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
                 getWorkPlan(DateUtil.timeStringToStamp(startDate).toString(), DateUtil.timeStringToStamp(endDate).toString())
             } else if (this.localDate!!.monthOfYear != localDate.monthOfYear) {
                 getWorkPlan(DateUtil.timeStringToStamp(startDate).toString(), DateUtil.timeStringToStamp(endDate).toString())
-            } else if (this.localDate!!.dayOfMonth != localDate.dayOfMonth) {
-                getWorkPlan(DateUtil.timeStringToStamp(localDate.toString() + " 00:00:00").toString(), DateUtil.timeStringToStamp(localDate.toString() + " 24:00:00").toString())
-                tv_plan_date.setText(localDate.toString().substring(5))
-                tv_plan_week.setText(DateUtil.dateToWeek(localDate.toString()))
             }
+//            } else if (this.localDate!!.dayOfMonth != localDate.dayOfMonth) {
+//                getWorkPlan(DateUtil.timeStringToStamp(localDate.toString() + " 00:00:00").toString(), DateUtil.timeStringToStamp(localDate.toString() + " 24:00:00").toString())
+//                tv_plan_date.setText(localDate.toString().substring(5))
+//                tv_plan_week.setText(DateUtil.dateToWeek(localDate.toString()))
+//            }
             this.localDate = localDate
         }
         iv_create_plan.setOnClickListener {

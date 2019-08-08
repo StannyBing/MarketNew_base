@@ -11,6 +11,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
+import com.zx.module_other.module.documentmanage.ui.DocumentActivity
 
 import com.zx.module_other.module.print.mvp.contract.ChoiceFileContract
 import com.zx.module_other.module.print.mvp.model.ChoiceFileModel
@@ -59,7 +60,9 @@ class ChoiceFileActivity : BaseActivity<ChoiceFilePresenter, ChoiceFileModel>(),
      * View事件设置
      */
     override fun onViewListener() {
-
+        btn_system_file.setOnClickListener {
+            DocumentActivity.startAction(this, false)
+        }
     }
 
 }

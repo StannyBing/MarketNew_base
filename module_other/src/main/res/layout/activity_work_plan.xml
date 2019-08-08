@@ -10,9 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        app:title_text="@string/work_plan"
         app:show_rightpic="true"
-        />
+        app:title_text="@string/work_plan" />
 
     <LinearLayout
         android:id="@+id/ll_week"
@@ -152,5 +151,5 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_20"
-        android:src="@drawable/collect_select"/>
+        android:src="@drawable/add_work" />
 </RelativeLayout>

@@ -26,6 +26,10 @@ interface ApiService {
     @POST(ApiConfigModule.URL + "user/update.do")
     fun changePwd(@Body info: RequestBody): Observable<BaseRespose<String>>
 
+    @Headers("Content-Type: application/json", "Accept: application/json")
+    @POST(ApiConfigModule.URL + "user/update.do")
+    fun changeUserInfo(@Body info: RequestBody): Observable<BaseRespose<String>>
+
     @POST(ApiConfigModule.URL_APP + "pushMsg/getPushMsgPage.do")
     fun getMessageList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<MessageBean>>>
 

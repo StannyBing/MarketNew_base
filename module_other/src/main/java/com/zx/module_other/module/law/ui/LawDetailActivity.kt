@@ -64,7 +64,7 @@ class LawDetailActivity : BaseActivity<LawDetailPresenter, LawDetailModel>(), La
         wv_law_query.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
-            settings.textZoom = 200
+            settings.textZoom = 250
 //            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
             scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
             settings.loadWithOverviewMode = true
