@@ -1,5 +1,6 @@
 package com.zx.marketnew_base.main.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
@@ -24,6 +25,7 @@ import com.zx.marketnew_base.main.mvp.contract.UserDetailContract
 import com.zx.marketnew_base.main.mvp.model.UserDetailModel
 import com.zx.marketnew_base.main.mvp.presenter.UserDetailPresenter
 import com.zx.module_library.XApp
+import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.FileBean
@@ -96,7 +98,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             toolbar_view.showRightText("保存")
         }
 
-        Glide.with(ZXApp.getContext()).load(userBean.imgurl)
+        Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP+userBean.imgurl)
                 .apply(RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .error(R.drawable.app_default_headicon)
@@ -150,9 +152,10 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             }
         }
         iv_userDetail_head.setOnClickListener {
-            XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, this, 0x02) {
-                it["cameraType"] = 1
-            }
+            getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
+                XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, this, 0x02) {
+                    it["cameraType"] = 1
+                }
 //            val addView = LayoutInflater.from(this).inflate(com.zx.module_library.R.layout.layout_dialog_addfile, null, false)
 //            val llAddImage = addView.findViewById<LinearLayout>(com.zx.module_library.R.id.ll_fileadd_image)
 //            val llAddVideo = addView.findViewById<LinearLayout>(com.zx.module_library.R.id.ll_fileadd_video)
@@ -179,6 +182,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
 //            }
 //
 //            ZXDialogUtil.showCustomViewDialog(context, "请选择添加类型", addView, null, { _, _ -> }, false)
+            }
         }
     }
 

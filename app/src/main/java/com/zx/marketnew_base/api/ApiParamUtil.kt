@@ -93,14 +93,14 @@ object ApiParamUtil {
     }
 
     //修改密码
-    fun changeUserInfoParam(id: String, telephone: String, imgUrl: String): RequestBody {
+    fun changeUserInfoParam(id: String, telephone: String, imgurl: String): RequestBody {
         val map = hashMapOf<String, String>()
         map["id"] = id
         if (!TextUtils.isEmpty(telephone)) {
             map["telephone"] = telephone
         }
-        if (!TextUtils.isEmpty(imgUrl)) {
-            map["imgUrl"] = imgUrl
+        if (!TextUtils.isEmpty(imgurl)) {
+            map["imgurl"] = imgurl
         }
         return toJson(map)
     }
