@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * Updated by dell on 2019-07-08
  */
-data class DetailBean(var info: InfoBean, var files: List<FileBean>?) : Serializable {
+data class DetailBean(var info: InfoBean, var files: List<FileBean>?, var isHandle: IsHandleBean) : Serializable {
     data class InfoBean(var createUserId: String,
                         var endDate: String?,
                         var departmentId: String,
@@ -76,4 +76,8 @@ data class DetailBean(var info: InfoBean, var files: List<FileBean>?) : Serializ
                         var updateUser: String,
                         var updateUserId: String,
                         var updateDate: Long) : Serializable
+
+    data class IsHandleBean(var pro_case: Boolean,
+                            var pro_jylc: Boolean,
+                            var pro_qzcs: Boolean)
 }

@@ -7,6 +7,7 @@ import com.frame.zxmvp.http.AppDelegate
 import com.frame.zxmvp.http.GlobalHttpHandler
 import com.frame.zxmvp.integration.ConfigModule
 import com.frame.zxmvp.integration.IRepositoryManager
+import com.zx.module_library.BuildConfig
 import com.zx.zxutils.util.ZXLogUtil
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -18,21 +19,9 @@ import okhttp3.Response
  */
 open class BaseConfigModule(val apiService: Class<*> = ApiService::class.java, var moduleName: String = "library") : ConfigModule {
 
-    enum class APP_TYPE(val versionCode: Int, val versionName: String, val realseUrl: String, val debugUrl: String, val areaParentId : String) {
-        BASE(1, "1.0.0", "http://rc.jx968969.com/", "http://scjg.zxgeo.com/", "360481"),
-        DX_APP(1, "1.0.0", "http://223.83.172.79:90/", "http://192.168.11.248:8106/", "360481"),
-        RC_APP(1, "1.0.0", "http://rc.jx968969.com/", "http://192.168.11.248:8101/", "360481");
-    }
-
     companion object {
-        const val APP_HEAD = ""//头部(用于区分不同的应用)
-        val appInfo = when (APP_HEAD) {
-            "dx" -> APP_TYPE.DX_APP
-            "rc" -> APP_TYPE.RC_APP
-            else -> APP_TYPE.BASE
-        }
-        val ISRELEASE = false// 是否正式环境
-        val BASE_IP = if (ISRELEASE) appInfo.realseUrl else appInfo.debugUrl
+        const val APP_HEAD = BuildConfig.APP_HEAD
+        val BASE_IP = if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL
         var TOKEN = ""
     }
 

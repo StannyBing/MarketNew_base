@@ -25,7 +25,8 @@ android {
         }
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        //必须要保证所有的flavor 都属于同一个维度
+        flavorDimensions "default"
     }
     lintOptions {
         checkReleaseBuilds false
@@ -49,6 +50,22 @@ android {
         }
     }
 
+
+    publishNonDefault true//在module中使用flavor必须加上
+    productFlavors {
+        base {
+            dimension "default"
+            matchingFallbacks = ["base"]
+        }
+        dx {
+            dimension "default"
+            matchingFallbacks = ["dx"]
+        }
+        rc {
+            dimension "default"
+            matchingFallbacks = ["rc"]
+        }
+    }
 }
 
 dependencies {

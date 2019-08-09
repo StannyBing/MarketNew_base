@@ -43,8 +43,6 @@ import java.io.File
 @Route(path = RoutePath.ROUTE_SUPERVISE_DAILY_ADD)
 class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), DailyAddContract.View {
 
-    override var canSwipeBack: Boolean = false
-
     private lateinit var dailyBaseFragment: DailyBaseFragment
     private lateinit var dailyCheckFragment: DailyCheckFragment
 

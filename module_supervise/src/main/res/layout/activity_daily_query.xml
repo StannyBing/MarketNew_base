@@ -9,6 +9,8 @@
     <com.zx.module_library.view.ToolBarView
         android:id="@+id/toolBar_view"
         app:show_rightpic="true"
+        app:show_righttext="true"
+        app:right_text="新增检查"
         app:rightpic_bg="@drawable/daily_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

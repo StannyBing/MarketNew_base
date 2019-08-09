@@ -87,7 +87,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                     override fun onItemClick(item: LegalcaseListBean?, position: Int) {
-                        DetailActivity.startAction(this@QueryActivity, false, item!!.id, item.taskId, searchType != "1" || todo != "1", item.processType)
+                        DetailActivity.startAction(this@QueryActivity, false, item!!.id, item.taskId,  item.processType)
                     }
 
                 })

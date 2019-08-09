@@ -13,6 +13,7 @@ import com.zx.module_library.module.camera.mvp.contract.CameraVideoContract
 import com.zx.module_library.module.camera.mvp.model.CameraVideoModel
 import com.zx.module_library.module.camera.mvp.presenter.CameraVideoPresenter
 import com.zx.zxutils.util.ZXBitmapUtil
+import com.zx.zxutils.util.ZXFileUtil
 import com.zx.zxutils.util.ZXTimeUtil
 import com.zx.zxutils.views.CameraView.ZXCameraView
 import com.zx.zxutils.views.CameraView.listener.CameraListener
@@ -72,6 +73,7 @@ class CameraVideoActivity : BaseActivity<CameraVideoPresenter, CameraVideoModel>
                         val time = ZXTimeUtil.getTime(System.currentTimeMillis(), SimpleDateFormat("yyyyMMdd_HHmmss"))
                         val name = time + ".jpg"
                         val path = ConstStrings.getCachePath() + time + ".jpg"
+                        ZXFileUtil.createNewFile(path)
                         ZXBitmapUtil.bitmapToFile(bitmap, File(path))
                         val intent = Intent()
                         intent.putExtra("path", path)

@@ -84,7 +84,6 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
                             XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
                                 it["id"] = textBean.businessId
                                 it["taskId"] = textBean.taskId
-                                it["optable"] = true
                             }
                         }
                         "投诉举报" -> {
@@ -96,7 +95,6 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
                             XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
                                 it["id"] = textBean.businessId
                                 it["taskId"] = textBean.taskId
-                                it["optable"] = true
                                 it["processType"] = textBean.processType
                             }
                         }

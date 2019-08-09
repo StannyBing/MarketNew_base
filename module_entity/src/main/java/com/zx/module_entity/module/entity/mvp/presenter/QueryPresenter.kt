@@ -3,10 +3,10 @@ package com.zx.module_entity.module.entity.mvp.presenter
 import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSubscriber
 import com.zx.module_entity.api.ApiParamUtil
-import com.zx.module_entity.module.entity.bean.EntityStationBean
 import com.zx.module_entity.module.entity.bean.EntityBean
+import com.zx.module_entity.module.entity.bean.EntityStationBean
 import com.zx.module_entity.module.entity.mvp.contract.QueryContract
-import com.zx.module_library.app.BaseConfigModule
+import com.zx.module_library.BuildConfig
 import com.zx.module_library.bean.NormalList
 
 
@@ -41,7 +41,7 @@ class QueryPresenter : QueryContract.Presenter() {
                 }
                 .flatMap {
                     mView.onEntityLevelResult(it)
-                    mModel.deptListData(ApiParamUtil.entityStationParam(BaseConfigModule.appInfo.areaParentId))
+                    mModel.deptListData(ApiParamUtil.entityStationParam(BuildConfig.AREA_ID))
                 }
                 .subscribe(object : RxSubscriber<List<EntityStationBean>>() {
                     override fun _onNext(stationBeans: List<EntityStationBean>) {

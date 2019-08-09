@@ -49,7 +49,6 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
     }
 
     override fun onResume() {

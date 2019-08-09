@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import cn.jpush.android.api.JPushInterface
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
+import com.zx.marketnew_base.BuildConfig
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.main.bean.FuncBean
 import com.zx.marketnew_base.main.bean.VersionBean
@@ -15,7 +16,6 @@ import com.zx.marketnew_base.main.func.adapter.FuncAdapter
 import com.zx.marketnew_base.system.mvp.contract.SettingContract
 import com.zx.marketnew_base.system.mvp.model.SettingModel
 import com.zx.marketnew_base.system.mvp.presenter.SettingPresenter
-import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.ConstStrings
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -137,8 +137,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
      * 版本检测
      */
     override fun onVersionResult(versionBean: VersionBean) {
-        val versionCode = BaseConfigModule.appInfo.versionCode
-        if (versionCode < versionBean.versionCode) {
+        if (BuildConfig.VERSION_CODE < versionBean.versionCode) {
             ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}") { dialog, which ->
                 getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     mPresenter.downloadApk(versionBean.url)

@@ -74,7 +74,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(true)
-                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
+                .setTitleColor(ContextCompat.getColor(this, R.color.text_color_light), ContextCompat.getColor(this, R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
@@ -106,7 +106,8 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                     it["type"] = 1
                     it["taskBean"] = MapTaskBean(XAppComplain.LIST.name,
                             XAppComplain.LIST.appIcon,
-                            (detailBean!!.baseInfo.fName ?: "") + (detailBean!!.baseInfo.fType ?: "") + (detailBean!!.baseInfo.fEntityName ?: ""),
+                            (detailBean!!.baseInfo.fName ?: "") + (detailBean!!.baseInfo.fType
+                                    ?: "") + (detailBean!!.baseInfo.fEntityName ?: ""),
                             "主体地址：" + (detailBean!!.baseInfo.fEntityAddress ?: ""),
                             "涉及主体：" + (detailBean!!.baseInfo.fEntityName ?: ""),
                             detailBean!!.baseInfo.fGuid ?: "",
@@ -128,23 +129,23 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         //设置按钮
         val fStatus = detailBean.baseInfo.fStatus
         val roles = UserManager.getUser().role
-        btn_complain_dispose.visibility = View.VISIBLE
-        if (fStatus == 20 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
-            btn_complain_dispose.text = "任务处置(分流)"
-        } else if (fStatus == 30 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
-            btn_complain_dispose.text = "任务处置(指派)"
-        } else if (fStatus == 40 && detailBean.baseInfo.fDisposeUser.equals(UserManager.getUser().id)) {
-            btn_complain_dispose.text = "任务处置(联系)"
-        } else if (fStatus == 50 && detailBean.baseInfo.fDisposeUser.equals(UserManager.getUser().id)) {
-            btn_complain_dispose.text = "任务处置(处置)"
-        } else if (fStatus == 60 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
-            btn_complain_dispose.text = "任务处置(初审)"
-        } else if (fStatus == 70 && roles.contains("2010")) {
-            btn_complain_dispose.text = "任务处置(终审)"
-        } else if (fStatus == 80 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
-            btn_complain_dispose.text = "任务处置(办结)"
-        } else {
-            btn_complain_dispose.visibility = View.GONE
+        if (detailBean.isHandle) {
+            btn_complain_dispose.visibility = View.VISIBLE
+            if (fStatus == 20 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+                btn_complain_dispose.text = "任务处置(分流)"
+            } else if (fStatus == 30 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
+                btn_complain_dispose.text = "任务处置(指派)"
+            } else if (fStatus == 40 && detailBean.baseInfo.fDisposeUser.equals(UserManager.getUser().id)) {
+                btn_complain_dispose.text = "任务处置(联系)"
+            } else if (fStatus == 50 && detailBean.baseInfo.fDisposeUser.equals(UserManager.getUser().id)) {
+                btn_complain_dispose.text = "任务处置(处置)"
+            } else if (fStatus == 60 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
+                btn_complain_dispose.text = "任务处置(初审)"
+            } else if (fStatus == 70 && roles.contains("2010")) {
+                btn_complain_dispose.text = "任务处置(终审)"
+            } else if (fStatus == 80 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+                btn_complain_dispose.text = "任务处置(办结)"
+            }
         }
         //初始化数据
         regInfoFragment.reSetInfo(detailBean.baseInfo)

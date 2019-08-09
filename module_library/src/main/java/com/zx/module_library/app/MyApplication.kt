@@ -23,7 +23,6 @@ open class MyApplication : BaseApplication() {
 
     companion object {
         lateinit var instance: MyApplication
-
 //        fun getInstance(): MyApplication {
 //            return
 //        }
@@ -34,6 +33,7 @@ open class MyApplication : BaseApplication() {
     lateinit var mContest: Context
 
     lateinit var component: AppComponent
+
 
     override fun onCreate() {
         super.onCreate()

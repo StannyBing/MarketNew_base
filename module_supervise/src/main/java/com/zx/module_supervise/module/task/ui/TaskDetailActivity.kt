@@ -32,7 +32,6 @@ class TaskDetailActivity : BaseActivity<TaskDetailPresenter, TaskDetailModel>(),
 
     private lateinit var id: String
     private lateinit var taskId: String
-    private var optable: Boolean = false
 
     private var taskInfoBean: TaskInfoBean? = null
     private var entityInfoBean: EntityInfoBean? = null
@@ -46,11 +45,10 @@ class TaskDetailActivity : BaseActivity<TaskDetailPresenter, TaskDetailModel>(),
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, id: String, taskId: String, optable: Boolean = false) {
+        fun startAction(activity: Activity, isFinish: Boolean, id: String, taskId: String) {
             val intent = Intent(activity, TaskDetailActivity::class.java)
             intent.putExtra("id", id)
             intent.putExtra("taskId", taskId)
-            intent.putExtra("optable", optable)
             activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
         }
@@ -71,7 +69,6 @@ class TaskDetailActivity : BaseActivity<TaskDetailPresenter, TaskDetailModel>(),
 
         toolBar_view.withXApp(XAppSupervise.SUPERVISE)
 
-        optable = if (intent.hasExtra("optable")) intent.getBooleanExtra("optable", false) else false
         id = intent.getStringExtra("id")
         taskId = intent.getStringExtra("taskId")
 
@@ -139,7 +136,7 @@ class TaskDetailActivity : BaseActivity<TaskDetailPresenter, TaskDetailModel>(),
         entityInfoFragment.resetInfo(entityInfoBean)
         dynamicFragment.resetInfo(taskId, entityInfoBean.fEntityGuid)
 
-        if (optable) {
+        if (entityInfoBean.isHandle) {
             btn_supervise_dispose.visibility = View.VISIBLE
             btn_supervise_dispose.text = when (entityInfoBean.fStatus) {
                 "101" -> "开始执行"

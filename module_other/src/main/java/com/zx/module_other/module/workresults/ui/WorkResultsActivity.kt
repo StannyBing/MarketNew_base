@@ -44,9 +44,7 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
                 "投诉举报" -> XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK)
                 "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK)
                 "现场检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY)
-                "专项检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK)
-                "监管任务" -> {}
-
+                "监管任务" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK)
             }
         }
     }

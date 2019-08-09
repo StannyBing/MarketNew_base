@@ -25,6 +25,8 @@ android {
                 includeCompileClasspath true
             }
         }
+        //必须要保证所有的flavor 都属于同一个维度
+        flavorDimensions "default"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -72,6 +74,21 @@ android {
         }
     }
 
+    publishNonDefault true//在module中使用flavor必须加上
+    productFlavors {
+        base {
+            dimension "default"
+            matchingFallbacks = ["base"]
+        }
+        dx {
+            dimension "default"
+            matchingFallbacks = ["dx"]
+        }
+        rc {
+            dimension "default"
+            matchingFallbacks = ["rc"]
+        }
+    }
 }
 
 buildscript {
@@ -105,3 +122,4 @@ kapt {
     generateStubs = true
     mapDiagnosticLocations = true
 }
+

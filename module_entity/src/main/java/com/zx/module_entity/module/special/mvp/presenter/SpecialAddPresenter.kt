@@ -5,7 +5,7 @@ import com.frame.zxmvp.baserx.RxSubscriber
 import com.frame.zxmvp.http.upload.UploadRequestBody
 import com.zx.module_entity.module.special.bean.DeptBean
 import com.zx.module_entity.module.special.mvp.contract.SpecialAddContract
-import com.zx.module_library.app.BaseConfigModule
+import com.zx.module_library.BuildConfig
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -26,7 +26,7 @@ class SpecialAddPresenter : SpecialAddContract.Presenter() {
                 }
                 .flatMap {
                     mView.onIdentifyListResult(it)
-                    mModel.deptListData(hashMapOf("type" to "10", "parentId" to BaseConfigModule.appInfo.areaParentId))
+                    mModel.deptListData(hashMapOf("type" to "10", "parentId" to BuildConfig.AREA_ID))
                 }
                 .subscribe(object : RxSubscriber<List<DeptBean>>() {
                     override fun _onNext(t: List<DeptBean>?) {

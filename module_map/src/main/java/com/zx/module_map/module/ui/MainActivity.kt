@@ -29,8 +29,6 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
     private var taskBean: MapTaskBean? = null
 
-    override var canSwipeBack: Boolean = false
-
     private var type: Int = 0
     //0普通
     //1主体查看

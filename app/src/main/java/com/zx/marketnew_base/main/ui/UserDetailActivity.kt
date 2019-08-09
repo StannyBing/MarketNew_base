@@ -112,10 +112,10 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         rv_userDetail_info.layoutManager = LinearLayoutManager(this)
         rv_userDetail_info.adapter = listAdapter
 
-        dataBeans.add(KeyValueBean("组织", "组织组织组织组织组织"))
+        dataBeans.add(KeyValueBean("组织", userBean.station))
         dataBeans.add(KeyValueBean("姓名", userBean.realName))
         dataBeans.add(KeyValueBean("电话", userBean.telephone))
-        dataBeans.add(KeyValueBean("部门", "部门部门"))
+        dataBeans.add(KeyValueBean("部门", userBean.department))
         dataBeans.add(KeyValueBean("部门座机", userBean.officeTel + ""))
         dataBeans.add(KeyValueBean("职位", userBean.department))
 

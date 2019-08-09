@@ -87,7 +87,7 @@ class TaskQueryActivity : BaseActivity<TaskQueryPresenter, TaskQueryModel>(), Ta
                     }
 
                     override fun onItemClick(item: TaskListBean?, position: Int) {
-                        TaskDetailActivity.startAction(this@TaskQueryActivity, false, item!!.fId, item.fTaskId, searchType == "0")
+                        TaskDetailActivity.startAction(this@TaskQueryActivity, false, item!!.fId, item.fTaskId)
                     }
 
                 })

@@ -6,6 +6,7 @@ import java.io.Serializable
  * Updated by dell on 2019-06-27
  */
 data class DetailBean(var baseInfo: BaseInfo,
+                      var isHandle : Boolean,
                       var statusInfo: List<StatusInfo>?,
                       var files: List<FileBean>?) : Serializable {
     data class BaseInfo(var fGuid: String?,

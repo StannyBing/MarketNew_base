@@ -50,7 +50,6 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         rightText = if (typedArray.hasValue(R.styleable.ToolBarView_right_text)) typedArray.getString(R.styleable.ToolBarView_right_text) else ""
         showRightPic = typedArray.getBoolean(R.styleable.ToolBarView_show_rightpic, false)
         showRightText = typedArray.getBoolean(R.styleable.ToolBarView_show_righttext, false)
-        showRightPic = if (showRightText) false else showRightPic
         module_color = typedArray.getColor(R.styleable.ToolBarView_module_color, ContextCompat.getColor(context, R.color.colorPrimary))
         bg_color = typedArray.getColor(R.styleable.ToolBarView_bg_color, ContextCompat.getColor(context, R.color.white))
         init(context)

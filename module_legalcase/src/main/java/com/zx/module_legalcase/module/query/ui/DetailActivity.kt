@@ -43,11 +43,10 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, id: String, taskId: String?, optable: Boolean = false, processType: String? = "pro_case") {
+        fun startAction(activity: Activity, isFinish: Boolean, id: String, taskId: String?, processType: String? = "pro_case") {
             val intent = Intent(activity, DetailActivity::class.java)
             intent.putExtra("id", id)
             intent.putExtra("taskId", taskId)
-            intent.putExtra("optable", optable)
             intent.putExtra("processType", processType)
             activity.startActivityForResult(intent, 0x01)
             if (isFinish) activity.finish()
@@ -139,15 +138,14 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         this.detailBean = detailBean
         this.detailBean!!.info.taskId = if (intent.hasExtra("taskId")) intent.getStringExtra("taskId") else ""
         this.detailBean!!.info.processType = if (intent.hasExtra("processType")) intent.getStringExtra("processType") else ""
-        val optable = intent.hasExtra("optable") && intent.getBooleanExtra("optable", false)
         if (detailBean.info.status == "00") {
             optList.add("启动流程")
-        } else if (detailBean.info.processType == "pro_case" && optable) {
+        } else if (detailBean.info.processType == "pro_case" && detailBean.isHandle.pro_case) {
             optList.add("流程操作" + "-${detailBean.info.statusName}")
         }
-        if (optable) optList.add("强制措施" + if (detailBean.info.processType == "pro_qzcs") "-${detailBean.info.compelStatusName
+        if (detailBean.isHandle.pro_qzcs) optList.add("强制措施" + if (detailBean.info.processType == "pro_qzcs") "-${detailBean.info.compelStatusName
                 ?: ""}" else "")
-        if (optable) optList.add("简易流程" + if (detailBean.info.processType == "pro_jylc") "-处置" else "")
+        if (detailBean.isHandle.pro_jylc) optList.add("简易流程" + if (detailBean.info.processType == "pro_jylc") "-处置" else "")
         optList.add("案件移送")
 
         if (detailBean.info.status == "03") {//已归档

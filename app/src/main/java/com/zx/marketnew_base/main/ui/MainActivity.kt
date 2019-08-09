@@ -82,7 +82,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
         JPushInterface.resumePush(this)
         JPushInterface.setAlias(this, 0, UserManager.getUser().id)
-        JPushInterface.setTags(this, 0, setOf(BaseConfigModule.APP_HEAD + (if (BaseConfigModule.ISRELEASE) "_regular" else "_test")))
+        JPushInterface.setTags(this, 0, setOf(BaseConfigModule.APP_HEAD + BuildConfig.pushTag))
 
         mPresenter.getVerson()
     }
@@ -98,8 +98,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      * 版本检测
      */
     override fun onVersionResult(versionBean: VersionBean) {
-        val versionCode = BaseConfigModule.appInfo.versionCode
-        if (versionCode < versionBean.versionCode) {
+        if (BuildConfig.VERSION_CODE < versionBean.versionCode) {
             ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}") { dialog, which ->
                 getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     mPresenter.downloadApk(versionBean.url)

@@ -41,6 +41,7 @@ object ApiParamUtil {
         val map = hashMapOf<String, String>()
         map["pageNo"] = pageNo.toString()
         map["pageSize"] = pageSize.toString()
+        map["orderByClause"] = "found_date desc"
         if (process.isNotEmpty()) map["process"] = process
         if (domainCode.isNotEmpty()) map["domainCode"] = domainCode
         if (condition.isNotEmpty()) map["condition"] = condition

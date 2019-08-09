@@ -56,6 +56,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
         }
 
         if (canSwipeBack) ZXSwipeBackHelper.onCreate(this)
+                .setSwipeEdge(70)
                 .setSwipeBackEnable(true)
                 .setSwipeRelateEnable(true)
         MyApplication.instance.addActivity(this)
@@ -79,7 +80,6 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                                 XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
                                     it["id"] = jsonObj.getString("businessId")
                                     it["taskId"] = jsonObj.getString("taskId")
-                                    it["optable"] = true
                                 }
                             }, null)
                             return@Action1
@@ -97,7 +97,6 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                                 XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
                                     it["id"] = jsonObj.getInfo("businessId")
                                     it["taskId"] = jsonObj.getInfo("taskId")
-                                    it["optable"] = true
                                     it["processType"] = jsonObj.getInfo("processType")
                                 }
                             }, null)

@@ -22,7 +22,6 @@ class WorkResultAllAdapter<T>(dataBeans: List<T>) : ZXQuickAdapter<T, ZXBaseHold
                     "投诉举报"->helper.getView<ImageView>(R.id.iv_report).setImageResource(R.drawable.icon_complain)
                     "综合执法"->helper.getView<ImageView>(R.id.iv_report).setImageResource(R.drawable.icon_legalcase_handle)
                     "现场检查"->helper.getView<ImageView>(R.id.iv_report).setImageResource(R.drawable.icon_daily)
-                    "专项检查"->helper.getView<ImageView>(R.id.iv_report).setImageResource(R.drawable.icon_supervise)
                     "监管任务"->helper.getView<ImageView>(R.id.iv_report).setImageResource(R.drawable.icon_supervise)
                 }
             }

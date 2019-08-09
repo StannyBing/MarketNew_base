@@ -138,18 +138,18 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
                 build()
             }
             //处理结果
-            sp_dispose_result.apply {
-                showUnderineColor(false)
-                setData(arrayListOf<KeyValueEntity>().apply {
-                    add(KeyValueEntity("符合", "符合"))
-                    add(KeyValueEntity("不符合", "不符合"))
-                    add(KeyValueEntity("基本符合", "基本符合"))
-                })
-                setItemHeightDp(40)
-                setItemTextSizeSp(15)
-                showSelectedTextColor(true, XAppSupervise.SUPERVISE.moduleColor)
-                build()
-            }
+//            sp_dispose_result.apply {
+//                showUnderineColor(false)
+//                setData(arrayListOf<KeyValueEntity>().apply {
+//                    add(KeyValueEntity("符合", "符合"))
+//                    add(KeyValueEntity("不符合", "不符合"))
+//                    add(KeyValueEntity("基本符合", "基本符合"))
+//                })
+//                setItemHeightDp(40)
+//                setItemTextSizeSp(15)
+//                showSelectedTextColor(true, XAppSupervise.SUPERVISE.moduleColor)
+//                build()
+//            }
         } else {
             ll_dispose_hanlde.visibility = View.GONE
             //处置方式
@@ -188,7 +188,7 @@ class DisposeBaseFragment : BaseFragment<DisposeBasePresenter, DisposeBaseModel>
             return hashMapOf("fId" to fId, "fStatus" to status, "fQualify" to sp_dispose_type.selectedKey, "fResult" to et_dispose_remark.text.toString())
         } else {
             if (disposeType == 0) {//通过
-                return hashMapOf("fId" to fId, "fQualify" to sp_dispose_result.selectedKey, "fResult" to et_dispose_remark.text.toString())
+                return hashMapOf("fId" to fId, "fQualify" to if (rb_dispose_value0.isChecked) "符合" else if (rb_dispose_value1.isChecked) "不符合" else  "基本符合", "fResult" to et_dispose_remark.text.toString())
             } else {//退回
                 return hashMapOf("fTaskId" to fTaskId, "fEntityGuidList" to arrayListOf(fEntityGuid), "fResultList" to arrayListOf(et_dispose_remark.text.toString()))
             }

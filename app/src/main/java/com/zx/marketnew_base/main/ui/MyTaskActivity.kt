@@ -75,7 +75,6 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
                                 XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
                                     it["id"] = item.id ?: ""
                                     it["taskId"] = item.taskId ?: ""
-                                    it["optable"] = true
                                     it["processType"] = item.processType ?: ""
                                 }
                             }
@@ -88,7 +87,6 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
                                 XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
                                     it["id"] = item.fId ?: ""
                                     it["taskId"] = item.fTaskId ?: ""
-                                    it["optable"] = true
                                 }
                             }
                         }

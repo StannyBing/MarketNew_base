@@ -233,14 +233,41 @@
                         android:textColor="@color/text_color_noraml"
                         android:textSize="@dimen/text_size_normal"/>
 
-                    <com.zx.zxutils.views.ZXSpinner
-                        android:id="@+id/sp_dispose_result"
+                    <RadioGroup
+                        android:id="@+id/rg_dispose_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:visibility="visible">
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
-                    </com.zx.zxutils.views.ZXSpinner>
+                        <RadioButton
+                            android:id="@+id/rb_dispose_value0"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/supervise_color"
+                            android:checked="true"
+                            android:text="符合"
+                            android:textColor="@color/supervise_color"
+                            android:textSize="@dimen/text_size_small"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_dispose_value1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/supervise_color"
+                            android:text="不符合"
+                            android:textColor="@color/supervise_color"
+                            android:textSize="@dimen/text_size_small"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_dispose_value2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/supervise_color"
+                            android:text="基本符合"
+                            android:textColor="@color/supervise_color"
+                            android:textSize="@dimen/text_size_small"/>
+                    </RadioGroup>
 
                 </LinearLayout>
             </LinearLayout>
