@@ -14,12 +14,15 @@ import com.zx.marketnew_base.main.mvp.model.UserModel
 import com.zx.marketnew_base.main.mvp.presenter.UserPresenter
 import com.zx.marketnew_base.system.ui.SettingActivity
 import com.zx.module_library.XApp
+import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseFragment
+import com.zx.module_library.bean.UserBean
 import com.zx.module_library.func.tool.GlideRoundTransformation
 import com.zx.module_library.func.tool.UserManager
 import com.zx.zxutils.ZXApp
 import kotlinx.android.synthetic.main.fragment_user.*
+import rx.functions.Action1
 
 /**
  * Create By admin On 2017/7/11
@@ -43,6 +46,9 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
     /**
      * layout配置
      */
@@ -55,16 +61,7 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-
-        Glide.with(ZXApp.getContext()).load(R.drawable.app_default_headicon)
-                .apply(RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .error(R.drawable.app_default_headicon)
-                        .transform(GlideRoundTransformation(ZXApp.getContext()))
-                )
-                .transition(DrawableTransitionOptions().crossFade())
-                .into(iv_user_head)
-
+        setUserInfo(UserManager.getUser())
         rv_user_func.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = listAdapter
@@ -75,6 +72,10 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
         dataBeans.add(FuncBean("三会一课", R.drawable.app_func_dang))
         dataBeans.add(FuncBean("法律法规", R.drawable.app_func_law, true))
         dataBeans.add(FuncBean("设置", R.drawable.app_func_setting))
+
+        mRxManager.on("userInfoChange", Action1<UserBean> {
+            setUserInfo(it)
+        })
     }
 
     /**
@@ -108,5 +109,19 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
                 }
             }
         }
+    }
+
+    fun setUserInfo(userBean: UserBean){
+        Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP + userBean.imgUrl)
+                .apply(RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .error(R.drawable.app_default_headicon)
+                        .transform(GlideRoundTransformation(ZXApp.getContext()))
+                )
+                .transition(DrawableTransitionOptions().crossFade())
+                .into(iv_user_head)
+        tv_user_name.setText(userBean.realName)
+        tv_user_dept.setText(userBean.department)
+        tv_user_telephone.setText(userBean.telephone)
     }
 }

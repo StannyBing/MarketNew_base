@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.zx.marketnew_base.R
+import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.bean.UserBean
 import com.zx.module_library.func.tool.GlideRoundTransformation
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
@@ -42,7 +43,7 @@ class MailListAdapter(dataBeans: List<UserBean>) : ZXQuickAdapter<UserBean, ZXBa
                 }
             } else {
                 Glide.with(mContext)
-                        .load(item.imgUrl)
+                        .load(BaseConfigModule.BASE_IP+item.imgUrl)
                         .apply(RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .error(R.mipmap.ic_launcher)

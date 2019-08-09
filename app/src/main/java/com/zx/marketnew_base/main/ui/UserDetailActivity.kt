@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.frame.zxmvp.baserx.RxManager
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.api.ApiParamUtil
 import com.zx.marketnew_base.main.func.adapter.UserInfoAdapter
@@ -98,7 +99,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             toolbar_view.showRightText("保存")
         }
 
-        Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP+userBean.imgUrl)
+        Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP + userBean.imgUrl)
                 .apply(RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .error(R.drawable.app_default_headicon)
@@ -194,13 +195,16 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             }
         }
         userBean.telephone = telephone
-        userBean.imgUrl = url
+        if (!TextUtils.isEmpty(url)){
+            userBean.imgUrl = url
+        }
         mPresenter.changeUserInfo(ApiParamUtil.changeUserInfoParam(userBean.id, telephone, url))
     }
 
 
     override fun onChangeResult() {
         UserManager.setUser(userBean)
+        RxManager().post("userInfoChange", userBean)
         ZXToastUtil.showToast("修改成功")
     }
 
