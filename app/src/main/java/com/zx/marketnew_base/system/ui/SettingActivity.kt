@@ -73,6 +73,9 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             adapter = listAdapter
         }
 
+        if (mSharedPrefUtil.contains("openDevelop") && mSharedPrefUtil.getBool("openDevelop")) {
+            dataBeans.add(FuncBean("开发者模式", R.drawable.app_func_develop, true))
+        }
         dataBeans.add(FuncBean("录像设置", R.drawable.app_func_video))
         dataBeans.add(FuncBean("清理缓存", R.drawable.app_func_clear, true))
         dataBeans.add(FuncBean("检查更新", R.drawable.app_func_version))
@@ -114,7 +117,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                     mPresenter.getVerson()
                 }
                 "意见反馈" -> {
-                    FeedBackActivity.startAction(this,false)
+                    FeedBackActivity.startAction(this, false)
                 }
                 "修改密码" -> {
                     ForgetPwdActivity.startAction(this, false, UserManager.getUser().telephone)
@@ -126,12 +129,38 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                         LoginActivity.startAction(this, false)
                     }
                 }
+                "开发者模式" -> {
+                    DevelopActivity.startAction(this, false)
+                }
                 else -> {
                     showToast("正在开发中")
                 }
             }
         }
+        //开发者模式
+        toolbar_view.setMidClickListener {
+            if (!mSharedPrefUtil.contains("openDevelop") || !mSharedPrefUtil.getBool("openDevelop")) {
+                if (System.currentTimeMillis() - developTime < 1000 || developTime == 0L) {
+                    developCount++
+                    developTime = System.currentTimeMillis()
+                    if (developCount == 5) {
+                        dataBeans.add(0, FuncBean("开发者模式", R.drawable.app_func_develop, true))
+                        listAdapter.notifyDataSetChanged()
+                        mSharedPrefUtil.putBool("openDevelop", true)
+                        showToast("已开启开发者模式！")
+                        developCount = 0
+                        developTime = 0
+                    }
+                } else {
+                    developCount = 0
+                    developTime = 0
+                }
+            }
+        }
     }
+
+    var developCount = 0
+    var developTime = 0L
 
     /**
      * 版本检测
@@ -143,6 +172,8 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                     mPresenter.downloadApk(versionBean.url)
                 }
             }
+        } else {
+            showToast("当前已是最新版本！")
         }
     }
 
@@ -177,6 +208,14 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                     return@forEachIndexed
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (mSharedPrefUtil.contains("openDevelop") && !mSharedPrefUtil.getBool("openDevelop") && dataBeans[0].title == "开发者模式") {
+            dataBeans.removeAt(0)
+            listAdapter.notifyDataSetChanged()
         }
     }
 }

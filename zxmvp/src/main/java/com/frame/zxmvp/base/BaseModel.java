@@ -11,7 +11,11 @@ import com.frame.zxmvp.integration.IRepositoryManager;
 
 public class BaseModel implements IModel {
 
-    protected IRepositoryManager mRepositoryManager =
+    public static void init() {
+        mRepositoryManager = BaseApplication.baseApplication.getAppComponent().repositoryManager();//用于管理网络请求层,以及数据缓存层
+    }
+
+    protected static IRepositoryManager mRepositoryManager =
             BaseApplication.baseApplication.getAppComponent().repositoryManager();//用于管理网络请求层,以及数据缓存层
 
 //    public BaseModel(IRepositoryManager repositoryManager) {

@@ -26,6 +26,13 @@ class XAppAdapter(dataBeans: List<XAppBean>, val xtype: XAppListBean.XTYPE) : ZX
             if (xtype == XAppListBean.XTYPE.TASK_STATISTICS) {
                 helper.getView<TextView>(R.id.tv_xapp_icon).background = null
                 helper.setText(R.id.tv_xapp_icon, item.num.toString())
+                if (item.num.toString().length <= 2) {
+                    helper.getView<TextView>(R.id.tv_xapp_icon).textSize = 19f
+                } else if (item.num.toString().length == 3) {
+                    helper.getView<TextView>(R.id.tv_xapp_icon).textSize = 15f
+                } else {
+                    helper.getView<TextView>(R.id.tv_xapp_icon).textSize = 11f
+                }
             } else {
                 val icon = ContextCompat.getDrawable(mContext, item.appIcon)!!
                 icon.setTint(ContextCompat.getColor(mContext, R.color.white))

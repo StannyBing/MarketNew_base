@@ -98,7 +98,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      * 版本检测
      */
     override fun onVersionResult(versionBean: VersionBean) {
-        if (BuildConfig.VERSION_CODE < versionBean.versionCode) {
+        if (com.zx.marketnew_base.BuildConfig.VERSION_CODE < versionBean.versionCode) {
             ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}") { dialog, which ->
                 getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     mPresenter.downloadApk(versionBean.url)

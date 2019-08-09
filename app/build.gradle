@@ -12,15 +12,16 @@ kapt {
 }
 
 android {
-//    signingConfigs {
-//        release {
-//            keyAlias 'zxdlxx'
-//            keyPassword '123456'
-//            storeFile file('F:/keystore/zxdl.jks')
-//            storePassword '123456'
-//            v1SigningEnabled true
-//        }
-//    }
+    signingConfigs {
+        sign {
+            keyAlias 'zxdlxx'
+            keyPassword '123456'
+            storeFile file('F:/keystore/zxdl.jks')
+            storePassword '123456'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
     compileSdkVersion 27
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
@@ -86,9 +87,9 @@ android {
             minifyEnabled false
             buildConfigField "boolean", "RELEASE", "true"
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.sign
         }
     }
-
     //配置多版本
     productFlavors {
         base {
@@ -97,7 +98,8 @@ android {
             versionCode 2
             versionName "1.0.1"
             applicationId "com.zx.marketnew_base"
-            manifestPlaceholders = [APP_NAME     : "移动监督管理",
+            manifestPlaceholders = [APP_NAME     : "移动监督管理系统",
+                                    APP_ICON     : "@mipmap/ic_launcher",
                                     JPUSH_PKGNAME: applicationId,
                                     JPUSH_APPKEY : "29c3083a4c451fb2e2a18e8a",
                                     JPUSH_CHANNEL: "developer-default",]
@@ -108,7 +110,8 @@ android {
             versionCode 1
             versionName "1.0.0"
             applicationId "com.zx.marketnew_basedx"
-            manifestPlaceholders = [APP_NAME     : "东乡移动监督管理",
+            manifestPlaceholders = [APP_NAME     : "移动监督管理系统",
+                                    APP_ICON     : "@mipmap/dx_ic_launcher",
                                     JPUSH_PKGNAME: applicationId,
                                     JPUSH_APPKEY : "29c3083a4c451fb2e2a18e8a",
                                     JPUSH_CHANNEL: "developer-default",]
@@ -119,7 +122,8 @@ android {
             versionCode 18
             versionName "2.0.0"
             applicationId "com.zx.marketnew_baserc"
-            manifestPlaceholders = [APP_NAME     : "瑞昌移动监督管理",
+            manifestPlaceholders = [APP_NAME     : "移动监督管理系统",
+                                    APP_ICON     : "@mipmap/rc_ic_launcher",
                                     JPUSH_PKGNAME: applicationId,
                                     JPUSH_APPKEY : "29c3083a4c451fb2e2a18e8a",
                                     JPUSH_CHANNEL: "developer-default",]

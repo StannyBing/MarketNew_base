@@ -47,9 +47,11 @@ open class MyApplication : BaseApplication() {
         ARouter.init(this)
         Thread {
             mSharedPrefUtil = ZXSharedPrefUtil()
+            if (mSharedPrefUtil.contains("openLog") && mSharedPrefUtil.getBool("openLog")) {
+                ZXApp.init(this, true)
+            }
             instance = this
             mContest = this
-            component = BaseApplication.baseApplication.appComponent
             //配置极光推送
             JPushInterface.setDebugMode(!BuildConfig.isRelease)
             JPushInterface.init(this)//初始化JPush
@@ -71,6 +73,12 @@ open class MyApplication : BaseApplication() {
         //Bugly 热更新
         // 调试时，将第三个参数改为true
         // Bugly.init(this, "cb2f1fd59d", true);
+        init()
+    }
+
+    fun init() {
+        initAppDelegate(this)
+        component = appComponent
     }
 
     override fun attachBaseContext(base: Context?) {

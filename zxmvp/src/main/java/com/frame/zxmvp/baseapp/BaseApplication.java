@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.multidex.MultiDex;
 
+import com.frame.zxmvp.base.BaseModel;
 import com.frame.zxmvp.di.component.AppComponent;
 import com.frame.zxmvp.http.AppDelegate;
 
@@ -29,9 +30,13 @@ public class BaseApplication extends Application implements App {
     @Override
     public void onCreate() {
         super.onCreate();
-        this.mAppDelegate = new AppDelegate(this);
-        this.mAppDelegate.onCreate();
         baseApplication = this;
+    }
+
+    public void initAppDelegate(Application application) {
+        mAppDelegate = new AppDelegate(application);
+        mAppDelegate.onCreate();
+        BaseModel.init();
     }
 
     /**
@@ -70,7 +75,10 @@ public class BaseApplication extends Application implements App {
      */
     @Override
     public AppComponent getAppComponent() {
-        return mAppDelegate.getAppComponent();
+        if (mAppDelegate != null)
+            return mAppDelegate.getAppComponent();
+        else
+            return null;
     }
 
     // 添加Activity到容器中
