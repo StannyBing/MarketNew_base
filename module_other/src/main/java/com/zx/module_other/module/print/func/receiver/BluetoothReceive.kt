@@ -1,6 +1,7 @@
 package com.zx.module_other.module.print.func.receiver
 
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -16,7 +17,7 @@ class BluetoothReceive : BroadcastReceiver() {
         // 把搜索的设置添加到集合中
         if (BluetoothDevice.ACTION_FOUND == action) {
             val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            if (device.type == PrintBean.PRINT_TYPE) {
+            if (device.bluetoothClass.majorDeviceClass == BluetoothClass.Device.Major.IMAGING) {
                 for (d in devices) {
                     if (d.address == device.address) {
                         return
@@ -45,7 +46,7 @@ class BluetoothReceive : BroadcastReceiver() {
         } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED == action) {
             val state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, -1)
             val device: BluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)
-            if (device.type == PrintBean.PRINT_TYPE) {
+            if (device.bluetoothClass.majorDeviceClass == BluetoothClass.Device.Major.IMAGING) {
                 when (state) {
                     BluetoothDevice.BOND_NONE -> RxManager().post("bluetoothState", device)
                     BluetoothDevice.BOND_BONDING -> RxManager().post("bluetoothState", device)

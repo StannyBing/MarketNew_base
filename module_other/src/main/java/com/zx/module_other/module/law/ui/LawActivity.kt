@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -77,6 +78,9 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
         }
         searchView.setSearchListener {
             val lawMainBean = LawMainBean(it, 4, 0)
+            if (TextUtils.isEmpty(lawMainBean.name)) {
+                lawMainBean.name = getString(R.string.hint_text)
+            }
             LawQueryActivity.startAction(this, false, lawMainBean)
         }
         initData()

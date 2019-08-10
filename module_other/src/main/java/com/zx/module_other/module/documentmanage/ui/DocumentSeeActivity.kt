@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,21 +13,19 @@ import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
+import android.view.MotionEvent
 import android.webkit.ValueCallback
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.webkit.WebView.enableSlowWholeDocumentDraw
 import android.webkit.WebViewClient
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.zx.module_library.app.BaseConfigModule.Companion.BASE_IP
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
-import com.zx.module_other.api.ApiConfigModule
 import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.documentmanage.bean.Children
-import com.zx.module_other.module.documentmanage.func.util.DBService
-import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.util.PrintDataUtil
 import com.zx.module_other.module.print.ui.PrintActivity
 import com.zx.module_other.module.print.ui.StartPrintActivity
@@ -36,6 +35,7 @@ import com.zx.module_other.module.workplan.mvp.presenter.DocumentSeePresenter
 import com.zx.zxutils.util.ZXPermissionUtil
 import com.zx.zxutils.util.ZXToastUtil
 import kotlinx.android.synthetic.main.activity_document_see.*
+
 
 @Route(path = RoutePath.ROUTE_OTHER_DOCUMENT_PREVIEW)
 class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>(), DocumentSeeContract.View {
@@ -79,7 +79,9 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun getLayoutId(): Int {
+        enableSlowWholeDocumentDraw()
         return R.layout.activity_document_see
     }
 
@@ -93,14 +95,14 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
         btn_fill_document.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
         btn_print_document.background.setTint(ContextCompat.getColor(this, XAppOther.get("文书管理")!!.moduleColor))
-
+        wv_documentsee.isVerticalScrollBarEnabled = false
         wv_documentsee.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
             settings.supportZoom()
             settings.displayZoomControls = false
             settings.builtInZoomControls = true
-            settings.textZoom = 150
+            settings.textZoom = 200
             // settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
             scrollBarStyle = WebView.SCROLLBARS_OUTSIDE_OVERLAY
             settings.loadWithOverviewMode = true
@@ -137,7 +139,7 @@ class DocumentSeeActivity : BaseActivity<DocumentSeePresenter, DocumentSeeModel>
         }
         if (bluetoothAdapter!!.isEnabled()) {
             for (device in bluetoothAdapter!!.bondedDevices) {
-                if (device.type == PrintBean.PRINT_TYPE) {
+                if (device.bluetoothClass.majorDeviceClass == BluetoothClass.Device.Major.IMAGING) {
                     devices.add(device)
                 }
             }

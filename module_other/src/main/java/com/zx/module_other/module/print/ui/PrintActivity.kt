@@ -3,6 +3,7 @@ package com.zx.module_other.module.print.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothClass
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.content.IntentFilter
@@ -111,7 +112,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
     fun searchDevices() {
         if (bluetoothAdapter!!.isEnabled()) {
             for (device in bluetoothAdapter!!.bondedDevices) {
-                if (device.type == PrintBean.PRINT_TYPE) {
+                if (device.bluetoothClass.majorDeviceClass == BluetoothClass.Device.Major.IMAGING) {
                     devices.add(device)
                 }
             }

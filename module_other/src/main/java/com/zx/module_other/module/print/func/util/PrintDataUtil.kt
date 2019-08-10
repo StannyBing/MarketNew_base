@@ -1,8 +1,8 @@
 package com.zx.module_other.module.print.func.util
 
-import android.graphics.Bitmap
 import android.webkit.WebView
 import android.content.Context
+import android.graphics.*
 import android.print.PageRange
 import android.print.PrintAttributes
 import android.print.PrintDocumentAdapter
@@ -13,6 +13,10 @@ import java.lang.reflect.Method
 import android.os.*
 import android.support.annotation.RequiresApi
 import java.io.*
+import android.opengl.ETC1.getHeight
+import android.graphics.Bitmap
+import android.support.annotation.NonNull
+import android.view.View
 
 
 class PrintDataUtil {
@@ -24,12 +28,34 @@ class PrintDataUtil {
 
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         fun getWebViewImgData(webView: WebView): Int {
-            webView.zoomBy(1/webView.scale)
-            webView.setDrawingCacheEnabled(true)
-            webView.buildDrawingCache()
-            val bmp = webView.getDrawingCache()
-            return saveImageToGallery(bmp)
-            webView.destroyDrawingCache()
+            webView.zoomBy(1 / webView.scale)
+//            webView.setDrawingCacheEnabled(true)
+//            webView.buildDrawingCache()
+//            val bmp = webView.getDrawingCache()
+            webView.measure(0, 0);
+            val contentHeight = webView.getMeasuredHeight()
+            val height = webView.getHeight()
+            val totalScrollCount = contentHeight / height
+            val surplusScrollHeight = contentHeight - totalScrollCount * height
+            val cacheBitmaps = ArrayList<Bitmap>()
+            webView.scrollY = 0
+            val bitmap = getScreenshot(webView)
+            cacheBitmaps.add(bitmap!!);
+            for (i in 0..totalScrollCount) {
+                if (i > 1) {
+                    webView.scrollY = i * height
+                    val bitmap = getScreenshot(webView)
+                    cacheBitmaps.add(bitmap!!);
+                }
+            }
+
+            if (surplusScrollHeight > 0) {
+                webView.scrollY = contentHeight
+                var bitmap = getScreenshot(webView)
+                cacheBitmaps.add(bitmap!!);
+            }
+            var bmp = mergeBitmap(cacheBitmaps, contentHeight, surplusScrollHeight)
+            return saveImageToGallery(bmp!!)
         }
 
 
@@ -65,6 +91,59 @@ class PrintDataUtil {
             return DEF
         }
 
+        fun mergeBitmap(datas: List<Bitmap>, totalBitmapHeight: Int, remainScrollHeight: Int): Bitmap? {
+            if (datas == null || datas.size <= 0) {
+                return null
+            }
+            //图纸宽度(因为是截图,图片宽度大小都是一样的)
+            val bitmapWidth = datas[0].width
+            //图纸高度
+            //1:创建图纸
+            val bimap = Bitmap.createBitmap(bitmapWidth, totalBitmapHeight, Bitmap.Config.RGB_565)
+            //2:创建画布,并绑定图纸
+            val canvas = Canvas(bimap)
+            //3:创建画笔
+            val paint = Paint()
+            val count = datas.size
+            var i = 0
+            while (i < count) {
+                val data = datas[i]
+                val left = 0f
+                val top = (i * data.height).toFloat()
+                var src: Rect? = null
+                var des: RectF? = null
+                /**
+                 * Rect src = new Rect(); 代表图片矩形范围
+                 * RectF des = new RectF(); 代表Canvas的矩形范围(显示位置)
+                 */
+                if (i == count - 1 && remainScrollHeight > 0) {
+                    val srcRectTop = data.height - remainScrollHeight
+                    src = Rect(0, srcRectTop, data.width, data.height)
+                    des = RectF(left, top, data.width.toFloat(), top + remainScrollHeight)
+                } else {
+                    src = Rect(0, 0, data.width, data.height)
+                    des = RectF(left, top, data.width.toFloat(), top + data.height)
+                }
+                canvas.drawBitmap(data, src, des, paint)
+                i++
+            }
+            return bimap
+        }
+
+        fun getScreenshot(view: View): Bitmap? {
+            if (view == null) {
+                return null
+            }
+            //1:打开缓存开关
+            view.setDrawingCacheEnabled(true)
+            //2:获取缓存  此方法需要在主线程调用
+            val drawingCache = view.getDrawingCache()
+            //3:拷贝图片
+            val newBitmap = Bitmap.createBitmap(drawingCache)
+            //4:关闭缓存开关
+            view.setDrawingCacheEnabled(false)
+            return newBitmap
+        }
 
         var descriptor: ParcelFileDescriptor? = null
         var ranges: Array<PageRange>? = null
