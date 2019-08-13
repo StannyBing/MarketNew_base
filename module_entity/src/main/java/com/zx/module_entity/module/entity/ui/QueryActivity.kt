@@ -177,7 +177,14 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
         if (entityLevelBeans.isNotEmpty()) {
             filterList.add(SearchFilterBean("信用等级", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
                 entityLevelBeans.forEach {
-                    add(SearchFilterBean.ValueBean(it.value, it.key))
+                    add(SearchFilterBean.ValueBean(it.value + when (it.value) {
+                        "绿" -> "(A)"
+                        "黃" -> "(B)"
+                        "红" -> "(C)"
+                        "橙" -> "(D)"
+                        "黑" -> "(Z)"
+                        else -> "(A)"
+                    }, it.key))
                 }
             }))
         }

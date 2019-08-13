@@ -25,6 +25,6 @@ data class UserBean(
         var status: Int = 0,
         var remark: String = "",
         var userType: String = "",
-        var imgUrl: String = "",
+        var imgUrl: String? = "",
         var role: List<String> = arrayListOf(),
         var module: List<String> = arrayListOf()) : Serializable

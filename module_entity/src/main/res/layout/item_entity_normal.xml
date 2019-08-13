@@ -23,6 +23,7 @@
                 android:layout_width="25dp"
                 android:layout_centerInParent="true"
                 android:layout_height="25dp"
+                android:visibility="gone"
                 android:src="@drawable/entity_type"
                 android:layout_gravity="center_vertical"/>
 
@@ -30,9 +31,12 @@
                 android:id="@+id/tv_entity_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="药友制药"
+                android:maxEms="2"
+                android:gravity="center"
                 android:textSize="@dimen/text_size_small"
                 android:layout_centerInParent="true"
-                android:textColor="@color/entity_color"/>
+                android:textColor="@color/white"/>
         </RelativeLayout>
 
         <LinearLayout
