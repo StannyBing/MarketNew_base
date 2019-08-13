@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat
 import com.esri.android.map.GraphicsLayer
 import com.esri.android.map.LocationDisplayManager
 import com.esri.android.map.MapView
+import com.esri.android.map.ags.ArcGISDynamicMapServiceLayer
 import com.esri.android.map.event.OnSingleTapListener
 import com.esri.android.map.event.OnStatusChangedListener
 import com.esri.android.runtime.ArcGISRuntime
@@ -19,6 +20,7 @@ import com.esri.core.geometry.SpatialReference
 import com.esri.core.map.Graphic
 import com.esri.core.symbol.MarkerSymbol
 import com.esri.core.symbol.PictureMarkerSymbol
+import com.zx.module_library.BuildConfig
 import com.zx.module_library.base.BaseFragment
 import com.zx.module_library.bean.MapTaskBean
 import com.zx.module_map.R
@@ -38,8 +40,6 @@ import kotlinx.android.synthetic.main.fragment_map.*
  */
 class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, OnStatusChangedListener, OnSingleTapListener {
 
-    private var vectorLayer: OnlineTileLayer? = null
-
     private var vectorGlobalLayer: TianDiTuLayer? = null
     private var vectorGlobalLable: TianDiTuLayer? = null
     private var imageGlobalLayer: TianDiTuLayer? = null
@@ -50,6 +50,9 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     private var mLabLayer: TianDiTuLayer? = null
     private var mGridLayer: TianDiTuLayer? = null
 
+    private var onlineVecLayer : OnlineTileLayer?=null
+    private var onlineImgLayer : OnlineTileLayer?=null
+
     private var mMarkersGLayer: GraphicsLayer? = null// 用于展示主体或任务结果注记
 
     val mapListener = MyListener()
@@ -59,6 +62,9 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     private var taskBean: MapTaskBean? = null
 
     private var type: Int = 0
+    //0普通
+    //1主体查看
+    //2坐标选取
 
     companion object {
         /**
@@ -107,27 +113,66 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
 
     //初始化基础底图
     private fun initBaseLayer() {
-        vectorGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_2000)
-        vectorGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_ANNOTATION_CHINESE_2000)
-        imageGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_2000)
-        imageGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_ANNOTATION_CHINESE_2000)
-        map_view.addLayer(vectorGlobalLayer)
-        map_view.addLayer(vectorGlobalLable)
-        map_view.addLayer(imageGlobalLayer)
-        map_view.addLayer(imageGlobalLable)
-        imageGlobalLayer!!.isVisible = false
-        imageGlobalLable!!.isVisible = false
+//        vectorGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_2000)
+//        vectorGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_ANNOTATION_CHINESE_2000)
+//        imageGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_2000)
+//        imageGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_ANNOTATION_CHINESE_2000)
+//        map_view.addLayer(vectorGlobalLayer)
+//        map_view.addLayer(vectorGlobalLable)
+//        map_view.addLayer(imageGlobalLayer)
+//        map_view.addLayer(imageGlobalLable)
+//        imageGlobalLayer!!.isVisible = false
+//        imageGlobalLable!!.isVisible = false
+
+        when (BuildConfig.APP_HEAD) {
+            "rc" -> {
+                mVecLayer = TianDiTuLayer(TianDiTuLayerTypes.JXRC_VEC)
+                map_view.addLayer(mVecLayer)
+                mImgLayer = TianDiTuLayer(TianDiTuLayerTypes.JXRC_IMG)
+                map_view.addLayer(mImgLayer)
+                mImgLayer!!.isVisible = false
+                mLabLayer = TianDiTuLayer(TianDiTuLayerTypes.JXRC_CVA)
+                map_view.addLayer(mLabLayer)
+                mGridLayer = TianDiTuLayer(TianDiTuLayerTypes.JXRC_GRID)
+                map_view.addLayer(mGridLayer)
+            }
+            "dx" -> {
+                mVecLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_VEC)
+                map_view.addLayer(mVecLayer)
+                mImgLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_IMG)
+                map_view.addLayer(mImgLayer)
+                mImgLayer!!.isVisible = false
+                mLabLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_CVA)
+                map_view.addLayer(mLabLayer)
+//                mGridLayer = TianDiTuLayer(TianDiTuLayerTypes.JXDX_GRID)
+//                map_view.addLayer(mGridLayer)
+            }
+            else -> {
+                vectorGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_2000)
+                vectorGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_VECTOR_ANNOTATION_CHINESE_2000)
+                imageGlobalLayer = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_2000)
+                imageGlobalLable = TianDiTuLayer(TianDiTuLayerTypes.TIANDITU_IMAGE_ANNOTATION_CHINESE_2000)
+                map_view.addLayer(vectorGlobalLayer)
+                map_view.addLayer(vectorGlobalLable)
+                map_view.addLayer(imageGlobalLayer)
+                map_view.addLayer(imageGlobalLable)
+                imageGlobalLayer!!.isVisible = false
+                imageGlobalLable!!.isVisible = false
+
+                onlineVecLayer = OnlineTileLayer("http://222.180.171.187/arcgis/rest/services/lj_vec/MapServer", "online_vector")
+                map_view.addLayer(onlineVecLayer)
+                onlineImgLayer = OnlineTileLayer("http://222.180.171.187/arcgis/rest/services/lj_image/MapServer", "online_image")
+                map_view.addLayer(onlineImgLayer)
+                onlineImgLayer!!.isVisible = false
+                map_view.addLayer(ArcGISDynamicMapServiceLayer("http://222.180.171.187/arcgis/rest/services/sgs/MapServer"))
+            }
+        }
 
         mMarkersGLayer = GraphicsLayer()
         map_view.addLayer(mMarkersGLayer)
 
         map_view.onStatusChangedListener = this
         map_view.onSingleTapListener = this
-//        map_view.setOnStatusChangedListener { any, status ->
-//            if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
-//                mapListener.doLocation()
-//            }
-//        }
     }
 
     /**
@@ -140,16 +185,14 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     //状态改变事件
     override fun onStatusChanged(p0: Any?, status: OnStatusChangedListener.STATUS?) {
         if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
-            mapListener.doLocation()
             if (type == 1) {
                 if (taskBean != null && taskBean!!.longtitude != null && taskBean!!.latitude != null) {
                     val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
                     symbol.offsetY = 17f
                     var point = Point(taskBean!!.longtitude!!, taskBean!!.latitude!!)
-                    point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
-                    val graphic = Graphic(point, symbol)
+                    val graphic = Graphic(point.toSpatialPoint(), symbol)
                     mMarkersGLayer?.addGraphic(graphic)
-                    map_view.centerAt(point, true)
+                    map_view.centerAt(point.toSpatialPoint(), true)
                     map_view.scale = 70000.00
                 }
             } else if (type == 2) {
@@ -159,12 +202,13 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
                     val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
                     symbol.offsetY = 17f
                     var point = Point(longitude.toDouble(), latitude.toDouble())
-                    point = GeometryEngine.project(point, SpatialReference.create(4326), map_view.spatialReference) as Point
-                    val graphic = Graphic(point, symbol)
+                    val graphic = Graphic(point.toSpatialPoint(), symbol)
                     mMarkersGLayer?.addGraphic(graphic)
-                    map_view.centerAt(point, true)
+                    map_view.centerAt(point.toSpatialPoint(), true)
                     map_view.scale = 70000.00
                 }
+            } else {
+                mapListener.doLocation()
             }
         }
     }
@@ -209,10 +253,12 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
                     }
                 }
                 if (location != null) {
-                    map_view.centerAt(location!!.latitude, location!!.longitude, true)
+                    val point = Point(location!!.longitude, location!!.latitude).toSpatialPoint()
+                    map_view.centerAt(point, true)
                     map_view.scale = 70000.00
                 } else if (ZXLocationUtil.getLocation(activity!!) != null) {
-                    map_view.centerAt(ZXLocationUtil.getLocation(activity!!)!!.latitude, ZXLocationUtil.getLocation(activity!!)!!.longitude, true)
+                    val point = Point(ZXLocationUtil.getLocation(activity!!)!!.longitude, ZXLocationUtil.getLocation(activity!!)!!.latitude).toSpatialPoint()
+                    map_view.centerAt(point, true)
                     map_view.scale = 70000.00
                 } else {
                     showToast("当前GPS信号弱，未获取到位置信息，请稍后再试")
@@ -227,16 +273,32 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
                     vectorGlobalLable?.isVisible = true
                     imageGlobalLayer?.isVisible = false
                     imageGlobalLable?.isVisible = false
+
+                    mVecLayer?.isVisible = true
+                    mImgLayer?.isVisible = false
+
+                    onlineVecLayer?.isVisible = true
+                    onlineImgLayer?.isVisible = false
                 }
                 "image" -> {
                     vectorGlobalLayer?.isVisible = false
                     vectorGlobalLable?.isVisible = false
                     imageGlobalLayer?.isVisible = true
                     imageGlobalLable?.isVisible = true
+
+                    mVecLayer?.isVisible = false
+                    mImgLayer?.isVisible = true
+
+                    onlineVecLayer?.isVisible = false
+                    onlineImgLayer?.isVisible = true
                 }
             }
         }
 
+    }
+
+    private fun Point.toSpatialPoint(): Point {
+        return GeometryEngine.project(this, SpatialReference.create(4326), map_view.spatialReference) as Point
     }
 
 }

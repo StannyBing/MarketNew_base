@@ -69,13 +69,17 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
     override fun onViewListener() {
         //搜索事件
         sv_mailList_search.setSearchListener {
-            for (index in 0..dataBeans.size-1) {
-                if (dataBeans.get(index).realName.contains(it)) {
+            if (it.isEmpty()) {
+                rv_maillist_list.scrollToPosition(0)
+                return@setSearchListener
+            }
+            for (index in 0 until dataBeans.size) {
+                if (dataBeans[index].realName.contains(it)) {
 //                    var topSmoothScroller: TopSmoothScroller = TopSmoothScroller(mActivity)
 //                    topSmoothScroller.setTargetPosition(index);
 //                    rv_maillist_list.layoutManager?.startSmoothScroll(topSmoothScroller);
                     (rv_maillist_list.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(index, 0);
-                    (rv_maillist_list.layoutManager as LinearLayoutManager).setStackFromEnd(true)
+                    (rv_maillist_list.layoutManager as LinearLayoutManager).stackFromEnd = true
                     return@setSearchListener
                 }
             }

@@ -24,10 +24,10 @@ import com.zx.module_library.bean.XAppBean
 class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
 
     private lateinit var toolbarBack: LinearLayout//返回按钮
-    private lateinit var toolbarBackText: TextView//返回文字
+    lateinit var toolbarBackText: TextView//返回文字
     private lateinit var toolbarBackPic: ImageView//返回图片
     private lateinit var toolbarMidPic: ImageView//中间图片
-    private lateinit var toolbarTitle: TextView//中间标题
+    lateinit var toolbarTitle: TextView//中间标题
     private lateinit var toolbarRightImage: ImageView//右侧图片
     private lateinit var toolbarRightText: TextView//右侧文字
     private lateinit var toolbarBg: RelativeLayout//toolbar

@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import cn.jpush.android.api.JPushInterface
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.bumptech.glide.Glide
@@ -69,7 +70,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         rv_setting.apply {
-            layoutManager = LinearLayoutManager(this@SettingActivity)
+            layoutManager = LinearLayoutManager(this@SettingActivity) as RecyclerView.LayoutManager?
             adapter = listAdapter
         }
 
@@ -77,9 +78,11 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             dataBeans.add(FuncBean("开发者模式", R.drawable.app_func_develop, true))
         }
         dataBeans.add(FuncBean("录像设置", R.drawable.app_func_video))
+        dataBeans.add(FuncBean("字体设置", R.drawable.app_func_font))
         dataBeans.add(FuncBean("清理缓存", R.drawable.app_func_clear, true))
-        dataBeans.add(FuncBean("检查更新", R.drawable.app_func_version))
         dataBeans.add(FuncBean("意见反馈", R.drawable.app_func_feedback))
+        dataBeans.add(FuncBean("关于我们", R.drawable.app_func_about))
+        dataBeans.add(FuncBean("检查更新", R.drawable.app_func_version))
         dataBeans.add(FuncBean("修改密码", R.drawable.app_func_law, true))
         dataBeans.add(FuncBean("退出登录", R.drawable.app_func_logout))
 
@@ -87,7 +90,9 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             mPresenter.getVerson()
         }
 
-        listAdapter.notifyValue("清理缓存", getFileSize().toString() + "M")
+        getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            listAdapter.notifyValue("清理缓存", getFileSize().toString() + "M")
+        }
     }
 
     /**
@@ -99,6 +104,9 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             when (dataBeans[position].title) {
                 "录像设置" -> {
                     VideoSettingActivity.startAction(this, false)
+                }
+                "字体设置" -> {
+                    FontSettingActivity.startAction(this, false)
                 }
                 "清理缓存" -> {
                     showLoading("正在清理中...")
@@ -118,6 +126,9 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                 }
                 "意见反馈" -> {
                     FeedBackActivity.startAction(this, false)
+                }
+                "关于我们" -> {
+                    AboutActivity.startAction(this, false)
                 }
                 "修改密码" -> {
                     ForgetPwdActivity.startAction(this, false, UserManager.getUser().telephone)

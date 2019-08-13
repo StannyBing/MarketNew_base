@@ -13,6 +13,7 @@ import com.zx.marketnew_base.main.mvp.presenter.WorkPresenter
 import com.zx.module_complain.XAppComplain
 import com.zx.module_entity.XAppEntity
 import com.zx.module_legalcase.XAppLegalcase
+import com.zx.module_library.BuildConfig
 import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseFragment
@@ -66,6 +67,8 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
 
         //添加信息界面
         ZXFragmentUtil.addFragment(childFragmentManager, WorkInfoFragment.newInstance().apply { workInfoFragment = this }, R.id.fm_work_info)
+
+        tv_work_name.text = BuildConfig.WORK_TITLE
 
         rv_work_xApp.apply {
             layoutManager = ZXInScrollRecylerManager(activity)

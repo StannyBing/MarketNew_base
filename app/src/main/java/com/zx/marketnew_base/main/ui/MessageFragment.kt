@@ -113,8 +113,6 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
                     deleteItemPosition = position
                     mPresenter.deleteMessage(hashMapOf("guid" to dataBeans[position].guid).toJson())
                 }
-        loadData(true)
-
     }
 
     /**
@@ -155,7 +153,7 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
             sr_message.isRefreshing = false
             dataBeans.clear()
             dataBeans.addAll(messageList.list)
-            listAdapter.setNewData(dataBeans)
+            listAdapter.notifyDataSetChanged()
         } else {
             dataBeans.addAll(messageList.list)
             listAdapter.notifyDataSetChanged()
@@ -171,11 +169,15 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
     override fun onMessageDetailResult(messageBean: MessageBean) {
         dataBeans[clickItemPosition].isRead = 1
         listAdapter.notifyItemChanged(clickItemPosition)
+
+        mRxManager.post("mainAction", "unread")
     }
 
     override fun onMessageDeleteResult() {
         dataBeans.removeAt(deleteItemPosition)
         listAdapter.notifyItemRemoved(deleteItemPosition)
+
+        mRxManager.post("mainAction", "unread")
     }
 
     override fun onResume() {

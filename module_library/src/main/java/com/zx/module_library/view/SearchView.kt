@@ -113,7 +113,7 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     private fun showFilterBubble() {
         if (filterBubble == null) {
             filterBubble = ZXBubbleView(context)
-            val filterView = LayoutInflater.from(context).inflate(R.layout.layout_search_filter, null, false)
+            val filterView = LayoutInflater.from(context).inflate(R.layout.layout_search_filter, this, false)
             val tvReset = filterView.findViewById<TextView>(R.id.tv_filter_reset)
             val tvSubmit = filterView.findViewById<TextView>(R.id.tv_filter_submit)
             val viewDivider = filterView.findViewById<View>(R.id.view_filter_divider)

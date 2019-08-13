@@ -1,12 +1,13 @@
 package com.zx.module_supervise.module.task.func.adapter
 
+import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.RadioGroup
+import android.widget.*
 import com.zx.module_supervise.R
 import com.zx.module_supervise.module.task.bean.TaskCheckBean
 import com.zx.zxutils.other.QuickAdapter.ZXBaseHolder
@@ -16,7 +17,8 @@ import com.zx.zxutils.other.QuickAdapter.ZXQuickAdapter
  * Created by Xiangb on 2019/7/23.
  * 功能：
  */
-class TaskCheckAdapter(dataList: List<TaskCheckBean>) : ZXQuickAdapter<TaskCheckBean, ZXBaseHolder>(R.layout.item_check_view, dataList) {
+@SuppressLint("NewApi")
+class TaskCheckAdapter(dataList: List<TaskCheckBean>, var color: Int) : ZXQuickAdapter<TaskCheckBean, ZXBaseHolder>(R.layout.item_check_view, dataList) {
 
     var isEdit = true
     var isShow = true
@@ -32,6 +34,12 @@ class TaskCheckAdapter(dataList: List<TaskCheckBean>) : ZXQuickAdapter<TaskCheck
                         rgValue.visibility = View.VISIBLE
                         helper.getView<EditText>(R.id.et_check_value).visibility = View.GONE
                         helper.setText(R.id.tv_check_tips, if (isEdit) "请选择处置结果：" else "处置结果：")
+                        helper.setTextColor(R.id.rb_check_value0, ContextCompat.getColor(mContext, color))
+                        helper.setTextColor(R.id.rb_check_value1, ContextCompat.getColor(mContext, color))
+                        helper.setTextColor(R.id.rb_check_value2, ContextCompat.getColor(mContext, color))
+                        helper.getView<RadioButton>(R.id.rb_check_value0).buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, color))
+                        helper.getView<RadioButton>(R.id.rb_check_value1).buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, color))
+                        helper.getView<RadioButton>(R.id.rb_check_value2).buttonTintList = ColorStateList.valueOf(ContextCompat.getColor(mContext, color))
                         when (item.fCheckResult) {
                             "0" -> rgValue.check(R.id.rb_check_value0)
                             "1" -> rgValue.check(R.id.rb_check_value1)
@@ -40,7 +48,7 @@ class TaskCheckAdapter(dataList: List<TaskCheckBean>) : ZXQuickAdapter<TaskCheck
                         }
                         if (isEdit) {
                             rgValue.setOnCheckedChangeListener { _, checkedId ->
-                                if (checkedId == -1){
+                                if (checkedId == -1) {
                                     return@setOnCheckedChangeListener
                                 }
                                 item.fCheckResult = when (checkedId) {
@@ -61,6 +69,17 @@ class TaskCheckAdapter(dataList: List<TaskCheckBean>) : ZXQuickAdapter<TaskCheck
                         helper.getView<RadioGroup>(R.id.rg_check_value).visibility = View.GONE
                         etValue.visibility = View.VISIBLE
                         helper.setText(R.id.tv_check_tips, if (isEdit) "请输入处置结果：" else "处置结果：")
+
+                        try {
+                            val cursorFiled = TextView::class.java.getDeclaredField("mCursorDrawableRes")
+                            cursorFiled.isAccessible = true
+                            val drawable = ContextCompat.getDrawable(mContext, R.drawable.shape_search_cursor)
+                            drawable!!.setTint(ContextCompat.getColor(mContext, color))
+                            cursorFiled.set(etValue, drawable)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+
                         if (isEdit) {
                             etValue.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
                             etValue.addTextChangedListener(object : TextWatcher {

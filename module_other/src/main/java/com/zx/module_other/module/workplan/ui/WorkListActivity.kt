@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
@@ -15,7 +14,6 @@ import com.zx.module_other.api.ApiParamUtil
 import com.zx.module_other.module.workplan.bean.WorkPlanBean
 import com.zx.module_other.module.workplan.func.adapter.WorkPlanAdpater
 import com.zx.module_other.module.workplan.func.util.DateUtil
-
 import com.zx.module_other.module.workplan.mvp.contract.WorkListContract
 import com.zx.module_other.module.workplan.mvp.model.WorkListModel
 import com.zx.module_other.module.workplan.mvp.presenter.WorkListPresenter
@@ -56,7 +54,7 @@ class WorkListActivity : BaseActivity<WorkListPresenter, WorkListModel>(), WorkL
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        toobar_view.withXApp(XAppOther.get("个人工作计划")!!)
+        toobar_view.withXApp(XAppOther.PLAN)
         mPresenter.getWorkDatesList()
         datesAdpter = ArrayAdapter(this, com.zx.module_other.R.layout.item_start_print, R.id.text, dates)
         sp_work_list.adapter = datesAdpter

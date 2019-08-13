@@ -61,6 +61,8 @@
         <activity android:name=".system.ui.VideoSettingActivity"/>
         <activity android:name=".system.ui.FeedBackActivity"/>
         <activity android:name=".system.ui.DevelopActivity"/>
+        <activity android:name=".system.ui.FontSettingActivity"/>
+        <activity android:name=".system.ui.AboutActivity"/>
     </application>
 
 </manifest>

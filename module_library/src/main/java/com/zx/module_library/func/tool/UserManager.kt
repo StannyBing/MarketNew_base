@@ -3,6 +3,7 @@ package com.zx.module_library.func.tool
 import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.MyApplication
 import com.zx.module_library.bean.UserBean
+import com.zx.zxutils.util.ZXSharedPrefUtil
 
 /**
  * Created by Xiangb on 2019/3/5.
@@ -64,6 +65,9 @@ object UserManager {
     }
 
     fun loginOut() {
+        if (ZXSharedPrefUtil().contains("openInterface") && ZXSharedPrefUtil().getBool("openInterface")) {
+            ZXSharedPrefUtil().putString("request_list", "")
+        }
         BaseConfigModule.TOKEN = ""
         passWord = ""
         saveUser()

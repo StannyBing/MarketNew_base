@@ -15,6 +15,8 @@ object RoutePath {
     const val ROUTE_APP_SETTING = "/app/setting"//设置
     const val ROUTE_APP_SETTING_VIDEO = "/app/setting/video"//设置-录像
     const val ROUTE_APP_SETTING_FEEDBACK = "app/setting/feedback"//设置-意见反馈
+    const val ROUTE_APP_SETTING_FONT = "app/setting/font"//设置-字体设置
+    const val ROUTE_APP_SETTING_ABOUT = "app/setting/about"//设置-关于我们
     const val ROUTE_APP_MYTASK = "/app/mytask"//我的任务
 
 

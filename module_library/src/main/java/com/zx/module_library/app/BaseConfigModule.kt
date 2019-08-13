@@ -10,9 +10,11 @@ import com.frame.zxmvp.integration.IRepositoryManager
 import com.zx.module_library.BuildConfig
 import com.zx.zxutils.util.ZXLogUtil
 import com.zx.zxutils.util.ZXSharedPrefUtil
+import com.zx.zxutils.util.ZXTimeUtil
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import java.net.URLDecoder
 
 /**
  * Created by Xiangb on 2019/2/26.
@@ -23,13 +25,14 @@ open class BaseConfigModule(val apiService: Class<*> = ApiService::class.java, v
     companion object {
         const val APP_HEAD = BuildConfig.APP_HEAD
         val BASE_IP = ZXSharedPrefUtil().getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL)
-        //        val BASE_IP = BuildConfig.RELEASE_URL//用于在测试环境强行运行正式环境host
+//                val BASE_IP = BuildConfig.RELEASE_URL//用于在测试环境强行运行正式环境host
         var TOKEN = ""
     }
 
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
         builder.baseurl(ZXSharedPrefUtil().getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL))
+//        builder.baseurl(BASE_IP)
                 //使用builder可以为框架配置一些配置信息
                 .globalHttpHandler(object : GlobalHttpHandler {
                     // 这里可以提供一个全局处理Http请求和响应结果的处理类,
@@ -49,6 +52,11 @@ open class BaseConfigModule(val apiService: Class<*> = ApiService::class.java, v
                            return chain.request().newBuilder().header("token", tokenId)
                                   .build(); */
                         ZXLogUtil.loge("Request $moduleName: ${request.url()}")
+                        if (ZXSharedPrefUtil().contains("openInterface") && ZXSharedPrefUtil().getBool("openInterface")) {
+                            var requestList = if (ZXSharedPrefUtil().contains("request_list")) ZXSharedPrefUtil().getString("request_list") else ""
+                            requestList = ZXTimeUtil.getCurrentTime() + "->" + URLDecoder.decode(request.url().toString()) + "\n\n" + requestList
+                            ZXSharedPrefUtil().putString("request_list", requestList)
+                        }
                         return chain.request().newBuilder().header("Authorization", TOKEN)
                                 .build()
                         //                        return chain.request().newBuilder().header("Accept", "application/json").build();

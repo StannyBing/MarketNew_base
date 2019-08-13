@@ -4,19 +4,14 @@ import com.esri.core.geometry.Point;
 
 public class LayerInfoFactory {
 
-    private static final String URL_VECTOR_Global = "http://t0.tianditu.com/vec_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_VECTORLabel_Global = "http://t0.tianditu.gov.cn/cva_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_Image_Global = "http://t0.tianditu.com/vec_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_ImageLabel_Global = "http://t0.tianditu.gov.cn/cia_w/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-
-    private static final String URL_VECTOR_2000 = "http://t0.tianditu.com/vec_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_VECTOR_ANNOTATION_CHINESE_2000 = "http://t0.tianditu.com/cva_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_VECTOR_ANNOTATION_ENGLISH_2000 = "http://t0.tianditu.com/eva_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_IMAGE_2000 = "http://t0.tianditu.com/img_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_IMAGE_ANNOTATION_CHINESE_2000 = "http://t0.tianditu.com/cia_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_IMAGE_ANNOTATION_ENGLISH_2000 = "http://t0.tianditu.com/cia_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_TERRAIN_2000 = "http://t0.tianditu.com/ter_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
-    private static final String URL_TERRAIN_ANNOTATION_CHINESE_2000 = "http://t0.tianditu.com/cta_c/wmts?tk=6156a35d41b87a052b2a27ccfa8c6bdd";
+    private static final String URL_VECTOR_2000 = "http://t0.tianditu.com/vec_c/wmts";
+    private static final String URL_VECTOR_ANNOTATION_CHINESE_2000 = "http://t0.tianditu.com/cva_c/wmts";
+    private static final String URL_VECTOR_ANNOTATION_ENGLISH_2000 = "http://t0.tianditu.com/eva_c/wmts";
+    private static final String URL_IMAGE_2000 = "http://t0.tianditu.com/img_c/wmts";
+    private static final String URL_IMAGE_ANNOTATION_CHINESE_2000 = "http://t0.tianditu.com/cia_c/wmts";
+    private static final String URL_IMAGE_ANNOTATION_ENGLISH_2000 = "http://t0.tianditu.com/cia_c/wmts";
+    private static final String URL_TERRAIN_2000 = "http://t0.tianditu.com/ter_c/wmts";
+    private static final String URL_TERRAIN_ANNOTATION_CHINESE_2000 = "http://t0.tianditu.com/cta_c/wmts";
 
     private static final String URL_VECTOR_MERCATOR = "http://t0.tianditu.com/vec_w/wmts";
     private static final String URL_VECTOR_ANNOTATION_CHINESE_MERCATOR = "http://t0.tianditu.com/cva_w/wmts";
@@ -26,7 +21,7 @@ public class LayerInfoFactory {
     private static final String URL_IMAGE_ANNOTATION_ENGLISH_MERCATOR = "http://t0.tianditu.com/cia_w/wmts";
     private static final String URL_TERRAIN_MERCATOR = "http://t0.tianditu.com/ter_w/wmts";
     private static final String URL_TERRAIN_ANNOTATION_CHINESE_MERCATOR = "http://t0.tianditu.com/cta_w/wmts";
-    private static final String URL_JXDX = "http://223.83.172.79:89/geoserver/gwc/service/wmts";
+    private static final String URL_JXDX = "http://47.92.223.79:8080/geoserver/gwc/service/wmts";
     private static final String URL_JXRC = "http://rc.jx968969.com/geoserver/gwc/service/wmts";
 
     private static final String URL_VEC_NEW = "http://t3.tianditu.gov.cn/DataServer?T=vec_w&tk=6156a35d41b87a052b2a27ccfa8c6bdd";
@@ -205,10 +200,6 @@ public class LayerInfoFactory {
                 layerInfo.setUrl(LayerInfoFactory.URL_JXDX);
                 layerInfo.setLayerName("JXDX:JXDX_CIA");
                 break;
-            case TianDiTuLayerTypes.JXDX_GRID:
-                layerInfo.setUrl(LayerInfoFactory.URL_JXDX);
-                layerInfo.setLayerName("JXDX:JXDX_SHP");
-                break;
             case TianDiTuLayerTypes.JXRC_VEC:
                 layerInfo.setUrl(LayerInfoFactory.URL_JXRC);
                 layerInfo.setLayerName("JXRC:RC_VEC");
@@ -246,19 +237,6 @@ public class LayerInfoFactory {
                 break;
             case TianDiTuLayerTypes.TDT_CTA_NEW:
                 layerInfo.setUrl(LayerInfoFactory.URL_CTA_NEW);
-                break;
-            case TianDiTuLayerTypes.TDT_GLOBAL_VEC:
-                layerInfo.setUrl(LayerInfoFactory.URL_VECTOR_Global);
-                break;
-            case TianDiTuLayerTypes.TDT_GLOBAL_VECLABEL:
-                layerInfo.setUrl(LayerInfoFactory.URL_VECTORLabel_Global);
-                break;
-            case TianDiTuLayerTypes.TDT_GLOBAL_IMAGE:
-                layerInfo.setUrl(LayerInfoFactory.URL_Image_Global);
-                layerInfo.setLayerName(LayerInfoFactory.LAYER_NAME_VECTOR);
-                break;
-            case TianDiTuLayerTypes.TDT_GLOBAL_IMAGELABEL:
-                layerInfo.setUrl(LayerInfoFactory.URL_ImageLabel_Global);
                 break;
         }
 
@@ -309,7 +287,6 @@ public class LayerInfoFactory {
             case TianDiTuLayerTypes.JXDX_IMG:
             case TianDiTuLayerTypes.JXDX_CVA:
             case TianDiTuLayerTypes.JXDX_CIA:
-            case TianDiTuLayerTypes.JXDX_GRID:
                 layerInfo.setOrigin(LayerInfoFactory.ORIGIN_2000);
                 layerInfo.setSrid(LayerInfoFactory.SRID_JXDX);
                 layerInfo.setxMin(LayerInfoFactory.X_MIN_2000);

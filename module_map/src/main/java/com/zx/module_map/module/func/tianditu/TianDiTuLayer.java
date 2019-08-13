@@ -35,8 +35,7 @@ public class TianDiTuLayer extends TiledServiceLayer {
     protected byte[] getTile(int level, int col, int row) throws Exception {
         String url = "";
         if (layerInfo.getType() == TianDiTuLayerTypes.JXDX_VEC || layerInfo.getType() == TianDiTuLayerTypes.JXDX_IMG || layerInfo.getType() == TianDiTuLayerTypes.JXDX_CVA
-                || layerInfo.getType() == TianDiTuLayerTypes.JXRC_VEC || layerInfo.getType() == TianDiTuLayerTypes.JXRC_IMG || layerInfo.getType() == TianDiTuLayerTypes.JXRC_CVA
-                || layerInfo.getType() == TianDiTuLayerTypes.JXRC_GRID || layerInfo.getType() == TianDiTuLayerTypes.JXDX_GRID) {
+                || layerInfo.getType() == TianDiTuLayerTypes.JXRC_VEC || layerInfo.getType() == TianDiTuLayerTypes.JXRC_IMG || layerInfo.getType() == TianDiTuLayerTypes.JXRC_CVA || layerInfo.getType() == TianDiTuLayerTypes.JXRC_GRID) {
             if (level > layerInfo.getMaxZoomLevel()
                     || level < layerInfo.getMinZoomLevel())
                 return new byte[0];
@@ -48,7 +47,7 @@ public class TianDiTuLayer extends TiledServiceLayer {
                     + "&Request=GetTile"
                     + "&Version=1.0.0"
                     + "&Format=image/png"
-                    + "&TileMatrix=" + layerInfo.getTileMatrixSet() + ":" + (level)
+                    + "&TileMatrix=" + layerInfo.getTileMatrixSet() + ":" + (level + 1)
                     + "&TileCol=" + col
                     + "&TileRow=" + row
                     + "&TileatrixSet="
@@ -63,18 +62,17 @@ public class TianDiTuLayer extends TiledServiceLayer {
             if (level > layerInfo.getMaxZoomLevel()
                     || level < layerInfo.getMinZoomLevel())
                 return new byte[0];
-            url = layerInfo.getUrl() +
-                    "&service=wmts" +
+            url = layerInfo.getUrl() + "?" +
+                    "service=wmts" +
                     "&request=gettile" +
                     "&version=1.0.0" +
                     "&layer=" + layerInfo.getLayerName() +
                     "&format=tiles" +
-                    "&style=default" +
-                    "&format=tiles" +
                     "&tilematrixset=" + layerInfo.getTileMatrixSet() +
                     "&tilecol=" + col +
                     "&tilerow=" + row +
-                    "&tilematrix=" + (level + 1);
+                    "&tilematrix=" + (level + 1) +
+                    "&tk=" + "6156a35d41b87a052b2a27ccfa8c6bdd";
         }
         Map<String, String> map = null;
         return com.esri.core.internal.io.handler.a.a(url, map);

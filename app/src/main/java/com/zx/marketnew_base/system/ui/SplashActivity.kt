@@ -10,11 +10,15 @@ import com.zx.marketnew_base.main.ui.MainActivity
 import com.zx.marketnew_base.system.mvp.contract.SplashContract
 import com.zx.marketnew_base.system.mvp.model.SplashModel
 import com.zx.marketnew_base.system.mvp.presenter.SplashPresenter
+import com.zx.module_library.BuildConfig
 import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.UserBean
 import com.zx.module_library.func.tool.UserManager
+import com.zx.zxutils.util.ZXSystemUtil
+import com.zx.zxutils.views.ZXStatusBarCompat
+import kotlinx.android.synthetic.main.activity_splash.*
 
 
 /**
@@ -49,6 +53,8 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
+        ZXStatusBarCompat.translucent(this)
+        ZXStatusBarCompat.setStatusBarDarkMode(this)
     }
 
     override fun onResume() {
@@ -61,6 +67,8 @@ class SplashActivity : BaseActivity<SplashPresenter, SplashModel>(), SplashContr
             //自动登录
             mPresenter.doLogin(ApiParamUtil.loginParam(UserManager.userName, UserManager.passWord))
         }
+
+        tv_splash_info.text = "版本号：${ZXSystemUtil.getVersionName()}\n${BuildConfig.WORK_TITLE}"
     }
 
     /**

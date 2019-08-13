@@ -7,10 +7,12 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.content.res.Resources
 import android.content.res.TypedArray
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
@@ -103,7 +105,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                             return@Action1
                         }
                         "版本更新" -> {
-                            XApp.startXApp(RoutePath.ROUTE_APP_SETTING){
+                            XApp.startXApp(RoutePath.ROUTE_APP_SETTING) {
                                 it["checkVerson"] = true
                             }
                         }
@@ -121,6 +123,10 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                     ZXDialogUtil.showInfoDialog(this, it.getString(JPushInterface.EXTRA_NOTIFICATION_TITLE), it.getString(JPushInterface.EXTRA_ALERT))
                 }
             }
+        })
+
+        mRxManager.on("resetFontScale", Action1<String> {
+            this.recreate()
         })
     }
 
@@ -166,7 +172,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
         if (code == "10120") {//未登录或登录超时
             UserManager.loginOut()
 //            JPushInterface.stopPush(this)
-            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN){
+            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN) {
                 it["reLogin"] = true
             }
 //            showLoginDialog()
@@ -289,12 +295,50 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
         if (canSwipeBack) ZXSwipeBackHelper.onPostCreate(this)
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (ZXSharedPrefUtil().contains("openInterface") && ZXSharedPrefUtil().getBool("openInterface")) {
+            if (isTopActivity() && (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP)) {
+                ZXDialogUtil.showInfoDialog(this, "接口", mSharedPrefUtil.getString("request_list"))
+                return true
+            }
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (supportFragmentManager.fragments.isNotEmpty()) {
             supportFragmentManager.fragments.forEach {
                 it.onActivityResult(requestCode, resultCode, data)
             }
+        }
+    }
+
+    /**
+     * 设置字体大小（api<=25）
+     */
+    override fun getResources(): Resources {
+        val res = super.getResources()
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N) {
+            val config = res.configuration
+            config.fontScale = mSharedPrefUtil.getFloat("fontScale", 1.0f)
+            res.updateConfiguration(config, res.displayMetrics)
+        }
+        return res
+    }
+
+    /**
+     * 设置字体大小（api>25）
+     */
+    override fun attachBaseContext(newBase: Context?) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+            val res = newBase?.resources
+            val config = res?.configuration
+            config?.fontScale = mSharedPrefUtil.getFloat("fontScale", 1.0f)
+            val newContext = newBase?.createConfigurationContext(config)
+            super.attachBaseContext(newContext)
+        } else {
+            super.attachBaseContext(newBase)
         }
     }
 

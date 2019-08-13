@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.zx.module_library.base.BaseFragment
 import com.zx.module_supervise.R
+import com.zx.module_supervise.XAppSupervise
 import com.zx.module_supervise.module.task.bean.TaskCheckBean
 import com.zx.module_supervise.module.task.func.adapter.TaskCheckAdapter
 import com.zx.module_supervise.module.task.mvp.contract.DetailCheckInfoContract
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_detail_check_info.*
 class DetailCheckInfoFragment : BaseFragment<DetailCheckInfoPresenter, DetailCheckInfoModel>(), DetailCheckInfoContract.View {
 
     private val checkList = arrayListOf<TaskCheckBean>()
-    private val checkAdapter = TaskCheckAdapter(checkList)
+    private val checkAdapter = TaskCheckAdapter(checkList, XAppSupervise.SUPERVISE.moduleColor)
 
     companion object {
         /**

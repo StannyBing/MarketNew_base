@@ -50,6 +50,10 @@ class DevelopActivity : BaseActivity<DevelopPresenter, DevelopModel>(), DevelopC
             switch_log.isChecked = true
         }
 
+        if (mSharedPrefUtil.contains("openInterface") && mSharedPrefUtil.getBool("openInterface")) {
+            switch_interface.isChecked = true
+        }
+
         //设置当前服务器ip
         val ip = mSharedPrefUtil.getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL)
         et_develop_ip.setText(ip.substring(7, ip.lastIndex))
@@ -59,6 +63,7 @@ class DevelopActivity : BaseActivity<DevelopPresenter, DevelopModel>(), DevelopC
      * View事件设置
      */
     override fun onViewListener() {
+        //日志打印
         switch_log.setOnCheckedChangeListener { buttonView, isChecked ->
             mSharedPrefUtil.putBool("openLog", isChecked)
             ZXApp.init(MyApplication.instance, isChecked)
@@ -81,11 +86,17 @@ class DevelopActivity : BaseActivity<DevelopPresenter, DevelopModel>(), DevelopC
             et_develop_ip.setText(ip.substring(7, ip.lastIndex))
         }
 
+        //接口查看
+        switch_interface.setOnCheckedChangeListener { buttonView, isChecked ->
+            mSharedPrefUtil.putBool("openInterface", isChecked)
+        }
+
         //退出开发者
         tv_develop_close.setOnClickListener {
             ZXDialogUtil.showYesNoDialog(this, "提示", "是否关闭开发者模式？") { _, _ ->
                 mSharedPrefUtil.putBool("openDevelop", false)
                 mSharedPrefUtil.putBool("openLog", false)
+                mSharedPrefUtil.putBool("openInterface", false)
                 mSharedPrefUtil.putString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL)
                 ZXApp.init(MyApplication.instance, false)
 

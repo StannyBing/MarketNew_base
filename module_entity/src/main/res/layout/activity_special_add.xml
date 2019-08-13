@@ -11,7 +11,7 @@
         android:id="@+id/toolBar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:right_text="新增记录"
+        app:right_text="所有记录"
         app:show_righttext="true"
         app:title_text="无证无照监管">
 

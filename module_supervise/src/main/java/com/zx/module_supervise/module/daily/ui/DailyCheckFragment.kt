@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.zx.module_library.base.BaseFragment
 import com.zx.module_supervise.R
+import com.zx.module_supervise.XAppSupervise
 import com.zx.module_supervise.module.daily.mvp.contract.DailyCheckContract
 import com.zx.module_supervise.module.daily.mvp.model.DailyCheckModel
 import com.zx.module_supervise.module.daily.mvp.presenter.DailyCheckPresenter
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_daily_check.*
 class DailyCheckFragment : BaseFragment<DailyCheckPresenter, DailyCheckModel>(), DailyCheckContract.View {
 
     val checkList = arrayListOf<TaskCheckBean>()
-    private val checkAdapter = TaskCheckAdapter(checkList)
+    private val checkAdapter = TaskCheckAdapter(checkList, XAppSupervise.DAILY.moduleColor)
 
     companion object {
         /**

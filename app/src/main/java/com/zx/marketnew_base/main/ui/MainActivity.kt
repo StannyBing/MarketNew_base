@@ -22,6 +22,7 @@ import com.zx.zxutils.util.ZXAppUtil
 import com.zx.zxutils.util.ZXDialogUtil
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager
 import kotlinx.android.synthetic.main.activity_main.*
+import rx.functions.Action1
 import java.io.File
 
 
@@ -85,6 +86,12 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
         JPushInterface.setTags(this, 0, setOf(BaseConfigModule.APP_HEAD + BuildConfig.pushTag))
 
         mPresenter.getVerson()
+
+        mRxManager.on("mainAction", Action1<String> {
+            when(it){
+                "unread"->mPresenter.getUnread()
+            }
+        })
     }
 
     /**
@@ -130,7 +137,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
     override fun onResume() {
         super.onResume()
-        mPresenter.getUnread()
+        mRxManager.post("mainAction", "unread")
     }
 
 }
