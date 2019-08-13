@@ -83,7 +83,7 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
      */
     override fun onViewListener() {
         //修改按钮点击事件
-        iv_user_modify.setOnClickListener { activity?.let { it1 -> UserDetailActivity.startAction(it1, false, UserManager.getUser()) } }
+        iv_user_modify.setOnClickListener { activity?.let { it1 -> UserDetailActivity.startAction(it1, false, UserManager.getUser(),true) } }
         //菜单点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
             when (dataBeans[position].title) {

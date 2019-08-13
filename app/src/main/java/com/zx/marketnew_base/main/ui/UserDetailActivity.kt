@@ -57,15 +57,16 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
     lateinit var userBean: UserBean
     var filePath: String? = null
 
-    var isUserModify = false//是否为本人信息修改
+    var isChange = false//是否为本人信息修改
 
     companion object {
         /**
          * 启动器
          */
-        fun startAction(activity: Activity, isFinish: Boolean, userBean: UserBean) {
+        fun startAction(activity: Activity, isFinish: Boolean, userBean: UserBean, isChange: Boolean) {
             val intent = Intent(activity, UserDetailActivity::class.java)
             intent.putExtra("userBean", userBean)
+            intent.putExtra("isChange", isChange)
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
@@ -94,8 +95,8 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
 
         userBean = intent.getSerializableExtra("userBean") as UserBean
 
-        isUserModify = userBean.id == UserManager.getUser().id
-        if (isUserModify) {
+        isChange = intent.getBooleanExtra("isChange", false)
+        if (isChange) {
             toolbar_view.showRightText("保存")
         }
 
@@ -108,8 +109,8 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
                 .transition(DrawableTransitionOptions().crossFade())
                 .into(iv_userDetail_head)
 
-        listAdapter = UserInfoAdapter(dataBeans, isUserModify)
-        ll_userDetail_call.visibility = if (isUserModify) View.GONE else View.VISIBLE
+        listAdapter = UserInfoAdapter(dataBeans, isChange)
+        ll_userDetail_call.visibility = if (isChange) View.GONE else View.VISIBLE
         rv_userDetail_info.layoutManager = LinearLayoutManager(this)
         rv_userDetail_info.adapter = listAdapter
 
@@ -132,10 +133,12 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewListener() {
         toolbar_view.setRightClickListener {
-            if (TextUtils.isEmpty(filePath)) {
-                save("")
-            } else {
-                mPresenter.uploadFile(2, listOf(File(filePath)))
+            ZXDialogUtil.showYesNoDialog(this, "提示", "是否保存") { _, _ ->
+                if (TextUtils.isEmpty(filePath)) {
+                    save("")
+                } else {
+                    mPresenter.uploadFile(2, listOf(File(filePath)))
+                }
             }
         }
 
@@ -153,36 +156,18 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             }
         }
         iv_userDetail_head.setOnClickListener {
-            getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
-                XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, this, 0x02) {
-                    it["cameraType"] = 1
+            if (isChange) {
+                getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO)) {
+                    XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, this, 0x02) {
+                        it["cameraType"] = 1
+                    }
                 }
-//            val addView = LayoutInflater.from(this).inflate(com.zx.module_library.R.layout.layout_dialog_addfile, null, false)
-//            val llAddImage = addView.findViewById<LinearLayout>(com.zx.module_library.R.id.ll_fileadd_image)
-//            val llAddVideo = addView.findViewById<LinearLayout>(com.zx.module_library.R.id.ll_fileadd_video)
-//            val llAddOther = addView.findViewById<LinearLayout>(com.zx.module_library.R.id.ll_fileadd_other)
-//            val ivAddImage = addView.findViewById<ImageView>(com.zx.module_library.R.id.iv_fileadd_image)
-//            val ivAddVideo = addView.findViewById<ImageView>(com.zx.module_library.R.id.iv_fileadd_video)
-//
-//            ivAddImage.drawable.mutate().setTint(R.color.white)
-//            ivAddVideo.drawable.mutate().setTint(R.color.white)
-//            llAddOther.visibility = View.GONE
-//            (llAddVideo.getChildAt(1) as TextView).setText("拍照")
-//
-//            llAddImage.setOnClickListener {
-//                XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, context as Activity, 0x02) {
-//                    it["cameraType"] = 1
-//                }
-//                ZXDialogUtil.dismissDialog()
-//            }
-//            llAddVideo.setOnClickListener {
-//                XApp.startXApp(RoutePath.ROUTE_LIBRARY_CAMERA, context as Activity, 0x02) {
-//                    it["cameraType"] = 1
-//                }
-//                ZXDialogUtil.dismissDialog()
-//            }
-//
-//            ZXDialogUtil.showCustomViewDialog(context, "请选择添加类型", addView, null, { _, _ -> }, false)
+            } else {
+                XApp.startXApp(RoutePath.ROUTE_LIBRARY_PREVIEW) {
+
+                    it["name"] = userBean.imgUrl!!.substring(userBean.imgUrl!!.length-3)
+                    it["path"] = BaseConfigModule.BASE_IP + userBean.imgUrl
+                }
             }
         }
     }
@@ -195,7 +180,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
             }
         }
         userBean.telephone = telephone
-        if (!TextUtils.isEmpty(url)){
+        if (!TextUtils.isEmpty(url)) {
             userBean.imgUrl = url
         }
         mPresenter.changeUserInfo(ApiParamUtil.changeUserInfoParam(userBean.id, telephone, url))
@@ -206,6 +191,7 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         UserManager.setUser(userBean)
         RxManager().post("userInfoChange", userBean)
         ZXToastUtil.showToast("修改成功")
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -88,7 +88,7 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
         //列表点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
             if (dataBeans[position].listType == 1) {
-                this@MailListFragment.activity?.let { UserDetailActivity.startAction(it, false, dataBeans[position]) }
+                this@MailListFragment.activity?.let { UserDetailActivity.startAction(it, false, dataBeans[position],false) }
             }
         }
     }
