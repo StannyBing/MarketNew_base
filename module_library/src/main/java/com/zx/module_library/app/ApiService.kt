@@ -13,6 +13,7 @@ import rx.Observable
  * 功能：
  */
 interface ApiService {
+
     @POST(BaseConfigModule.APP_HEAD + "sso/user/addUserPath.do")
     fun addUserPath(@Body body: RequestBody): Observable<BaseRespose<String>>
 

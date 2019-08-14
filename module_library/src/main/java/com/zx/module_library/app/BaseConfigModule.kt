@@ -24,15 +24,15 @@ open class BaseConfigModule(val apiService: Class<*> = ApiService::class.java, v
 
     companion object {
         const val APP_HEAD = BuildConfig.APP_HEAD
-        val BASE_IP = ZXSharedPrefUtil().getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL)
-//                val BASE_IP = BuildConfig.RELEASE_URL//用于在测试环境强行运行正式环境host
+//        val BASE_IP = ZXSharedPrefUtil().getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL)
+                val BASE_IP = BuildConfig.RELEASE_URL//用于在测试环境强行运行正式环境host
         var TOKEN = ""
     }
 
 
     override fun applyOptions(context: Context, builder: GlobalConfigModule.Builder) {
-        builder.baseurl(ZXSharedPrefUtil().getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL))
-//        builder.baseurl(BASE_IP)
+//        builder.baseurl(ZXSharedPrefUtil().getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL))
+        builder.baseurl(BASE_IP)
                 //使用builder可以为框架配置一些配置信息
                 .globalHttpHandler(object : GlobalHttpHandler {
                     // 这里可以提供一个全局处理Http请求和响应结果的处理类,

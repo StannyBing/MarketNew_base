@@ -74,7 +74,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             adapter = listAdapter
         }
 
-        if (mSharedPrefUtil.contains("openDevelop") && mSharedPrefUtil.getBool("openDevelop")) {
+        if (mSharedPrefUtil.getBool("openDevelop", false)) {
             dataBeans.add(FuncBean("开发者模式", R.drawable.app_func_develop, true))
         }
         dataBeans.add(FuncBean("录像设置", R.drawable.app_func_video))
@@ -150,7 +150,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
         }
         //开发者模式
         toolbar_view.setMidClickListener {
-            if (!mSharedPrefUtil.contains("openDevelop") || !mSharedPrefUtil.getBool("openDevelop")) {
+            if (!mSharedPrefUtil.getBool("openDevelop",false)) {
                 if (System.currentTimeMillis() - developTime < 1000 || developTime == 0L) {
                     developCount++
                     developTime = System.currentTimeMillis()
@@ -224,7 +224,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
 
     override fun onResume() {
         super.onResume()
-        if (mSharedPrefUtil.contains("openDevelop") && !mSharedPrefUtil.getBool("openDevelop") && dataBeans[0].title == "开发者模式") {
+        if (!mSharedPrefUtil.getBool("openDevelop", false) && dataBeans[0].title == "开发者模式") {
             dataBeans.removeAt(0)
             listAdapter.notifyDataSetChanged()
         }

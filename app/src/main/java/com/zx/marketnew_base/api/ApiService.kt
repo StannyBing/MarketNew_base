@@ -56,4 +56,7 @@ interface ApiService {
 
     @POST(ApiConfigModule.URL_APP + "optLog/addOptLog.do")
     fun sendXAppOpt(@Body body: RequestBody): Observable<BaseRespose<String>>
+
+    @POST(ApiConfigModule.URL_APP + "feedback/addFeedback.do")
+    fun addFeedBack(@Body body: RequestBody) : Observable<BaseRespose<String>>
 }

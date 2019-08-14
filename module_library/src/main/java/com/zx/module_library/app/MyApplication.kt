@@ -47,9 +47,7 @@ open class MyApplication : BaseApplication() {
         ARouter.init(this)
         Thread {
             mSharedPrefUtil = ZXSharedPrefUtil()
-            if (mSharedPrefUtil.contains("openLog") && mSharedPrefUtil.getBool("openLog")) {
-                ZXApp.init(this, true)
-            }
+            ZXApp.init(this, mSharedPrefUtil.getBool("openLog", false))
             instance = this
             mContest = this
             //配置极光推送

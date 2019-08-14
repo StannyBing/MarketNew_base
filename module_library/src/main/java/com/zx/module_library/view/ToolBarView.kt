@@ -29,7 +29,7 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
     private lateinit var toolbarMidPic: ImageView//中间图片
     lateinit var toolbarTitle: TextView//中间标题
     private lateinit var toolbarRightImage: ImageView//右侧图片
-    private lateinit var toolbarRightText: TextView//右侧文字
+    lateinit var toolbarRightText: TextView//右侧文字
     private lateinit var toolbarBg: RelativeLayout//toolbar
     private var titleText = ""
     private var backText = "返回"

@@ -58,7 +58,7 @@ class VideoSettingActivity : BaseActivity<VideoSettingPresenter, VideoSettingMod
             adapter = listAdapter
         }
 
-        val nowQuality = arrayListOf("超高清", "高清", "普清", "低清", "超低清")[when (if (mSharedPrefUtil.contains("video_quality")) mSharedPrefUtil.getInt("video_quality") else ZXCameraView.MEDIA_QUALITY_MIDDLE) {
+        val nowQuality = arrayListOf("超高清", "高清", "普清", "低清", "超低清")[when (mSharedPrefUtil.getInt("video_quality", ZXCameraView.MEDIA_QUALITY_MIDDLE)) {
             ZXCameraView.MEDIA_QUALITY_HIGH -> 0
             ZXCameraView.MEDIA_QUALITY_MIDDLE -> 1
             ZXCameraView.MEDIA_QUALITY_LOW -> 2
@@ -67,7 +67,7 @@ class VideoSettingActivity : BaseActivity<VideoSettingPresenter, VideoSettingMod
             else -> 1
         }]
 
-        val nowDuation = arrayListOf("10s", "30s", "1min", "2min")[when (if (mSharedPrefUtil.contains("video_duration")) mSharedPrefUtil.getInt("video_duration") else 30) {
+        val nowDuation = arrayListOf("10s", "30s", "1min", "2min")[when (mSharedPrefUtil.getInt("video_duration", 30)) {
             10 -> 0
             30 -> 1
             60 -> 2
@@ -89,7 +89,7 @@ class VideoSettingActivity : BaseActivity<VideoSettingPresenter, VideoSettingMod
             when (dataBeans[position].title) {
                 "录像分辨率" -> {
                     val list = arrayListOf("超高清", "高清", "普清", "低清", "超低清")
-                    val quality = if (mSharedPrefUtil.contains("video_quality")) mSharedPrefUtil.getInt("video_quality") else ZXCameraView.MEDIA_QUALITY_MIDDLE
+                    val quality = mSharedPrefUtil.getInt("video_quality", ZXCameraView.MEDIA_QUALITY_MIDDLE)
                     list[when (quality) {
                         ZXCameraView.MEDIA_QUALITY_HIGH -> 0
                         ZXCameraView.MEDIA_QUALITY_MIDDLE -> 1
@@ -112,7 +112,7 @@ class VideoSettingActivity : BaseActivity<VideoSettingPresenter, VideoSettingMod
                 }
                 "时长限制" -> {
                     val list = arrayListOf("10s", "30s", "1min", "2min")
-                    val quality = if (mSharedPrefUtil.contains("video_duration")) mSharedPrefUtil.getInt("video_duration") else ZXCameraView.MEDIA_QUALITY_MIDDLE
+                    val quality = mSharedPrefUtil.getInt("video_duration", ZXCameraView.MEDIA_QUALITY_MIDDLE)
                     list[when (quality) {
                         10 -> 0
                         30 -> 1

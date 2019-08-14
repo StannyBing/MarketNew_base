@@ -63,10 +63,10 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
 
+        dailyId = arguments!!.getString("dailyId")
+
         file_view.withXApp(XAppSupervise.DAILY)
         file_view.setModifiable(dailyId.isEmpty())
-
-        dailyId = arguments!!.getString("dailyId")
 
         if (entityBean != null) {
             tv_daily_entity.text = "主体信息（点击切换主体）"

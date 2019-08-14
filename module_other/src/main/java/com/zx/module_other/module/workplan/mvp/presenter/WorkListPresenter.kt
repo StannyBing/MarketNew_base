@@ -51,7 +51,7 @@ class WorkListPresenter : WorkListContract.Presenter() {
     override fun getWorkPlanList(map: Map<String, String>) {
         mModel.getWorkPlan(map)
                 .compose(RxHelper.bindToLifecycle(mView))
-                .subscribe(object : RxSubscriber<List<WorkPlanBean>>(mView) {
+                .subscribe(object : RxSubscriber<List<WorkPlanBean>>() {
                     override fun _onNext(t: List<WorkPlanBean>?) {
                         if (t != null) {
                             mView.getWorkPlanResult(t)

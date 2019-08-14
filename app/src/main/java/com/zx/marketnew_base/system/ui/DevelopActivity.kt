@@ -46,13 +46,9 @@ class DevelopActivity : BaseActivity<DevelopPresenter, DevelopModel>(), DevelopC
      */
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        if (mSharedPrefUtil.contains("openLog") && mSharedPrefUtil.getBool("openLog")) {
-            switch_log.isChecked = true
-        }
+        switch_log.isChecked = mSharedPrefUtil.getBool("openLog", false)
 
-        if (mSharedPrefUtil.contains("openInterface") && mSharedPrefUtil.getBool("openInterface")) {
-            switch_interface.isChecked = true
-        }
+        switch_interface.isChecked = mSharedPrefUtil.getBool("openInterface", false)
 
         //设置当前服务器ip
         val ip = mSharedPrefUtil.getString("base_ip", if (BuildConfig.isRelease) BuildConfig.RELEASE_URL else BuildConfig.DEBUG_URL)

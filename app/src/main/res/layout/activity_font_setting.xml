@@ -11,6 +11,8 @@
         android:id="@+id/toolbar_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:show_righttext="true"
+        app:right_text="保存"
         app:title_text="字体设置">
 
     </com.zx.module_library.view.ToolBarView>

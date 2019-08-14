@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.XApp
@@ -57,7 +58,10 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
         ZXStatusBarCompat.translucent(this, R.color.work_satisics_bg)
-        ZXStatusBarCompat.setStatusBarLightMode(this)
+        ZXStatusBarCompat.setStatusBarDarkMode(this)
+
+        toolbar_view.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.white))
+
         rv_workresult.apply {
             layoutManager = GridLayoutManager(this@WorkResultsActivity, 2)
             adapter = workResultAllAdapter

@@ -65,8 +65,8 @@ class CameraVideoActivity : BaseActivity<CameraVideoPresenter, CameraVideoModel>
 
         cv_camera_view.setSaveVideoPath(ConstStrings.getCachePath())
                 .setCameraMode(if (cameraType == 1) ZXCameraView.BUTTON_STATE_ONLY_CAPTURE else if (cameraType == 2) ZXCameraView.BUTTON_STATE_ONLY_RECORDER else ZXCameraView.BUTTON_STATE_BOTH)
-                .setMediaQuality(if (mSharedPrefUtil.contains("video_quality")) mSharedPrefUtil.getInt("video_quality") else ZXCameraView.MEDIA_QUALITY_MIDDLE)
-                .setMaxVedioDuration(if (mSharedPrefUtil.contains("video_duration")) mSharedPrefUtil.getInt("video_duration") else 30)
+                .setMediaQuality(mSharedPrefUtil.getInt("video_quality", ZXCameraView.MEDIA_QUALITY_MIDDLE))
+                .setMaxVedioDuration(mSharedPrefUtil.getInt("video_duration", 30))
                 .showAlbumView(cameraType == 1)
                 .setCameraLisenter(object : CameraListener {
                     override fun onCaptureCommit(bitmap: Bitmap?) {

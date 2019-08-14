@@ -32,6 +32,8 @@ import io.github.xudaojie.qrcodelib.CaptureActivity
 import kotlinx.android.synthetic.main.activity_entity_query.*
 
 
+
+
 /**
  * Create By admin On 2017/7/11
  * 功能：主体查询-主界面

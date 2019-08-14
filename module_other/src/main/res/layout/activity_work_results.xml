@@ -3,44 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/work_satisics_bg"
-    android:paddingTop="10dp">
+    android:background="@color/work_satisics_bg">
 
-    <RelativeLayout
-        android:id="@+id/rl_title"
+    <com.zx.module_library.view.ToolBarView
+        android:id="@+id/toolbar_view"
+        app:title_text="工作成果"
+        android:layout_marginTop="20dp"
+        app:module_color="@color/white"
+        app:bg_color="@color/work_satisics_bg"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_50"
-        android:layout_marginTop="@dimen/dp_10">
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:src="@drawable/back_white" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/work_achievements"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_normal" />
-    </RelativeLayout>
+    </com.zx.module_library.view.ToolBarView>
 
     <com.zx.module_other.module.workplan.func.view.StatisticsView
         android:id="@+id/sv_statistics"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_work_info"
-        android:layout_below="@+id/rl_title"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbar_view"
         android:layout_marginBottom="@dimen/dp_10" />
 
     <LinearLayout

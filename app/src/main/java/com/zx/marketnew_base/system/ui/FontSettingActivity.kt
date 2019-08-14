@@ -83,6 +83,7 @@ class FontSettingActivity : BaseActivity<FontSettingPresenter, FontSettingModel>
                     tv_font_tips.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultNameSize * selectScale)
                     toolbar_view.toolbarBackText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultToolBackSize * selectScale)
                     toolbar_view.toolbarTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultToolTitleSize * selectScale)
+                    toolbar_view.toolbarRightText.setTextSize(TypedValue.COMPLEX_UNIT_PX, defaultToolBackSize * selectScale)
                 }
             }
 
@@ -92,15 +93,19 @@ class FontSettingActivity : BaseActivity<FontSettingPresenter, FontSettingModel>
             override fun getProgressOnFinally(progress: Int, progressFloat: Float) {
             }
         }
-    }
 
-    override fun onBackPressed() {
-        mSharedPrefUtil.putFloat("fontScale", selectScale)
-        mRxManager.post("resetFontScale", "")
-        showLoading("正在修改...")
-        handler.postDelayed({
-            dismissLoading()
-            super.onBackPressed()
-        }, 200)
+        toolbar_view.setRightClickListener {
+            if (mSharedPrefUtil.getFloat("fontScale", 1.0f) != selectScale) {
+                mSharedPrefUtil.putFloat("fontScale", selectScale)
+                mRxManager.post("resetFontScale", "")
+                showLoading("正在修改...")
+                handler.postDelayed({
+                    dismissLoading()
+                    finish()
+                }, 500)
+            } else {
+                finish()
+            }
+        }
     }
 }

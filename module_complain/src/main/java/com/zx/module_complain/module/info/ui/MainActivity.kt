@@ -93,6 +93,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
 
                 })
         loadData(true)
+
     }
 
     /**

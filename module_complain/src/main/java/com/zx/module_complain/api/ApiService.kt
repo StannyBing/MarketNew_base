@@ -15,6 +15,7 @@ import rx.Observable
  * 功能：
  */
 interface ApiService {
+
     @GET(ApiConfigModule.URL_COMPLAIN + "complaint/getComplaintByStatus.do")
     fun getMyComplainList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<ComplainListBean>>>
 

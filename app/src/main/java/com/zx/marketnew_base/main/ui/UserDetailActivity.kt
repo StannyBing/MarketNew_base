@@ -5,9 +5,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
@@ -35,7 +32,6 @@ import com.zx.module_library.bean.UserBean
 import com.zx.module_library.bean.XAppBean
 import com.zx.module_library.func.tool.GlideRoundTransformation
 import com.zx.module_library.func.tool.UserManager
-import com.zx.module_other.module.print.func.util.PrintDataUtil.Companion.context
 import com.zx.zxutils.ZXApp
 import com.zx.zxutils.util.ZXDialogUtil
 import com.zx.zxutils.util.ZXSystemUtil
@@ -114,7 +110,6 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         rv_userDetail_info.layoutManager = LinearLayoutManager(this)
         rv_userDetail_info.adapter = listAdapter
 
-        dataBeans.add(KeyValueBean("组织", userBean.station))
         dataBeans.add(KeyValueBean("姓名", userBean.realName))
         dataBeans.add(KeyValueBean("电话", userBean.telephone))
         dataBeans.add(KeyValueBean("部门", userBean.department))
