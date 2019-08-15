@@ -18,6 +18,7 @@ import com.zx.module_entity.module.special.func.adapter.DisposeAdapter
 import com.zx.module_entity.module.special.mvp.contract.SpecialAddContract
 import com.zx.module_entity.module.special.mvp.model.SpecialAddModel
 import com.zx.module_entity.module.special.mvp.presenter.SpecialAddPresenter
+import com.zx.module_library.BuildConfig
 import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -139,7 +140,11 @@ class SpecialAddActivity : BaseActivity<SpecialAddPresenter, SpecialAddModel>(),
             }
             if (disposeList[it].disposeName == "分管所") {
                 if (disposeList[it].resultValue.isNotEmpty()) {
-                    mPresenter.getAreaDeptList(hashMapOf("parentId" to disposeList.getItem("分管所")?.resultValue!!))
+                    mPresenter.getAreaDeptList(hashMapOf("parentId" to disposeList.getItem("分管所")?.resultValue!!, "type" to when (BuildConfig.APP_HEAD) {
+                        "rc" -> "12"
+                        "dx" -> "12"
+                        else -> "10"
+                    }))
                 } else {
                     val position = disposeList.getItemPosition("分管片区")
                     disposeList[position].disposeValue.clear()

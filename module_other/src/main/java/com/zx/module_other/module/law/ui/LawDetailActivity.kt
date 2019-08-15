@@ -12,6 +12,7 @@ import android.webkit.WebViewClient
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.func.tool.UserManager
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
@@ -60,7 +61,7 @@ class LawDetailActivity : BaseActivity<LawDetailPresenter, LawDetailModel>(), La
         super.initView(savedInstanceState)
 
         toolbar_view.withXApp(XAppOther.LAW)
-        mPresenter.getCollectList(ApiParamUtil.lawMyCollectAllParam("oynkBwtUWJ2tFcS5s19RofvkfTs8"))
+        mPresenter.getCollectList(ApiParamUtil.lawMyCollectAllParam(UserManager.getUser().id))
         wv_law_query.apply {
             settings.javaScriptEnabled = true
             settings.domStorageEnabled = true
@@ -92,7 +93,7 @@ class LawDetailActivity : BaseActivity<LawDetailPresenter, LawDetailModel>(), La
             if (isCollect) {
                 mPresenter.DeleteWeixinCollectLaw(ApiParamUtil.lawDeleteCollectParam(lawCollectId!!))
             } else {
-                mPresenter.AddWeixinCollectLaw(ApiParamUtil.lawAddCollectParam(lawDetail!!.id.toString(), "oynkBwtUWJ2tFcS5s19RofvkfTs8", lawDetail!!.name, lawDetail!!.type))
+                mPresenter.AddWeixinCollectLaw(ApiParamUtil.lawAddCollectParam(lawDetail!!.id.toString(), UserManager.getUser().id, lawDetail!!.name, lawDetail!!.type))
             }
         }
     }

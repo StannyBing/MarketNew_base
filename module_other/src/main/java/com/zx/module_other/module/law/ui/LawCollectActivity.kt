@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
+import com.zx.module_library.func.tool.UserManager
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
@@ -79,7 +80,7 @@ class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(),
             pageNo = 1
             sr_law_collect.clearStatus()
         }
-        mPresenter.getCollectList(ApiParamUtil.lawMyCollectParam("oynkBwtUWJ2tFcS5s19RofvkfTs8", pageNo, 15))
+        mPresenter.getCollectList(ApiParamUtil.lawMyCollectParam(UserManager.getUser().id, pageNo, 15))
     }
 
     override fun onLawCollectResult(lawCollectResultBean: NormalList<LawCollectBean>?) {
