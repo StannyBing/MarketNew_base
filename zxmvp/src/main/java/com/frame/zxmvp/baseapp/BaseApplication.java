@@ -92,7 +92,7 @@ public class BaseApplication extends Application implements App {
             activity.finish();
         }
 //		App.getInstance().destroyMap();
-        System.exit(0);
+//        System.exit(0);
     }
 
 

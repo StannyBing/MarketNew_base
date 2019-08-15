@@ -20,6 +20,8 @@ class DetailCreditFragment : BaseFragment<DetailCreditPresenter, DetailCreditMod
     private val creditList = arrayListOf<CreditBean>()
     private val creditAdapter = CreditAdapter(creditList)
 
+    private var fCreditLevel: String = ""
+
     companion object {
         /**
          * 启动器
@@ -67,7 +69,10 @@ class DetailCreditFragment : BaseFragment<DetailCreditPresenter, DetailCreditMod
         }
     }
 
-    fun resetInfo(fEntityGuid: String?) {
+    fun resetInfo(fCreditLevel: String?, fEntityGuid: String?) {
+        if (fCreditLevel != null) {
+            this.fCreditLevel = fCreditLevel
+        }
         if (fEntityGuid != null) {
             mPresenter.getCreditInfo(hashMapOf("id" to fEntityGuid))
         }
@@ -75,6 +80,7 @@ class DetailCreditFragment : BaseFragment<DetailCreditPresenter, DetailCreditMod
 
     override fun onCreditListResult(creditList: List<CreditBean>) {
         this.creditList.clear()
+        this.creditList.add(CreditBean(0, 0, fCreditLevel))
         this.creditList.addAll(creditList)
         creditAdapter.notifyDataSetChanged()
     }

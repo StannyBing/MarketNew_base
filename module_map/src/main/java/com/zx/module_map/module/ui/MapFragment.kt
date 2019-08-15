@@ -50,8 +50,8 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     private var mLabLayer: TianDiTuLayer? = null
     private var mGridLayer: TianDiTuLayer? = null
 
-    private var onlineVecLayer : OnlineTileLayer?=null
-    private var onlineImgLayer : OnlineTileLayer?=null
+    private var onlineVecLayer: OnlineTileLayer? = null
+    private var onlineImgLayer: OnlineTileLayer? = null
 
     private var mMarkersGLayer: GraphicsLayer? = null// 用于展示主体或任务结果注记
 
@@ -187,25 +187,13 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
         if (status == OnStatusChangedListener.STATUS.INITIALIZED) {
             if (type == 1) {
                 if (taskBean != null && taskBean!!.longtitude != null && taskBean!!.latitude != null) {
-                    val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
-                    symbol.offsetY = 17f
-                    var point = Point(taskBean!!.longtitude!!, taskBean!!.latitude!!)
-                    val graphic = Graphic(point.toSpatialPoint(), symbol)
-                    mMarkersGLayer?.addGraphic(graphic)
-                    map_view.centerAt(point.toSpatialPoint(), true)
-                    map_view.scale = 70000.00
+                    mapListener.addMarker(Point(taskBean!!.longtitude!!, taskBean!!.latitude!!))
                 }
             } else if (type == 2) {
                 val longitude = activity?.intent?.getFloatExtra("longitude", 0f)
                 val latitude = activity?.intent?.getFloatExtra("latitude", 0f)
                 if (longitude != null && latitude != null && longitude != 0f && latitude != 0f) {
-                    val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
-                    symbol.offsetY = 17f
-                    var point = Point(longitude.toDouble(), latitude.toDouble())
-                    val graphic = Graphic(point.toSpatialPoint(), symbol)
-                    mMarkersGLayer?.addGraphic(graphic)
-                    map_view.centerAt(point.toSpatialPoint(), true)
-                    map_view.scale = 70000.00
+                    mapListener.addMarker(Point(longitude.toDouble(), latitude.toDouble()))
                 }
             } else {
                 mapListener.doLocation()
@@ -227,6 +215,18 @@ class MapFragment : BaseFragment<MapPresenter, MapModel>(), MapContract.View, On
     inner class MyListener : MapListener {
         override fun getMap(): MapView {
             return map_view
+        }
+
+        override fun addMarker(point: Point, removeOther : Boolean) {
+            if (removeOther){
+                mMarkersGLayer?.removeAll()
+            }
+            val symbol = PictureMarkerSymbol(activity, ContextCompat.getDrawable(activity!!, R.drawable.map_marker))
+            symbol.offsetY = 17f
+            val graphic = Graphic(point.toSpatialPoint(), symbol)
+            mMarkersGLayer?.addGraphic(graphic)
+            map_view.centerAt(point.toSpatialPoint(), true)
+            map_view.scale = 70000.00
         }
 
         override fun doLocation() {

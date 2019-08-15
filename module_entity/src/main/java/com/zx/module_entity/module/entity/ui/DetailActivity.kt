@@ -79,7 +79,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         super.initView(savedInstanceState)
 
         toolBar_view.withXApp(XAppEntity.ENTITY)
-        toolBar_view.setMidText("详情")
+        toolBar_view.setMidText("主体详情")
 
         fEntityGuid = if (intent.hasExtra("fEntityGuid")) intent.getStringExtra("fEntityGuid") else ""
         isSpeacial = if (intent.hasExtra("isSpeacial")) intent.getBooleanExtra("isSpeacial", false) else false
@@ -92,7 +92,7 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
-                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
+                .setTitleColor(ContextCompat.getColor(this, R.color.text_color_light), ContextCompat.getColor(this, R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppEntity.ENTITY.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
@@ -151,14 +151,15 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
             finish()
             return
         }
+        toolBar_view.setMidText(entityDetail.fEntityName)
         btn_entity_check.visibility = View.VISIBLE
         detailBean = entityDetail
         if (entityDetail.fCreditLevel == "Z") {
             tvp_entity_detail.tabLayout.visibility = View.GONE
-            tvp_entity_detail.setTabScrollable(false)
+            tvp_entity_detail.setViewpagerCanScroll(false)
         }
         infoFragment.resetInfo(entityDetail)
-        creditFragment.resetInfo(entityDetail.fEntityGuid)
+        creditFragment.resetInfo(entityDetail.fCreditLevel, entityDetail.fEntityGuid)
         businessFragment.resetInfo(entityDetail.fEntityGuid)
         imageFragment.resetInfo(entityDetail)
     }

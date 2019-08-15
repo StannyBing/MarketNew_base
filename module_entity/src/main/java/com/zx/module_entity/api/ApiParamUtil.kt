@@ -38,7 +38,7 @@ object ApiParamUtil {
     }
 
     //搜索
-    fun searchParam(pageNo: Int, pageSize: Int, fCondition: String = "", positionList: String = "", radius: String = "", fTags: String = "", fCreditLevel: String = "", fStatus: String = "", areaCode: String = ""): Map<String, String> {
+    fun searchParam(pageNo: Int, pageSize: Int, fCondition: String = "", positionList: String = "", radius: String = "", fTags: String = "", fCreditLevel: String = "", fStatus: String = "", fStation: String = "", fGrid : String = ""): Map<String, String> {
         val map = hashMapOf<String, String>()
         map["pageNo"] = pageNo.toString()
         map["pageSize"] = pageSize.toString()
@@ -47,7 +47,8 @@ object ApiParamUtil {
             if (fTags.isNotEmpty()) map["fTags"] = fTags
             if (fCreditLevel.isNotEmpty()) map["fCreditLevelList"] = fCreditLevel
             if (fStatus.isNotEmpty()) map["fStatus"] = fStatus
-            if (areaCode.isNotEmpty()) map["areaCode"] = areaCode
+            if (fStation.isNotEmpty()) map["fStation"] = fStation
+            if (fGrid.isNotEmpty()) map["fGrid"] = fGrid
 //        } else {
             map["positionList"] = positionList
             map["radius"] = radius

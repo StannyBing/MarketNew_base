@@ -91,7 +91,11 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
         }
 
         getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            listAdapter.notifyValue("清理缓存", getFileSize().toString() + "M")
+            listAdapter.notifyValue("清理缓存", if (getFileSize().toString().isNotEmpty() && getFileSize().toString().length > 4) {
+                getFileSize().toString().substring(0, 4)
+            } else {
+                getFileSize().toString()
+            } + "M")
         }
     }
 
@@ -116,7 +120,11 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                     }.start()
                     Glide.get(this).clearMemory()
                     handler.postDelayed({
-                        listAdapter.notifyValue("清理缓存", getFileSize().toString() + "M")
+                        listAdapter.notifyValue("清理缓存", if (getFileSize().toString().isNotEmpty() && getFileSize().toString().length > 4) {
+                            getFileSize().toString().substring(0, 4)
+                        } else {
+                            getFileSize().toString()
+                        } + "M")
                         dismissLoading()
                         showToast("清理完成")
                     }, 1000)
@@ -131,7 +139,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
                     AboutActivity.startAction(this, false)
                 }
                 "修改密码" -> {
-                    ForgetPwdActivity.startAction(this, false, UserManager.getUser().telephone)
+                    ChangePwdActivity.startAction(this, false, UserManager.getUser().id)
                 }
                 "退出登录" -> {
                     ZXDialogUtil.showYesNoDialog(this, "提示", "是否退出登录？") { dialog, which ->
@@ -150,7 +158,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
         }
         //开发者模式
         toolbar_view.setMidClickListener {
-            if (!mSharedPrefUtil.getBool("openDevelop",false)) {
+            if (!mSharedPrefUtil.getBool("openDevelop", false)) {
                 if (System.currentTimeMillis() - developTime < 1000 || developTime == 0L) {
                     developCount++
                     developTime = System.currentTimeMillis()

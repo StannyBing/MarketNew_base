@@ -22,10 +22,7 @@ import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
 import com.zx.module_library.bean.SearchFilterBean
-import com.zx.module_library.func.tool.animateToTop
-import com.zx.module_library.func.tool.getItem
-import com.zx.module_library.func.tool.getPosition
-import com.zx.module_library.func.tool.getSelect
+import com.zx.module_library.func.tool.*
 import com.zx.zxutils.util.ZXLocationUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import io.github.xudaojie.qrcodelib.CaptureActivity
@@ -50,7 +47,8 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     private var fTags = ""//主体标识
     private var fCreditLevel = ""//主体等级
     private var fStatus = ""//主体状态
-    private var areaCode = ""//片区
+    private var fStation = ""//分局
+    private var fGrid = ""//片区
     private var radius = ""//范围
     private var positionList = ""//坐标
 
@@ -118,7 +116,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             pageNo = 1
             sr_entity_list.clearStatus()
         }
-        mPresenter.getEntityList(ApiParamUtil.searchParam(pageNo, 15, searchText, radius = radius, positionList = positionList, fTags = fTags, fCreditLevel = fCreditLevel, fStatus = fStatus, areaCode = areaCode))
+        mPresenter.getEntityList(ApiParamUtil.searchParam(pageNo, 15, searchText, radius = radius, positionList = positionList, fTags = fTags, fCreditLevel = fCreditLevel, fStatus = fStatus, fStation = fStation, fGrid = fGrid))
     }
 
     /**
@@ -127,15 +125,15 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     override fun onViewListener() {
         //过滤事件
         search_view.setFuncListener(filterList) {
-            if (filterList.getSelect(name = "监管局").isEmpty() && areaCode.isNotEmpty()) {
+            if (filterList.getSelect(name = "监管局").isEmpty() && fStation.isNotEmpty()) {
                 onDeptListResult(arrayListOf())
-            } else if (areaCode != filterList.getSelect(name = "监管局")) {
+            } else if (fStation != filterList.getSelectKey(name = "监管局")) {
                 mPresenter.getAreaDeptList(ApiParamUtil.entityStationParam(filterList.getSelect(name = "监管局")))
             }
             fTags = filterList.getSelect(name = "主体标识")
             fCreditLevel = filterList.getSelect(name = "信用等级")
             fStatus = filterList.getSelect(name = "主体状态")
-            areaCode = filterList.getSelect(name = "监管所")
+            fStation = filterList.getSelectKey(name = "监管局")
             if (filterList.getSelect(name = "周边查询") == "1" && filterList.getSelect(name = "查询范围").isNotEmpty()) {
                 getPermission(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)) {
                     val location = ZXLocationUtil.getLocation(this)
@@ -146,7 +144,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                 positionList = ""
                 radius = ""
             }
-            if (filterList.getSelect(name = "监管片区").isNotEmpty()) areaCode = filterList.getSelect(name = "监管片区")
+            fGrid = filterList.getSelectKey(name = "监管片区")
         }
         search_view.setOtherPicClick {
             getPermission(arrayOf(Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -192,6 +190,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
         }
         filterList.add(SearchFilterBean("主体状态", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
             add(SearchFilterBean.ValueBean("存活", "存活"))
+            add(SearchFilterBean.ValueBean("注销", "注销"))
             add(SearchFilterBean.ValueBean("吊销", "吊销"))
         }))
     }

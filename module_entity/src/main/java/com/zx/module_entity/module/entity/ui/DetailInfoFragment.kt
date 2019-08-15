@@ -244,6 +244,8 @@ class DetailInfoFragment : BaseFragment<DetailInfoPresenter, DetailInfoModel>(),
             dataList.add(DetailInfoBean("企业标识", entityDetail.fTags))
         } else {
             dataList.add(DetailInfoBean("主体名称", entityDetail.fEntityName))
+            dataList.add(DetailInfoBean("企业状态", entityDetail.fCancelType ?: "存活"))
+            dataList.add(DetailInfoBean("主体类型", entityDetail.fEntityType))
             dataList.add(DetailInfoBean("营业执照号", entityDetail.fBizlicNum))
             dataList.add(DetailInfoBean("统一社会信用代码", entityDetail.fUniscid))
             dataList.add(DetailInfoBean("行业类型", entityDetail.fIndustry))

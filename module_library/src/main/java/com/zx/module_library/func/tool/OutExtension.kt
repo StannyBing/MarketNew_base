@@ -49,6 +49,37 @@ fun ArrayList<SearchFilterBean>.getSelect(position: Int = -1, name: String = "")
     }
 }
 
+fun ArrayList<SearchFilterBean>.getSelectKey(position: Int = -1, name: String = ""): String {
+    var bean: SearchFilterBean? = null
+    if (position != -1) {
+        bean = get(position)
+    } else {
+        forEach {
+            if (it.filterName == name) {
+                bean = it
+            }
+        }
+    }
+    if (bean == null) {
+        return ""
+    }
+    return when (bean!!.filterType) {
+        SearchFilterBean.FilterType.EDIT_TYPE -> {
+            bean!!.values[0].value
+        }
+        SearchFilterBean.FilterType.SELECT_TYPE -> {
+            var key = ""
+            bean!!.values.forEach {
+                if (it.isSelect) {
+                    key = it.key
+                    return@forEach
+                }
+            }
+            key
+        }
+    }
+}
+
 fun ArrayList<SearchFilterBean>.getPosition(name: String): Int {
     if (isNotEmpty()) {
         forEachIndexed { index, it ->

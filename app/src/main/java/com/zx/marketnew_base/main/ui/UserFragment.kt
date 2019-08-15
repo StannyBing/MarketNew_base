@@ -120,8 +120,8 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
                 )
                 .transition(DrawableTransitionOptions().crossFade())
                 .into(iv_user_head)
-        tv_user_name.setText(userBean.realName)
-        tv_user_dept.setText(userBean.department)
-        tv_user_telephone.setText(userBean.telephone)
+        tv_user_name.text = userBean.realName
+        tv_user_dept.text = userBean.department
+        tv_user_telephone.text = userBean.telephone
     }
 }

@@ -29,6 +29,19 @@ class CreditAdapter(dataList: List<CreditBean>) : ZXQuickAdapter<CreditBean, ZXB
                 helper.addOnClickListener(R.id.tv_credit_all)
                 ContextCompat.getColor(mContext, XAppEntity.ENTITY.moduleColor)
             })
+            if (helper.adapterPosition == 0) {
+                helper.setText(R.id.tv_credit_title, "信用等级")
+                helper.setVisible(R.id.tv_credit_year, false)
+                helper.setVisible(R.id.tv_credit_all, false)
+                helper.setVisible(R.id.tv_credit_tip2, false)
+                helper.setText(R.id.tv_credit_tip1, item.title)
+            } else {
+                helper.setText(R.id.tv_credit_title, item.title)
+                helper.setVisible(R.id.tv_credit_year, true)
+                helper.setVisible(R.id.tv_credit_all, true)
+                helper.setVisible(R.id.tv_credit_tip2, true)
+                helper.setText(R.id.tv_credit_tip1, "本年")
+            }
         }
     }
 }

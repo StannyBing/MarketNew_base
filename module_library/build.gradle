@@ -76,7 +76,7 @@ android {
             buildConfigField("String", "APP_HEAD", "\"dx\"")
             buildConfigField("String", "RELEASE_URL", "\"http://223.83.172.79:90/\"")
             buildConfigField("String", "DEBUG_URL", "\"http://192.168.11.248:8106/\"")
-            buildConfigField("String", "AREA_ID", "\"360481\"")
+            buildConfigField("String", "AREA_ID", "\"\"")
             buildConfigField("String", "WORK_TITLE", "\"东乡市场监督管理局\"")
         }
         rc {
@@ -84,7 +84,7 @@ android {
             buildConfigField("String", "APP_HEAD", "\"rc\"")
             buildConfigField("String", "RELEASE_URL", "\"http://rc.jx968969.com/\"")
             buildConfigField("String", "DEBUG_URL", "\"http://192.168.11.248:8101/\"")
-            buildConfigField("String", "AREA_ID", "\"360481\"")
+            buildConfigField("String", "AREA_ID", "\"\"")
             buildConfigField("String", "WORK_TITLE", "\"瑞昌市场监督管理局\"")
         }
     }

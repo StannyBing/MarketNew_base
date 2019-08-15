@@ -1,6 +1,7 @@
 package com.zx.marketnew_base.main.ui
 
 import android.os.Bundle
+import android.view.View
 import com.zx.marketnew_base.R
 import com.zx.marketnew_base.XAppMain
 import com.zx.marketnew_base.api.ApiParamUtil
@@ -69,6 +70,12 @@ class WorkFragment : BaseFragment<WorkPresenter, WorkModel>(), WorkContract.View
         ZXFragmentUtil.addFragment(childFragmentManager, WorkInfoFragment.newInstance().apply { workInfoFragment = this }, R.id.fm_work_info)
 
         tv_work_name.text = BuildConfig.WORK_TITLE
+
+        iv_work_compannyInfo.visibility = when (BuildConfig.APP_HEAD) {
+            "rc" -> View.GONE
+            "dx" -> View.GONE
+            else -> View.VISIBLE
+        }
 
         rv_work_xApp.apply {
             layoutManager = ZXInScrollRecylerManager(activity)
