@@ -21,6 +21,7 @@ import com.zx.module_other.module.workplan.mvp.model.WorkPlanModel
 import com.zx.module_other.module.workplan.mvp.presenter.WorkPlanPresenter
 import kotlinx.android.synthetic.main.activity_work_plan.*
 import org.joda.time.LocalDate
+import rx.functions.Action1
 
 @Route(path = RoutePath.ROUTE_OTHER_PLAN)
 class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkPlanContract.View {
@@ -29,6 +30,8 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
     private var workPlanAdapter: WorkPlanAdpater<WorkPlanBean> = WorkPlanAdpater(workPlanDatas)
     private var innerPainter: InnerPainter? = null
     private var localDate: LocalDate? = null
+    var startDate = ""
+    var endDate = ""
 
     companion object {
         /**
@@ -51,21 +54,19 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
         work_plan_calendar.setOnCalendarChangedListener { baseCalendar, year, month, localDate ->
             tv_plan_date.setText(month.toString() + "月份")
             tv_plan_week.setText("")
-            var startDate = ""
-            var endDate = ""
             if (month < 10) {
-                startDate = year.toString() + "-0" + month+"-01 00:00:00"
-                if (month == 9){
-                    endDate = year.toString()+"-10"+ "-01 00:00:00"
-                }else{
-                    endDate = year.toString()+"-0"+(month+1)+"-01 00:00:00"
+                startDate = year.toString() + "-0" + month + "-01 00:00:00"
+                if (month == 9) {
+                    endDate = year.toString() + "-10" + "-01 00:00:00"
+                } else {
+                    endDate = year.toString() + "-0" + (month + 1) + "-01 00:00:00"
                 }
-            }else{
-                startDate = year.toString() + "-" + month+"-01 00:00:00"
-                if (month == 12){
-                    endDate = (year+1).toString()+"-01"+"-01 00:00:00"
-                }else{
-                    endDate = year.toString()+"-"+(month+1)+"-01 00:00:00"
+            } else {
+                startDate = year.toString() + "-" + month + "-01 00:00:00"
+                if (month == 12) {
+                    endDate = (year + 1).toString() + "-01" + "-01 00:00:00"
+                } else {
+                    endDate = year.toString() + "-" + (month + 1) + "-01 00:00:00"
                 }
             }
             if (this.localDate == null) {
@@ -84,7 +85,7 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
             CreatePlanActivity.startAction(this, false)
         }
         toobar_view.setRightClickListener {
-            WorkListActivity.startAction(this,false)
+            WorkListActivity.startAction(this, false)
         }
     }
 
@@ -100,8 +101,11 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
             adapter = workPlanAdapter
             layoutManager = LinearLayoutManager(this@WorkPlanActivity)
         }
-
+        toobar_view.showRightImg(R.drawable.work_list)
         rv_work_plan.addItemDecoration(SpacesItemDecoration(10));
+        mRxManager.on("createplan", Action1<String> {
+            getWorkPlan(DateUtil.timeStringToStamp(startDate).toString(), DateUtil.timeStringToStamp(endDate).toString())
+        })
     }
 
     fun getWorkPlan(startDateMin: String, startDateMax: String) {

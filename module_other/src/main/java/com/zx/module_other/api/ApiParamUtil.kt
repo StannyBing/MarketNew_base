@@ -149,6 +149,7 @@ object ApiParamUtil {
         val map = hashMapOf<String, String>()
         map["content"] = content
         map["startDate"] = startDate
+        map["business"] = "个人计划"
         return toJson(map);
     }
 

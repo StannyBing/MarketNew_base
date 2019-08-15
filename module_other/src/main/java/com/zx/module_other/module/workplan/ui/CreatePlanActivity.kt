@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.frame.zxmvp.baserx.RxManager
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
@@ -49,6 +50,7 @@ class CreatePlanActivity : BaseActivity<CreatePlanPresenter, CreatePlanModel>(),
     }
 
     override fun getCreateWorkResult() {
+        RxManager().post("createplan", "")
         showToast("创建成功")
         finish()
     }

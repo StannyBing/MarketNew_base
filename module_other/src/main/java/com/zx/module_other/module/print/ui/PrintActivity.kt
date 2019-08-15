@@ -19,6 +19,7 @@ import com.zx.module_other.XAppOther
 import com.zx.module_other.module.documentmanage.bean.Children
 import com.zx.module_other.module.documentmanage.func.adapter.DocumentAdpater
 import com.zx.module_other.module.documentmanage.func.util.DBService
+import com.zx.module_other.module.documentmanage.ui.DocumentActivity
 import com.zx.module_other.module.documentmanage.ui.DocumentSeeActivity
 import com.zx.module_other.module.print.bean.PrintBean
 import com.zx.module_other.module.print.func.receiver.BluetoothReceive
@@ -95,7 +96,7 @@ class PrintActivity : BaseActivity<PrintPresenter, PrintModel>(), PrintContract.
                 if (intent.getSerializableExtra("child") != null) {
                     PrintActivity.startAction(this, true, intent.getSerializableExtra("child") as Children, PrintDataUtil.IMAGE_PATH)
                 } else {
-                    ChoiceFileActivity.startAction(this, true)
+                    DocumentActivity.startAction(this, true)
                 }
             }
         }
