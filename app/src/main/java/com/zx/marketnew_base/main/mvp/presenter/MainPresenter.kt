@@ -19,6 +19,7 @@ import java.io.File
  * 功能：
  */
 class MainPresenter : MainContract.Presenter() {
+
     override fun downloadApk(downUrl: String) {
         val fileName = downUrl.substring(downUrl.lastIndexOf("/") + 1)
         val downInfo = DownInfo(downUrl)

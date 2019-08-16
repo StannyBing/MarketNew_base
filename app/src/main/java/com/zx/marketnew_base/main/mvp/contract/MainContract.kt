@@ -26,6 +26,7 @@ interface MainContract {
         fun versionData(): Observable<VersionBean>
 
         fun countUnreadData() : Observable<Int>
+
     }
 
     //方法
@@ -35,5 +36,6 @@ interface MainContract {
         abstract fun downloadApk(downUrl : String)
 
         abstract fun getUnread()
+
     }
 }

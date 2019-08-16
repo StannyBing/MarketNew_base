@@ -15,6 +15,7 @@ import com.zx.module_library.app.ConstStrings
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
+import com.zx.module_library.func.tool.UserActionTool
 import com.zx.module_library.func.tool.toJson
 import com.zx.module_library.view.SearchView
 import com.zx.module_supervise.R
@@ -92,7 +93,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                 .setIndicatorHeight(5)
                 .setTablayoutHeight(40)
                 .setTabScrollable(false)
-                .setTitleColor(ContextCompat.getColor(this,R.color.text_color_light), ContextCompat.getColor(this,R.color.text_color_noraml))
+                .setTitleColor(ContextCompat.getColor(this, R.color.text_color_light), ContextCompat.getColor(this, R.color.text_color_noraml))
                 .setIndicatorColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
                 .setTablayoutBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
                 .setTabTextSize(resources.getDimension(R.dimen.text_size_normal).toInt())
@@ -111,7 +112,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                 showEntityDilaog()
             }
         } else {
-            btn_daily_submit.setText("重新检查")
+            btn_daily_submit.setText("再次检查")
         }
     }
 
@@ -176,7 +177,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                 submitDaily()
             } else {
                 if (dailyBaseFragment.entityBean != null) {
-                    ZXDialogUtil.showYesNoDialog(this, "提示", "是否重新检查") { _, _ ->
+                    ZXDialogUtil.showYesNoDialog(this, "提示", "是否再次检查") { _, _ ->
                         XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY_ADD) {
                             it["fEntityGuid"] = dailyBaseFragment.entityBean!!.fEntityGuid ?: ""
                             it["fEntityName"] = dailyBaseFragment.entityBean!!.fEntityName ?: ""
@@ -260,6 +261,9 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
     }
 
     override fun onDailySaveResult() {
+        if (intent.hasExtra("fEntityGuid")) {
+            UserActionTool.addUserAction(this, UserActionTool.ActionType.Supervise_Daily, intent.getStringExtra("fEntityGuid"))
+        }
         showToast("提交成功")
         setResult(0x01)
         finish()

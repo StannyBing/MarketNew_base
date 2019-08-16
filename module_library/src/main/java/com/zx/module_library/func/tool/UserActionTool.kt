@@ -25,20 +25,20 @@ object UserActionTool {
     fun addUserAction(activity: Activity, actionType: ActionType, id: String) {
         try {
             val location = ZXLocationUtil.getLocation(activity)
-            if (location != null && location.longitude > 0 && location.latitude > 0) {
-                MyApplication.instance.component.repositoryManager()
-                        .obtainRetrofitService(ApiService::class.java)
-                        .addUserPath(ApiParamUtil.addUserPath(actionType.type, actionType.content, id, location.longitude.toString(), location.latitude.toString()))
-                        .compose(RxHelper.handleResult())
-                        .subscribe(object : RxSubscriber<String>() {
-                            override fun _onNext(t: String?) {
-                            }
+            val longitude = if (location == null) "" else location.longitude.toString()
+            val latitude = if (location == null) "" else location.latitude.toString()
+            MyApplication.instance.component.repositoryManager()
+                    .obtainRetrofitService(ApiService::class.java)
+                    .addUserPath(ApiParamUtil.addUserPath(actionType.type, actionType.content, id, longitude, latitude))
+                    .compose(RxHelper.handleResult())
+                    .subscribe(object : RxSubscriber<String>() {
+                        override fun _onNext(t: String?) {
+                        }
 
-                            override fun _onError(code: String?, message: String?) {
-                            }
+                        override fun _onError(code: String?, message: String?) {
+                        }
 
-                        })
-            }
+                    })
         } catch (e: Exception) {
         }
     }

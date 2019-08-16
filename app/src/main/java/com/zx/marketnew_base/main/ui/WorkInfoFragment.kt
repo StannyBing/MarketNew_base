@@ -65,7 +65,7 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
             XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
                 val index = vf_info_view.currentView.tag as Int
                 it["mTitle"] = notices[index].name
-                it["mUrl"] = notices[index].info
+                it["mUrl"] = notices[index].url
             }
         }
     }
@@ -85,7 +85,7 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
             val images = arrayListOf<String>()
             banners.forEach {
                 //轮播控件
-                images.add(BaseConfigModule.BASE_IP + it.image)
+                images.add(BaseConfigModule.BASE_IP + it.info)
             }
             banner_work_info
                     .setImageLoader(GlideImageLoader())
@@ -95,7 +95,7 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
                     .setOnBannerListener { index ->
                         XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
                             it["mTitle"] = banners[index].name
-                            it["mUrl"] = banners[index].info
+                            it["mUrl"] = banners[index].url
                         }
                     }
                     .setImages(images)
@@ -103,9 +103,9 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
         }
         if (notices.isNotEmpty() && vf_info_view != null) {
             notices.forEachIndexed { index, it ->
-                val tv = TextView(activity)
+                val tv = TextView(activity!!)
                 tv.apply {
-                    text = it.name
+                    text = it.info
                     setSingleLine(true)
                     textSize = ZXSystemUtil.px2sp(resources.getDimension(R.dimen.text_size_small))
                     setTextColor(ContextCompat.getColor(activity!!, R.color.text_color_noraml))

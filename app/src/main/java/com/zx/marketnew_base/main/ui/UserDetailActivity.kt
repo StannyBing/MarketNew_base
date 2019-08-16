@@ -113,12 +113,11 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         dataBeans.add(KeyValueBean("姓名", userBean.realName))
         dataBeans.add(KeyValueBean("电话", userBean.telephone))
         dataBeans.add(KeyValueBean("部门", userBean.department))
-        dataBeans.add(KeyValueBean("部门座机", userBean.officeTel + ""))
-        dataBeans.add(KeyValueBean("职位", userBean.department))
+        dataBeans.add(KeyValueBean("职位", userBean.remark))
 
-        tv_userDetail_name.setText(userBean.realName);
-        tv_userDetail_dept.setText(userBean.remark)
-        tv_userDetail_duty.setText(userBean.department)
+        tv_userDetail_name.text = userBean.realName;
+        tv_userDetail_dept.text = userBean.department
+        tv_userDetail_duty.text = userBean.remark
     }
 
     /**
@@ -138,15 +137,10 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
         }
 
         ll_userDetail_call.setOnClickListener {
-            ZXDialogUtil.showListDialog(this, "请选择拨打对象", "取消", arrayListOf("电话", "座机")) { dialog: DialogInterface?, which: Int ->
-                ZXDialogUtil.dismissDialog()
-                val telephone = if (which == 0) {
-                    userBean.telephone
-                } else {
-                    userBean.officeTel
-                }
-                ZXDialogUtil.showYesNoDialog(this, "提示", "即将拨打电话\n${telephone}") { _, _ ->
-                    ZXSystemUtil.callTo(this, telephone)
+            val teles = userBean.telephone.split(";")
+            if (teles.isNotEmpty()) {
+                ZXDialogUtil.showListDialog(this, "请选择拨打对象", "取消", teles) { dialog: DialogInterface?, which: Int ->
+                    ZXSystemUtil.callTo(this, teles[which])
                 }
             }
         }
@@ -158,10 +152,11 @@ class UserDetailActivity : BaseActivity<UserDetailPresenter, UserDetailModel>(),
                     }
                 }
             } else {
-                XApp.startXApp(RoutePath.ROUTE_LIBRARY_PREVIEW) {
-
-                    it["name"] = userBean.imgUrl!!.substring(userBean.imgUrl!!.length-3)
-                    it["path"] = BaseConfigModule.BASE_IP + userBean.imgUrl
+                if (userBean.imgUrl.isNullOrEmpty()) {
+                    XApp.startXApp(RoutePath.ROUTE_LIBRARY_PREVIEW) {
+                        it["name"] = userBean.imgUrl!!.substring(userBean.imgUrl!!.length - 3)
+                        it["path"] = BaseConfigModule.BASE_IP + userBean.imgUrl
+                    }
                 }
             }
         }

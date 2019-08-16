@@ -14,6 +14,7 @@ import rx.Observable
  * 功能：
  */
 class MainModel : BaseModel(), MainContract.Model {
+
     override fun versionData(): Observable<VersionBean> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
                 .getVersion()

@@ -88,7 +88,7 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
         //列表点击事件
         listAdapter.setOnItemClickListener { adapter, view, position ->
             if (dataBeans[position].listType == 1) {
-                this@MailListFragment.activity?.let { UserDetailActivity.startAction(it, false, dataBeans[position],false) }
+                this@MailListFragment.activity?.let { UserDetailActivity.startAction(it, false, dataBeans[position], false) }
             }
         }
     }
@@ -101,8 +101,9 @@ class MailListFragment : BaseFragment<MailListPresenter, MailListModel>(), MailL
                         ?: "", imgUrl = it.imgUrl ?: "", listType = 0))
                 if (it.children.isNotEmpty()) {
                     it.children.forEach {
-                        dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.remark
-                                ?: "", imgUrl = it.imgUrl ?: "", listType = 1))
+                        dataBeans.add(UserBean(it.id, "", realName = it.realName, department = it.department
+                                ?: "", remark = it.remark
+                                ?: "", imgUrl = it.imgUrl ?: "", telephone = it.telephone ?: "", listType = 1))
                     }
                 }
             }

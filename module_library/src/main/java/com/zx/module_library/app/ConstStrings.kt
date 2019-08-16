@@ -1,5 +1,7 @@
 package com.zx.module_library.app
 
+import com.zx.module_library.BuildConfig
+
 /**
  * Created by Xiangb on 2019/2/26.
  * 功能：
@@ -13,7 +15,7 @@ object ConstStrings {
     var INI_PATH = ""
     var APP_NAME = "ZHSQ"
     var DEVICE_TYPE = "android_pad"
-    val APPNAME = "MarketNew"
+    val APPNAME = "MarketNew${BuildConfig.APP_HEAD}"
     val RESPONSE_SUCCESS = "1" // 请求成功
     val arcgisKey = "5SKIXc21JlankElJ"
     var LOCAL_PATH: String? = null

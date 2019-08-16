@@ -79,32 +79,39 @@ class MessageFragment : BaseFragment<MessagePresenter, MessageModel>(), MessageC
                     } catch (e: Exception) {
 
                     }
-                    when (textBean?.business) {
-                        "专项检查" -> {
-                            XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
-                                it["id"] = textBean.businessId
-                                it["taskId"] = textBean.taskId
-                            }
+                    if (dataBeans[it].displayType.contains("链接")) {
+                        XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
+                            it["mTitle"] = dataBeans[clickItemPosition].title
+                            it["mUrl"] = dataBeans[clickItemPosition].text?:""
                         }
-                        "投诉举报" -> {
-                            XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK_DETAIL) {
-                                it["fGuid"] = textBean.businessId
+                    } else {
+                        when (textBean?.business) {
+                            "专项检查" -> {
+                                XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK_DETAIL) {
+                                    it["id"] = textBean.businessId
+                                    it["taskId"] = textBean.taskId
+                                }
                             }
-                        }
-                        "综合执法" -> {
-                            XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
-                                it["id"] = textBean.businessId
-                                it["taskId"] = textBean.taskId
-                                it["processType"] = textBean.processType
+                            "投诉举报" -> {
+                                XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK_DETAIL) {
+                                    it["fGuid"] = textBean.businessId
+                                }
                             }
-                        }
-                        "版本更新" -> {
-                            XApp.startXApp(RoutePath.ROUTE_APP_SETTING) {
-                                it["checkVerson"] = true
+                            "综合执法" -> {
+                                XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK_DETAIL) {
+                                    it["id"] = textBean.businessId
+                                    it["taskId"] = textBean.taskId
+                                    it["processType"] = textBean.processType
+                                }
                             }
-                        }
-                        else -> {
-                            ZXDialogUtil.showInfoDialog(activity, dataBeans[it].title, dataBeans[it].ticker)
+                            "版本更新" -> {
+                                XApp.startXApp(RoutePath.ROUTE_APP_SETTING) {
+                                    it["checkVerson"] = true
+                                }
+                            }
+                            else -> {
+                                ZXDialogUtil.showInfoDialog(activity, dataBeans[it].title, dataBeans[it].ticker)
+                            }
                         }
                     }
                 }

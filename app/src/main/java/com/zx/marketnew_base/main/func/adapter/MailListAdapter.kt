@@ -63,7 +63,7 @@ class MailListAdapter(dataBeans: List<UserBean>) : ZXQuickAdapter<UserBean, ZXBa
                 }
             }
             helper.setText(R.id.tv_maillist_name, item.realName)
-            helper.setText(R.id.tv_maillist_duty, item.department)
+            helper.setText(R.id.tv_maillist_duty, item.remark)
             if (item.department.contains("局长") || item.department.contains("领导")
                     || item.department.contains("科长") || item.department.contains("主任")
                     || item.department.contains("队长") || item.department.contains("所长")

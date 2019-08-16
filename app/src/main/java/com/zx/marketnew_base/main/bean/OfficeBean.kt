@@ -14,14 +14,14 @@ data class OfficeBean(var banner: List<Banner>,
 
     data class Banner(var id: String,
                       var type: String,
-                      var image: String,
+                      var url: String,
                       var date: Long,
                       var name: String,
                       var info: String) : Serializable
 
     data class Notice(var id: String,
                       var type: String,
-                      var image: String,
+                      var url: String,
                       var date: Long,
                       var name: String,
                       var info: String) : Serializable

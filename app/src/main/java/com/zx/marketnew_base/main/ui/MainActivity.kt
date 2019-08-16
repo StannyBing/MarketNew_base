@@ -15,15 +15,20 @@ import com.zx.marketnew_base.main.mvp.model.MainModel
 import com.zx.marketnew_base.main.mvp.presenter.MainPresenter
 import com.zx.module_library.BuildConfig
 import com.zx.module_library.app.BaseConfigModule
+import com.zx.module_library.app.MyApplication
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.func.tool.UserActionTool
 import com.zx.module_library.func.tool.UserManager
 import com.zx.zxutils.util.ZXAppUtil
 import com.zx.zxutils.util.ZXDialogUtil
+import com.zx.zxutils.util.ZXLocationUtil
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.functions.Action1
 import java.io.File
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 /**
@@ -88,10 +93,24 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
         mPresenter.getVerson()
 
         mRxManager.on("mainAction", Action1<String> {
-            when(it){
-                "unread"->mPresenter.getUnread()
+            when (it) {
+                "unread" -> mPresenter.getUnread()
             }
         })
+
+        startLocationUpdate()
+    }
+
+    private fun startLocationUpdate() {
+        Timer().schedule(0, 3 * 60 * 1000) {
+            getPermission(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                val location = ZXLocationUtil.getLocation(this@MainActivity)
+                if (location != null) {
+                    UserActionTool.addUserAction(this@MainActivity, UserActionTool.ActionType.Normal, "")
+//                    mPresenter.updateLocation(hashMapOf("longitude" to location.longitude.toString(), "latitude" to location.latitude.toString()))
+                }
+            }
+        }
     }
 
     /**
@@ -105,10 +124,24 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      * 版本检测
      */
     override fun onVersionResult(versionBean: VersionBean) {
+        var isDownLoad = false
         if (com.zx.marketnew_base.BuildConfig.VERSION_CODE < versionBean.versionCode) {
-            ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}") { dialog, which ->
+            ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}", "立即更新", "取消", { dialog, which ->
+                isDownLoad = true
                 getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     mPresenter.downloadApk(versionBean.url)
+                }
+            }, { _, _ ->
+                showToast("请先更新后使用")
+                handler.postDelayed({
+                    MyApplication.instance.exit()
+                }, 500)
+            }, false).setOnDismissListener {
+                if (!isDownLoad) {
+                    showToast("请先更新后使用")
+                    handler.postDelayed({
+                        MyApplication.instance.exit()
+                    }, 500)
                 }
             }
         }

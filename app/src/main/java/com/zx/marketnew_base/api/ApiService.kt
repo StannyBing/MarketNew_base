@@ -59,4 +59,5 @@ interface ApiService {
 
     @POST(ApiConfigModule.URL_APP + "feedback/addFeedback.do")
     fun addFeedBack(@Body body: RequestBody) : Observable<BaseRespose<String>>
+
 }

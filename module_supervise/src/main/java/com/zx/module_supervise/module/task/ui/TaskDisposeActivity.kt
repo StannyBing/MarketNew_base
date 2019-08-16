@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.zx.module_library.app.ConstStrings
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
+import com.zx.module_library.func.tool.UserActionTool
 import com.zx.module_library.func.tool.toJson
 import com.zx.module_supervise.R
 import com.zx.module_supervise.XAppSupervise
@@ -134,6 +135,7 @@ class TaskDisposeActivity : BaseActivity<TaskDisposePresenter, TaskDisposeModel>
 
     //提交成功
     override fun onSubmitResult() {
+        UserActionTool.addUserAction(this, UserActionTool.ActionType.Supervise_Task, fId)
         showToast("提交成功")
         setResult(0x01)
         finish()

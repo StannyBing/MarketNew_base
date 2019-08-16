@@ -18,6 +18,7 @@ import com.zx.marketnew_base.system.mvp.contract.SettingContract
 import com.zx.marketnew_base.system.mvp.model.SettingModel
 import com.zx.marketnew_base.system.mvp.presenter.SettingPresenter
 import com.zx.module_library.app.ConstStrings
+import com.zx.module_library.app.MyApplication
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.func.tool.UserManager
@@ -186,9 +187,23 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
      */
     override fun onVersionResult(versionBean: VersionBean) {
         if (BuildConfig.VERSION_CODE < versionBean.versionCode) {
-            ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}") { dialog, which ->
+            var isDownLoad = false
+            ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}", "立即更新", "取消", { dialog, which ->
+                isDownLoad = true
                 getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     mPresenter.downloadApk(versionBean.url)
+                }
+            }, { _, _ ->
+                showToast("请先更新后使用")
+                handler.postDelayed({
+                    MyApplication.instance.exit()
+                }, 500)
+            }, false).setOnDismissListener {
+                if (!isDownLoad) {
+                    showToast("请先更新后使用")
+                    handler.postDelayed({
+                        MyApplication.instance.exit()
+                    }, 500)
                 }
             }
         } else {
