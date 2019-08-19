@@ -34,17 +34,18 @@ public class HttpDownManager {
     /*记录下载数据*/
     private Set<DownInfo> downInfos;
     /*回调sub队列*/
-    private HashMap<String,ProgressDownSubscriber> subMap;
+    private HashMap<String, ProgressDownSubscriber> subMap;
     /*单利对象*/
     private volatile static HttpDownManager INSTANCE;
 
-    private HttpDownManager(){
-        downInfos=new HashSet<>();
-        subMap=new HashMap<>();
+    private HttpDownManager() {
+        downInfos = new HashSet<>();
+        subMap = new HashMap<>();
     }
 
     /**
      * 获取单例
+     *
      * @return
      */
     public static HttpDownManager getInstance() {
@@ -62,23 +63,23 @@ public class HttpDownManager {
     /**
      * 开始下载
      */
-    public void startDown(final DownInfo info){
+    public void startDown(final DownInfo info) {
         /*正在下载不处理*/
 //        if(info==null||subMap.get(info.getUrl())!=null){
 //            return;
 //        }
-        if(info==null){
+        if (info == null) {
             return;
         }
         /*添加回调处理类*/
-        ProgressDownSubscriber subscriber=new ProgressDownSubscriber(info);
+        ProgressDownSubscriber subscriber = new ProgressDownSubscriber(info);
         /*记录回调sub*/
-        subMap.put(info.getUrl(),subscriber);
+        subMap.put(info.getUrl(), subscriber);
         /*获取service，多次请求公用一个sercie*/
         HttpService httpService;
-        if(downInfos.contains(info)){
+        if (downInfos.contains(info)) {
             httpService = info.getService();
-        }else{
+        } else {
             DownloadInterceptor interceptor = new DownloadInterceptor(subscriber);
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             //手动创建一个OkHttpClient并设置超时时间
@@ -91,20 +92,20 @@ public class HttpDownManager {
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .baseUrl(info.getBaseUrl())
                     .build();
-            httpService= retrofit.create(HttpService.class);
+            httpService = retrofit.create(HttpService.class);
             info.setService(httpService);
         }
         /*得到rx对象-上一次下載的位置開始下載*/
-        httpService.download("bytes=" + info.getReadLength() + "-",info.getUrl())
+        httpService.download("bytes=" + info.getReadLength() + "-", info.getUrl())
                 /*指定线程*/
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                   /*失败后的retry配置*/
+                /*失败后的retry配置*/
                 .retryWhen(new RetryWhenNetworkException())
                 /*读取下载写入文件*/
                 .map(responseBody -> {
                     try {
-                        writeCache(responseBody,new File(info.getSavePath()),info);
+                        writeCache(responseBody, new File(info.getSavePath()), info);
                     } catch (IOException e) {
                         /*失败抛出异常*/
                         throw new HttpTimeException(e.getMessage());
@@ -122,12 +123,12 @@ public class HttpDownManager {
     /**
      * 停止下载
      */
-    public void stopDown(DownInfo info){
-        if(info==null)return;
+    public void stopDown(DownInfo info) {
+        if (info == null) return;
         info.setState(HttpState.STOP);
         info.getListener().onStop();
-        if(subMap.containsKey(info.getUrl())) {
-            ProgressDownSubscriber subscriber=subMap.get(info.getUrl());
+        if (subMap.containsKey(info.getUrl())) {
+            ProgressDownSubscriber subscriber = subMap.get(info.getUrl());
             subscriber.unsubscribe();
             subMap.remove(info.getUrl());
         }
@@ -137,24 +138,26 @@ public class HttpDownManager {
 
     /**
      * 删除
+     *
      * @param info
      */
-    public void deleteDown(DownInfo info){
+    public void deleteDown(DownInfo info) {
         stopDown(info);
-         /*删除数据库信息和本地文件*/
+        /*删除数据库信息和本地文件*/
     }
 
 
     /**
      * 暂停下载
+     *
      * @param info
      */
-    public void pause(DownInfo info){
-        if(info==null)return;
+    public void pause(DownInfo info) {
+        if (info == null) return;
         info.setState(HttpState.PAUSE);
         info.getListener().onPuase();
-        if(subMap.containsKey(info.getUrl())){
-            ProgressDownSubscriber subscriber=subMap.get(info.getUrl());
+        if (subMap.containsKey(info.getUrl())) {
+            ProgressDownSubscriber subscriber = subMap.get(info.getUrl());
             subscriber.unsubscribe();
             subMap.remove(info.getUrl());
         }
@@ -164,7 +167,7 @@ public class HttpDownManager {
     /**
      * 停止全部下载
      */
-    public void stopAllDown(){
+    public void stopAllDown() {
         for (DownInfo downInfo : downInfos) {
             stopDown(downInfo);
         }
@@ -175,7 +178,7 @@ public class HttpDownManager {
     /**
      * 暂停全部下载
      */
-    public void pauseAll(){
+    public void pauseAll() {
         for (DownInfo downInfo : downInfos) {
             pause(downInfo);
         }
@@ -186,6 +189,7 @@ public class HttpDownManager {
 
     /**
      * 返回全部正在下载的数据
+     *
      * @return
      */
     public Set<DownInfo> getDownInfos() {
@@ -195,39 +199,41 @@ public class HttpDownManager {
 
     /**
      * 写入文件
+     *
      * @param file
      * @param info
      * @throws IOException
      */
-    public void writeCache(ResponseBody responseBody, File file, DownInfo info) throws IOException{
-        if (!file.getParentFile().exists())
+    public void writeCache(ResponseBody responseBody, File file, DownInfo info) throws IOException {
+        if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
-        long allLength;
-        if (info.getCountLength()==0){
-            allLength=responseBody.contentLength();
-        }else{
-            allLength=info.getCountLength();
         }
-            FileChannel channelOut = null;
-            RandomAccessFile randomAccessFile = null;
-            randomAccessFile = new RandomAccessFile(file, "rwd");
-            channelOut = randomAccessFile.getChannel();
-            MappedByteBuffer mappedBuffer = channelOut.map(FileChannel.MapMode.READ_WRITE,
-                    info.getReadLength(),allLength-info.getReadLength());
-            byte[] buffer = new byte[1024*8];
-            int len;
-            int record = 0;
-            while ((len = responseBody.byteStream().read(buffer)) != -1) {
-                mappedBuffer.put(buffer, 0, len);
-                record += len;
-            }
-            responseBody.byteStream().close();
-                if (channelOut != null) {
-                    channelOut.close();
-                }
-                if (randomAccessFile != null) {
-                    randomAccessFile.close();
-                }
+        long allLength;
+        if (info.getCountLength() == 0) {
+            allLength = responseBody.contentLength();
+        } else {
+            allLength = info.getCountLength();
+        }
+        FileChannel channelOut = null;
+        RandomAccessFile randomAccessFile = null;
+        randomAccessFile = new RandomAccessFile(file, "rwd");
+        channelOut = randomAccessFile.getChannel();
+        MappedByteBuffer mappedBuffer = channelOut.map(FileChannel.MapMode.READ_WRITE,
+                info.getReadLength(), allLength - info.getReadLength());
+        byte[] buffer = new byte[1024 * 8];
+        int len;
+        int record = 0;
+        while ((len = responseBody.byteStream().read(buffer)) != -1) {
+            mappedBuffer.put(buffer, 0, len);
+            record += len;
+        }
+        responseBody.byteStream().close();
+        if (channelOut != null) {
+            channelOut.close();
+        }
+        if (randomAccessFile != null) {
+            randomAccessFile.close();
+        }
     }
 
 }

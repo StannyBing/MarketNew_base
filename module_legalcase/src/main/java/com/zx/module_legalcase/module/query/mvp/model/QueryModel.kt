@@ -36,5 +36,11 @@ class QueryModel : BaseModel(), QueryContract.Model {
                 .compose(RxSchedulers.io_main())
     }
 
+    override fun workCaseListData(map: Map<String, String>): Observable<NormalList<LegalcaseListBean>> {
+        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
+                .getWorkCaseList(map)
+                .compose(RxHelper.handleResult())
+                .compose(RxSchedulers.io_main())
+    }
 
 }

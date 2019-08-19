@@ -42,6 +42,8 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
     private var todo = "0"//待办已办
     private var searchType = "0"//搜索类型 0我的案件  1全部案件
 
+    private var monthNum = ""//工作成果
+
     companion object {
         /**
          * 启动器
@@ -69,6 +71,12 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
         search_view.withXApp(XAppLegalcase.HANDLE)
         tv_legalcase_tips.setTextColor(ContextCompat.getColor(this, XAppLegalcase.HANDLE.moduleColor))
 
+        monthNum = if (intent.hasExtra("monthNum")) intent.getStringExtra("monthNum") else ""
+
+        if (monthNum.isNotEmpty()) {
+            search_view.hideFunc()
+        }
+
         sr_legalcase_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
                 .autoLoadMore()
@@ -87,7 +95,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                     override fun onItemClick(item: LegalcaseListBean?, position: Int) {
-                        DetailActivity.startAction(this@QueryActivity, false, item!!.id, item.taskId,  item.processType)
+                        DetailActivity.startAction(this@QueryActivity, false, item!!.id, item.taskId, item.processType)
                     }
 
                 })
@@ -145,7 +153,9 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
             pageNo = 1
             sr_legalcase_list.clearStatus()
         }
-        if (searchType == "0") {//我的案件
+        if (monthNum.isNotEmpty()) {
+            mPresenter.getWorkCaseList(ApiParamUtil.workCaseListParam(pageNo, 15, searchText, monthNum))
+        } else if (searchType == "0") {//我的案件
             if (todo == "0") {//待办
                 mPresenter.getMyCaseTodoList(ApiParamUtil.caseListParam(pageNo, 15, process, searchText, domainCode))
             } else {//已办

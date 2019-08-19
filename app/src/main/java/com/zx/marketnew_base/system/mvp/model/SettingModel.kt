@@ -14,12 +14,7 @@ import rx.Observable
  * 功能：
  */
 class SettingModel : BaseModel(), SettingContract.Model {
-    override fun versionData(): Observable<VersionBean> {
-        return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .getVersion()
-                .compose(RxHelper.handleResult())
-                .compose(RxSchedulers.io_main())
-    }
+
 
 
 }

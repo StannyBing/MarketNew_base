@@ -3,7 +3,6 @@ package com.zx.module_other.module.law.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import com.zx.module_library.base.BaseActivity
@@ -12,17 +11,16 @@ import com.zx.module_library.func.tool.UserManager
 import com.zx.module_other.R
 import com.zx.module_other.XAppOther
 import com.zx.module_other.api.ApiParamUtil
-import com.zx.module_other.module.law.bean.*
+import com.zx.module_other.module.law.bean.LawBean
+import com.zx.module_other.module.law.bean.LawMainBean
+import com.zx.module_other.module.law.bean.LawSearchBean
 import com.zx.module_other.module.law.func.adapter.LawQueryListAdapter
 import com.zx.module_other.module.law.func.adapter.LawQuerySortAdapter
 import com.zx.module_other.module.law.mvp.contract.LawQueryContract
 import com.zx.module_other.module.law.mvp.model.LawQueryModel
 import com.zx.module_other.module.law.mvp.presenter.LawQueryPresenter
-import com.zx.zxutils.util.ZXToastUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
-import kotlinx.android.synthetic.main.activity_law_collect.*
 import kotlinx.android.synthetic.main.activity_law_query.*
-import kotlinx.android.synthetic.main.activity_law_query.toobar_view
 
 class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQueryContract.View {
 
@@ -56,7 +54,7 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
             lawMainBean = intent.getSerializableExtra("lawBean") as LawMainBean
         }
         queryPostMethod()
-        sv_law_search.setSearchListener {
+        sv_law_search.setSearchListener(true) {
             if (!TextUtils.isEmpty(it)) {
                 pageNo = 1
                 lawMainBean = LawMainBean(it, 4, 0)

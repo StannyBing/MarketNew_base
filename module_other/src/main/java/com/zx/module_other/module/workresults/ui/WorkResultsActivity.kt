@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_other.R
@@ -41,10 +42,18 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
     override fun onViewListener() {
         workResultAllAdapter.setOnItemClickListener { adapter, view, position ->
             when (workAllData[position].business) {
-//                "投诉举报" -> XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK)
-//                "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK)
-//                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY)
-//                "监管任务" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK)
+                "投诉举报" -> XApp.startXApp(RoutePath.ROUTE_COMPLAIN_TASK) {
+                    it["monthNum"] = "4"
+                }
+                "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK) {
+                    it["monthNum"] = "4"
+                }
+                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY) {
+                    it["monthNum"] = "4"
+                }
+                "监管任务" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK) {
+                    it["monthNum"] = "4"
+                }
             }
         }
     }

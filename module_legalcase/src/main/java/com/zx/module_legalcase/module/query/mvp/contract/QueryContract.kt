@@ -24,6 +24,8 @@ interface QueryContract {
         fun myCaseAlreadyListData(map: Map<String, String>) : Observable<NormalList<LegalcaseListBean>>
 
         fun allCaseListData(map: Map<String, String>) : Observable<NormalList<LegalcaseListBean>>
+
+        fun workCaseListData(map: Map<String, String>) : Observable<NormalList<LegalcaseListBean>>
     }
 
     //方法
@@ -33,5 +35,7 @@ interface QueryContract {
         abstract fun getMyCaseAlreadyList(map: Map<String, String>)
 
         abstract fun getAllCaseList(map: Map<String, String>)
+
+        abstract fun getWorkCaseList(map: Map<String, String>)
     }
 }

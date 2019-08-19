@@ -52,8 +52,9 @@
         </activity>
         <activity android:name=".main.ui.MainActivity"/>
         <!-- <activity android:name=".system.ui.SplashActivity"/> -->
-        <activity android:name=".system.ui.LoginActivity"
-                  android:launchMode="singleTop"/>
+        <activity
+            android:name=".system.ui.LoginActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".system.ui.ForgetPwdActivity"/>
         <activity android:name=".system.ui.ChangePwdActivity"/>
         <activity android:name=".system.ui.SettingActivity"/>
@@ -64,6 +65,7 @@
         <activity android:name=".system.ui.DevelopActivity"/>
         <activity android:name=".system.ui.FontSettingActivity"/>
         <activity android:name=".system.ui.AboutActivity"/>
+        <activity android:name=".system.ui.VersionUpdateActivity"/>
     </application>
 
 </manifest>

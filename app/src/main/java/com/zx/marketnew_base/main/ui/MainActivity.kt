@@ -13,20 +13,17 @@ import com.zx.marketnew_base.main.bean.VersionBean
 import com.zx.marketnew_base.main.mvp.contract.MainContract
 import com.zx.marketnew_base.main.mvp.model.MainModel
 import com.zx.marketnew_base.main.mvp.presenter.MainPresenter
+import com.zx.marketnew_base.system.ui.VersionUpdateActivity
 import com.zx.module_library.BuildConfig
 import com.zx.module_library.app.BaseConfigModule
-import com.zx.module_library.app.MyApplication
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.func.tool.UserActionTool
 import com.zx.module_library.func.tool.UserManager
-import com.zx.zxutils.util.ZXAppUtil
-import com.zx.zxutils.util.ZXDialogUtil
 import com.zx.zxutils.util.ZXLocationUtil
 import com.zx.zxutils.views.TabViewPager.ZXTabViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.functions.Action1
-import java.io.File
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -124,26 +121,8 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      * 版本检测
      */
     override fun onVersionResult(versionBean: VersionBean) {
-        var isDownLoad = false
         if (com.zx.marketnew_base.BuildConfig.VERSION_CODE < versionBean.versionCode) {
-            ZXDialogUtil.showYesNoDialog(mContext, "提示", "当前应用需要下载更新\n版本号:${versionBean.versionName}\n内容:${versionBean.content}", "立即更新", "取消", { dialog, which ->
-                isDownLoad = true
-                getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    mPresenter.downloadApk(versionBean.url)
-                }
-            }, { _, _ ->
-                showToast("请先更新后使用")
-                handler.postDelayed({
-                    MyApplication.instance.exit()
-                }, 500)
-            }, false).setOnDismissListener {
-                if (!isDownLoad) {
-                    showToast("请先更新后使用")
-                    handler.postDelayed({
-                        MyApplication.instance.exit()
-                    }, 500)
-                }
-            }
+            VersionUpdateActivity.startAction(this,false)
         }
     }
 
@@ -152,13 +131,6 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      */
     override fun onCountUnreadResult(num: Int) {
         tvp_main.setTabTitleNum(0, num)
-    }
-
-    /**
-     * apk下载回调
-     */
-    override fun onApkDownloadResult(file: File) {
-        ZXAppUtil.installApp(this, file.path)
     }
 
     override fun onBackPressed() {

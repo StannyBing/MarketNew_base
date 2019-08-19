@@ -191,6 +191,11 @@ class SearchView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         }
     }
 
+    fun hideFunc() {
+        searchFuncPic.visibility = View.GONE
+        searchFunc.visibility = View.GONE
+    }
+
     //搜索功能-点击搜索
     fun setSearchListener(justSearchButton: Boolean = false, doSearch: (String) -> Unit) {
         this.justSearchButton = justSearchButton

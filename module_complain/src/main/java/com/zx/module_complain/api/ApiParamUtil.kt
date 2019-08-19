@@ -50,6 +50,17 @@ object ApiParamUtil {
         return map
     }
 
+    //投诉举报列表
+    fun complainWorkResultParam(pageNo: Int, pageSize: Int = 15, fCondition: String = "", monthNum: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["pageNo"] = pageNo.toString()
+        map["pageSize"] = pageSize.toString()
+        map["queryType"] = "workResult"
+        map["monthNum"] = monthNum
+        if (fCondition.isNotEmpty()) map["fCondition"] = fCondition
+        return map
+    }
+
     //投诉举报详情
     fun detailParam(fGuid: String): Map<String, String> {
         val map = hashMapOf<String, String>()

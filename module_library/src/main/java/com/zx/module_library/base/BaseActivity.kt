@@ -105,9 +105,7 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                             return@Action1
                         }
                         "版本更新" -> {
-                            XApp.startXApp(RoutePath.ROUTE_APP_SETTING) {
-                                it["checkVerson"] = true
-                            }
+                            XApp.startXApp(RoutePath.ROUTE_APP_VERSIONUPDATE)
                         }
                     }
                 }
@@ -167,23 +165,28 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
     }
 
 
+    private var reLoginMills = 0L
+
     override fun handleError(code: String?, message: String) {
         showToast(message)
-        if (code == "10120") {//未登录或登录超时
-            UserManager.loginOut()
+        if (System.currentTimeMillis() - reLoginMills > 1000) {//禁止一秒内多次跳转
+            reLoginMills = System.currentTimeMillis()
+            if (code == "10120") {//未登录或登录超时
+                UserManager.loginOut()
 //            JPushInterface.stopPush(this)
-            XApp.startXApp(RoutePath.ROUTE_APP_LOGIN) {
-                it["reLogin"] = true
-            }
-//            showLoginDialog()
-        } else if (code == "10000") {//系统错误
-            showToast("系统超时，即将重新登录")
-            handler.postDelayed({
-                BaseConfigModule.TOKEN = ""
                 XApp.startXApp(RoutePath.ROUTE_APP_LOGIN) {
                     it["reLogin"] = true
                 }
-            }, 1000)
+//            showLoginDialog()
+            } else if (code == "10000") {//系统错误
+                showToast("系统超时，即将重新登录")
+                handler.postDelayed({
+                    BaseConfigModule.TOKEN = ""
+                    XApp.startXApp(RoutePath.ROUTE_APP_LOGIN) {
+                        it["reLogin"] = true
+                    }
+                }, 1000)
+            }
         }
     }
 

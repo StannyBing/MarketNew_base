@@ -35,6 +35,8 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
     private var dataBeans = arrayListOf<DailyListBean>()
     private var mAdapter = DailyListAdapter(dataBeans)
 
+    private var monthNum = ""//工作成果
+
     companion object {
         /**
          * 启动器
@@ -61,6 +63,12 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
         toolBar_view.withXApp(XAppSupervise.DAILY)
         search_view.withXApp(XAppSupervise.DAILY)
         tv_daily_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
+
+        monthNum = if (intent.hasExtra("monthNum")) intent.getStringExtra("monthNum") else ""
+
+        if (monthNum.isNotEmpty()) {
+            search_view.hideFunc()
+        }
 
         sr_daily_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
@@ -91,7 +99,11 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
             pageNo = 1
             sr_daily_list.clearStatus()
         }
-        mPresenter.getDailyList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "name" to searchText))
+        if (monthNum.isNotEmpty()) {
+            mPresenter.getDailyList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "name" to searchText, "queryType" to "workStatus", "monthNum" to monthNum))
+        } else {
+            mPresenter.getDailyList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "name" to searchText))
+        }
     }
 
     /**

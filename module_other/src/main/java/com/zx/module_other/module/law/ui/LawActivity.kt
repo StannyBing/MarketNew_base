@@ -76,7 +76,7 @@ class LawActivity : BaseActivity<LawPresenter, LawModel>(), LawContract.View {
             layoutManager = LinearLayoutManager(this@LawActivity)
             adapter = notifyAdapter
         }
-        searchView.setSearchListener {
+        searchView.setSearchListener(true) {
             val lawMainBean = LawMainBean(it, 4, 0)
             if (TextUtils.isEmpty(lawMainBean.name)) {
                 lawMainBean.name = getString(R.string.hint_text)

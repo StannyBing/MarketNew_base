@@ -42,6 +42,8 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
     private var overdue = ""//逾期状态
     private var searchType = "0"//搜索类型 0我的任务  1全部任务
 
+    private var monthNum = ""//工作成果
+
     companion object {
         /**
          * 启动器
@@ -69,6 +71,12 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
         toolBar_view.withXApp(XAppComplain.LIST)
         search_view.withXApp(XAppComplain.LIST)
         tv_complain_tips.setTextColor(ContextCompat.getColor(this, XAppComplain.LIST.moduleColor))
+
+        monthNum = if (intent.hasExtra("monthNum")) intent.getStringExtra("monthNum") else ""
+
+        if (monthNum.isNotEmpty()) {
+            search_view.hideFunc()
+        }
 
         sr_complain_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
@@ -104,7 +112,9 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
             pageNo = 1
             sr_complain_list.clearStatus()
         }
-        if (searchType == "0") {
+        if (monthNum.isNotEmpty()) {
+            mPresenter.getMyComplainList(ApiParamUtil.complainWorkResultParam(pageNo, 15, searchText, monthNum))
+        } else if (searchType == "0") {
             mPresenter.getMyComplainList(ApiParamUtil.complainListParam(pageNo, 15, searchText, fType, fStatus, overdue))
         } else if (searchType == "1") {
             mPresenter.getAllComplainList(ApiParamUtil.complainListParam(pageNo, 15, searchText, fType, fStatus, overdue))
@@ -154,7 +164,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
             loadData(true)
         }
         //顶部点击滚动到开头
-        toolBar_view.setMidClickListener { sr_complain_list.recyclerView.animateToTop(0)}
+        toolBar_view.setMidClickListener { sr_complain_list.recyclerView.animateToTop(0) }
     }
 
     override fun onComplainListResult(complainList: NormalList<ComplainListBean>) {

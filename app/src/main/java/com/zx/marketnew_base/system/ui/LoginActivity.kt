@@ -117,14 +117,14 @@ class LoginActivity : BaseActivity<LoginPresenter, LoginModel>(), LoginContract.
     }
 
     override fun onBackPressed() {
-        if (reLogin) {
-            super.onBackPressed()
-        } else {
+//        if (reLogin) {
+//            super.onBackPressed()
+//        } else {
             JPushInterface.stopPush(this)
             showToast("请先登录后使用")
             handler.postDelayed({
                 MyApplication.instance.exit()
             }, 1000)
-        }
+//        }
     }
 }

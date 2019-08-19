@@ -49,7 +49,7 @@ object ConstStrings {
     }
 
     fun getLocalPath(): String {
-        return "$LOCAL_PATH/$APPNAME"
+        return "$LOCAL_PATH/$APPNAME/"
     }
 
     //地图默认中心点

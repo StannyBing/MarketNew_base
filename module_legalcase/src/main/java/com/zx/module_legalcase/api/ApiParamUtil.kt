@@ -48,6 +48,17 @@ object ApiParamUtil {
         return map
     }
 
+    fun workCaseListParam(pageNo: Int, pageSize: Int, condition: String, monthNum: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["pageNo"] = pageNo.toString()
+        map["pageSize"] = pageSize.toString()
+        map["orderByClause"] = "found_date desc"
+        map["queryType"] = "workResult"
+        map["monthNum"] = monthNum
+        if (condition.isNotEmpty()) map["condition"] = condition
+        return map
+    }
+
     //详情
     fun detailParam(id: String): Map<String, String> {
         val map = hashMapOf<String, String>()

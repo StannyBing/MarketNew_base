@@ -63,5 +63,21 @@ class QueryPresenter : QueryContract.Presenter() {
                 })
     }
 
+    override fun getWorkCaseList(map: Map<String, String>) {
+        mModel.workCaseListData(map)
+                .compose(RxHelper.bindToLifecycle(mView))
+                .subscribe(object : RxSubscriber<NormalList<LegalcaseListBean>>(){
+                    override fun _onNext(t: NormalList<LegalcaseListBean>?) {
+                        if (t != null) {
+                            mView.onCaseListResult(t)
+                        }
+                    }
+
+                    override fun _onError(code: String?, message: String?) {
+                        mView.handleError(code, message)
+                    }
+
+                })
+    }
 
 }

@@ -25,6 +25,9 @@ interface ApiService {
     @GET(ApiConfigModule.URL_CASE + "case/getCasePage.do")
     fun getAllCaseList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<LegalcaseListBean>>>
 
+    @GET(ApiConfigModule.URL_CASE + "case/getCaseList.do")
+    fun getWorkCaseList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<LegalcaseListBean>>>
+
     @GET(ApiConfigModule.URL_CASE + "case/getCaseDetail.do")
     fun getDetail(@QueryMap map: Map<String, String>) : Observable<BaseRespose<DetailBean>>
 

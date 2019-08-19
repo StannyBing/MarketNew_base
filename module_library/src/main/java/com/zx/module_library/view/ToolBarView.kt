@@ -79,7 +79,14 @@ class ToolBarView @JvmOverloads constructor(context: Context, attrs: AttributeSe
         toolbarBg.setBackgroundColor(bg_color)
         resetColor()
 
-        toolbarBack.setOnClickListener { v -> (context as Activity).onBackPressed() }
+        toolbarBack.setOnClickListener {(context as Activity).onBackPressed() }
+    }
+
+    /**
+     * 设置左侧按钮点击事件
+     */
+    fun setLeftClickListener(onClick: () -> Unit) {
+        toolbarBack.setOnClickListener { onClick() }
     }
 
     /**

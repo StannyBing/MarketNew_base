@@ -18,6 +18,7 @@ object RoutePath {
     const val ROUTE_APP_SETTING_FONT = "app/setting/font"//设置-字体设置
     const val ROUTE_APP_SETTING_ABOUT = "app/setting/about"//设置-关于我们
     const val ROUTE_APP_MYTASK = "/app/mytask"//我的任务
+    const val ROUTE_APP_VERSIONUPDATE = "/app/versionupdate"//版本更新
 
 
 

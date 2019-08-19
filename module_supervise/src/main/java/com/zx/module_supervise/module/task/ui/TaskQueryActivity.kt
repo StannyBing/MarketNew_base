@@ -42,6 +42,8 @@ class TaskQueryActivity : BaseActivity<TaskQueryPresenter, TaskQueryModel>(), Ta
 
     private val filterList = arrayListOf<SearchFilterBean>()//过滤条件
 
+    private var monthNum = ""//工作成果
+
     companion object {
         /**
          * 启动器
@@ -68,6 +70,12 @@ class TaskQueryActivity : BaseActivity<TaskQueryPresenter, TaskQueryModel>(), Ta
         toolBar_view.withXApp(XAppSupervise.SUPERVISE)
         search_view.withXApp(XAppSupervise.SUPERVISE)
         tv_supervise_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.SUPERVISE.moduleColor))
+
+        monthNum = if (intent.hasExtra("monthNum")) intent.getStringExtra("monthNum") else ""
+
+        if (monthNum.isNotEmpty()) {
+            search_view.hideFunc()
+        }
 
         sr_supervise_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
@@ -102,8 +110,13 @@ class TaskQueryActivity : BaseActivity<TaskQueryPresenter, TaskQueryModel>(), Ta
             pageNo = 1
             sr_supervise_list.clearStatus()
         }
-        mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fUserId" to UserManager.getUser().id,
-                "fStatus" to fStatus, "queryType" to queryType, "condition" to searchText, "orderByClause" to "f_start_date desc"))
+        if (monthNum.isNotEmpty()) {
+            mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fUserId" to UserManager.getUser().id,
+                    "queryType" to "workStatus", "condition" to searchText, "orderByClause" to "f_start_date desc", "monthNum" to monthNum))
+        } else {
+            mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fUserId" to UserManager.getUser().id,
+                    "fStatus" to fStatus, "queryType" to queryType, "condition" to searchText, "orderByClause" to "f_start_date desc"))
+        }
     }
 
     /**
