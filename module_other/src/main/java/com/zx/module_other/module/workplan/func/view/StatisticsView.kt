@@ -44,6 +44,7 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        valuePoint.clear()
         canvas!!.drawText("近四个月完成数", (widths * 0.1).toFloat(), (hight * 0.1).toFloat(), TextPaint);
         for (index in 0..datas.size - 1) {
             var w: Float = (index + 1) * xItemValue
@@ -66,7 +67,7 @@ class StatisticsView(context: Context, attrs: AttributeSet?) : View(context, att
                 startx = (index * width / (datas.size + 1)).toFloat()
                 starty = (hight - hight * 0.1 - datas[index - 1] * yItemValue).toFloat()
             }
-            var endy: Float = (hight - hight * 0.1 - datas[index] * yItemValue).toFloat()
+            var endy: Float = (hight - hight * 0.2 - datas[index] * yItemValue).toFloat()
             valuePoint.add(PointF(w, endy))
 
             //文字绘制
