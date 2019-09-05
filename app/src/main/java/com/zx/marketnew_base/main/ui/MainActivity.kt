@@ -13,8 +13,8 @@ import com.zx.marketnew_base.main.bean.VersionBean
 import com.zx.marketnew_base.main.mvp.contract.MainContract
 import com.zx.marketnew_base.main.mvp.model.MainModel
 import com.zx.marketnew_base.main.mvp.presenter.MainPresenter
-import com.zx.marketnew_base.system.ui.VersionUpdateActivity
 import com.zx.module_library.BuildConfig
+import com.zx.module_library.XApp
 import com.zx.module_library.app.BaseConfigModule
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
@@ -122,7 +122,9 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
      */
     override fun onVersionResult(versionBean: VersionBean) {
         if (com.zx.marketnew_base.BuildConfig.VERSION_CODE < versionBean.versionCode) {
-            VersionUpdateActivity.startAction(this,false)
+            XApp.startXApp(RoutePath.ROUTE_APP_VERSIONUPDATE){
+                it["update"] = true
+            }
         }
     }
 

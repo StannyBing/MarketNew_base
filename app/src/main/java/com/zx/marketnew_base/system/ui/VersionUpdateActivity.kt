@@ -12,9 +12,11 @@ import com.zx.marketnew_base.main.bean.VersionBean
 import com.zx.marketnew_base.system.mvp.contract.VersionUpdateContract
 import com.zx.marketnew_base.system.mvp.model.VersionUpdateModel
 import com.zx.marketnew_base.system.mvp.presenter.VersionUpdatePresenter
+import com.zx.module_library.app.ConstStrings
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.zxutils.util.ZXAppUtil
+import com.zx.zxutils.util.ZXFileUtil
 import kotlinx.android.synthetic.main.activity_version_update.*
 import java.io.File
 
@@ -28,8 +30,6 @@ class VersionUpdateActivity : BaseActivity<VersionUpdatePresenter, VersionUpdate
 
     private var versionBean: VersionBean? = null
 
-    override var canSwipeBack = false
-
     companion object {
         /**
          * 启动器
@@ -39,6 +39,11 @@ class VersionUpdateActivity : BaseActivity<VersionUpdatePresenter, VersionUpdate
             activity.startActivity(intent)
             if (isFinish) activity.finish()
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        canSwipeBack = !intent.hasExtra("update")
+        super.onCreate(savedInstanceState)
     }
 
     /**
@@ -62,6 +67,10 @@ class VersionUpdateActivity : BaseActivity<VersionUpdatePresenter, VersionUpdate
     override fun onViewListener() {
         btn_doUpdate.setOnClickListener {
             getPermission(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                val localFile = File(ConstStrings.getLocalPath())
+                if (localFile.exists() && localFile.isFile) {
+                    ZXFileUtil.deleteFiles(localFile)
+                }
                 mPresenter.downloadApk(versionBean!!.url)
             }
         }

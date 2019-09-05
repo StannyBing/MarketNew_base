@@ -6,19 +6,24 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.zx.module_library.BuildConfig
+import com.zx.module_library.XApp
 import com.zx.module_library.app.RoutePath
 import com.zx.module_library.base.BaseActivity
 import com.zx.module_library.bean.NormalList
+import com.zx.module_library.bean.SearchFilterBean
 import com.zx.module_library.func.tool.animateToTop
-import com.zx.module_library.func.tool.toJson
+import com.zx.module_library.func.tool.getItem
+import com.zx.module_library.func.tool.getPosition
+import com.zx.module_library.func.tool.getSelect
 import com.zx.module_supervise.R
 import com.zx.module_supervise.XAppSupervise
-import com.zx.module_supervise.module.daily.bean.DailyListBean
-import com.zx.module_supervise.module.daily.func.adapter.DailyListAdapter
+import com.zx.module_supervise.module.daily.bean.DailyQueryBean
+import com.zx.module_supervise.module.daily.bean.EntityStationBean
+import com.zx.module_supervise.module.daily.func.adapter.DailyQueryAdapter
 import com.zx.module_supervise.module.daily.mvp.contract.DailyQueryContract
 import com.zx.module_supervise.module.daily.mvp.model.DailyQueryModel
 import com.zx.module_supervise.module.daily.mvp.presenter.DailyQueryPresenter
-import com.zx.zxutils.util.ZXDialogUtil
 import com.zx.zxutils.views.SwipeRecylerView.ZXSRListener
 import kotlinx.android.synthetic.main.activity_daily_query.*
 
@@ -32,10 +37,12 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
 
     private var pageNo = 1
     private var searchText = ""
-    private var dataBeans = arrayListOf<DailyListBean>()
-    private var mAdapter = DailyListAdapter(dataBeans)
+    private var dataBeans = arrayListOf<DailyQueryBean>()
+    private var mAdapter = DailyQueryAdapter(dataBeans)
 
-    private var monthNum = ""//工作成果
+    private val filterList = arrayListOf<SearchFilterBean>()//过滤条件
+    private var fStation = ""//分局
+    private var fGrid = ""//片区
 
     companion object {
         /**
@@ -64,18 +71,12 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
         search_view.withXApp(XAppSupervise.DAILY)
         tv_daily_tips.setTextColor(ContextCompat.getColor(this, XAppSupervise.DAILY.moduleColor))
 
-        monthNum = if (intent.hasExtra("monthNum")) intent.getStringExtra("monthNum") else ""
-
-        if (monthNum.isNotEmpty()) {
-            search_view.hideFunc()
-        }
-
         sr_daily_list.setLayoutManager(LinearLayoutManager(this))
                 .setAdapter(mAdapter)
                 .autoLoadMore()
                 .setPageSize(15)
-                .setSRListener(object : ZXSRListener<DailyListBean> {
-                    override fun onItemLongClick(item: DailyListBean?, position: Int) {
+                .setSRListener(object : ZXSRListener<DailyQueryBean> {
+                    override fun onItemLongClick(item: DailyQueryBean?, position: Int) {
                     }
 
                     override fun onLoadMore() {
@@ -87,11 +88,14 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
                         loadData(true)
                     }
 
-                    override fun onItemClick(item: DailyListBean?, position: Int) {
-                        DailyAddActivity.startAction(this@DailyQueryActivity, false, item!!.id)
+                    override fun onItemClick(item: DailyQueryBean?, position: Int) {
+                        DailyListActivity.startAction(this@DailyQueryActivity, false, item!!.enterpriseId)
                     }
                 })
+        sr_daily_list.swipeRefreshLayout.setColorSchemeResources(R.color.daily_color)
         loadData(true)
+
+        mPresenter.getDeptList(hashMapOf("parentId" to BuildConfig.AREA_ID))
     }
 
     private fun loadData(refresh: Boolean = false) {
@@ -99,17 +103,28 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
             pageNo = 1
             sr_daily_list.clearStatus()
         }
-        if (monthNum.isNotEmpty()) {
-            mPresenter.getDailyList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "name" to searchText, "queryType" to "workStatus", "monthNum" to monthNum))
-        } else {
-            mPresenter.getDailyList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "name" to searchText))
-        }
+        mPresenter.getEntitys(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fStationCode" to fStation, "fGridCode" to fGrid, "enterpriseName" to searchText))
+    }
+
+    override fun onEntitysResult(entitys: NormalList<DailyQueryBean>) {
+        tv_daily_tips.text = "检索到检查主体共${entitys.total}个"
+        sr_daily_list.refreshData(entitys.list, entitys.total)
     }
 
     /**
      * View事件设置
      */
     override fun onViewListener() {
+        //过滤事件
+        search_view.setFuncListener(filterList) {
+            if (filterList.getSelect(name = "监管局").isEmpty() && fStation.isNotEmpty()) {
+                onDeptListResult(arrayListOf())
+            } else if (fStation != filterList.getSelect(name = "监管局")) {
+                mPresenter.getAreaDeptList(hashMapOf("parentId" to filterList.getSelect(name = "监管局")))
+            }
+            fStation = filterList.getSelect(name = "监管局")
+            fGrid = filterList.getSelect(name = "监管片区")
+        }
         //搜索事件
         search_view.setSearchListener {
             searchText = it
@@ -118,28 +133,43 @@ class DailyQueryActivity : BaseActivity<DailyQueryPresenter, DailyQueryModel>(),
         //顶部点击滚动到开头
         toolBar_view.setMidClickListener { sr_daily_list.recyclerView.animateToTop(0) }
         //新增按钮
-        toolBar_view.setRightClickListener {
+        fab_daily_add.setOnClickListener {
             DailyAddActivity.startAction(this, false)
         }
-        //结论补录
-        mAdapter.setOnItemChildClickListener { _, view, position ->
-            if (view.id == R.id.tv_daily_status) {
-                if (dataBeans[position].result == null) {
-                    ZXDialogUtil.showListDialog(this, "结论补录", "关闭", arrayOf("符合", "不符合", "基本符合")
-                    ) { dialog, which -> mPresenter.updateDaily(hashMapOf("id" to dataBeans[position].id, "result" to which).toJson()) }
+        toolBar_view.setRightClickListener {
+            XApp.startXApp(RoutePath.ROUTE_STATISTICS_INFO) {
+                it["xApp"] = XAppSupervise.DAILY
+            }
+        }
+
+    }
+
+    //监管片区
+    override fun onAreaDeptListResult(deptBeans: List<EntityStationBean>) {
+        filterList.getItem("监管片区")?.values?.apply {
+            clear()
+            if (deptBeans.isNotEmpty()) {
+                deptBeans.forEach {
+                    add(SearchFilterBean.ValueBean(it.value, it.id))
                 }
             }
         }
+        search_view.notifyItemChanged(filterList.getPosition("监管片区"))
     }
 
-    override fun onDailyListResult(dailyList: NormalList<DailyListBean>) {
-        tv_daily_tips.text = "检索到检查任务共${dailyList.total}条"
-        sr_daily_list.refreshData(dailyList.list, dailyList.total)
-    }
-
-    override fun onDailyUpdateResult() {
-        showToast("更新成功")
-        loadData(true)
+    //监管局
+    override fun onDeptListResult(stationBeans: List<EntityStationBean>) {
+        if (stationBeans.isNotEmpty()) {
+            filterList.add(SearchFilterBean("监管局", SearchFilterBean.FilterType.SELECT_TYPE, arrayListOf<SearchFilterBean.ValueBean>().apply {
+                stationBeans.forEach {
+                    add(SearchFilterBean.ValueBean(it.value, it.id))
+                }
+            }, singleFunc = true))
+            filterList.add(SearchFilterBean("监管片区", SearchFilterBean.FilterType.SELECT_TYPE))
+        } else {
+            filterList.getItem("监管片区")?.values?.clear()
+        }
+        search_view.notifyItemChanged(filterList.getPosition("监管片区"))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

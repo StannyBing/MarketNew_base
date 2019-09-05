@@ -2,10 +2,7 @@ package com.zx.module_supervise.api
 
 import com.frame.zxmvp.basebean.BaseRespose
 import com.zx.module_library.bean.NormalList
-import com.zx.module_supervise.module.daily.bean.DailyDetailBean
-import com.zx.module_supervise.module.daily.bean.DailyListBean
-import com.zx.module_supervise.module.daily.bean.EntityBean
-import com.zx.module_supervise.module.daily.bean.TemplateBean
+import com.zx.module_supervise.module.daily.bean.*
 import com.zx.module_supervise.module.task.bean.*
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -46,6 +43,12 @@ interface ApiService {
 
     @POST(ApiConfigModule.URL_SUPERVISE + "file/upload.do")
     fun uploadFile(@Body body: RequestBody): Observable<BaseRespose<List<String>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "inspect/getList.do")
+    fun getDailyEntitys(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<DailyQueryBean>>>
+
+    @GET(ApiConfigModule.URL_SUPERVISE + "entity/getEntityStation.do")
+    fun getEntityStation(@QueryMap map: Map<String, String>): Observable<BaseRespose<List<EntityStationBean>>>
 
     @GET(ApiConfigModule.URL_SUPERVISE + "inspect/queryList.do")
     fun getDailyList(@QueryMap map: Map<String, String>): Observable<BaseRespose<NormalList<DailyListBean>>>

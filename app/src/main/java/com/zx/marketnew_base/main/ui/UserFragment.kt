@@ -111,7 +111,7 @@ class UserFragment : BaseFragment<UserPresenter, UserModel>(), UserContract.View
         }
     }
 
-    fun setUserInfo(userBean: UserBean){
+    private fun setUserInfo(userBean: UserBean){
         Glide.with(ZXApp.getContext()).load(BaseConfigModule.BASE_IP + userBean.imgUrl)
                 .apply(RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

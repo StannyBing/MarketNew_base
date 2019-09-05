@@ -115,7 +115,10 @@ class DisposeActivity : BaseActivity<DisposePresenter, DisposeModel>(), DisposeC
                     } else {
                         when (detailBean.baseInfo.fStatus) {
                             10 -> {//受理
-
+                                mPresenter.submitDispose(ApiParamUtil.acceptParam(detailBean.baseInfo.fGuid!!,
+                                        detailBean.baseInfo.fStatus!!,
+                                        disposeList.getItem("操作")!!.resultValue,
+                                        disposeList.getItem("处理说明")!!.resultValue))
                             }
                             20 -> {//分流
                                 mPresenter.submitDispose(ApiParamUtil.shuntParam(detailBean.baseInfo.fGuid!!,

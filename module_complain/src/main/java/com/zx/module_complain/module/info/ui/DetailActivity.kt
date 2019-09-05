@@ -131,7 +131,9 @@ class DetailActivity : BaseActivity<DetailPresenter, DetailModel>(), DetailContr
         val roles = UserManager.getUser().role
         if (detailBean.isHandle) {
             btn_complain_dispose.visibility = View.VISIBLE
-            if (fStatus == 20 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
+            if(fStatus == 10){
+                btn_complain_dispose.text = "任务处置(受理)"
+            }else if (fStatus == 20 && detailBean.baseInfo.fInputUser.equals(UserManager.getUser().id)) {
                 btn_complain_dispose.text = "任务处置(分流)"
             } else if (fStatus == 30 && roles.intersect(arrayListOf("1001", "2020")).isNotEmpty()) {
                 btn_complain_dispose.text = "任务处置(指派)"

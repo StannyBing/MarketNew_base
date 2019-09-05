@@ -5,10 +5,9 @@ import com.frame.zxmvp.baserx.RxHelper
 import com.frame.zxmvp.baserx.RxSchedulers
 import com.zx.module_library.bean.NormalList
 import com.zx.module_supervise.api.ApiService
-import com.zx.module_supervise.module.daily.bean.DailyListBean
-
+import com.zx.module_supervise.module.daily.bean.DailyQueryBean
+import com.zx.module_supervise.module.daily.bean.EntityStationBean
 import com.zx.module_supervise.module.daily.mvp.contract.DailyQueryContract
-import okhttp3.RequestBody
 import rx.Observable
 
 /**
@@ -16,16 +15,16 @@ import rx.Observable
  * 功能：
  */
 class DailyQueryModel : BaseModel(), DailyQueryContract.Model {
-    override fun dailyListData(map: Map<String, String>): Observable<NormalList<DailyListBean>> {
+    override fun entitysData(map: Map<String, String>): Observable<NormalList<DailyQueryBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .getDailyList(map)
+                .getDailyEntitys(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }
 
-    override fun dailyUpdate(body: RequestBody): Observable<String> {
+    override fun areaDeptListData(map: Map<String, String>): Observable<List<EntityStationBean>> {
         return mRepositoryManager.obtainRetrofitService(ApiService::class.java)
-                .updateDailyInfo(body)
+                .getEntityStation(map)
                 .compose(RxHelper.handleResult())
                 .compose(RxSchedulers.io_main())
     }

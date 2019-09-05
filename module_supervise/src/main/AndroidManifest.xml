@@ -19,6 +19,7 @@
         <activity android:name=".module.manage.ui.ManageEquipmentActivity"/>
         <activity android:name=".module.manage.ui.ManageDrugsActivity"/>
         <activity android:name=".module.manage.ui.ManageFoodsActivity"/>
+        <activity android:name=".module.daily.ui.DailyListActivity"/>
     </application>
 
 </manifest>

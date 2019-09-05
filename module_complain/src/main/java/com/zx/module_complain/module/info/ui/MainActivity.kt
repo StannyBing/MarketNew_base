@@ -100,6 +100,7 @@ class MainActivity : BaseActivity<MainPresenter, MainModel>(), MainContract.View
                     }
 
                 })
+        sr_complain_list.swipeRefreshLayout.setColorSchemeResources(R.color.complain_color)
         loadData(true)
 
     }

@@ -92,6 +92,7 @@ class MyTaskActivity : BaseActivity<MyTaskPresenter, MyTaskModel>(), MyTaskContr
                         }
                     }
                 })
+        sr_my_task.swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
     }
 
     /**

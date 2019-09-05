@@ -48,6 +48,7 @@ public abstract class RxBaseActivity<T extends BasePresenter, E extends BaseMode
 //        this.initPresenter();
         this.initView(savedInstanceState);
         BaseApplication.baseApplication.addActivity(this);
+
     }
 
     @Override

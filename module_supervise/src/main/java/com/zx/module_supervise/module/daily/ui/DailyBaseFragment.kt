@@ -120,7 +120,19 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
     fun getDailyInfo(): HashMap<String, Any> {
         return hashMapOf("enterpriseId" to entityBean!!.fEntityGuid!!,
                 "name" to if (et_daily_checkName.text.toString().isEmpty()) entityBean!!.fEntityName!! else et_daily_checkName.text.toString(),
-                "result" to if (rb_check_value0.isChecked) "0" else if (rb_check_value1.isChecked) "1" else if (rb_check_value2.isChecked) "2" else "",
+                "result" to if (rb_check_value3.isChecked) {
+                    "3"
+                } else if (rb_check_value3.isChecked) {
+                    "4"
+                } else if (rb_check_value5.isChecked) {
+                    "5"
+                } else if (rb_check_value6.isChecked) {
+                    "6"
+                } else if (rb_check_value7.isChecked) {
+                    "7"
+                } else if (rb_check_value8.isChecked) {
+                    "8"
+                } else "",
                 "remark" to et_daily_remark.text.toString())
     }
 
@@ -170,9 +182,15 @@ class DailyBaseFragment : BaseFragment<DailyBasePresenter, DailyBaseModel>(), Da
             rg_check_value.getChildAt(i).isEnabled = false
         }
         when (dailyDetailBean.result) {
-            0 -> rg_check_value.check(R.id.rb_check_value0)
-            1 -> rg_check_value.check(R.id.rb_check_value1)
-            2 -> rg_check_value.check(R.id.rb_check_value2)
+//            0 -> rg_check_value.check(R.id.rb_check_value0)
+//            1 -> rg_check_value.check(R.id.rb_check_value1)
+//            2 -> rg_check_value.check(R.id.rb_check_value2)
+            3 -> rg_check_value.check(R.id.rb_check_value3)
+            4 -> rg_check_value.check(R.id.rb_check_value4)
+            5 -> rg_check_value.check(R.id.rb_check_value5)
+            6 -> rg_check_value.check(R.id.rb_check_value6)
+            7 -> rg_check_value.check(R.id.rb_check_value7)
+            8 -> rg_check_value.check(R.id.rb_check_value8)
         }
         //设置附件信息
         if (dailyDetailBean.enterpriseSign != null) {

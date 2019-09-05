@@ -437,7 +437,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="70dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -460,7 +460,7 @@
                         android:textColor="@color/text_color_noraml"
                         android:textSize="@dimen/text_size_normal"/>
 
-                    <RadioGroup
+                    <com.zx.module_supervise.module.daily.func.view.MyRadioGroup
                         android:id="@+id/rg_check_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -468,32 +468,59 @@
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/rb_check_value0"
+                            android:id="@+id/rb_check_value3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/daily_color"
-                            android:text="符合"
+                            android:text="符合要求"
                             android:textColor="@color/daily_color"
                             android:textSize="@dimen/text_size_small"/>
 
                         <RadioButton
-                            android:id="@+id/rb_check_value1"
+                            android:id="@+id/rb_check_value4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/daily_color"
-                            android:text="不符合"
+                            android:text="当场整改"
                             android:textColor="@color/daily_color"
                             android:textSize="@dimen/text_size_small"/>
 
                         <RadioButton
-                            android:id="@+id/rb_check_value2"
+                            android:id="@+id/rb_check_value5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:buttonTint="@color/daily_color"
-                            android:text="基本符合"
+                            android:text="当场行政处罚"
                             android:textColor="@color/daily_color"
                             android:textSize="@dimen/text_size_small"/>
-                    </RadioGroup>
+
+                        <RadioButton
+                            android:id="@+id/rb_check_value6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/daily_color"
+                            android:text="限期整改"
+                            android:textColor="@color/daily_color"
+                            android:textSize="@dimen/text_size_small"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_check_value7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/daily_color"
+                            android:text="停业整顿"
+                            android:textColor="@color/daily_color"
+                            android:textSize="@dimen/text_size_small"/>
+
+                        <RadioButton
+                            android:id="@+id/rb_check_value8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/daily_color"
+                            android:text="移交稽查"
+                            android:textColor="@color/daily_color"
+                            android:textSize="@dimen/text_size_small"/>
+                    </com.zx.module_supervise.module.daily.func.view.MyRadioGroup>
 
                 </LinearLayout>
 

@@ -68,9 +68,9 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="height" value="64" />
-                            <entry key="outputName" value="btn_correct" />
+                            <entry key="outputName" value="icon_statistics" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\dell\Desktop\坐标.svg" />
+                            <entry key="sourceFile" value="C:\Users\dell\Desktop\统计分析.svg" />
                             <entry key="width" value="64" />
                           </map>
                         </option>

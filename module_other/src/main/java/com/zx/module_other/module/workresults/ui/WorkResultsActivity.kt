@@ -48,7 +48,7 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
                 "综合执法" -> XApp.startXApp(RoutePath.ROUTE_LEGALCASE_TASK) {
                     it["monthNum"] = "4"
                 }
-                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY) {
+                "现场检查" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_DAILY_LIST) {
                     it["monthNum"] = "4"
                 }
                 "监管任务" -> XApp.startXApp(RoutePath.ROUTE_SUPERVISE_TASK) {
@@ -65,8 +65,8 @@ class WorkResultsActivity : BaseActivity<WorkResultsPresenter, WorkResultsModel>
     @SuppressLint("ResourceAsColor")
     override fun initView(savedInstanceState: Bundle?) {
         super.initView(savedInstanceState)
-        ZXStatusBarCompat.translucent(this, R.color.work_satisics_bg)
-        ZXStatusBarCompat.setStatusBarDarkMode(this)
+        ZXStatusBarCompat.translucent(this)
+        ZXStatusBarCompat.setStatusBarLightMode(this)
 
         toolbar_view.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.white))
 

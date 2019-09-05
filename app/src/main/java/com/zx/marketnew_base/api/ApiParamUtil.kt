@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Base64
 import com.google.gson.Gson
 import com.zx.module_library.app.ApiParamUtil
+import com.zx.module_library.app.BaseConfigModule
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.UnsupportedEncodingException
@@ -48,6 +49,7 @@ object ApiParamUtil {
 
     //登录
     fun loginParam(userName: String, password: String): RequestBody {
+        BaseConfigModule.TOKEN = ""
         val map = hashMapOf<String, String>()
         map["remark"] = "app"
         map["userName"] = userName

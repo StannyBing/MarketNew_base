@@ -168,7 +168,9 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
 
     private fun getFileSize(): Double {
         var size = 0.0
-        size += ZXFileUtil.getFileOrFilesSize(ConstStrings.getLocalPath(), ZXFileUtil.SIZETYPE_MB)
+        if (ZXFileUtil.isFileExists(ConstStrings.getLocalPath())) {
+            size += ZXFileUtil.getFileOrFilesSize(ConstStrings.getLocalPath(), ZXFileUtil.SIZETYPE_MB)
+        }
         return size
     }
 
@@ -178,7 +180,7 @@ class SettingActivity : BaseActivity<SettingPresenter, SettingModel>(), SettingC
             localFile.listFiles().forEach {
                 ZXFileUtil.deleteFiles(it)
             }
-        }else{
+        } else {
             ZXFileUtil.deleteFiles(localFile)
         }
     }

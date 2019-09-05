@@ -94,6 +94,7 @@ class TaskCheckAdapter(dataList: List<TaskCheckBean>, var color: Int) : ZXQuickA
                                 }
                             })
                         } else {
+                            etValue.setText(item.fCheckResult)
                             etValue.isClickable = false
                             etValue.isFocusableInTouchMode = false
                             etValue.setOnTouchListener { _, _ -> true }
@@ -118,6 +119,7 @@ class TaskCheckAdapter(dataList: List<TaskCheckBean>, var color: Int) : ZXQuickA
                                 }
                             })
                         } else {
+                            etValue.setText(item.fCheckResult)
                             etValue.isClickable = false
                             etValue.isFocusableInTouchMode = false
                             etValue.setOnTouchListener { _, _ -> true }

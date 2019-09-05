@@ -93,6 +93,16 @@ object ApiParamUtil {
         return map
     }
 
+    //投诉举报-退回
+    fun acceptParam(fGuid: String, fStatus: Int, fDispose: String, fDisposeRemark: String): RequestBody {
+        val map = HashMap<String, String>()
+        map["fGuid"] = fGuid
+        map["fStatus"] = fStatus.toString()
+        map["fDispose"] = fDispose
+        map["fDisposeRemark"] = fDisposeRemark
+        return toJson(map)
+    }
+
     //投诉举报-分流
     fun shuntParam(fGuid: String, fStatus: Int, fDispose: String, fDisposeRemark: String, fShunt: String): RequestBody {
         val map = HashMap<String, String>()

@@ -62,10 +62,12 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
     override fun onViewListener() {
         //消息滚动条点击事件
         vf_info_view.setOnClickListener {
-            XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
-                val index = vf_info_view.currentView.tag as Int
-                it["mTitle"] = notices[index].name
-                it["mUrl"] = notices[index].url
+            val index = vf_info_view.currentView.tag as Int
+            if (!notices[index].url.isNullOrEmpty()) {
+                XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
+                    it["mTitle"] = notices[index].name
+                    it["mUrl"] = notices[index].url!!
+                }
             }
         }
     }
@@ -93,9 +95,11 @@ class WorkInfoFragment : BaseFragment<WorkInfoPresenter, WorkInfoModel>(), WorkI
                     .isAutoPlay(true)
                     .setDelayTime(6000)
                     .setOnBannerListener { index ->
-                        XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
-                            it["mTitle"] = banners[index].name
-                            it["mUrl"] = banners[index].url
+                        if (!banners[index].url.isNullOrEmpty()) {
+                            XApp.startXApp(RoutePath.ROUTE_LIBRARY_WEB) {
+                                it["mTitle"] = banners[index].name
+                                it["mUrl"] = banners[index].url
+                            }
                         }
                     }
                     .setImages(images)

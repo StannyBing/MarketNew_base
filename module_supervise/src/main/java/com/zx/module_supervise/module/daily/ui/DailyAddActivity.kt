@@ -112,7 +112,8 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                 showEntityDilaog()
             }
         } else {
-            btn_daily_submit.setText("再次检查")
+            toolBar_view.setMidText("检查详情")
+            btn_daily_submit.text = "再次检查"
         }
     }
 
@@ -156,6 +157,7 @@ class DailyAddActivity : BaseActivity<DailyAddPresenter, DailyAddModel>(), Daily
                     }
 
                 })
+        srEntityList?.swipeRefreshLayout?.setColorSchemeResources(R.color.daily_color)
         loadEntityList()
         ZXDialogUtil.showCustomViewDialog(this, "请先选择检查主体", entityView, null, { _, _ -> })
     }

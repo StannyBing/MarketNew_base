@@ -101,7 +101,7 @@ class WorkPlanActivity : BaseActivity<WorkPlanPresenter, WorkPlanModel>(), WorkP
             adapter = workPlanAdapter
             layoutManager = LinearLayoutManager(this@WorkPlanActivity)
         }
-        toobar_view.showRightImg(R.drawable.work_list)
+//        toobar_view.showRightImg(R.drawable.work_list)
         rv_work_plan.addItemDecoration(SpacesItemDecoration(10));
         mRxManager.on("createplan", Action1<String> {
             getWorkPlan(DateUtil.timeStringToStamp(startDate).toString(), DateUtil.timeStringToStamp(endDate).toString())

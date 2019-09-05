@@ -84,6 +84,7 @@ class SpecialListActivity : BaseActivity<SpecialListPresenter, SpecialListModel>
                     }
 
                 })
+        sr_special_list.swipeRefreshLayout.setColorSchemeResources(R.color.special_color)
         loadData(true)
     }
 

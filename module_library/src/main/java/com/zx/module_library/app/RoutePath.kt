@@ -52,6 +52,7 @@ object RoutePath {
     const val ROUTE_SUPERVISE_TASK_DETAIL = "/supervise/task/detail"//专项检查详情
     const val ROUTE_SUPERVISE_TASK_DISPOSE = "/supervise/task/dispose"//专项检查处置
     const val ROUTE_SUPERVISE_DAILY = "/supervise/daily"//现场检查
+    const val ROUTE_SUPERVISE_DAILY_LIST = "/supervise/daily/list"//主体相关列表
     const val ROUTE_SUPERVISE_DAILY_ADD = "/supervise/daily/add"//现场检查-新增
     const val ROUTE_SUPERVISE_DAILY_TEMPLATE = "/supervise/daily/template"//现场检查-模板
     const val ROUTE_SUPERVISE_DAILY_CHECKLIST = "/supervise/daily/checklist"//现场检查-检查指标
@@ -62,7 +63,8 @@ object RoutePath {
 
 
     //统计分析
-    const val ROUTE_STATISTICS_COMPLAIN = "/statistics/complain"//统计-投诉举报
+    const val ROUTE_STATISTICS_MAIN = "/statistics/main"//统计-主页
+    const val ROUTE_STATISTICS_INFO = "/statistics/info"//统计-信息
 
 
 

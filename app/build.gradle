@@ -95,8 +95,8 @@ android {
         base {
             dimension "default"
             matchingFallbacks = ["base"]
-            versionCode 3
-            versionName "1.0.2"
+            versionCode 4
+            versionName "1.0.3"
             applicationId "com.zx.marketnew_base"
             manifestPlaceholders = [APP_NAME     : "移动监督管理系统",
                                     APP_ICON     : "@mipmap/ic_launcher",
@@ -119,8 +119,8 @@ android {
         rc {
             dimension "default"
             matchingFallbacks = ["rc"]
-            versionCode 18
-            versionName "2.0.0"
+            versionCode 20
+            versionName "2.0.2"
             applicationId "com.zx.marketnew_baserc"
             manifestPlaceholders = [APP_NAME     : "移动监督管理系统",
                                     APP_ICON     : "@mipmap/rc_ic_launcher",

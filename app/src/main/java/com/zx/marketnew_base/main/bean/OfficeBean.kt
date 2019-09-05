@@ -21,7 +21,7 @@ data class OfficeBean(var banner: List<Banner>,
 
     data class Notice(var id: String,
                       var type: String,
-                      var url: String,
+                      var url: String?,
                       var date: Long,
                       var name: String,
                       var info: String) : Serializable

@@ -99,6 +99,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                 })
+        sr_legalcase_list.swipeRefreshLayout.setColorSchemeResources(R.color.legalcase_color)
         loadData(true)
     }
 

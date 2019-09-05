@@ -72,6 +72,7 @@ class LawCollectActivity : BaseActivity<LawCollectPresenter, LawCollectModel>(),
                     }
 
                 })
+        sr_law_collect.swipeRefreshLayout.setColorSchemeResources(R.color.law_color)
     }
 
 

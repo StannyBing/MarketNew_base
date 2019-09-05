@@ -99,6 +99,7 @@ class TaskQueryActivity : BaseActivity<TaskQueryPresenter, TaskQueryModel>(), Ta
                     }
 
                 })
+        sr_supervise_list.swipeRefreshLayout.setColorSchemeResources(R.color.supervise_color)
         loadData(true)
     }
 
@@ -112,7 +113,7 @@ class TaskQueryActivity : BaseActivity<TaskQueryPresenter, TaskQueryModel>(), Ta
         }
         if (monthNum.isNotEmpty()) {
             mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fUserId" to UserManager.getUser().id,
-                    "queryType" to "workStatus", "condition" to searchText, "orderByClause" to "f_start_date desc", "monthNum" to monthNum))
+                    "queryType" to "workResult", "condition" to searchText, "orderByClause" to "f_start_date desc", "monthNum" to monthNum))
         } else {
             mPresenter.getSuperviseList(hashMapOf("pageNo" to pageNo.toString(), "pageSize" to 15.toString(), "fUserId" to UserManager.getUser().id,
                     "fStatus" to fStatus, "queryType" to queryType, "condition" to searchText, "orderByClause" to "f_start_date desc"))

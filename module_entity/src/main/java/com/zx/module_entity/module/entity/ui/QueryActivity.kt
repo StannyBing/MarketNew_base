@@ -103,6 +103,7 @@ class QueryActivity : BaseActivity<QueryPresenter, QueryModel>(), QueryContract.
                     }
 
                 })
+        sr_entity_list.swipeRefreshLayout.setColorSchemeResources(R.color.entity_color)
         loadData(true)
 
         mPresenter.getFilterInfo()

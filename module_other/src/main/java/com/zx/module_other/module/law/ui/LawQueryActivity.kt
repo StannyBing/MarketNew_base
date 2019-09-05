@@ -115,6 +115,7 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
                     })
             loadData(true, 1)
         }
+        rv_law_query.swipeRefreshLayout.setColorSchemeResources(R.color.law_color)
     }
 
     fun loadData(refresh: Boolean = false, type: Int) {
@@ -151,9 +152,9 @@ class LawQueryActivity : BaseActivity<LawQueryPresenter, LawQueryModel>(), LawQu
 
 
     override fun onLawListResult(complainList: List<LawBean>) {
-        for (lawBean in complainList){
-            if (lawBean.name.equals(lawMainBean!!.name)){
-                val list:List<LawBean> = lawBean.children!!
+        for (lawBean in complainList) {
+            if (lawBean.name.equals(lawMainBean!!.name)) {
+                val list: List<LawBean> = lawBean.children!!
                 rv_law_query.refreshData(list, list.size)
             }
         }

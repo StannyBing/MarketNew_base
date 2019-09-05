@@ -105,7 +105,9 @@ abstract class BaseActivity<T : BasePresenter<*, *>, E : BaseModel> : RxBaseActi
                             return@Action1
                         }
                         "版本更新" -> {
-                            XApp.startXApp(RoutePath.ROUTE_APP_VERSIONUPDATE)
+                            XApp.startXApp(RoutePath.ROUTE_APP_VERSIONUPDATE){
+                                it["update"] = true
+                            }
                         }
                     }
                 }
